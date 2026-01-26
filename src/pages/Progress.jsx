@@ -16,7 +16,6 @@ function Progress() {
           <h2 style={styles.title}>Your reading journey</h2>
           <p style={styles.subtitle}>
             This space reflects what you have explored so far.
-            There are no scores — only your personal path.
           </p>
         </header>
 
