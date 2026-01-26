@@ -27,7 +27,7 @@ function Landing() {
 
         <footer style={styles.footer}>
           <p style={styles.footerText}>
-            Start with a theme that feels close to you. No grades. No pressure.
+            Start with a theme that feels close to you.
           </p>
         </footer>
       </div>
