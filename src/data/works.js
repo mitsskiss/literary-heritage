@@ -1,8 +1,15 @@
+import abaiCover from "../assets/works/abay.png";
+import murakamiCover from "../assets/works/murakami.png";
+import dostoevskyCover from "../assets/works/dostoevsky.png";
+import camusCover from "../assets/works/camus.png";
+import woolfCover from "../assets/works/woolf.png";
+
 export const works = [
   {
     id: "abai-words",
     title: "Book of Words",
     author: "Abai Kunanbayev",
+    image: abaiCover,
     year: 1890,
     themes: ["Identity", "Morality", "Knowledge", "Society"],
     description:
@@ -40,34 +47,6 @@ export const works = [
           },
         },
       },
-      {
-        id: "abai-f2",
-        text:
-          "Knowledge is not given freely; it must be earned through effort and reflection.",
-        authorNote:
-          "For Abai, knowledge is inseparable from ethical responsibility and continuous self-improvement.",
-        annotations: [
-          {
-            word: "Knowledge",
-            explanation:
-              "Wisdom acquired through learning and life experience.",
-          },
-          {
-            word: "reflection",
-            explanation:
-              "Deep thinking about ideas, actions, and their consequences.",
-          },
-        ],
-        reflection: {
-          question: "Do you agree that knowledge requires effort?",
-          options: ["Yes", "Partially", "No"],
-          resonanceQuote: {
-            text:
-              "True knowledge is achieved only through persistent effort.",
-            author: "Abai Kunanbayev",
-          },
-        },
-      },
     ],
   },
 
@@ -75,6 +54,7 @@ export const works = [
     id: "murakami-identity",
     title: "Kafka on the Shore",
     author: "Haruki Murakami",
+    image: murakamiCover,
     year: 2002,
     themes: ["Identity", "Society"],
     description:
@@ -114,6 +94,7 @@ export const works = [
     id: "dostoevsky-crime",
     title: "Crime and Punishment",
     author: "Fyodor Dostoevsky",
+    image: dostoevskyCover,
     year: 1942,
     themes: ["Morality", "Identity", "Society"],
     description:
@@ -149,6 +130,7 @@ export const works = [
     id: "camus-stranger",
     title: "The Stranger",
     author: "Albert Camus",
+    image: camusCover,
     themes: ["Identity", "Morality"],
     description:
       "A philosophical novel examining the absurdity of existence and emotional detachment.",
@@ -187,6 +169,7 @@ export const works = [
     id: "woolf-dalloway",
     title: "Mrs Dalloway",
     author: "Virginia Woolf",
+    image: woolfCover,
     year: 1925,
     themes: ["Identity", "Society"],
     description:
