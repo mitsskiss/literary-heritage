@@ -1,6 +1,5 @@
 import { works } from "../data/works";
 import { Link, useSearchParams } from "react-router-dom";
-import { useState, useEffect } from "react";
 
 const THEMES = {
   Identity: { color: "#e3f2fd", accent: "#1976d2" },
@@ -10,15 +9,16 @@ const THEMES = {
 };
 
 function Explore() {
-  const [activeTheme, setActiveTheme] = useState(null);
-  const [searchParams] = useSearchParams();
-  const themeFromUrl = searchParams.get("theme");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeTheme = searchParams.get("theme");
 
-  useEffect(() => {
-    if (themeFromUrl) {
-      setActiveTheme(themeFromUrl);
+  const handleThemeChange = (theme) => {
+    if (!theme) {
+      setSearchParams({});
+    } else {
+      setSearchParams({ theme });
     }
-  }, [themeFromUrl]);
+  };
 
   const filteredWorks =
     activeTheme === null
@@ -57,7 +57,7 @@ function Explore() {
 
               <div style={styles.filterBar}>
                 <button
-                  onClick={() => setActiveTheme(null)}
+                  onClick={() => handleThemeChange(null)}
                   className="explore-filter-btn"
                   style={{
                     ...styles.filterBtn,
@@ -70,7 +70,7 @@ function Explore() {
                 {Object.keys(THEMES).map((theme) => (
                   <button
                     key={theme}
-                    onClick={() => setActiveTheme(theme)}
+                    onClick={() => handleThemeChange(theme)}
                     className="explore-filter-btn"
                     style={{
                       ...styles.filterBtn,
@@ -103,7 +103,7 @@ function Explore() {
                 There are no works for this theme in the current collection.
               </p>
               <button
-                onClick={() => setActiveTheme(null)}
+                onClick={() => handleThemeChange(null)}
                 style={styles.emptyBtn}
               >
                 Show all themes
@@ -117,10 +117,7 @@ function Explore() {
                   className="explore-work-card"
                   style={styles.card}
                 >
-                  <Link
-                    to={`/reading/${work.id}`}
-                    style={styles.imageLink}
-                  >
+                  <Link to={`/reading/${work.id}`} style={styles.imageLink}>
                     <div
                       style={{
                         ...styles.cardImage,
