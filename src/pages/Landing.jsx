@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import { works } from "../data/works";
 import { authors } from "../data/authors";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import MetaBalls from "../components/MetaBalls";
+
+const INTRO_SESSION_KEY = "literary_intro_seen";
 
 const movements = [
   {
@@ -21,9 +24,89 @@ const movements = [
   },
 ];
 
+const introHighlights = [
+  "Poetry and philosophy",
+  "Voices across generations",
+  "Stories that shape identity",
+];
+
+const introNarrative = [
+  "Explore famous authors, literary works, and the ideas behind them.",
+  "Every great work of literature is a conversation - not just between the author and their time, but between the text and you.",
+  "Read, explore, and reflect on literary works.",
+];
+
+const introVisuals = [...works.slice(0, 3), ...authors.slice(0, 2)];
+
 function Landing() {
   const sliderRef = useRef(null);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [introStage, setIntroStage] = useState(() => {
+    if (typeof window === "undefined") return "done";
+    return window.sessionStorage.getItem(INTRO_SESSION_KEY) ? "done" : "loading";
+  });
+  const [isMuted, setIsMuted] = useState(true);
+  const [activeNarrativeIndex, setActiveNarrativeIndex] = useState(0);
+
+  useEffect(() => {
+    document.body.style.overflow = introStage === "done" ? "" : "hidden";
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [introStage]);
+
+  useEffect(() => {
+    if (introStage !== "loading") return undefined;
+
+    const timer = window.setTimeout(() => {
+      setIntroStage("enter");
+    }, 1800);
+
+    return () => window.clearTimeout(timer);
+  }, [introStage]);
+
+  useEffect(() => {
+    if (introStage !== "story") return undefined;
+
+    const timer = window.setTimeout(() => {
+      setIntroStage("done");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }, 6500);
+
+    return () => window.clearTimeout(timer);
+  }, [introStage]);
+
+  useEffect(() => {
+    if (introStage !== "story") return undefined;
+
+    const interval = window.setInterval(() => {
+      setActiveNarrativeIndex((current) => (current + 1) % introNarrative.length);
+    }, 2600);
+
+    return () => window.clearInterval(interval);
+  }, [introStage]);
+
+  useEffect(() => {
+    if (introStage === "done") {
+      window.sessionStorage.setItem(INTRO_SESSION_KEY, "true");
+    }
+  }, [introStage]);
+
+  const handleEnter = () => {
+    setActiveNarrativeIndex(0);
+    setIntroStage("story");
+  };
+
+  const handleSkipIntro = () => {
+    window.sessionStorage.setItem(INTRO_SESSION_KEY, "true");
+    setIntroStage("done");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const toggleMute = () => {
+    setIsMuted((current) => !current);
+  };
 
   const scrollLeft = () => {
     if (sliderRef.current) {
@@ -48,6 +131,104 @@ function Landing() {
 
   return (
     <main style={styles.page}>
+      {introStage !== "done" ? (
+        <section className="landing-intro" aria-live="polite">
+          <div className="landing-intro__texture" />
+
+          {introStage === "loading" ? (
+            <div className="landing-loader">
+              <div className="landing-loader__ring" />
+              <div className="landing-loader__ring landing-loader__ring--delayed" />
+              <p className="landing-loader__label">Preparing the archive</p>
+            </div>
+          ) : null}
+
+          {introStage === "enter" ? (
+            <div className="landing-enter">
+              <div className="landing-enter__meta-field">
+                <MetaBalls
+                  color="#17453f"
+                  cursorBallColor="#2f7c70"
+                  cursorBallSize={1.2}
+                  ballCount={12}
+                  animationSize={28}
+                  enableMouseInteraction
+                  enableTransparency
+                  hoverSmoothness={0.15}
+                  clumpFactor={0.64}
+                  offsetY={4.6}
+                  speed={0.3}
+                />
+              </div>
+              <div className="landing-enter__content">
+                <p className="landing-enter__eyebrow">Literary Heritage</p>
+                <button
+                  type="button"
+                  className="landing-enter__button"
+                  onClick={handleEnter}
+                >
+                  Enter
+                </button>
+              </div>
+            </div>
+          ) : null}
+
+          {introStage === "story" ? (
+            <div className="landing-story">
+              <div className="landing-story__visual">
+                {introVisuals.map((item, index) => (
+                  <div
+                    key={item.id ?? item.name}
+                    className={`landing-story__panel landing-story__panel--${index + 1}`}
+                    style={{ backgroundImage: `url(${item.image})` }}
+                  />
+                ))}
+                <div className="landing-story__glow landing-story__glow--one" />
+                <div className="landing-story__glow landing-story__glow--two" />
+                <div className="landing-story__shade" />
+              </div>
+
+              <div className="landing-story__content">
+                <div className="landing-story__narrative">
+                  <p key={activeNarrativeIndex} className="landing-story__line is-visible is-current">
+                    {introNarrative[activeNarrativeIndex]}
+                  </p>
+                </div>
+              </div>
+
+              <div className="landing-story__footer">
+                <button
+                  type="button"
+                  className={`landing-story__sound ${isMuted ? "is-muted" : ""}`}
+                  onClick={toggleMute}
+                >
+                  <span className="landing-story__sound-icon" aria-hidden="true">
+                    <span />
+                    <span />
+                    <span />
+                  </span>
+                  <span>{isMuted ? "Sound off" : "Sound on"}</span>
+                </button>
+
+                <div className="landing-story__chips">
+                  {introHighlights.map((item) => (
+                    <span key={item}>{item}</span>
+                  ))}
+                </div>
+
+                <button
+                  type="button"
+                  className="landing-story__skip"
+                  onClick={handleSkipIntro}
+                >
+                  Skip intro
+                </button>
+              </div>
+            </div>
+          ) : null}
+        </section>
+      ) : null}
+
       <section style={styles.hero}>
         <div className="hero-quote-mark">“</div>
         <div style={styles.heroOverlay}>
@@ -273,6 +454,7 @@ const styles = {
     background: "#f8f5ef",
     color: "#1f1f1f",
     minHeight: "100vh",
+    position: "relative",
   },
 
   hero: {

@@ -56,7 +56,7 @@ export const works = [
     author: "Haruki Murakami",
     image: murakamiCover,
     year: 2002,
-    themes: ["Identity", "Society"],
+    themes: ["Identity", "Society", "Memory", "Fate"],
     description:
       "A surreal exploration of identity, memory, and the inner world of the individual.",
     fragments: [
@@ -95,8 +95,8 @@ export const works = [
     title: "Crime and Punishment",
     author: "Fyodor Dostoevsky",
     image: dostoevskyCover,
-    year: 1942,
-    themes: ["Morality", "Identity", "Society"],
+    year: 1866,
+    themes: ["Morality", "Identity", "Society", "Freedom"],
     description:
       "A psychological novel exploring guilt, conscience, and moral responsibility.",
     fragments: [
@@ -131,7 +131,8 @@ export const works = [
     title: "The Stranger",
     author: "Albert Camus",
     image: camusCover,
-    themes: ["Identity", "Morality"],
+    year: 1942,
+    themes: ["Identity", "Morality", "Freedom", "Fate"],
     description:
       "A philosophical novel examining the absurdity of existence and emotional detachment.",
     fragments: [
@@ -171,7 +172,7 @@ export const works = [
     author: "Virginia Woolf",
     image: woolfCover,
     year: 1925,
-    themes: ["Identity", "Society"],
+    themes: ["Identity", "Society", "Memory", "Love"],
     description:
       "An exploration of consciousness, time, and personal experience within society.",
     fragments: [
