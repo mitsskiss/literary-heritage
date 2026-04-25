@@ -11,7 +11,7 @@ function ThemeCard({ theme, relatedWorks, onExplore }) {
       </ul>
 
       <button type="button" className="explore-theme-card__button" onClick={onExplore}>
-        Explore Theme
+        Open theme
       </button>
     </article>
   );

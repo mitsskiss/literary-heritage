@@ -47,10 +47,10 @@ function ExploreWorkCard({ work, onThemeSelect }) {
 
         <div className="explore-work-card__footer">
           <span className="explore-work-card__progress">
-            {Math.min(100, work.fragments.length * 28)}% guide ready
+            {Math.min(100, work.fragments.length * 28)}% route ready
           </span>
           <Link to={`/reading/${work.id}`} className="explore-work-card__action">
-            Explore Work
+            Open work
           </Link>
         </div>
       </div>

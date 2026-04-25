@@ -161,8 +161,8 @@ function Explore() {
           <div className="explore-hero__copy">
             <h1 className="explore-hero__title">Explore Literary Worlds</h1>
             <p className="explore-hero__subtitle">
-              Discover literature through time, themes, and guided routes that feel
-              more like a curated product experience than a static archive.
+              Search works, compare themes, and open reading routes by period,
+              author, or topic.
             </p>
           </div>
         </section>
@@ -260,7 +260,7 @@ function Explore() {
 
         <section className="explore-section explore-reveal">
           <div className="explore-section__head">
-            <h2 className="explore-section__title">Begin with a route, not a list.</h2>
+            <h2 className="explore-section__title">Start with a guided route.</h2>
           </div>
 
           <div className="explore-journeys">
@@ -281,7 +281,7 @@ function Explore() {
                 className="explore-journeys__featureAction"
                 onClick={() => beginJourney(primaryJourney.focusTheme)}
               >
-                Begin journey
+                Start route
               </button>
             </article>
 
@@ -303,9 +303,7 @@ function Explore() {
 
         <section className="explore-section explore-reveal">
           <div className="explore-section__head">
-            <h2 className="explore-section__title">
-              Let one work pull you into the archive.
-            </h2>
+            <h2 className="explore-section__title">Open one work and begin.</h2>
           </div>
 
           <div className="explore-spotlight">
@@ -327,19 +325,19 @@ function Explore() {
               </p>
 
               <div className="explore-spotlight__question">
-                <span className="explore-spotlight__label">Central tension</span>
+                <span className="explore-spotlight__label">Main question</span>
                 <p>{spotlightWork.conflict}</p>
               </div>
 
               <p className="explore-spotlight__why">
-                Why it matters today: {spotlightWork.whyNow}
+                Today: {spotlightWork.whyNow}
               </p>
 
               <Link
                 to={`/reading/${spotlightWork.id}`}
                 className="explore-spotlight__action"
               >
-                Enter the story
+                Start reading
               </Link>
             </div>
           </div>
@@ -347,15 +345,15 @@ function Explore() {
 
         <section className="explore-section explore-reveal">
           <div className="explore-section__head explore-section__head--split">
-            <h2 className="explore-section__title">Readable, curated, and filtered.</h2>
+            <h2 className="explore-section__title">Browse the collection.</h2>
             <p className="explore-section__meta">{filteredWorks.length} visible works</p>
           </div>
 
           {filteredWorks.length === 0 ? (
             <div className="explore-empty">
-              <h3 className="explore-empty__title">Nothing fits the current path.</h3>
+              <h3 className="explore-empty__title">No results found.</h3>
               <p className="explore-empty__text">
-                Reset the filters and reopen the archive from a broader point of entry.
+                Change the filters or search again.
               </p>
               <button
                 type="button"
@@ -380,7 +378,7 @@ function Explore() {
 
         <section className="explore-section explore-reveal">
           <div className="explore-section__head">
-            <h2 className="explore-section__title">A few strong doors into the archive.</h2>
+            <h2 className="explore-section__title">Explore by theme.</h2>
           </div>
 
           <div className="explore-themes">
@@ -399,9 +397,7 @@ function Explore() {
 
         <section className="explore-section explore-reveal">
           <div className="explore-section__head">
-            <h2 className="explore-section__title">
-              Keep the supportive layer present, but quiet.
-            </h2>
+            <h2 className="explore-section__title">Track activity and next steps.</h2>
           </div>
 
           <div className="explore-signals">
@@ -435,7 +431,7 @@ function Explore() {
                 {recommendedWorks.map((work) => (
                   <article key={work.id} className="explore-signals__recommendation">
                     <p>
-                      Because you explored{" "}
+                      Based on{" "}
                       <strong>{recommendationTheme.toLowerCase()}</strong>
                     </p>
                     <h3>{work.title}</h3>
@@ -475,27 +471,24 @@ function Explore() {
         </section>
 
         <section className="explore-cta explore-reveal">
-          <h2 className="explore-cta__title">
-            Move deeper into the archive when you are ready.
-          </h2>
+          <h2 className="explore-cta__title">Continue exploring the archive.</h2>
           <p className="explore-cta__text">
-            Explore all works, begin a guided route, or keep building a more
-            personal reading path.
+            Open more works, start a route, or continue your current progress.
           </p>
 
           <div className="explore-cta__actions">
             <Link to="/explore" className="explore-cta__action is-primary">
-              Explore all works
+              Open all works
             </Link>
             <button
               type="button"
               className="explore-cta__action"
               onClick={() => beginJourney(primaryJourney.focusTheme)}
             >
-              Start a guided route
+              Start route
             </button>
             <button type="button" className="explore-cta__action">
-              Create an account
+              Create account
             </button>
           </div>
         </section>

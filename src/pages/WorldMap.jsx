@@ -84,12 +84,10 @@ function WorldMap() {
         <section className="world-map-shell">
           <header className="world-map-shell__top">
             <div className="world-map-shell__copy">
-              <h1 className="world-map-shell__title">
-                Interactive Literary World Map
-              </h1>
+              <h1 className="world-map-shell__title">Literary World Map</h1>
               <p className="world-map-shell__subtitle">
-                Scroll through the years and watch books appear across their
-                literary geographies.
+                See where project books were written or published. Move the year
+                slider to show entries by time.
               </p>
             </div>
 
@@ -138,7 +136,7 @@ function WorldMap() {
                   }}
                   aria-label="Reset map view"
                 >
-                  Reset
+                  Center
                 </button>
               </div>
 
@@ -260,7 +258,7 @@ function WorldMap() {
                   </div>
 
                   <div className="world-map-panel__works">
-                    <p className="world-map-panel__worksLabel">Origin note</p>
+                    <p className="world-map-panel__worksLabel">Book info</p>
                     <ul>
                       <li>{selectedMarker.originNote}</li>
                       <li>{selectedMarker.themes.join(", ")}</li>
@@ -271,7 +269,7 @@ function WorldMap() {
                     to={`/reading/${selectedMarker.workId}`}
                     className="world-map-panel__action"
                   >
-                    Explore book
+                    Open book
                   </Link>
                 </div>
               </aside>

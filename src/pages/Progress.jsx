@@ -33,6 +33,7 @@ function Progress() {
       (chapter) => storyProgress[chapter.id]?.completed
     )
   );
+
   const activeStories = storyEnabledWorks.flatMap((work) =>
     getChaptersByWorkId(work.id)
       .filter((chapter) => {
@@ -67,11 +68,10 @@ function Progress() {
       <div className="progress-page__container">
         <section className="progress-hero">
           <div className="progress-hero__copy">
-            <p className="progress-hero__eyebrow">Your literary journey</p>
-            <h1 className="progress-hero__title">Progress that feels alive.</h1>
+            <p className="progress-hero__eyebrow">Game dashboard</p>
+            <h1 className="progress-hero__title">Track your reading stats.</h1>
             <p className="progress-hero__subtitle">
-              Track XP, maintain your streak, and see how your story-based reading
-              path is unfolding across the archive.
+              Check XP, streak, lives, completed chapters, and current runs.
             </p>
           </div>
 
@@ -97,7 +97,7 @@ function Progress() {
 
         <section className="progress-overview">
           <div className="progress-overview__card">
-            <p className="progress-overview__label">Collection progress</p>
+            <p className="progress-overview__label">Archive progress</p>
             <div className="progress-overview__row">
               <h2>{completionRate}%</h2>
               <span>
@@ -120,7 +120,7 @@ function Progress() {
                   <span key={achievement}>{achievement}</span>
                 ))
               ) : (
-                <span>Start your first story</span>
+                <span>Finish your first chapter</span>
               )}
             </div>
           </div>
@@ -128,18 +128,15 @@ function Progress() {
 
         <section className="progress-section">
           <div className="progress-section__head">
-            <h2>Active stories</h2>
+            <h2>Active runs</h2>
             <span>{activeStories.length} in progress</span>
           </div>
 
           {activeStories.length === 0 ? (
             <div className="progress-empty">
-              <h3>No active stories yet</h3>
-              <p>
-                Begin one of the story experiences from Explore and your active
-                sessions will appear here.
-              </p>
-              <Link to="/explore">Explore stories</Link>
+              <h3>No active runs</h3>
+              <p>Start a story mode from Explore to add a run here.</p>
+              <Link to="/explore">Open Explore</Link>
             </div>
           ) : (
             <div className="progress-cards">
@@ -148,7 +145,7 @@ function Progress() {
                   <p className="progress-story-card__eyebrow">In progress</p>
                   <h3>{story.title}</h3>
                   <p>
-                    {story.author} · Chapter {story.chapterNumber}: {story.chapterTitle}
+                    {story.author} | Chapter {story.chapterNumber}: {story.chapterTitle}
                   </p>
                   <div className="progress-story-card__meta">
                     <span>
@@ -157,7 +154,7 @@ function Progress() {
                     <span>{story.earnedXp} XP earned</span>
                   </div>
                   <Link to={getChapterPath(story.workId, story.chapterNumber)}>
-                    Continue chapter
+                    Continue
                   </Link>
                 </article>
               ))}
@@ -167,16 +164,14 @@ function Progress() {
 
         <section className="progress-section">
           <div className="progress-section__head">
-            <h2>Completed stories</h2>
+            <h2>Completed runs</h2>
             <span>{completedWorks.length} finished</span>
           </div>
 
           {completedWorks.length === 0 ? (
             <div className="progress-empty">
-              <h3>You have not completed a story yet</h3>
-              <p>
-                Finish one interactive story to start building your archive of completed works.
-              </p>
+              <h3>No completed runs yet</h3>
+              <p>Finish one story route to unlock this section.</p>
             </div>
           ) : (
             <div className="progress-cards">
@@ -206,17 +201,14 @@ function Progress() {
 
         <section className="progress-section">
           <div className="progress-section__head">
-            <h2>Recent reflections</h2>
+            <h2>Recent choices</h2>
             <span>{Object.keys(reflections).length} saved</span>
           </div>
 
           {reflectionEntries.length === 0 ? (
             <div className="progress-empty">
-              <h3>No reflections yet</h3>
-              <p>
-                Quiz answers and interpretive choices will appear here as you move
-                through the stories.
-              </p>
+              <h3>No saved choices yet</h3>
+              <p>Scene answers and quiz choices will appear here.</p>
             </div>
           ) : (
             <div className="progress-reflections">

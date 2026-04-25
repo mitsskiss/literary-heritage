@@ -191,19 +191,16 @@ function LiteraryTimeline() {
     <section className="explore-timeline">
       <div className="explore-timeline__top">
         <div className="explore-timeline__copy">
-          <p className="explore-timeline__eyebrow">Storytelling Literary Timeline</p>
-          <h2 className="explore-timeline__title">
-            Move through literary history like a guided product journey.
-          </h2>
+          <p className="explore-timeline__eyebrow">Timeline</p>
+          <h2 className="explore-timeline__title">Browse literary history by year.</h2>
           <p className="explore-timeline__subtitle">
-            Books, authors, and literary movements appear as a curated route
-            rather than a static archive. Slide across time and open the works
-            that matter at each moment.
+            View books, authors, and literary movements in one timeline. Use the
+            slider or arrows to move between entries.
           </p>
         </div>
 
         <div key={selectedEntry?.id} className="explore-timeline__panel">
-          <p className="explore-timeline__panelLabel">Focused entry</p>
+          <p className="explore-timeline__panelLabel">Selected item</p>
           <h3 className="explore-timeline__panelTitle">
             {selectedEntry?.detailsTitle}
           </h3>

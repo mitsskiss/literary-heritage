@@ -11,7 +11,7 @@ function JourneyCard({ journey, worksCount, onBegin }) {
       </div>
 
       <button type="button" className="explore-journey-card__button" onClick={onBegin}>
-        Begin Journey
+        Start route
       </button>
     </article>
   );
