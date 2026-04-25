@@ -1,4 +1,4 @@
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { works } from "../data/works";
 import {
@@ -33,12 +33,36 @@ const THEME_ORDER = [
   "Fate",
 ];
 
+function highlightMatch(text, query) {
+  const normalizedText = text.toLowerCase();
+  const normalizedQuery = query.trim().toLowerCase();
+
+  if (!normalizedQuery) return text;
+
+  const matchIndex = normalizedText.indexOf(normalizedQuery);
+  if (matchIndex === -1) return text;
+
+  const matchEnd = matchIndex + normalizedQuery.length;
+
+  return (
+    <>
+      {text.slice(0, matchIndex)}
+      <mark className="explore-toolbar__highlight">
+        {text.slice(matchIndex, matchEnd)}
+      </mark>
+      {text.slice(matchEnd)}
+    </>
+  );
+}
+
 function Explore() {
   const pageRef = useRef(null);
   const [searchValue, setSearchValue] = useState("");
   const [typeFilter, setTypeFilter] = useState("all");
   const [periodFilter, setPeriodFilter] = useState("all");
   const [sortValue, setSortValue] = useState("featured");
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const activeTheme = searchParams.get("theme") || "all";
@@ -55,6 +79,28 @@ function Explore() {
   );
 
   const normalizedQuery = searchValue.trim().toLowerCase();
+  const searchSuggestions =
+    normalizedQuery.length === 0
+      ? []
+      : enrichedWorks
+          .filter(
+            (work) =>
+              work.title.toLowerCase().includes(normalizedQuery) ||
+              work.author.toLowerCase().includes(normalizedQuery)
+          )
+          .sort((a, b) => {
+            const aStarts = a.title.toLowerCase().startsWith(normalizedQuery);
+            const bStarts = b.title.toLowerCase().startsWith(normalizedQuery);
+            const aAuthorStarts = a.author.toLowerCase().startsWith(normalizedQuery);
+            const bAuthorStarts = b.author.toLowerCase().startsWith(normalizedQuery);
+
+            if (aStarts && !bStarts) return -1;
+            if (!aStarts && bStarts) return 1;
+            if (aAuthorStarts && !bAuthorStarts) return -1;
+            if (!aAuthorStarts && bAuthorStarts) return 1;
+            return a.title.localeCompare(b.title);
+          })
+          .slice(0, 6);
 
   const filteredWorks = enrichedWorks
     .filter((work) => {
@@ -124,6 +170,11 @@ function Explore() {
     handleThemeSelect("all");
   };
 
+  const openSuggestedWork = (workId) => {
+    setIsSearchFocused(false);
+    navigate(`/reading/${workId}`);
+  };
+
   useEffect(() => {
     const root = pageRef.current;
     if (!root) return undefined;
@@ -176,16 +227,58 @@ function Explore() {
           aria-label="Explore filters"
         >
           <div className="explore-toolbar__filters">
-            <label className="explore-toolbar__search">
-              <input
-                id="explore-search"
-                type="search"
-                value={searchValue}
-                onChange={(event) => setSearchValue(event.target.value)}
-                placeholder="Search by title, author, theme, or idea"
-                aria-label="Search the archive"
-              />
-            </label>
+            <div className="explore-toolbar__searchBox">
+              <label className="explore-toolbar__search">
+                <input
+                  id="explore-search"
+                  type="search"
+                  value={searchValue}
+                  onChange={(event) => setSearchValue(event.target.value)}
+                  onFocus={() => setIsSearchFocused(true)}
+                  onBlur={() => {
+                    window.setTimeout(() => {
+                      setIsSearchFocused(false);
+                    }, 120);
+                  }}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter" && searchSuggestions.length > 0) {
+                      event.preventDefault();
+                      openSuggestedWork(searchSuggestions[0].id);
+                    }
+                  }}
+                  placeholder="Search by title, author, theme, or idea"
+                  aria-label="Search the archive"
+                  aria-expanded={isSearchFocused && searchSuggestions.length > 0}
+                  aria-controls="explore-search-suggestions"
+                />
+              </label>
+
+              {isSearchFocused && searchSuggestions.length > 0 ? (
+                <div
+                  id="explore-search-suggestions"
+                  className="explore-toolbar__suggestions"
+                  role="listbox"
+                  aria-label="Suggested books"
+                >
+                  {searchSuggestions.map((work) => (
+                    <button
+                      key={work.id}
+                      type="button"
+                      className="explore-toolbar__suggestion"
+                      onMouseDown={(event) => event.preventDefault()}
+                      onClick={() => openSuggestedWork(work.id)}
+                    >
+                      <span className="explore-toolbar__suggestionTitle">
+                        {highlightMatch(work.title, normalizedQuery)}
+                      </span>
+                      <span className="explore-toolbar__suggestionMeta">
+                        {work.author}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              ) : null}
+            </div>
 
             <div className="explore-toolbar__themes">
               {themeOptions.map((theme) => (

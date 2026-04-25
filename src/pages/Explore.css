@@ -421,6 +421,10 @@
   gap: 16px;
 }
 
+.explore-toolbar__searchBox {
+  position: relative;
+}
+
 .explore-toolbar__search input,
 .explore-toolbar__field select {
   width: 100%;
@@ -444,6 +448,65 @@
   outline: none;
   border-color: rgba(22, 58, 53, 0.28);
   box-shadow: 0 0 0 4px rgba(22, 58, 53, 0.06);
+}
+
+.explore-toolbar__suggestions {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  right: 0;
+  z-index: 12;
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid rgba(22, 58, 53, 0.12);
+  border-radius: 24px;
+  background: rgba(255, 252, 246, 0.96);
+  box-shadow: 0 18px 40px rgba(18, 39, 35, 0.08);
+  backdrop-filter: blur(10px);
+}
+
+.explore-toolbar__suggestion {
+  width: 100%;
+  display: grid;
+  gap: 4px;
+  padding: 14px 16px;
+  border: 1px solid transparent;
+  border-radius: 18px;
+  background: rgba(255, 253, 249, 0.84);
+  color: #163a35;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.explore-toolbar__suggestion:hover,
+.explore-toolbar__suggestion:focus-visible {
+  transform: translateY(-1px);
+  border-color: rgba(22, 58, 53, 0.12);
+  background: rgba(255, 255, 255, 0.98);
+  outline: none;
+}
+
+.explore-toolbar__suggestionTitle {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.explore-toolbar__suggestionMeta {
+  font-size: 13px;
+  color: rgba(22, 58, 53, 0.62);
+}
+
+.explore-toolbar__highlight {
+  padding: 0 2px;
+  border-radius: 6px;
+  background: rgba(212, 179, 116, 0.28);
+  color: #163a35;
 }
 
 .explore-toolbar__themes,
