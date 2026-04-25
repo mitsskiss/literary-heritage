@@ -11,6 +11,7 @@ import {
 } from "../data/exploreData";
 import JourneyCard from "../components/explore/JourneyCard";
 import ExploreWorkCard from "../components/explore/ExploreWorkCard";
+import LiteraryTimeline from "../components/explore/LiteraryTimeline";
 import ThemeCard from "../components/explore/ThemeCard";
 import "./Explore.css";
 
@@ -129,11 +130,13 @@ function Explore() {
           <div className="explore-hero__copy">
             <h1 className="explore-hero__title">Explore Literary Worlds</h1>
             <p className="explore-hero__subtitle">
-              Discover literature through themes, periods, and guided routes that
-              feel quieter, more curated, and easier to navigate.
+              Discover literature through time, themes, and guided routes that feel
+              more like a curated product experience than a static archive.
             </p>
           </div>
         </section>
+
+        <LiteraryTimeline />
 
         <section className="explore-toolbar" aria-label="Explore filters">
           <div className="explore-toolbar__filters">

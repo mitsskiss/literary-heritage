@@ -1,11 +1,13 @@
+import { useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
 import PillNav from "./PillNav";
 import StaggeredMenu from "./StaggeredMenu";
 
 const navItems = [
   { label: "Home", href: "/" },
-  { label: "Authors", href: "/authors" },
   { label: "Explore", href: "/explore" },
+  { label: "Map", href: "/map" },
+  { label: "Authors", href: "/authors" },
   { label: "Progress", href: "/progress" },
 ];
 
@@ -16,8 +18,40 @@ const mobileItems = navItems.map((item) => ({
 }));
 
 function Header() {
+  const [isHeaderHidden, setIsHeaderHidden] = useState(false);
+  const lastScrollYRef = useRef(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      const previousScrollY = lastScrollYRef.current;
+      const delta = currentScrollY - previousScrollY;
+
+      if (currentScrollY <= 16) {
+        setIsHeaderHidden(false);
+        lastScrollYRef.current = currentScrollY;
+        return;
+      }
+
+      if (delta > 10 && currentScrollY > 120) {
+        setIsHeaderHidden(true);
+      } else if (delta < -8) {
+        setIsHeaderHidden(false);
+      }
+
+      lastScrollYRef.current = currentScrollY;
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
-    <header className="site-header">
+    <header className={`site-header ${isHeaderHidden ? "is-hidden" : ""}`}>
+      <div className="site-header__scrollline" aria-hidden="true" />
       <div className="site-header__container">
         <NavLink to="/" className="site-header__brand">
           <span className="site-header__brand-mark" aria-hidden="true">
