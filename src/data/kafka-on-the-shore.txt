@@ -1,0 +1,1528 @@
+
+# Chapter 1. Kafka’s Escape
+
+## Scene 1. The Decision to Leave
+
+### Context
+
+Kafka Tamura is a fifteen-year-old boy living in Tokyo with his father. The house he lives in does not feel like a place of warmth, safety, or belonging. On the contrary, it is a space filled with heavy silence, inner tension, and a constant sense of estrangement. Kafka’s father is cold, withdrawn, and almost unsettlingly distant. The bond between them has long ceased to resemble an ordinary family relationship and has turned instead into a painful form of coexistence.
+
+Kafka’s mother and older sister disappeared from his life when he was still very young. They vanished not as people whose memory could be preserved through conversation, but as an empty absence that was never filled. As a result, the hero’s past consists not so much of clear memories as of loss, absence, and unanswered questions. This makes his inner life especially tense: he is not simply lonely, but lives with the feeling that he was abandoned from the very beginning.
+
+Against this background, Kafka’s determination to leave begins to take shape. For him, escape is not a childish fantasy, not an impulse, and not a search for excitement. It is a decision he has carried within himself for a long time. The inner voice he calls Crow supports this resolve and pushes him toward the idea that a person can survive only by becoming strong enough to endure loneliness and the unknown. Kafka feels that if he remains in this house and in this life, he will never truly become himself. That is why the decision to leave appears to him as a necessary, almost inevitable step.
+
+### Question
+
+Why does Kafka decide to run away?
+
+### Options
+
+**A.** He simply wants an adventure and a chance to see a new world
+**B.** He is trying to break free from inner pressure, the past, and a sense of fate
+**C.** He leaves only in order to find his mother and sister
+
+---
+
+# Answer Logic
+
+## If the user chose A
+
+**Result:** not quite accurate
+
+**Explanation:**
+This answer makes Kafka’s action sound too light and too romantically adolescent. But in the novel, his escape does not look like a desire for vivid impressions. It is a serious, almost dark decision, driven not by curiosity but by inner necessity. He leaves not for novelty, but because his former life feels psychologically unbearable.
+
+**How this helps the reader understand the character:**
+The user sees that Kafka is not an adventurer in the ordinary sense. He is not seeking entertainment, but trying to preserve his inner integrity. That distinguishes him from the hero of a road adventure: his movement forward is born from crisis, not excitement.
+
+**How it appears in the original work:**
+Kafka’s escape is presented as a deeply inward and heavy step. He prepares for it in advance and treats it not as a spontaneous outing, but as a passage into an entirely different form of existence.
+
+**Reward:** +10 XP
+
+---
+
+## If the user chose B
+
+**Result:** correct
+
+**Explanation:**
+This is the most accurate answer. Kafka is not simply leaving home, and not only leaving his father. He is trying to escape the whole structure of life that presses upon him: a wounded past, painful loneliness, the oppressive presence of his father, and the feeling that his destiny has somehow already been decided for him. His escape becomes an attempt to break out of that invisible circle.
+
+**How this helps the reader understand the character:**
+The user understands one of Kafka’s key traits: he acts not only in physical space, but in an existential sense. His escape is not merely movement from one place to another, but an attempt to transform his very being, his inner status, and even his fate.
+
+**How it appears in the original work:**
+In the novel, Kafka experiences the need to leave as something absolute and serious. It is an act of self-preservation and self-definition. He can no longer remain within his former coordinates, so he chooses the path into the unknown.
+
+**Reward:** +15 XP
+
+---
+
+## If the user chose C
+
+**Result:** partially correct
+
+**Explanation:**
+The theme of Kafka’s mother and sister is indeed important to his story, and their absence is deeply connected to his inner condition. However, at the moment of escape, this is not the only motive, nor the main one he can clearly formulate. The search for family is one of the novel’s deeper lines, but the immediate source of action is a broader feeling of pressure and the impossibility of remaining where he was.
+
+**How this helps the reader understand the character:**
+The user begins to see the layered nature of motivation. Kafka does not have one simple reason. His actions are woven out of trauma, loss, fear, willpower, and a vague hope.
+
+**How it appears in the original work:**
+The past connected to his mother and sister remains one of the most important hidden forces in the novel, but the escape is not reducible to their search alone. It is presented as a more complex inner rupture with his former life.
+
+**Reward:** +12 XP
+
+---
+
+## What happens next after the answer
+
+After this explanation block, the user clicks:
+
+**Continue →**
+
+and moves to the preparation for escape.
+
+---
+
+## Scene 2. Preparing to Leave
+
+### Context
+
+Once he has made the decision to leave, Kafka begins to prepare for escape not like a child, but like someone who understands the cost of making a mistake. He packs a backpack, thinks about money, appearance, and what he will need on the road. He takes only what is necessary. This carefulness matters: it shows that his escape is not chaotic, but deliberate and measured.
+
+Crow’s inner voice sounds especially clearly during these moments. It does not comfort Kafka, but hardens him. Crow speaks of the need to become the toughest fifteen-year-old in the world — not in the sense of cruelty toward others, but in the sense of being able to endure loneliness, fear, and inner weight without collapsing. For Kafka, this becomes a formula for survival.
+
+That is why preparation for escape is not only about gathering things. It is almost a ritual of transition. The hero seems to renounce part of his former identity in advance and begin constructing a new one: silent, composed, inconspicuous, able to endure.
+
+### Question
+
+Why is Kafka so determined to become unnoticed?
+
+### Options
+
+**A.** Only so that no one will stop him and send him back home
+**B.** Because invisibility helps him break from his old life and create a new self
+**C.** Because he fears all human contact and cannot endure people
+
+---
+
+# Answer Logic
+
+## If the user chose A
+
+**Result:** partially correct
+
+**Explanation:**
+There is indeed a practical reason here: Kafka needs to avoid attention in order to leave quietly and not be sent back. But that does not exhaust the meaning of invisibility. For him, it is connected not only with safety, but with an inward break from his former life.
+
+**How this helps the reader understand the character:**
+The user notices that even outwardly simple actions in the novel often have a double nature: practical and symbolic. Kafka is hiding not only physically, but existentially.
+
+**How it appears in the original work:**
+Kafka’s preparation shows his desire not merely to leave, but to become someone else — unrecognizable to his former world.
+
+**Reward:** +12 XP
+
+---
+
+## If the user chose B
+
+**Result:** correct
+
+**Explanation:**
+This is the most accurate reading of the scene. For Kafka, invisibility is a form of self-reconstruction. He wants to sever his connection with his old biography, with the role of son, with his former home, and with his earlier vulnerability. He is not only hiding — he is rebuilding himself.
+
+**How this helps the reader understand the character:**
+This reveals one of the novel’s central themes: identity is not simply given once and for all, but may have to be reassembled under the pressure of fate and loneliness.
+
+**How it appears in the original work:**
+Kafka is presented as a hero who consciously enters a transitional state: he has not yet become his new self, but he is already leaving the old one behind. The preparation emphasizes precisely this threshold.
+
+**Reward:** +15 XP
+
+---
+
+## If the user chose C
+
+**Result:** not quite accurate
+
+**Explanation:**
+Kafka does not come across as someone paralyzed by fear of other people. He is reserved, distant, and inwardly closed off, but his invisibility is not the result of social weakness. It is part of a chosen strategy.
+
+**How this helps the reader understand the character:**
+The user learns to distinguish fearfulness from inner discipline. Kafka may be closed, but that does not mean he is merely passively afraid of the world.
+
+**How it appears in the original work:**
+In the story, Kafka acts in a composed and consistent way. He does not flee people in panic, but organizes his behavior with cold precision.
+
+**Reward:** +10 XP
+
+---
+
+## What happens next after the answer
+
+After this explanation block, the user clicks:
+
+**Continue →**
+
+and moves to the scene of departure itself.
+
+---
+
+## Scene 3. The Escape
+
+### Context
+
+When the moment finally comes, Kafka truly leaves. He does not create a dramatic scene, does not leave behind grand words, and does not try to explain himself. His departure is almost silent. That is precisely what makes it so powerful: the decision has already been made, and now it simply takes place.
+
+He boards a bus and begins moving away from Tokyo. Outwardly, the world remains ordinary: roads, landscapes, people, cities. But inwardly, something shifts. He feels neither excitement nor chaos, but a strange mixture of calm and tension. On the one hand, he has finally done what he prepared himself for. On the other hand, he understands that he has entered a space where the old rules no longer guarantee safety or meaning.
+
+This moment matters as a threshold. Home has been left behind, but the new life has not fully begun. Kafka stands between past and future — at the point where a person can no longer return to what they were, but still does not know what they will become.
+
+### Question
+
+What emotional state most accurately describes Kafka at the moment of escape?
+
+### Options
+
+**A.** Sharp panic and the feeling that he has made a mistake
+**B.** Outward calm that contains inner tension and foreboding
+**C.** Pure joy and relief at his sudden freedom
+
+---
+
+# Answer Logic
+
+## If the user chose A
+
+**Result:** not quite accurate
+
+**Explanation:**
+Although escape is a serious event, Kafka is not portrayed as someone who loses control of himself. His strength lies precisely in the fact that he can hold himself together even at a breaking point.
+
+**How this helps the reader understand the character:**
+The user sees that Kafka experiences crisis not hysterically, but with concentration. This makes his inner world feel heavier and more mature.
+
+**How it appears in the original work:**
+In the novel, Kafka’s escape is colored not by panic, but by restrained seriousness. He understands the scale of what is happening, but he does not fall apart emotionally.
+
+**Reward:** +10 XP
+
+---
+
+## If the user chose B
+
+**Result:** correct
+
+**Explanation:**
+This is the most accurate answer. Kafka is outwardly calm because he has been moving toward this step for a long time, but inside him there remains strong tension. He is not simply traveling away; he is entering a destiny-shaped uncertainty, and that uncertainty is felt almost physically.
+
+**How this helps the reader understand the character:**
+The user sees a characteristic emotional structure of the novel: the strongest experiences are often expressed not through shouting, but through quiet inner density.
+
+**How it appears in the original work:**
+Kafka’s escape feels like a serious threshold. It is not a celebration of freedom, but a passage into the unknown, where freedom is joined to anxiety.
+
+**Reward:** +15 XP
+
+---
+
+## If the user chose C
+
+**Result:** partially correct
+
+**Explanation:**
+There is indeed an element of relief in his departure: he is no longer inside the house that weighed upon him. But his state cannot be called pure joy. There is too much silence, anxiety, and inner discipline in it.
+
+**How this helps the reader understand the character:**
+The user learns to see emotional complexity. Kafka does not experience simple states, and even relief in him is marked by heaviness.
+
+**How it appears in the original work:**
+The story presents Kafka’s escape as liberating, but also risky and psychologically tense.
+
+**Reward:** +12 XP
+
+---
+
+# What happens next after the answer
+
+After this explanation block, the user clicks:
+
+**Continue →**
+
+and moves to the next chapter.
+
+---
+
+# Chapter 2. Nakata and the Cats
+
+## Scene 1. Who Nakata Is
+
+### Context
+
+The second major line of the novel introduces the reader to a completely different rhythm of storytelling. At its center is Satoru Nakata — an elderly man who lives simply, quietly, and almost invisibly. Outwardly, his life appears modest and limited, but it contains one unusual feature. After a mysterious incident in childhood, Nakata lost many ordinary intellectual abilities, including the ability to read and write in the usual way. As a result, he became set apart from the normal social world.
+
+But in his case, loss does not mean total impoverishment. In place of ordinary intellectual order, he gains another way of relating to reality. Nakata can speak with cats. To others, that might sound strange, but for him there is nothing theatrical or self-consciously mystical about it. He does not take pride in his unusual ability and does not turn it into a personal legend. He simply lives with it as a fact of his existence.
+
+That is precisely why Nakata matters so much to the novel. He inhabits a different logic of perception. Where an ordinary person would explain and classify, Nakata simply accepts what is happening and enters into contact with it.
+
+### Question
+
+How does Nakata perceive his unusual ability to speak with cats?
+
+### Options
+
+**A.** As a heavy curse that has made his life distorted
+**B.** As a natural part of his existence
+**C.** As a special mission that makes him chosen
+
+---
+
+# Answer Logic
+
+## If the user chose A
+
+**Result:** not quite accurate
+
+**Explanation:**
+Nakata is not inclined to dramatize himself. Yes, his life is limited, and he is different from others, but he does not build a tragic myth around his condition. His relation to the world is calmer and more direct.
+
+**How this helps the reader understand the character:**
+The user sees that Nakata is not a melodramatic character. His depth appears not through complaint, but through simplicity and a distinctive mode of being in the world.
+
+**How it appears in the original work:**
+Nakata exists without intense self-reflection about his unusual nature. He accepts himself and his condition without pathos.
+
+**Reward:** +10 XP
+
+---
+
+## If the user chose B
+
+**Result:** correct
+
+**Explanation:**
+This is the most accurate understanding of the character. Nakata does not consider his ability something spectacular or frightening. For him, it simply exists, the way rain, a street, or another person’s voice exists. This naturalness is exactly what makes him such an unusual and important figure.
+
+**How this helps the reader understand the character:**
+The user notices that Nakata lives in a different mode of experience. He does not fight to explain the world, but remains in direct contact with it.
+
+**How it appears in the original work:**
+The novel presents Nakata as someone who accepts his unusual gift without theatricality and with almost childlike simplicity.
+
+**Reward:** +15 XP
+
+---
+
+## If the user chose C
+
+**Result:** partially correct
+
+**Explanation:**
+From the point of view of plot structure, Nakata does indeed become a very important figure. But he himself does not perceive himself as a chosen hero with a grand mission. His role in the story is significant, while his self-understanding remains modest and everyday.
+
+**How this helps the reader understand the character:**
+The user begins to distinguish between a character’s structural importance in a story and the way that character understands himself within it.
+
+**How it appears in the original work:**
+Nakata does not think or speak of himself as the bearer of a great destiny. He simply does what he can.
+
+**Reward:** +12 XP
+
+---
+
+## What happens next after the answer
+
+After this explanation block, the user clicks:
+
+**Continue →**
+
+and moves to the scene of searching for a missing cat.
+
+---
+
+## Scene 2. Searching for the Cat
+
+### Context
+
+One of the clearest and most everyday ways Nakata’s ability is expressed is through helping people look for missing cats. He talks to cats, listens to them, asks questions, and gradually gathers a picture of what has happened, much as another person might gather information through ordinary human channels. For him, this is a natural activity, one without spectacle or show.
+
+At the same time, the search for cats matters not only at the level of plot. It shows how Nakata is positioned within the world. He does not belong to the world of “important” people with careers, social status, or intellectual authority, and yet he proves useful and necessary. He is able to help — quietly, precisely, and in his own way.
+
+This scene also establishes the tone of Nakata’s entire narrative line. In his world, the boundary between the ordinary and the extraordinary is arranged differently. Speaking to a cat is not presented as a flashy fantasy episode, but as a simple continuation of daily life. That is one of the novel’s most distinctive strengths.
+
+### Question
+
+Why does Nakata spend his time searching for missing cats?
+
+### Options
+
+**A.** Only for money and practical benefit
+**B.** Because it is his way of being useful and remaining in contact with the world
+**C.** Because he has nothing else to do and it simply fills his time
+
+---
+
+# Answer Logic
+
+## If the user chose A
+
+**Result:** not quite accurate
+
+**Explanation:**
+Although any work in real life may involve money, that is not Nakata’s main reason for doing it. His activity is not built on commercial calculation. There is too much calm naturalness and inward sincerity in the way he acts.
+
+**How this helps the reader understand the character:**
+The user sees that Nakata acts not as a pragmatist, but as someone who lives through contact and usefulness.
+
+**How it appears in the original work:**
+The cat-searching line presents Nakata above all as someone who does his work without greed, ambition, or the desire to elevate himself.
+
+**Reward:** +10 XP
+
+---
+
+## If the user chose B
+
+**Result:** correct
+
+**Explanation:**
+This is the most accurate answer. Searching for cats becomes a form of presence in the world for Nakata. He is not merely performing a function — he is confirming through it that he can be needed by others, that he can act and be useful in his own distinctive way.
+
+**How this helps the reader understand the character:**
+The user notices that simple actions in the novel often reveal a character’s essence more deeply than long explanations. Nakata shows who he is through what he does.
+
+**How it appears in the original work:**
+Nakata takes part in searching for cats calmly and naturally. It appears as his way of living, helping, and finding his place in reality.
+
+**Reward:** +15 XP
+
+---
+
+## If the user chose C
+
+**Result:** partially correct
+
+**Explanation:**
+His life really is not crowded with external events, and searching for cats does give it form and content. But reducing it to boredom would be mistaken. For Nakata, this activity has real meaning and is tied to his unique way of interacting with the world.
+
+**How this helps the reader understand the character:**
+The user sees the difference between empty time-filling and quiet but meaningful action.
+
+**How it appears in the original work:**
+The novel does not present Nakata as someone merely killing time. On the contrary, his actions feel unexpectedly fitting and inwardly right.
+
+**Reward:** +12 XP
+
+---
+
+## What happens next after the answer
+
+After this explanation block, the user clicks:
+
+**Continue →**
+
+and moves to the chapter about the Komura Library.
+
+---
+
+# Chapter 3. The Komura Library
+
+## Scene 1. Arrival in Takamatsu
+
+### Context
+
+After leaving home and moving through the space that gradually separates him from his former life, Kafka arrives in Takamatsu. This place matters not only geographically. For him, it becomes a new point of existence — a city in which the past no longer presses upon him as directly as it did in Tokyo.
+
+Kafka experiences Takamatsu as calm. It lacks the aggressive energy and constant sense of чужого контроля that marked his life before. He can settle into an inexpensive place, blend into the city, and begin to exist a little more freely. But what matters even more is that he has the vague feeling that he has arrived not simply somewhere, but where he was meant to arrive.
+
+This is an important turn. Escape stops being only a flight away from something. It begins to feel like movement toward a still unclear, but meaningful point of destiny.
+
+### Question
+
+Why does Takamatsu feel like the “right” place for Kafka?
+
+### Options
+
+**A.** Because it is simply far enough away from home
+**B.** Because he intuitively feels a deep connection to this place
+**C.** Because it is easier to hide and remain unnoticed there
+
+---
+
+# Answer Logic
+
+## If the user chose A
+
+**Result:** partially correct
+
+**Explanation:**
+Physical distance does matter: it allows Kafka to feel a break from his former life. But that does not fully explain the meaning of Takamatsu. For him, the city begins to feel like a space of inward attraction, not merely one of separation.
+
+**How this helps the reader understand the character:**
+The user sees that Kafka’s path is built not only on the logic of hiding, but also on an intuitive movement toward a meaningful place.
+
+**How it appears in the original work:**
+Takamatsu functions not merely as a safe city, but as a point where the novel’s key connections begin to gather.
+
+**Reward:** +12 XP
+
+---
+
+## If the user chose B
+
+**Result:** correct
+
+**Explanation:**
+This is the most accurate understanding of the scene. Takamatsu begins to feel to Kafka like a place toward which some inner line of destiny has been leading him. He cannot fully explain that feeling rationally, but it is precisely what makes the city something more than a mere refuge.
+
+**How this helps the reader understand the character:**
+The user better understands how the novel combines inner intuition, fate, and space. Kafka does not only plan his route — he also seems to read a call from the world itself.
+
+**How it appears in the original work:**
+In the narrative, Takamatsu becomes the place where escape transforms into entry into a new center of meaning.
+
+**Reward:** +15 XP
+
+---
+
+## If the user chose C
+
+**Result:** not quite accurate
+
+**Explanation:**
+It is indeed easier to hide there than in a space tied to home and father. But this answer is too utilitarian. It does not capture the destiny-like quality that begins to color Kafka’s perception of the city.
+
+**How this helps the reader understand the character:**
+The user learns to distinguish between the practical function of a place and its symbolic role in the story.
+
+**How it appears in the original work:**
+Takamatsu matters not only as a city where one can disappear, but as a point where Kafka’s story enters a new phase.
+
+**Reward:** +10 XP
+
+---
+
+## What happens next after the answer
+
+After this explanation block, the user clicks:
+
+**Continue →**
+
+and moves to the scene of discovering the library.
+
+---
+
+## Scene 2. Discovering the Library
+
+### Context
+
+Once he is in the new city, Kafka gradually discovers the Komura Library. At first glance, it is unlike an ordinary library. It is not simply a public institution for reading and storing books, but almost a special kind of space — quiet, enclosed, and filled with an atmosphere that seems isolated from the chaotic movement of the outer world.
+
+For Kafka, the library becomes more than a convenient place. It holds a sense of order, silence, and depth that he has long been lacking. This is a space that does not intrude upon him and does not demand that he immediately explain himself. On the contrary, it allows him simply to be present, to observe, to read, and gradually to gather himself back together.
+
+That is why the library quickly becomes for him almost a refuge. Not in the banal sense of “a place to hide,” but in the deeper sense of a place where he can endure himself and not be destroyed by outside pressure.
+
+### Question
+
+What role does the Komura Library begin to play for Kafka?
+
+### Options
+
+**A.** It is merely a convenient place to read
+**B.** It is a space of refuge, quiet, and inner transition
+**C.** It is a random location with no special significance
+
+---
+
+# Answer Logic
+
+## If the user chose A
+
+**Result:** partially correct
+
+**Explanation:**
+The library is indeed connected to reading, and on the everyday level that is what it appears to be. But in the structure of the novel, its function is much deeper. It is not simply a place for books, but a space where Kafka first begins to feel relatively gathered and protected.
+
+**How this helps the reader understand the character:**
+The user learns to see places in the novel not as background, but as carriers of meaning. A place can reveal as much about a character as his words do.
+
+**How it appears in the original work:**
+The library gradually becomes one of the most important nodes of Kafka’s inner life and of the novel’s overall structure.
+
+**Reward:** +12 XP
+
+---
+
+## If the user chose B
+
+**Result:** correct
+
+**Explanation:**
+This is the most accurate answer. The library becomes for Kafka a special space of peace in which he not only hides from the outer world, but also undergoes an inner transformation. A new form of existence begins there.
+
+**How this helps the reader understand the character:**
+The user sees that what matters to Kafka is not only events, but spaces in which he can be himself. This deepens the understanding of identity and inward search.
+
+**How it appears in the original work:**
+In the story, the Komura Library takes on the role of an almost sacred center, joining knowledge, memory, silence, and fate-bearing encounters.
+
+**Reward:** +15 XP
+
+---
+
+## If the user chose C
+
+**Result:** not quite accurate
+
+**Explanation:**
+This answer does not fit the novel’s logic. In Murakami, key spaces are almost never random. The library enters Kafka’s life too quickly and too deeply to remain merely episodic.
+
+**How this helps the reader understand the character:**
+The user notices that in this story, space is an active part of meaning rather than empty decoration.
+
+**How it appears in the original work:**
+The library becomes one of the novel’s most important places and one of the main supports of Kafka’s line.
+
+**Reward:** +10 XP
+
+---
+
+## What happens next after the answer
+
+After this explanation block, the user clicks:
+
+**Continue →**
+
+and moves to Kafka’s meeting with Oshima.
+
+---
+
+## Scene 3. Meeting Oshima
+
+### Context
+
+At the library, Kafka meets Oshima. He is one of those characters whose presence immediately feels distinct. Oshima is calm, educated, observant, and at the same time remarkably delicate. He sees more than he says, and says less than he could ask.
+
+For Kafka, who is used to the oppressive presence of his father and to his own inner alertness, this becomes a very important experience. Oshima does not intrude by force, does not demand confession, and does not try to expose or define him immediately. He creates a rare space of respect for boundaries.
+
+That is why trust gradually grows between them. It is born not from sudden openness, but from the fact that Oshima proves to be someone beside whom Kafka does not have to remain constantly on guard.
+
+### Question
+
+Why does Kafka begin to trust Oshima?
+
+### Options
+
+**A.** Because he simply has no one else to turn to
+**B.** Because Oshima understands him without pressure and respects his inner space
+**C.** Because Oshima immediately solves all of his problems
+
+---
+
+# Answer Logic
+
+## If the user chose A
+
+**Result:** not quite accurate
+
+**Explanation:**
+Although Kafka’s loneliness certainly makes the meeting with an understanding person significant, his trust in Oshima is not forced. Kafka does not simply cling to the first available person. He senses the quality of Oshima’s presence itself.
+
+**How this helps the reader understand the character:**
+The user sees that Kafka is selective in relationships. His trust is neither cheap nor automatic.
+
+**How it appears in the original work:**
+Their connection is built not on desperation, but on a rare feeling of understanding and respect.
+
+**Reward:** +10 XP
+
+---
+
+## If the user chose B
+
+**Result:** correct
+
+**Explanation:**
+This is the most accurate answer. Oshima gives Kafka something that was almost absent from his earlier life: intellectual clarity without violence, attention without intrusion, and help without domination. That is why he becomes a figure of trust.
+
+**How this helps the reader understand the character:**
+The user begins to see why, for a wounded and inwardly closed character, the manner in which someone addresses him matters so much. For Kafka, trust is born from the form of relation, not merely from usefulness.
+
+**How it appears in the original work:**
+Oshima indeed functions as one of Kafka’s most subtle and understanding interlocutors, helping him remain steady in this new space of life.
+
+**Reward:** +15 XP
+
+---
+
+## If the user chose C
+
+**Result:** partially correct
+
+**Explanation:**
+Oshima does help Kafka and becomes an important supportive figure. But the point is not that he instantly “solves problems.” Trust appears earlier — at the level of tone, delicacy, and way of being present.
+
+**How this helps the reader understand the character:**
+The user learns to distinguish practical help from genuine human trust.
+
+**How it appears in the original work:**
+The bond between Kafka and Oshima is built first of all on understanding, and only afterward on concrete acts of help.
+
+**Reward:** +12 XP
+
+---
+
+## What happens next after the answer
+
+After this explanation block, the user clicks:
+
+**Continue →**
+
+and moves to the scene of meeting Miss Saeki.
+
+---
+
+## Scene 4. Miss Saeki
+
+### Context
+
+Among the people connected to the library, Miss Saeki stands out above all. She runs this space, yet gives the impression of someone who lives not only in the present, but in a deep inward past as well. In her calmness there is not just maturity, but the memory of some long-ago pain and loss.
+
+When Kafka sees her for the first time, his reaction is unusually strong. It is not merely the impression made by a beautiful woman, nor an ordinary sympathy. There is something deeper in what he feels — a sense of strange recognition, attraction, and inexplicable connection. He cannot yet name it, but he already senses that Miss Saeki occupies a special place in his inner world.
+
+This scene matters because one of the novel’s central themes begins to operate here with particular force: the intersection of memory, time, desire, and fate. Miss Saeki is perceived not simply as a character of the present, but as a figure in whom different layers of reality converge.
+
+### Question
+
+How can Kafka’s reaction to Miss Saeki be described most accurately?
+
+### Options
+
+**A.** It is an ordinary attraction to a beautiful and interesting person
+**B.** It is a deep, almost irrational attraction that goes beyond ordinary sympathy
+**C.** He feels neutral and calm toward her
+
+---
+
+# Answer Logic
+
+## If the user chose A
+
+**Result:** partially correct
+
+**Explanation:**
+On the surface, one can indeed see ordinary attraction here, but that answer simplifies the scene too much. Kafka’s reaction is much stronger and deeper. It is tied not only to outward impression, but to the feeling of a strange inner connection.
+
+**How this helps the reader understand the character:**
+The user sees that feelings in the novel are often built as layered experiences in which desire, memory, and fate intertwine.
+
+**How it appears in the original work:**
+From the beginning, Miss Saeki is colored in Kafka’s perception not by ordinary interest, but by a special inward significance.
+
+**Reward:** +12 XP
+
+---
+
+## If the user chose B
+
+**Result:** correct
+
+**Explanation:**
+This is the most accurate understanding of the scene. Kafka feels toward Miss Saeki something that cannot be reduced to ordinary sympathy. In his reaction there is an element of fate, inward recognition, and attraction that seems to disturb the ordinary boundaries of time and logic.
+
+**How this helps the reader understand the character:**
+The user better understands the emotional and symbolic complexity of the novel. Here it is not only facts that matter, but forms of experience that cannot be fully explained rationally.
+
+**How it appears in the original work:**
+Miss Saeki enters Kafka’s perception as a figure of special force, tied not only to the present, but also to the deepest layers of his inner world.
+
+**Reward:** +15 XP
+
+---
+
+## If the user chose C
+
+**Result:** not quite accurate
+
+**Explanation:**
+This reaction cannot be called neutral. Even if Kafka remains outwardly restrained, inwardly his impression of Miss Saeki is very strong.
+
+**How this helps the reader understand the character:**
+The user notices that a character’s outward restraint does not mean the absence of deep feeling.
+
+**How it appears in the original work:**
+The first meeting with Miss Saeki emphasizes her special importance for Kafka’s line.
+
+**Reward:** +10 XP
+
+---
+
+## What happens next after the answer
+
+After this explanation block, the user clicks:
+
+**Continue →**
+
+and moves to the scene of deciding to remain near the library.
+
+---
+
+## Scene 5. Choosing to Stay
+
+### Context
+
+As he spends more and more time in the library, Kafka begins to feel that this place is holding him back from inner disintegration. There he reads, observes, reflects, and for the first time in a long while experiences a space that does not crush him, but gathers him together. Around him there begins to emerge a kind of order — not harsh or imposed, but quiet and stable.
+
+For someone who has only recently escaped an oppressive family environment and now finds himself alone before the unknown, this is extremely important. The library becomes not simply a convenient place to stay, but an inward point of support. Near it and inside it, he can exist not as a panicked runaway, but as someone who is gradually finding coordinates of meaning.
+
+That is why the decision to remain close to the library feels natural. It is not just a passing fondness for a place, nor only a practical calculation. It is the choice of a space in which he feels able to live the next stage of his path.
+
+### Question
+
+Why does Kafka decide to stay near the Komura Library?
+
+### Options
+
+**A.** Because he simply has nowhere else to go
+**B.** Because the library becomes his inner refuge and point of support
+**C.** Because he simply likes the people who work there
+
+---
+
+# Answer Logic
+
+## If the user chose A
+
+**Result:** partially correct
+
+**Explanation:**
+There is indeed a practical side to this: Kafka is in a vulnerable position and needs a place where he can stabilize himself. But that explanation alone is not enough. His bond with the library is much deeper and inwardly motivated.
+
+**How this helps the reader understand the character:**
+The user notices that important decisions in the novel are rarely only practical. Behind them there is almost always a psychological and symbolic cause.
+
+**How it appears in the original work:**
+The library holds Kafka not merely because he has nowhere else to be, but because it becomes part of his inward path.
+
+**Reward:** +12 XP
+
+---
+
+## If the user chose B
+
+**Result:** correct
+
+**Explanation:**
+This is the most accurate answer. The library becomes for Kafka a space of inner steadiness, silence, and meaning. It helps him not only hide, but also gather himself as a person undergoing a deep transition.
+
+**How this helps the reader understand the character:**
+The user sees how important refuges are in the novel — places where the hero can temporarily acquire form and endure his own inward crisis.
+
+**How it appears in the original work:**
+The Komura Library functions for Kafka as a center of meaning, a refuge, and a space of further transformation.
+
+**Reward:** +15 XP
+
+---
+
+## If the user chose C
+
+**Result:** not quite accurate
+
+**Explanation:**
+The people he meets there do matter — especially Oshima and Miss Saeki. But that alone does not explain the depth of his attachment to the library. What holds him there is not only human company, but the atmosphere and structure of the place itself.
+
+**How this helps the reader understand the character:**
+The user learns to distinguish attraction to characters from attachment to a place as a bearer of meaning.
+
+**How it appears in the original work:**
+Kafka’s bond with the library is built not only through people, but through silence, order, memory, and the place’s special inner structure.
+
+**Reward:** +10 XP
+
+---
+
+## What happens next after the answer
+
+After this explanation block, the user clicks:
+
+**Continue →**
+
+and moves to the next chapter of the story.
+
+
+
+# Chapter 4. Johnny Walker
+
+## Scene 1. A Strange Trace in Nakata’s Storyline
+
+### Context
+
+Nakata’s storyline, which at first seems calm and even gentle because of his conversations with cats and his quiet way of life, gradually begins to change. While searching for missing animals, he is drawn into a much darker and more disturbing space than it first appeared. What once looked like a simple act of helping people with everyday problems starts leading him toward something shadowy and deeply unsettling, something that disturbs the normal order of the world.
+
+At the same time, Nakata remains himself. He does not turn into a suspicious detective, he does not dramatize events, and he does not try to build complicated theories. He simply keeps moving, step by step, in the direction his task leads him. That is what gives his storyline its special force: the stranger the world around him becomes, the calmer he remains within it.
+
+Eventually, this path brings him to a figure who appears both absurd and ominous at once. This is Johnny Walker — a character whose arrival breaks the earlier tone of Nakata’s narrative. The novel has already suggested that its world does not follow only the rules of everyday reality, but here that feeling becomes especially intense.
+
+### Question
+
+Why does the appearance of Johnny Walker feel like an important turning point in Nakata’s storyline?
+
+### Options
+
+**A.** Because the plot simply introduces another strange person
+**B.** Because Nakata’s story openly enters a space of threat and distorted reality for the first time
+**C.** Because Nakata finally receives an ordinary human opponent
+
+---
+
+# Answer Logic
+
+## If the user chose A
+
+**Result:** not quite accurate
+
+**Explanation:**
+This answer reduces the meaning of the scene too much. Johnny Walker is not important merely as “another strange character,” but as a sign that Nakata’s storyline is moving beyond quiet everyday oddity and entering a zone of serious moral and ontological tension.
+
+**How this helps the reader understand the character:**
+The user notices that some characters in the novel serve not only a plot function, but also a structural and symbolic one. They mark a transition from one phase of the narrative to another.
+
+**How it appears in the original work:**
+Johnny Walker’s appearance feels like a break in the earlier rhythm of Nakata’s storyline. The world remains strange, but now its strangeness becomes not merely curious, but deeply unsettling.
+
+**Reward:** +10 XP
+
+---
+
+## If the user chose B
+
+**Result:** correct
+
+**Explanation:**
+This is the most accurate answer. Johnny Walker becomes the figure through whom Nakata’s storyline openly enters a space of danger, moral horror, and a broken order of reality. Before this point, the unusual elements in Nakata’s world could still feel calm or even whimsical, but here they take on a much heavier and more threatening tone.
+
+**How this helps the reader understand the character:**
+The user sees that Nakata is not simply moving through a strange adventure, but through different layers of reality. His storyline, too, becomes a trial, although it is expressed not through dramatic heroics but through contact with something radically alien and disturbing.
+
+**How it appears in the original work:**
+In the novel, Johnny Walker functions as one of the most disturbing and significant images, sharply changing the tone of Nakata’s entire line.
+
+**Reward:** +15 XP
+
+---
+
+## If the user chose C
+
+**Result:** partially correct
+
+**Explanation:**
+In one sense, Johnny Walker does become a figure of confrontation. But he cannot be described as an “ordinary human opponent.” He is far more complex and symbolic than that. He is not simply a person with whom one can enter a conventional conflict.
+
+**How this helps the reader understand the character:**
+The user begins to distinguish between a realistic conflict and a symbolically charged confrontation, where the threat is both concrete and metaphysical.
+
+**How it appears in the original work:**
+Johnny Walker is presented as a deeply strange figure whose presence does not fit neatly into the categories of ordinary realism.
+
+**Reward:** +12 XP
+
+---
+
+## What happens next after the answer
+
+After this explanation block, the user clicks:
+
+**Continue →**
+
+and moves to the scene of Nakata’s direct encounter with Johnny Walker.
+
+---
+
+## Scene 2. The Meeting with Johnny Walker
+
+### Context
+
+When Nakata comes face to face with Johnny Walker, the scene is built immediately on a strong feeling of dissonance. The character’s outward image seems to refer to a familiar cultural mask, yet his behavior produces the opposite effect: instead of comedy, it creates unease. He speaks and acts in a way that deliberately combines the absurd with the horrifying. Because of this, the scene creates the feeling that the world’s familiar coordinates have begun to shift.
+
+For Nakata, the encounter becomes especially difficult not because he is prone to panic, but because he is confronted with a form of evil that cannot be explained in ordinary words. He remains direct, calm, even almost naively precise in the way he perceives things, and that makes the contrast even stronger: before him stands something profoundly wrong, while he continues to look at it without theatrical hysteria.
+
+The scene is built on moral pressure. Nakata is placed in a situation where simple kindness and ordinary decency are no longer enough to allow him to simply step aside. It is as though the world demands a decision from him, one for which his quiet life has never prepared him.
+
+### Question
+
+Why is this meeting so important for understanding Nakata’s storyline?
+
+### Options
+
+**A.** Because it shows that even the quietest hero can be forced into a radical moral choice
+**B.** Because Nakata finally begins acting like a conventional action hero
+**C.** Because the novel simply adds a frightening scene for the sake of tension
+
+---
+
+# Answer Logic
+
+## If the user chose A
+
+**Result:** correct
+
+**Explanation:**
+This is the most accurate answer. Before this scene, Nakata seemed like a figure of gentle, quiet existence. But here it becomes clear that his path also demands a genuine choice. And that choice concerns not practical advantage, but the fundamental difference between what can be accepted and what cannot.
+
+**How this helps the reader understand the character:**
+The user sees that Nakata is not just a “kind strange old man,” but a true protagonist who undergoes a serious trial. His simplicity does not make him weak; on the contrary, it gives his decisions a special clarity.
+
+**How it appears in the original work:**
+The encounter with Johnny Walker becomes one of the major moral trials in Nakata’s storyline and sharply alters the direction of the plot.
+
+**Reward:** +15 XP
+
+---
+
+## If the user chose B
+
+**Result:** not quite accurate
+
+**Explanation:**
+Nakata does not turn into a hero of action in the conventional genre sense. His strength does not lie in aggression, clever tactics, or dramatic initiative. On the contrary, his storyline retains its distinctly quiet nature even at the moment of extreme conflict.
+
+**How this helps the reader understand the character:**
+The user learns not to replace a character’s inner strength with clichés about what a “strong hero” should look like. Nakata remains himself even when faced with an extreme trial.
+
+**How it appears in the original work:**
+The novel does not reconstruct Nakata as a standard heroic archetype. His actions remain deeply connected to his simplicity, directness, and inner purity.
+
+**Reward:** +10 XP
+
+---
+
+## If the user chose C
+
+**Result:** partially correct
+
+**Explanation:**
+The scene does increase the novel’s tension, but its meaning is not limited to that. It is important not only because it is frightening, but because it places Nakata before a trial that changes the entire weight of his storyline.
+
+**How this helps the reader understand the character:**
+The user begins to see that tense scenes in the novel function not only as emotional effects, but also as crucial nodes of character revelation.
+
+**How it appears in the original work:**
+This encounter matters above all as a turning point of meaning: after it, Nakata’s storyline can no longer remain what it was before.
+
+**Reward:** +12 XP
+
+---
+
+## What happens next after the answer
+
+After this explanation block, the user clicks:
+
+**Continue →**
+
+and moves to the moment of moral decision.
+
+---
+
+## Scene 3. The Moral Limit
+
+### Context
+
+The encounter with Johnny Walker places Nakata under extreme inner pressure. For him, a man of simplicity who is not used to thinking in elaborate abstract categories, the most basic things remain the most important: obvious evil must not be allowed, and one cannot calmly watch something that violently violates the living order of the world. Yet here he is confronted with a situation in which every possible decision is heavy and painful.
+
+The force of this scene lies not in outward action, but in moral concentration. Nakata must make not an intellectual choice between theories, but a direct human choice: can one remain a passive witness when something intolerable is happening before one’s eyes? This is especially difficult for him because he does not live in a mode of conflict, ambition, or coercion at all.
+
+In this way, Nakata’s storyline rises to a new level. His simplicity ceases to be merely a feature of character and becomes a form of moral clarity. He does not explain the world to himself in grand philosophical language, but precisely because of that, he sometimes sees the boundary between good and evil more clearly than those who can reason about it endlessly.
+
+### Question
+
+What most accurately reveals Nakata in this scene?
+
+### Options
+
+**A.** His hidden cruelty finally comes to the surface
+**B.** His moral directness makes it impossible for him to accept what is happening as normal
+**C.** His desire to prove to himself that he is not weak
+
+---
+
+# Answer Logic
+
+## If the user chose A
+
+**Result:** not quite accurate
+
+**Explanation:**
+This answer misreads Nakata’s inner nature. His actions in this storyline do not arise from aggression or from pleasure in force. On the contrary, the entire weight of the scene depends on the fact that he is neither cruel nor naturally violent.
+
+**How this helps the reader understand the character:**
+The user sees the difference between an action born from inner darkness and an action made as an extreme moral response to what is unacceptable.
+
+**How it appears in the original work:**
+Nakata is presented not as a man of hidden cruelty, but as someone for whom the confrontation with radical evil becomes an unbearable moral ordeal.
+
+**Reward:** +10 XP
+
+---
+
+## If the user chose B
+
+**Result:** correct
+
+**Explanation:**
+This is the most accurate answer. Nakata’s simplicity here reveals itself as a form of moral clarity. He does not rationalize evil, disguise it, or adapt himself to it. That is why the situation demands a response from him.
+
+**How this helps the reader understand the character:**
+The user notices that one of Nakata’s greatest strengths is not intellect in the conventional sense, but purity of perception. He may not understand many complex things, but he feels the boundary of what is acceptable with unusual directness.
+
+**How it appears in the original work:**
+This storyline shows that Nakata’s moral core is extraordinarily strong, even though it is expressed not through abstract reflection but through a simple and firm human response.
+
+**Reward:** +15 XP
+
+---
+
+## If the user chose C
+
+**Result:** partially correct
+
+**Explanation:**
+One could say that in such a situation any person comes face to face with their own strength and weakness. But for Nakata this is not the primary motive. He does not act for the sake of self-assertion. His response is directed not toward proving himself, but toward the intolerable nature of what is happening.
+
+**How this helps the reader understand the character:**
+The user sees that truly moral decisions in the novel are often made not for the sake of self-image, but for the sake of remaining faithful to an inner truth.
+
+**How it appears in the original work:**
+Nakata is not trying to become “strong” in anyone’s eyes, including his own. He simply cannot accept what he sees as something permissible.
+
+**Reward:** +12 XP
+
+---
+
+## What happens next after the answer
+
+After this explanation block, the user clicks:
+
+**Continue →**
+
+and moves to the consequences of this encounter.
+
+---
+
+## Scene 4. Consequence and the Shift of the World
+
+### Context
+
+After the confrontation with Johnny Walker, Nakata’s storyline can no longer return to its earlier simplicity. What happens is not only a plot consequence, but also a deep shift in the very structure of the novel’s world. As often happens in Murakami, an important event does not remain local in its effect: it seems to echo across other layers of reality, other destinies, and other narrative lines.
+
+For Nakata, this moment becomes a transition. Before it, he existed in a relatively local, if unusual, world: helping people, speaking with cats, living a modest daily life. After it, he is drawn into a movement much larger than the scale of his former existence. It is as though he steps across a threshold and enters a space where his path is now tied not only to his personal routine, but to the broader logic of the novel.
+
+This scene matters because it shows that actions in the world of the book do not simply disappear. They become nodes that connect people, places, and levels of reality. After this point, Nakata’s line begins moving toward even stranger and more significant events.
+
+### Question
+
+How can the meaning of this scene for the novel best be described?
+
+### Options
+
+**A.** It simply ends one episode and moves on to the next
+**B.** It is a turning point after which the world of the novel noticeably shifts and Nakata’s line becomes larger in scale
+**C.** It is important only for Nakata’s own storyline and is barely connected to the rest of the novel
+
+---
+
+# Answer Logic
+
+## If the user chose A
+
+**Result:** not quite accurate
+
+**Explanation:**
+This answer reduces the importance of the episode too much. What happens here is not merely the local closure of one plot task. The scene functions as a deep turning point after which the structure of the novel begins to feel different.
+
+**How this helps the reader understand the character:**
+The user begins to see that some scenes in a narrative function not only as events, but as structural ruptures or thresholds.
+
+**How it appears in the original work:**
+After this storyline, the novel does not return to its previous state. There is a strong sense that an important threshold has been crossed.
+
+**Reward:** +10 XP
+
+---
+
+## If the user chose B
+
+**Result:** correct
+
+**Explanation:**
+This is the most accurate answer. The scene becomes one of those turning points after which the world of the novel feels more open, more unsettling, and more deeply interconnected. Nakata’s storyline ceases to be local and enters the central motion of the book.
+
+**How this helps the reader understand the character:**
+The user sees that Nakata is not a secondary figure, but one of the carriers of the novel’s structural center. His path influences the overall texture of the story.
+
+**How it appears in the original work:**
+After this encounter, Nakata’s line takes on a new scale, and the novel moves ever more clearly toward the crossing of different levels of reality.
+
+**Reward:** +15 XP
+
+---
+
+## If the user chose C
+
+**Result:** partially correct
+
+**Explanation:**
+The scene does indeed affect Nakata’s line very deeply. But its significance does not stop there. It is also important for the novel as a whole, because it participates in a larger interweaving of destinies and meanings.
+
+**How this helps the reader understand the character:**
+The user begins to see that in a multi-line novel, one narrative branch can matter not only in itself, but as part of the larger design.
+
+**How it appears in the original work:**
+After this event, Nakata’s storyline increasingly feels like one of the novel’s central lines rather than a merely supporting one.
+
+**Reward:** +12 XP
+
+---
+
+## What happens next after the answer
+
+After this explanation block, the user clicks:
+
+**Continue →**
+
+and moves to the next chapter.
+
+---
+
+# Chapter 5. The Crossing of Realities
+
+## Scene 1. The Library as a Boundary Between Worlds
+
+### Context
+
+By this point, the Komura Library has fully ceased to be merely a beautiful and quiet place. It begins to feel like a space where the usual boundary between outer and inner, past and present, memory and reality becomes especially thin. For Kafka, it is no longer only a refuge, but a place where his inner world seems to gain an almost visible extension.
+
+It is here that one of the novel’s main features becomes especially clear: reality does not openly collapse or turn into total chaos, but slowly allows other layers to pass through it. This happens quietly, almost soundlessly, so the reader feels not shock, but a gradual displacement of certainty. The library becomes the place where such displacements are possible.
+
+For Kafka, this means that his path can no longer be understood only as the external flight of a teenage boy. He is entering a space where memory, desire, fate, and time begin to work not as separate elements, but as intersecting forces.
+
+### Question
+
+Why does the library in this part of the novel feel like more than just a refuge?
+
+### Options
+
+**A.** Because it becomes a space where different levels of reality begin to intersect
+**B.** Because Kafka simply grows used to it and feels comfortable there
+**C.** Because more events happen there than before
+
+---
+
+# Answer Logic
+
+## If the user chose A
+
+**Result:** correct
+
+**Explanation:**
+This is the most accurate answer. The library retains its role as a refuge, but at the same time it becomes a boundary and a transitional space. Memory, loss, desire, and alternative modes of time begin to come into contact there, which turns it into one of the central nodes where realities intersect.
+
+**How this helps the reader understand the character:**
+The user sees that Kafka is moving not only through plot events, but through layers of the novel’s world itself. The space around him becomes an active participant in his inner journey.
+
+**How it appears in the original work:**
+The library gradually reveals itself as a place of unusual density of meaning, where reality can no longer be reduced to a single everyday plane.
+
+**Reward:** +15 XP
+
+---
+
+## If the user chose B
+
+**Result:** partially correct
+
+**Explanation:**
+Yes, the library does become a familiar and inwardly important place for Kafka. But that does not exhaust its role. It matters not only psychologically, but structurally — as a space where transitions between different levels of experience become possible.
+
+**How this helps the reader understand the character:**
+The user learns to distinguish a comforting place from a symbolically charged place that changes the very structure of the story.
+
+**How it appears in the original work:**
+The library remains quiet and comforting, but its meaning goes far beyond simple familiarity.
+
+**Reward:** +12 XP
+
+---
+
+## If the user chose C
+
+**Result:** not quite accurate
+
+**Explanation:**
+The number of events alone does not make a place significant. In the novel, what matters more is how the space functions as a carrier of memory, fate, and transition. The library matters not because “a lot happens there,” but because of the kind of meaning that gathers there.
+
+**How this helps the reader understand the character:**
+The user notices that a meaningful literary space is defined not by noise or action, but by depth of connection to the themes of the work.
+
+**How it appears in the original work:**
+The Komura Library becomes special not because it is eventful, but because it connects different layers of the novel.
+
+**Reward:** +10 XP
+
+---
+
+## What happens next after the answer
+
+After this explanation block, the user clicks:
+
+**Continue →**
+
+and moves to Miss Saeki’s line as a knot of memory.
+
+---
+
+## Scene 2. Miss Saeki and Memory
+
+### Context
+
+Miss Saeki is increasingly perceived not simply as a person in the present, but as a figure in whom the past remains alive. She is connected to memory not only at the level of biography, but at the level of the novel’s entire atmosphere. Around her there is a sense that the past has not vanished, but continues to exist in a special way — not as a dead fact, but as a living force capable of influencing the present.
+
+For Kafka, this has enormous significance. His own life is built around absences, losses, and unclear connections. Therefore, meeting a person in whom the past seems still to breathe becomes something deeply personal. His attraction to Miss Saeki is connected not only with feeling, but with a need to come into contact with that dimension of reality in which loss does not fully destroy connection.
+
+In this way, the novel increasingly joins Kafka’s personal story to its broader theme of memory. Memory here is not merely recollection, but a mode in which time continues to exist inside a human being.
+
+### Question
+
+Why is Miss Saeki so important to the theme of intersecting realities?
+
+### Options
+
+**A.** Because she symbolizes the power of memory that continues to live in the present
+**B.** Because she is simply the most mysterious character in the novel
+**C.** Because through her the author makes the love storyline more interesting
+
+---
+
+# Answer Logic
+
+## If the user chose A
+
+**Result:** correct
+
+**Explanation:**
+This is the most accurate answer. Miss Saeki matters not only as a character, but as a bearer of memory that has not dissolved in time. Through her, the novel shows that the past can remain active within the present, almost tangibly so.
+
+**How this helps the reader understand the character:**
+The user begins to see that Kafka’s attraction to Miss Saeki is connected not only to personal emotion, but also to his deep relation to loss, searching, and the unclear nature of his own past.
+
+**How it appears in the original work:**
+Miss Saeki functions as one of the novel’s central figures of memory, joining past and present within a single human life.
+
+**Reward:** +15 XP
+
+---
+
+## If the user chose B
+
+**Result:** partially correct
+
+**Explanation:**
+She is indeed mysterious, and that mystery matters to the atmosphere of the novel. But her function goes deeper than simply being “the enigmatic character.” Her significance lies in how memory, loss, and the strange persistence of the past manifest through her.
+
+**How this helps the reader understand the character:**
+The user learns to distinguish surface mystery from a deeper thematic function.
+
+**How it appears in the original work:**
+Miss Saeki matters not only as a mystery, but as a central node of memory and time.
+
+**Reward:** +12 XP
+
+---
+
+## If the user chose C
+
+**Result:** not quite accurate
+
+**Explanation:**
+This answer narrows her role too much. Kafka’s relation to Miss Saeki does not fit into a conventional love storyline, and her role in the novel is much broader than the development of romantic interest.
+
+**How this helps the reader understand the character:**
+The user notices that some relationships in the novel are built in a more complex way than ordinary genre models of romance.
+
+**How it appears in the original work:**
+Miss Saeki matters not as a “romantic subplot,” but as a figure through whom the novel explores memory, fate, and time.
+
+**Reward:** +10 XP
+
+---
+
+## What happens next after the answer
+
+After this explanation block, the user clicks:
+
+**Continue →**
+
+and moves to the scene of Kafka’s inner journey.
+
+---
+
+## Scene 3. The Journey Inward
+
+### Context
+
+As the story develops, it becomes increasingly clear that Kafka’s path is not only an external movement across a map, but also a descent into himself. He more and more often enters states where outer reality and inner experience can no longer be fully separated. The spaces, people, and events around him begin to reflect not only the objective world, but also his own inner crisis.
+
+That is why the novel increasingly feels like the story of an inner labyrinth. Kafka is trying to understand who he is, what he is fleeing from, what draws him toward certain people and places, and how one can live inside a fate that feels both imposed and chosen. His path becomes not a movement from point A to point B, but a journey from the surface version of himself toward a deeper, more painful, and more unstable layer of identity.
+
+The theme of the boundary becomes especially important here. In order to become himself, Kafka must pass through zones of uncertainty where the old explanations no longer work and new ones have not yet been found. That is what makes his line so tense.
+
+### Question
+
+How can Kafka’s path in this part of the novel best be understood?
+
+### Options
+
+**A.** As an ordinary teenage escape that simply became more complicated
+**B.** As an inner journey through memory, fear, fate, and the search for identity
+**C.** As a chain of random strange events that are not truly connected
+
+---
+
+# Answer Logic
+
+## If the user chose A
+
+**Result:** not quite accurate
+
+**Explanation:**
+Although outwardly everything did begin with the escape of a teenage boy, by this stage of the novel that explanation is no longer sufficient. Kafka’s story has already moved far beyond the everyday fact of running away from home and turned into a much deeper inner journey.
+
+**How this helps the reader understand the character:**
+The user notices how a plot form can outgrow its initial explanation. What begins as escape becomes a search for the self.
+
+**How it appears in the original work:**
+Kafka’s storyline gradually unfolds as a path of inner transformation, bound up with memory, fate, and identity.
+
+**Reward:** +10 XP
+
+---
+
+## If the user chose B
+
+**Result:** correct
+
+**Explanation:**
+This is the most accurate answer. At this point Kafka’s path must be understood as a deep inner journey in which the external plot serves as the form for movement through more complex themes: loss, memory, desire, fear, fate, and the attempt to understand himself.
+
+**How this helps the reader understand the character:**
+The user sees that the novel builds its hero not through outward victories, but through passage through inner complexity. This makes Kafka an existential, not merely a plot-driven, protagonist.
+
+**How it appears in the original work:**
+By this stage of the story, Kafka’s path is clearly perceived as movement through the deeper layers of his own identity and destiny.
+
+**Reward:** +15 XP
+
+---
+
+## If the user chose C
+
+**Result:** not quite accurate
+
+**Explanation:**
+Strangeness does indeed intensify, but the novel is not made up of random episodes. On the contrary, it is precisely here that it becomes especially clear that all the lines are beginning to gravitate toward shared themes and knots of meaning.
+
+**How this helps the reader understand the character:**
+The user learns to see behind surface mystery a deep connectedness.
+
+**How it appears in the original work:**
+Even the strangest events in the novel function as parts of one overall movement, not as a collection of disconnected oddities.
+
+**Reward:** +10 XP
+
+---
+
+## What happens next after the answer
+
+After this explanation block, the user clicks:
+
+**Continue →**
+
+and moves to the scene of the connection between the two narrative lines.
+
+---
+
+## Scene 4. The Invisible Link Between the Two Lines
+
+### Context
+
+One of the most important features of the novel is the growing sense that Kafka’s line and Nakata’s line are connected more deeply than it first appears. On the surface, they seem separate: different ages, different rhythms, different ways of perceiving the world. But as the story develops, it becomes increasingly clear that they are moving within the same larger structure.
+
+This does not necessarily express itself through immediate and direct explanations. On the contrary, the novel’s power lies in the fact that the connection emerges as a kind of intuitive recognition: the reader begins to feel echoes between events, inner states, and symbols. The world of the book is arranged in such a way that different lives can be joined on a deep level, even if the characters themselves do not consciously understand this.
+
+What matters in this scene is the realization that the novel is not building two random parallel stories, but one unified field of meaning. Kafka and Nakata travel along different roads, but those roads gradually reveal themselves as two ways of moving through the same mysterious world.
+
+### Question
+
+How should the relationship between Kafka’s line and Nakata’s line best be understood?
+
+### Options
+
+**A.** They are simply two independent stories placed side by side by chance
+**B.** They are two different trajectories within one shared symbolic and meaningful space
+**C.** Their connection exists only on the level of external plot, without deeper resonance
+
+---
+
+# Answer Logic
+
+## If the user chose A
+
+**Result:** not quite accurate
+
+**Explanation:**
+This answer contradicts the very structure of the novel. Although the lines do develop separately, their closeness becomes increasingly evident. They are not accidental in relation to each other, even if that relation is not always stated directly.
+
+**How this helps the reader understand the character:**
+The user begins to see a multi-line novel as a system of echoes and resonances rather than a simple alternation of unrelated chapters.
+
+**How it appears in the original work:**
+The story is built to gradually reveal the unity of different paths, not to preserve them as entirely autonomous.
+
+**Reward:** +10 XP
+
+---
+
+## If the user chose B
+
+**Result:** correct
+
+**Explanation:**
+This is the most accurate answer. Kafka’s line and Nakata’s line can be understood as two trajectories moving through the same world on different levels. They differ in form, but they are united by common themes, symbols, and the deep logic of the novel.
+
+**How this helps the reader understand the character:**
+The user sees that the novel builds meaning not only within each character, but also between characters — through reflection, rhyme, and parallel structure.
+
+**How it appears in the original work:**
+As the story develops, it becomes clearer and clearer that both lines belong to one larger design of meaning and move toward points of contact.
+
+**Reward:** +15 XP
+
+---
+
+## If the user chose C
+
+**Result:** partially correct
+
+**Explanation:**
+External plot does matter, and some connections do emerge through it. But it would be too limited to stop there. Between the two lines there is also a deep thematic and symbolic resonance.
+
+**How this helps the reader understand the character:**
+The user learns to distinguish plot-level connection from a more complex narrative connection built on parallels and resonances.
+
+**How it appears in the original work:**
+The relation between Kafka and Nakata works simultaneously on the levels of plot, theme, and symbol.
+
+**Reward:** +12 XP

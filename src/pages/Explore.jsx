@@ -1,470 +1,500 @@
-import { works } from "../data/works";
 import { Link, useSearchParams } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { works } from "../data/works";
+import {
+  communityPreview,
+  gamificationData,
+  literaryJourneys,
+  multimediaContext,
+  themeCollections,
+  workMetadataById,
+} from "../data/exploreData";
+import JourneyCard from "../components/explore/JourneyCard";
+import ExploreWorkCard from "../components/explore/ExploreWorkCard";
+import LiteraryTimeline from "../components/explore/LiteraryTimeline";
+import ThemeCard from "../components/explore/ThemeCard";
+import "./Explore.css";
 
-const THEMES = {
-  Identity: { color: "#e3f2fd", accent: "#1976d2" },
-  Morality: { color: "#fce4ec", accent: "#c2185b" },
-  Knowledge: { color: "#e8f5e9", accent: "#2e7d32" },
-  Society: { color: "#fff8e1", accent: "#f9a825" },
-};
+const SORT_OPTIONS = [
+  { value: "featured", label: "Featured" },
+  { value: "title-asc", label: "Title A-Z" },
+  { value: "time-asc", label: "Shortest read" },
+  { value: "period-asc", label: "Period" },
+];
+
+const THEME_ORDER = [
+  "Identity",
+  "Morality",
+  "Knowledge",
+  "Society",
+  "Love",
+  "Freedom",
+  "Memory",
+  "Fate",
+];
 
 function Explore() {
+  const pageRef = useRef(null);
+  const [searchValue, setSearchValue] = useState("");
+  const [typeFilter, setTypeFilter] = useState("all");
+  const [periodFilter, setPeriodFilter] = useState("all");
+  const [sortValue, setSortValue] = useState("featured");
   const [searchParams, setSearchParams] = useSearchParams();
-  const activeTheme = searchParams.get("theme");
 
-  const handleThemeChange = (theme) => {
-    if (!theme) {
-      setSearchParams({});
+  const activeTheme = searchParams.get("theme") || "all";
+
+  const enrichedWorks = works.map((work) => ({
+    ...work,
+    ...workMetadataById[work.id],
+  }));
+
+  const typeOptions = [...new Set(enrichedWorks.map((work) => work.type))];
+  const periodOptions = [...new Set(enrichedWorks.map((work) => work.period))];
+  const themeOptions = THEME_ORDER.filter((theme) =>
+    enrichedWorks.some((work) => work.themes.includes(theme))
+  );
+
+  const normalizedQuery = searchValue.trim().toLowerCase();
+
+  const filteredWorks = enrichedWorks
+    .filter((work) => {
+      const matchesTheme =
+        activeTheme === "all" || work.themes.includes(activeTheme);
+      const matchesType = typeFilter === "all" || work.type === typeFilter;
+      const matchesPeriod =
+        periodFilter === "all" || work.period === periodFilter;
+      const matchesSearch =
+        normalizedQuery.length === 0 ||
+        work.title.toLowerCase().includes(normalizedQuery) ||
+        work.author.toLowerCase().includes(normalizedQuery) ||
+        work.description.toLowerCase().includes(normalizedQuery) ||
+        work.themes.some((theme) => theme.toLowerCase().includes(normalizedQuery));
+
+      return matchesTheme && matchesType && matchesPeriod && matchesSearch;
+    })
+    .sort((a, b) => {
+      if (sortValue === "title-asc") return a.title.localeCompare(b.title);
+      if (sortValue === "time-asc") return a.readingTime - b.readingTime;
+      if (sortValue === "period-asc") return a.period.localeCompare(b.period);
+      return 0;
+    });
+
+  const spotlightWork =
+    filteredWorks[0] ??
+    enrichedWorks.find((work) => work.id === "dostoevsky-crime") ??
+    enrichedWorks[0];
+
+  const recommendationTheme =
+    activeTheme !== "all"
+      ? activeTheme
+      : spotlightWork?.themes?.[0] ?? themeOptions[0];
+
+  const primaryJourney =
+    literaryJourneys.find((journey) => journey.focusTheme === recommendationTheme) ??
+    literaryJourneys[0];
+
+  const recommendedWorks = enrichedWorks
+    .filter(
+      (work) =>
+        work.id !== spotlightWork.id && work.themes.includes(recommendationTheme)
+    )
+    .slice(0, 2);
+
+  const visibleThemes = themeCollections.slice(0, 4);
+
+  const handleThemeSelect = (theme) => {
+    const next = new URLSearchParams(searchParams);
+    if (!theme || theme === "all") {
+      next.delete("theme");
     } else {
-      setSearchParams({ theme });
+      next.set("theme", theme);
     }
+    setSearchParams(next, { replace: true });
   };
 
-  const filteredWorks =
-    activeTheme === null
-      ? works
-      : works.filter((w) => w.themes?.includes(activeTheme));
+  const beginJourney = (theme) => {
+    handleThemeSelect(theme);
+  };
+
+  const resetFilters = () => {
+    setSearchValue("");
+    setTypeFilter("all");
+    setPeriodFilter("all");
+    setSortValue("featured");
+    handleThemeSelect("all");
+  };
+
+  useEffect(() => {
+    const root = pageRef.current;
+    if (!root) return undefined;
+
+    const items = [...root.querySelectorAll(".explore-reveal")];
+    if (!items.length) return undefined;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.14,
+        rootMargin: "0px 0px -8% 0px",
+      }
+    );
+
+    items.forEach((item, index) => {
+      item.style.setProperty("--reveal-delay", `${Math.min(index * 55, 260)}ms`);
+      observer.observe(item);
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <main className="explore-page" style={styles.page}>
-      <div style={styles.container}>
-        <section style={styles.heroCard}>
-          <div style={styles.heroLeft}>
-            <p style={styles.kicker}>CURATED READING</p>
-            <h1 style={styles.title}>Explore by theme</h1>
-            <p style={styles.subtitle}>
-              Literary works often speak through several ideas at once. Choose a
-              theme and discover texts through identity, morality, knowledge,
-              and society.
+    <main ref={pageRef} className="explore-page">
+      <div className="explore-page__container">
+        <section className="explore-hero explore-reveal">
+          <div className="explore-hero__copy">
+            <h1 className="explore-hero__title">Explore Literary Worlds</h1>
+            <p className="explore-hero__subtitle">
+              Search works, compare themes, and open reading routes by period,
+              author, or topic.
             </p>
-
-            <div style={styles.metaRow}>
-              <div style={styles.metaPill}>
-                <span style={styles.metaLabel}>Works</span>
-                <span style={styles.metaValue}>{filteredWorks.length}</span>
-              </div>
-
-              <div style={styles.metaPill}>
-                <span style={styles.metaLabel}>Themes</span>
-                <span style={styles.metaValue}>{Object.keys(THEMES).length}</span>
-              </div>
-            </div>
           </div>
+        </section>
 
-          <div style={styles.heroRight}>
-            <div style={styles.filterPanel}>
-              <p style={styles.filterPanelTitle}>Browse themes</p>
+        <div className="explore-reveal">
+          <LiteraryTimeline />
+        </div>
 
-              <div style={styles.filterBar}>
+        <section
+          className="explore-toolbar explore-reveal"
+          aria-label="Explore filters"
+        >
+          <div className="explore-toolbar__filters">
+            <label className="explore-toolbar__search">
+              <input
+                id="explore-search"
+                type="search"
+                value={searchValue}
+                onChange={(event) => setSearchValue(event.target.value)}
+                placeholder="Search by title, author, theme, or idea"
+                aria-label="Search the archive"
+              />
+            </label>
+
+            <div className="explore-toolbar__themes">
+              {themeOptions.map((theme) => (
                 <button
-                  onClick={() => handleThemeChange(null)}
-                  className="explore-filter-btn"
-                  style={{
-                    ...styles.filterBtn,
-                    ...(activeTheme === null ? styles.filterActive : {}),
-                  }}
+                  key={theme}
+                  type="button"
+                  className={`explore-hero__theme ${
+                    activeTheme === theme ? "is-active" : ""
+                  }`}
+                  onClick={() => handleThemeSelect(theme)}
                 >
-                  All themes
+                  {theme}
                 </button>
+              ))}
+            </div>
 
-                {Object.keys(THEMES).map((theme) => (
-                  <button
-                    key={theme}
-                    onClick={() => handleThemeChange(theme)}
-                    className="explore-filter-btn"
-                    style={{
-                      ...styles.filterBtn,
-                      ...(activeTheme === theme ? styles.filterActive : {}),
-                    }}
-                  >
-                    {theme}
-                  </button>
-                ))}
-              </div>
+            <div className="explore-toolbar__controls">
+              <label className="explore-toolbar__field">
+                <select
+                  value={typeFilter}
+                  onChange={(event) => setTypeFilter(event.target.value)}
+                  aria-label="Filter by type"
+                >
+                  <option value="all">All types</option>
+                  {typeOptions.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              </label>
+
+              <label className="explore-toolbar__field">
+                <select
+                  value={periodFilter}
+                  onChange={(event) => setPeriodFilter(event.target.value)}
+                  aria-label="Filter by historical period"
+                >
+                  <option value="all">All periods</option>
+                  {periodOptions.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              </label>
+
+              <label className="explore-toolbar__field">
+                <select
+                  value={sortValue}
+                  onChange={(event) => setSortValue(event.target.value)}
+                  aria-label="Sort works"
+                >
+                  {SORT_OPTIONS.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+
+              <button
+                type="button"
+                className="explore-toolbar__reset"
+                onClick={resetFilters}
+              >
+                Reset filters
+              </button>
             </div>
           </div>
         </section>
 
-        <section style={styles.section}>
-          <div style={styles.sectionHeader}>
-            <h2 style={styles.sectionTitle}>
-              {activeTheme ? `${activeTheme} works` : "All works"}
-            </h2>
+        <section className="explore-section explore-reveal">
+          <div className="explore-section__head">
+            <h2 className="explore-section__title">Start with a guided route.</h2>
+          </div>
 
-            <span style={styles.sectionMeta}>
-              {filteredWorks.length} result{filteredWorks.length === 1 ? "" : "s"}
-            </span>
+          <div className="explore-journeys">
+            <article className="explore-journeys__feature">
+              <h3 className="explore-journeys__featureTitle">{primaryJourney.title}</h3>
+              <p className="explore-journeys__featureText">
+                {primaryJourney.description}
+              </p>
+
+              <div className="explore-journeys__featureMeta">
+                <span>{primaryJourney.works.length} works</span>
+                <span>{primaryJourney.minutes} min</span>
+                <span>{primaryJourney.level}</span>
+              </div>
+
+              <button
+                type="button"
+                className="explore-journeys__featureAction"
+                onClick={() => beginJourney(primaryJourney.focusTheme)}
+              >
+                Start route
+              </button>
+            </article>
+
+            <div className="explore-journeys__grid">
+              {literaryJourneys
+                .filter((journey) => journey.id !== primaryJourney.id)
+                .slice(0, 3)
+                .map((journey) => (
+                  <JourneyCard
+                    key={journey.id}
+                    journey={journey}
+                    worksCount={journey.works.length}
+                    onBegin={() => beginJourney(journey.focusTheme)}
+                  />
+                ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="explore-section explore-reveal">
+          <div className="explore-section__head">
+            <h2 className="explore-section__title">Open one work and begin.</h2>
+          </div>
+
+          <div className="explore-spotlight">
+            <div
+              className="explore-spotlight__visual"
+              style={{ backgroundImage: `url(${spotlightWork.image})` }}
+            />
+
+            <div className="explore-spotlight__content">
+              <div className="explore-spotlight__meta">
+                <span>{spotlightWork.author}</span>
+                <span>{spotlightWork.period}</span>
+                <span>{spotlightWork.readingTime} min</span>
+              </div>
+
+              <h3 className="explore-spotlight__title">{spotlightWork.title}</h3>
+              <p className="explore-spotlight__intro">
+                {spotlightWork.spotlightIntro}
+              </p>
+
+              <div className="explore-spotlight__question">
+                <span className="explore-spotlight__label">Main question</span>
+                <p>{spotlightWork.conflict}</p>
+              </div>
+
+              <p className="explore-spotlight__why">
+                Today: {spotlightWork.whyNow}
+              </p>
+
+              <Link
+                to={`/reading/${spotlightWork.id}`}
+                className="explore-spotlight__action"
+              >
+                Start reading
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        <section className="explore-section explore-reveal">
+          <div className="explore-section__head explore-section__head--split">
+            <h2 className="explore-section__title">Browse the collection.</h2>
+            <p className="explore-section__meta">{filteredWorks.length} visible works</p>
           </div>
 
           {filteredWorks.length === 0 ? (
-            <div style={styles.emptyCard}>
-              <h3 style={styles.emptyTitle}>No works found</h3>
-              <p style={styles.emptyText}>
-                There are no works for this theme in the current collection.
+            <div className="explore-empty">
+              <h3 className="explore-empty__title">No results found.</h3>
+              <p className="explore-empty__text">
+                Change the filters or search again.
               </p>
               <button
-                onClick={() => handleThemeChange(null)}
-                style={styles.emptyBtn}
+                type="button"
+                className="explore-empty__action"
+                onClick={resetFilters}
               >
-                Show all themes
+                Reset filters
               </button>
             </div>
           ) : (
-            <div style={styles.grid}>
+            <div className="explore-collection">
               {filteredWorks.map((work) => (
-                <article
+                <ExploreWorkCard
                   key={work.id}
-                  className="explore-work-card"
-                  style={styles.card}
-                >
-                  <Link to={`/reading/${work.id}`} style={styles.imageLink}>
-                    <div
-                      style={{
-                        ...styles.cardImage,
-                        backgroundImage: work.image ? `url(${work.image})` : undefined,
-                        backgroundSize: "cover",
-                        backgroundPosition: "center",
-                      }}
-                    >
-                      <div style={styles.cardImageOverlay} />
-                    </div>
-                  </Link>
-
-                  <div style={styles.cardBody}>
-                    <div style={styles.themeRow}>
-                      {work.themes.map((t) => (
-                        <Link
-                          key={t}
-                          to={`/explore?theme=${encodeURIComponent(t)}`}
-                          style={{
-                            ...styles.themeTag,
-                            background: THEMES[t]?.color || "#f4f4f4",
-                            color: THEMES[t]?.accent || "#1f1f1f",
-                          }}
-                        >
-                          {t}
-                        </Link>
-                      ))}
-                    </div>
-
-                    <Link to={`/reading/${work.id}`} style={styles.cardTitleLink}>
-                      <h3 style={styles.cardTitle}>{work.title}</h3>
-                    </Link>
-
-                    <Link
-                      to={`/author/${encodeURIComponent(work.author)}`}
-                      style={styles.authorLink}
-                    >
-                      {work.author}
-                    </Link>
-
-                    <p style={styles.description}>{work.description}</p>
-
-                    <div style={styles.cardBottom}>
-                      {work.year && (
-                        <span style={styles.yearPill}>{work.year}</span>
-                      )}
-
-                      <Link to={`/reading/${work.id}`} style={styles.readLink}>
-                        Read →
-                      </Link>
-                    </div>
-                  </div>
-                </article>
+                  work={work}
+                  onThemeSelect={handleThemeSelect}
+                />
               ))}
             </div>
           )}
+        </section>
+
+        <section className="explore-section explore-reveal">
+          <div className="explore-section__head">
+            <h2 className="explore-section__title">Explore by theme.</h2>
+          </div>
+
+          <div className="explore-themes">
+            {visibleThemes.map((theme) => (
+              <ThemeCard
+                key={theme.name}
+                theme={theme}
+                relatedWorks={enrichedWorks.filter((work) =>
+                  theme.works.includes(work.id)
+                )}
+                onExplore={() => beginJourney(theme.name)}
+              />
+            ))}
+          </div>
+        </section>
+
+        <section className="explore-section explore-reveal">
+          <div className="explore-section__head">
+            <h2 className="explore-section__title">Track activity and next steps.</h2>
+          </div>
+
+          <div className="explore-signals">
+            <section className="explore-signals__card">
+              <p className="explore-signals__label">Progress</p>
+              <div className="explore-signals__stats">
+                <div>
+                  <span>Explored works</span>
+                  <strong>{gamificationData.progress.exploredWorks}</strong>
+                </div>
+                <div>
+                  <span>Reflections saved</span>
+                  <strong>{gamificationData.progress.reflectionsSaved}</strong>
+                </div>
+                <div>
+                  <span>Active journey</span>
+                  <strong>{gamificationData.progress.activeJourney}</strong>
+                </div>
+              </div>
+
+              <div className="explore-signals__badges">
+                {gamificationData.badges.slice(0, 4).map((badge) => (
+                  <span key={badge}>{badge}</span>
+                ))}
+              </div>
+            </section>
+
+            <section className="explore-signals__card">
+              <p className="explore-signals__label">Recommended for you</p>
+              <div className="explore-signals__recommendations">
+                {recommendedWorks.map((work) => (
+                  <article key={work.id} className="explore-signals__recommendation">
+                    <p>
+                      Based on{" "}
+                      <strong>{recommendationTheme.toLowerCase()}</strong>
+                    </p>
+                    <h3>{work.title}</h3>
+                    <span>{work.author}</span>
+                    <Link to={`/reading/${work.id}`}>Open work</Link>
+                  </article>
+                ))}
+              </div>
+            </section>
+
+            <section className="explore-signals__card">
+              <p className="explore-signals__label">Community pulse</p>
+              <ul className="explore-signals__list">
+                {communityPreview.discussions.slice(0, 3).map((discussion) => (
+                  <li key={discussion}>{discussion}</li>
+                ))}
+              </ul>
+              <div className="explore-signals__footnote">
+                <span>{communityPreview.counters.comments} comments</span>
+                <span>{communityPreview.counters.likes} likes</span>
+              </div>
+            </section>
+
+            <section className="explore-signals__card">
+              <p className="explore-signals__label">Context materials</p>
+              <div className="explore-signals__media">
+                {multimediaContext.slice(0, 3).map((item) => (
+                  <article key={item.title}>
+                    <span>{item.type}</span>
+                    <h3>{item.title}</h3>
+                    <p>{item.description}</p>
+                  </article>
+                ))}
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section className="explore-cta explore-reveal">
+          <h2 className="explore-cta__title">Continue exploring the archive.</h2>
+          <p className="explore-cta__text">
+            Open more works, start a route, or continue your current progress.
+          </p>
+
+          <div className="explore-cta__actions">
+            <Link to="/explore" className="explore-cta__action is-primary">
+              Open all works
+            </Link>
+            <button
+              type="button"
+              className="explore-cta__action"
+              onClick={() => beginJourney(primaryJourney.focusTheme)}
+            >
+              Start route
+            </button>
+            <button type="button" className="explore-cta__action">
+              Create account
+            </button>
+          </div>
         </section>
       </div>
     </main>
   );
 }
-
-const styles = {
-  page: {
-    position: "relative",
-    minHeight: "100vh",
-    background: "#f8f5ef",
-    color: "#1f1f1f",
-    padding: "48px 20px 80px",
-  },
-
-  container: {
-    maxWidth: "1180px",
-    margin: "0 auto",
-  },
-
-  heroCard: {
-    display: "grid",
-    gridTemplateColumns: "1.2fr 0.8fr",
-    gap: "28px",
-    background: "rgba(255,255,255,0.68)",
-    border: "1px solid rgba(0,0,0,0.06)",
-    borderRadius: "28px",
-    padding: "28px",
-    backdropFilter: "blur(10px)",
-    marginBottom: "34px",
-  },
-
-  heroLeft: {
-    minWidth: 0,
-  },
-
-  heroRight: {
-    display: "flex",
-    alignItems: "stretch",
-  },
-
-  kicker: {
-    margin: 0,
-    fontSize: "13px",
-    letterSpacing: "0.1em",
-    textTransform: "uppercase",
-    opacity: 0.58,
-  },
-
-  title: {
-    margin: "10px 0 10px",
-    fontSize: "clamp(36px, 5vw, 58px)",
-    lineHeight: 1.02,
-    fontWeight: 700,
-    letterSpacing: "-0.03em",
-  },
-
-  subtitle: {
-    margin: 0,
-    fontSize: "17px",
-    lineHeight: 1.75,
-    opacity: 0.84,
-    maxWidth: "680px",
-  },
-
-  metaRow: {
-    display: "flex",
-    gap: "12px",
-    flexWrap: "wrap",
-    marginTop: "22px",
-  },
-
-  metaPill: {
-    display: "inline-flex",
-    alignItems: "center",
-    gap: "10px",
-    padding: "10px 14px",
-    borderRadius: "999px",
-    background: "#f3efe8",
-    border: "1px solid rgba(0,0,0,0.05)",
-  },
-
-  metaLabel: {
-    fontSize: "13px",
-    opacity: 0.6,
-  },
-
-  metaValue: {
-    fontSize: "14px",
-    fontWeight: 700,
-  },
-
-  filterPanel: {
-    width: "100%",
-    background: "#fcfbf8",
-    border: "1px solid rgba(0,0,0,0.05)",
-    borderRadius: "22px",
-    padding: "20px",
-  },
-
-  filterPanelTitle: {
-    margin: "0 0 14px",
-    fontSize: "16px",
-    fontWeight: 700,
-  },
-
-  filterBar: {
-    display: "flex",
-    gap: "10px",
-    flexWrap: "wrap",
-  },
-
-  filterBtn: {
-    padding: "10px 16px",
-    borderRadius: "999px",
-    border: "1px solid rgba(0,0,0,0.12)",
-    background: "#fff",
-    cursor: "pointer",
-    fontSize: "14px",
-    fontWeight: 600,
-    color: "#1f1f1f",
-  },
-
-  filterActive: {
-    background: "#1f1f1f",
-    color: "#fff",
-    borderColor: "#1f1f1f",
-  },
-
-  section: {
-    marginBottom: "38px",
-  },
-
-  sectionHeader: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    gap: "12px",
-    marginBottom: "16px",
-  },
-
-  sectionTitle: {
-    margin: 0,
-    fontSize: "28px",
-    fontWeight: 700,
-  },
-
-  sectionMeta: {
-    fontSize: "14px",
-    opacity: 0.58,
-  },
-
-  emptyCard: {
-    background: "rgba(255,255,255,0.64)",
-    border: "1px solid rgba(0,0,0,0.06)",
-    borderRadius: "24px",
-    padding: "28px",
-  },
-
-  emptyTitle: {
-    margin: 0,
-    fontSize: "24px",
-    fontWeight: 700,
-  },
-
-  emptyText: {
-    margin: "10px 0 0",
-    fontSize: "16px",
-    lineHeight: 1.75,
-    opacity: 0.76,
-  },
-
-  emptyBtn: {
-    marginTop: "18px",
-    padding: "12px 18px",
-    borderRadius: "12px",
-    background: "#1f1f1f",
-    color: "#fff",
-    border: "none",
-    cursor: "pointer",
-    fontWeight: 600,
-  },
-
-  grid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-    gap: "24px",
-    alignItems: "start",
-  },
-
-  card: {
-    background: "rgba(255,255,255,0.64)",
-    border: "1px solid rgba(0,0,0,0.06)",
-    borderRadius: "22px",
-    overflow: "hidden",
-    display: "flex",
-    flexDirection: "column",
-    minHeight: "100%",
-  },
-
-  imageLink: {
-    display: "block",
-    textDecoration: "none",
-  },
-
-  cardImage: {
-    height: "220px",
-    background:
-      "linear-gradient(135deg, #d9cdbd 0%, #b89f86 35%, #8e6e5b 100%)",
-    position: "relative",
-  },
-
-  cardImageOverlay: {
-    position: "absolute",
-    inset: 0,
-    background:
-      "linear-gradient(to top, rgba(18,18,18,0.45) 0%, rgba(18,18,18,0.08) 50%, rgba(18,18,18,0.02) 100%)",
-  },
-
-  cardBody: {
-    padding: "18px",
-    display: "flex",
-    flexDirection: "column",
-    gap: "10px",
-  },
-
-  themeRow: {
-    display: "flex",
-    gap: "8px",
-    flexWrap: "wrap",
-  },
-
-  themeTag: {
-    padding: "6px 12px",
-    borderRadius: "999px",
-    fontWeight: 600,
-    fontSize: "13px",
-    textDecoration: "none",
-  },
-
-  cardTitleLink: {
-    textDecoration: "none",
-    color: "#1f1f1f",
-  },
-
-  cardTitle: {
-    margin: 0,
-    fontSize: "24px",
-    lineHeight: 1.1,
-    fontWeight: 700,
-  },
-
-  authorLink: {
-    textDecoration: "none",
-    color: "#1f1f1f",
-    opacity: 0.68,
-    fontSize: "15px",
-  },
-
-  description: {
-    margin: 0,
-    fontSize: "15px",
-    lineHeight: 1.7,
-    opacity: 0.82,
-  },
-
-  cardBottom: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    gap: "12px",
-    marginTop: "6px",
-    flexWrap: "wrap",
-  },
-
-  yearPill: {
-    padding: "6px 10px",
-    borderRadius: "999px",
-    background: "#f3efe8",
-    border: "1px solid rgba(0,0,0,0.05)",
-    fontSize: "12px",
-    fontWeight: 700,
-    opacity: 0.72,
-  },
-
-  readLink: {
-    textDecoration: "none",
-    fontSize: "15px",
-    fontWeight: 600,
-    color: "#1f1f1f",
-  },
-};
 
 export default Explore;
