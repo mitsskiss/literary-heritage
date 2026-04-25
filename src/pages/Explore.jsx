@@ -1,5 +1,5 @@
 import { Link, useSearchParams } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { works } from "../data/works";
 import {
   communityPreview,
@@ -34,6 +34,7 @@ const THEME_ORDER = [
 ];
 
 function Explore() {
+  const pageRef = useRef(null);
   const [searchValue, setSearchValue] = useState("");
   const [typeFilter, setTypeFilter] = useState("all");
   const [periodFilter, setPeriodFilter] = useState("all");
@@ -123,10 +124,40 @@ function Explore() {
     handleThemeSelect("all");
   };
 
+  useEffect(() => {
+    const root = pageRef.current;
+    if (!root) return undefined;
+
+    const items = [...root.querySelectorAll(".explore-reveal")];
+    if (!items.length) return undefined;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.14,
+        rootMargin: "0px 0px -8% 0px",
+      }
+    );
+
+    items.forEach((item, index) => {
+      item.style.setProperty("--reveal-delay", `${Math.min(index * 55, 260)}ms`);
+      observer.observe(item);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <main className="explore-page">
+    <main ref={pageRef} className="explore-page">
       <div className="explore-page__container">
-        <section className="explore-hero">
+        <section className="explore-hero explore-reveal">
           <div className="explore-hero__copy">
             <h1 className="explore-hero__title">Explore Literary Worlds</h1>
             <p className="explore-hero__subtitle">
@@ -136,9 +167,14 @@ function Explore() {
           </div>
         </section>
 
-        <LiteraryTimeline />
+        <div className="explore-reveal">
+          <LiteraryTimeline />
+        </div>
 
-        <section className="explore-toolbar" aria-label="Explore filters">
+        <section
+          className="explore-toolbar explore-reveal"
+          aria-label="Explore filters"
+        >
           <div className="explore-toolbar__filters">
             <label className="explore-toolbar__search">
               <input
@@ -222,7 +258,7 @@ function Explore() {
           </div>
         </section>
 
-        <section className="explore-section">
+        <section className="explore-section explore-reveal">
           <div className="explore-section__head">
             <h2 className="explore-section__title">Begin with a route, not a list.</h2>
           </div>
@@ -265,7 +301,7 @@ function Explore() {
           </div>
         </section>
 
-        <section className="explore-section">
+        <section className="explore-section explore-reveal">
           <div className="explore-section__head">
             <h2 className="explore-section__title">
               Let one work pull you into the archive.
@@ -309,7 +345,7 @@ function Explore() {
           </div>
         </section>
 
-        <section className="explore-section">
+        <section className="explore-section explore-reveal">
           <div className="explore-section__head explore-section__head--split">
             <h2 className="explore-section__title">Readable, curated, and filtered.</h2>
             <p className="explore-section__meta">{filteredWorks.length} visible works</p>
@@ -342,7 +378,7 @@ function Explore() {
           )}
         </section>
 
-        <section className="explore-section">
+        <section className="explore-section explore-reveal">
           <div className="explore-section__head">
             <h2 className="explore-section__title">A few strong doors into the archive.</h2>
           </div>
@@ -361,7 +397,7 @@ function Explore() {
           </div>
         </section>
 
-        <section className="explore-section">
+        <section className="explore-section explore-reveal">
           <div className="explore-section__head">
             <h2 className="explore-section__title">
               Keep the supportive layer present, but quiet.
@@ -438,7 +474,7 @@ function Explore() {
           </div>
         </section>
 
-        <section className="explore-cta">
+        <section className="explore-cta explore-reveal">
           <h2 className="explore-cta__title">
             Move deeper into the archive when you are ready.
           </h2>
