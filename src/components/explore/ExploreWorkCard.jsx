@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
+import { useI18n } from "../../i18n/I18nContext";
 
 function ExploreWorkCard({ work, onThemeSelect }) {
+  const { t } = useI18n();
   return (
     <article className="explore-work-card">
       <Link to={`/reading/${work.id}`} className="explore-work-card__visualLink">
@@ -15,7 +17,7 @@ function ExploreWorkCard({ work, onThemeSelect }) {
       <div className="explore-work-card__body">
         <div className="explore-work-card__top">
           <p className="explore-work-card__period">{work.period}</p>
-          <span className="explore-work-card__time">{work.readingTime} min</span>
+          <span className="explore-work-card__time">{work.readingTime} {t("min")}</span>
         </div>
 
         <Link to={`/reading/${work.id}`} className="explore-work-card__titleLink">
@@ -23,7 +25,7 @@ function ExploreWorkCard({ work, onThemeSelect }) {
         </Link>
 
         <Link
-          to={`/author/${encodeURIComponent(work.author)}`}
+          to={`/author/${encodeURIComponent(work.canonicalAuthor ?? work.author)}`}
           className="explore-work-card__author"
         >
           {work.author}
@@ -47,10 +49,10 @@ function ExploreWorkCard({ work, onThemeSelect }) {
 
         <div className="explore-work-card__footer">
           <span className="explore-work-card__progress">
-            {Math.min(100, work.fragments.length * 28)}% route ready
+            {t("routeReady", { percent: Math.min(100, work.fragments.length * 28) })}
           </span>
           <Link to={`/reading/${work.id}`} className="explore-work-card__action">
-            Open work
+            {t("openWork")}
           </Link>
         </div>
       </div>

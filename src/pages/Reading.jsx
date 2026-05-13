@@ -9,12 +9,14 @@ import {
 } from "../data/stories";
 import { useProgressStore } from "../store/useProgressStore";
 import "./Reading.css";
+import { useI18n } from "../i18n/I18nContext";
 
 function Reading() {
+  const { t, localizeMetadata, localizeStoryBook, localizeWork } = useI18n();
   const { id } = useParams();
-  const work = works.find((item) => item.id === id);
-  const metadata = workMetadataById[id];
-  const storyBook = getStoryBookByWorkId(id);
+  const work = localizeWork(works.find((item) => item.id === id));
+  const metadata = localizeMetadata(id, workMetadataById[id]);
+  const storyBook = localizeStoryBook(getStoryBookByWorkId(id));
   const { xp, level, streak, storyProgress, migrateLegacyProgress } =
     useProgressStore();
 
@@ -27,12 +29,12 @@ function Reading() {
       <main className="reading-book-page">
         <div className="reading-book-page__container">
           <div className="reading-book-fallback">
-            <h1 className="reading-book-fallback__title">Work not found</h1>
+            <h1 className="reading-book-fallback__title">{t("workNotFound")}</h1>
             <p className="reading-book-fallback__text">
-              We could not find this literary work in the archive.
+              {t("workNotFoundText")}
             </p>
             <Link to="/explore" className="reading-book-fallback__action">
-              Back to explore
+              {t("backToExplore")}
             </Link>
           </div>
         </div>
@@ -45,17 +47,16 @@ function Reading() {
       <main className="reading-book-page">
         <div className="reading-book-page__container">
           <Link to="/explore" className="reading-book-page__backLink">
-            Back to explore
+            {t("backToExplore")}
           </Link>
 
           <div className="reading-book-fallback">
             <h1 className="reading-book-fallback__title">{work.title}</h1>
             <p className="reading-book-fallback__text">
-              This work is already part of the archive, but its chapter-based
-              interactive reading route has not been prepared yet.
+              {t("routeNotPrepared")}
             </p>
             <Link to="/explore" className="reading-book-fallback__action">
-              Return to archive
+              {t("returnArchive")}
             </Link>
           </div>
         </div>
@@ -95,7 +96,7 @@ function Reading() {
     <main className="reading-book-page">
       <div className="reading-book-page__container">
         <Link to="/explore" className="reading-book-page__backLink">
-          Back to explore
+          {t("backToExplore")}
         </Link>
 
         <section className="reading-book-hero">
@@ -108,9 +109,9 @@ function Reading() {
 
           <div className="reading-book-hero__content">
             <div className="reading-book-hero__topline">
-              <span>{metadata?.period ?? "Literary archive"}</span>
-              <span>{metadata?.type ?? "Work"}</span>
-              <span>{storyBook.totalMinutes} min route</span>
+              <span>{metadata?.period ?? t("literaryArchive")}</span>
+              <span>{metadata?.type ?? t("work")}</span>
+              <span>{t("minRoute", { count: storyBook.totalMinutes })}</span>
             </div>
 
             <h1 className="reading-book-hero__title">{work.title}</h1>
@@ -120,19 +121,19 @@ function Reading() {
 
             <div className="reading-book-hero__metrics">
               <article>
-                <span>Chapters</span>
+                <span>{t("chapters")}</span>
                 <strong>{storyBook.chapters.length}</strong>
               </article>
               <article>
-                <span>Scenes</span>
+                <span>{t("scenes")}</span>
                 <strong>{storyBook.totalScenes}</strong>
               </article>
               <article>
-                <span>XP route</span>
+                <span>{t("xpRoute")}</span>
                 <strong>{storyBook.totalXp}</strong>
               </article>
               <article>
-                <span>Your XP</span>
+                <span>{t("yourXp")}</span>
                 <strong>{xp}</strong>
               </article>
             </div>
@@ -143,11 +144,11 @@ function Reading() {
                 className="reading-book-hero__action is-primary"
               >
                 {nextChapter.isStarted && !nextChapter.isCompleted
-                  ? "Continue reading"
-                  : "Start reading"}
+                  ? t("continueReading")
+                  : t("startReading")}
               </Link>
               <Link to="/progress" className="reading-book-hero__action">
-                View progress
+                {t("viewProgress")}
               </Link>
             </div>
 
@@ -161,11 +162,11 @@ function Reading() {
 
         <section className="reading-book-summary">
           <article className="reading-book-summary__card">
-            <p className="reading-book-summary__label">Route progress</p>
+            <p className="reading-book-summary__label">{t("routeProgress")}</p>
             <div className="reading-book-summary__row">
               <h2>{progressPercent}%</h2>
               <span>
-                {completedChapters.length} of {chapterCards.length} chapters completed
+                {t("chaptersCompleted", { done: completedChapters.length, total: chapterCards.length })}
               </span>
             </div>
             <div className="reading-book-summary__track" aria-hidden="true">
@@ -177,20 +178,20 @@ function Reading() {
           </article>
 
           <article className="reading-book-summary__card">
-            <p className="reading-book-summary__label">Reader state</p>
+            <p className="reading-book-summary__label">{t("readerState")}</p>
             <div className="reading-book-summary__meta">
-              <span>Level {level}</span>
-              <span>{streak} day streak</span>
-              <span>{metadata?.mood ?? "Reflective"} tone</span>
+              <span>{t("levelValue", { level })}</span>
+              <span>{t("dayStreak", { count: streak })}</span>
+              <span>{t("tone", { mood: metadata?.mood ?? "Reflective" })}</span>
             </div>
           </article>
         </section>
 
         <section className="reading-book-chapters">
           <div className="reading-book-chapters__head">
-            <h2 className="reading-book-chapters__title">Chapter route</h2>
+            <h2 className="reading-book-chapters__title">{t("chapterRoute")}</h2>
             <p className="reading-book-chapters__meta">
-              Move chapter by chapter through the work.
+              {t("chapterRouteText")}
             </p>
           </div>
 
@@ -199,14 +200,14 @@ function Reading() {
               <article key={chapter.id} className="reading-chapter-card">
                 <div className="reading-chapter-card__top">
                   <p className="reading-chapter-card__eyebrow">
-                    Chapter {chapter.chapterNumber}
+                    {t("chapter", { number: chapter.chapterNumber })}
                   </p>
                   <span className={`reading-chapter-card__state ${chapter.isCompleted ? "is-complete" : ""}`}>
                     {chapter.isCompleted
-                      ? "Completed"
+                      ? t("completed")
                       : chapter.isStarted
-                        ? `Scene ${chapter.currentScene} of ${chapter.scenes.length}`
-                        : "Not started"}
+                        ? t("sceneOf", { current: chapter.currentScene, total: chapter.scenes.length })
+                        : t("notStarted")}
                   </span>
                 </div>
 
@@ -214,8 +215,8 @@ function Reading() {
                 <p className="reading-chapter-card__text">{chapter.tagline}</p>
 
                 <div className="reading-chapter-card__meta">
-                  <span>{chapter.scenes.length} scenes</span>
-                  <span>{chapter.estimatedMinutes} min</span>
+                  <span>{chapter.scenes.length} {t("scenes").toLowerCase()}</span>
+                  <span>{chapter.estimatedMinutes} {t("min")}</span>
                   <span>{chapter.completionXp} XP</span>
                 </div>
 
@@ -224,10 +225,10 @@ function Reading() {
                   className="reading-chapter-card__action"
                 >
                   {chapter.isCompleted
-                    ? "Replay chapter"
+                    ? t("replayChapter")
                     : chapter.isStarted
-                      ? "Continue chapter"
-                      : "Open chapter"}
+                      ? t("continueChapter")
+                      : t("openChapter")}
                 </Link>
               </article>
             ))}

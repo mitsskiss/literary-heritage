@@ -1,24 +1,28 @@
 import { useParams, Link } from "react-router-dom";
 import { works } from "../data/works";
 import { authors } from "../data/authors";
+import { useI18n } from "../i18n/I18nContext";
 
 function Author() {
+  const { t, localizeAuthors, localizeWorks } = useI18n();
   const { name } = useParams();
 
-  const authorInfo = authors.find((a) => a.name === name);
-  const authorWorks = works.filter((w) => w.author === name);
+  const localizedAuthors = localizeAuthors(authors);
+  const localizedWorks = localizeWorks(works);
+  const authorInfo = localizedAuthors.find((a) => a.canonicalName === name);
+  const authorWorks = localizedWorks.filter((w) => w.canonicalAuthor === name);
 
   if (!authorInfo || !authorWorks.length) {
     return (
       <main style={styles.page}>
         <div style={styles.container}>
           <div style={styles.notFoundBox}>
-            <h2 style={styles.notFoundTitle}>Author not found</h2>
+            <h2 style={styles.notFoundTitle}>{t("authorNotFound")}</h2>
             <p style={styles.notFoundText}>
-              We could not find this author in the current collection.
+              {t("authorNotFoundText")}
             </p>
             <Link to="/authors" style={styles.backBtn}>
-              Back to authors
+              {t("backToAuthors")}
             </Link>
           </div>
         </div>
@@ -61,7 +65,7 @@ function Author() {
     <main className="author-page" style={styles.page}>
       <div style={styles.container}>
         <Link to="/authors" style={styles.topBackLink}>
-          ← Back to authors
+          &lt; {t("backToAuthors")}
         </Link>
 
         <section style={styles.heroCard}>
@@ -85,7 +89,7 @@ function Author() {
           </div>
 
           <div style={styles.heroRight}>
-            <p style={styles.kicker}>LITERARY PROFILE</p>
+            <p style={styles.kicker}>{t("literaryProfile")}</p>
             <h1 style={styles.title}>{authorInfo.name}</h1>
 
             {authorInfo.period && (
@@ -96,12 +100,12 @@ function Author() {
 
             <div style={styles.metaRow}>
               <div style={styles.metaPill}>
-                <span style={styles.metaLabel}>Works</span>
+                <span style={styles.metaLabel}>{t("works")}</span>
                 <span style={styles.metaValue}>{authorWorks.length}</span>
               </div>
 
               <div style={styles.metaPill}>
-                <span style={styles.metaLabel}>Themes</span>
+                <span style={styles.metaLabel}>{t("themes")}</span>
                 <span style={styles.metaValue}>{themes.length}</span>
               </div>
             </div>
@@ -110,7 +114,7 @@ function Author() {
 
         <section style={styles.section}>
           <div style={styles.sectionHeader}>
-            <h2 style={styles.sectionTitle}>Themes explored</h2>
+            <h2 style={styles.sectionTitle}>{t("themesExplored")}</h2>
           </div>
 
           <div style={styles.themeRow}>
@@ -125,7 +129,7 @@ function Author() {
         {philosophyNotes.length > 0 && (
           <section style={styles.section}>
             <div style={styles.sectionHeader}>
-              <h2 style={styles.sectionTitle}>Philosophy focus</h2>
+              <h2 style={styles.sectionTitle}>{t("philosophyFocus")}</h2>
             </div>
 
             <div style={styles.philosophyCard}>
@@ -146,7 +150,7 @@ function Author() {
 
         <section style={styles.section}>
           <div style={styles.sectionHeader}>
-            <h2 style={styles.sectionTitle}>Evolution of ideas</h2>
+            <h2 style={styles.sectionTitle}>{t("evolutionIdeas")}</h2>
           </div>
 
           <div style={styles.timeline}>
@@ -178,7 +182,7 @@ function Author() {
 
         <section style={styles.section}>
           <div style={styles.sectionHeader}>
-            <h2 style={styles.sectionTitle}>Works</h2>
+            <h2 style={styles.sectionTitle}>{t("works")}</h2>
           </div>
 
           <div style={styles.worksGrid}>
@@ -201,7 +205,7 @@ function Author() {
                 </div>
 
                 <div style={styles.workBody}>
-                  <div style={styles.workYear}>{work.year || "Unknown year"}</div>
+                  <div style={styles.workYear}>{work.year || t("unknownYear")}</div>
                   <h3 style={styles.workTitle}>{work.title}</h3>
                   <p style={styles.workDesc}>{work.description}</p>
 
@@ -213,7 +217,9 @@ function Author() {
                     ))}
                   </div>
 
-                  <span style={styles.workLink}>Open work →</span>
+                  <span style={styles.workLink}>
+                    {t("openWork")} <span>&gt;</span>
+                  </span>
                 </div>
               </Link>
             ))}
@@ -581,3 +587,4 @@ const styles = {
 };
 
 export default Author;
+

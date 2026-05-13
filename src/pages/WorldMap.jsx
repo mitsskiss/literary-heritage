@@ -7,12 +7,14 @@ import {
   mapCategoryMeta,
 } from "../data/literaryWorldMap";
 import "./WorldMap.css";
+import { useI18n } from "../i18n/I18nContext";
 
 function clamp(value, min, max) {
   return Math.min(Math.max(value, min), max);
 }
 
 function WorldMap() {
+  const { t, localizeMapCategory, localizeMapMarker, localizeWork } = useI18n();
   const [selectedYear, setSelectedYear] = useState(mapBounds.defaultYear);
   const [hoveredMarkerId, setHoveredMarkerId] = useState(null);
   const [selectedMarkerId, setSelectedMarkerId] = useState(null);
@@ -20,9 +22,25 @@ function WorldMap() {
   const [pan, setPan] = useState({ x: 0, y: 0 });
   const [dragState, setDragState] = useState(null);
 
+  const localizedMarkers = useMemo(
+    () =>
+      literaryWorldMarkers.map((marker) => {
+        const work = localizeWork(marker);
+        const localizedMarker = localizeMapMarker(marker);
+        return {
+          ...localizedMarker,
+          name: work.title,
+          author: work.author,
+          description: work.description,
+          themes: work.themes,
+        };
+      }),
+    [localizeWork]
+  );
+
   const visibleMarkers = useMemo(
-    () => literaryWorldMarkers.filter((marker) => marker.startYear <= selectedYear),
-    [selectedYear]
+    () => localizedMarkers.filter((marker) => marker.startYear <= selectedYear),
+    [localizedMarkers, selectedYear]
   );
 
   useEffect(() => {
@@ -84,15 +102,16 @@ function WorldMap() {
         <section className="world-map-shell">
           <header className="world-map-shell__top">
             <div className="world-map-shell__copy">
-              <h1 className="world-map-shell__title">Literary World Map</h1>
+              <h1 className="world-map-shell__title">{t("mapTitle")}</h1>
               <p className="world-map-shell__subtitle">
-                See where project books were written or published. Move the year
-                slider to show entries by time.
+                {t("mapSubtitle")}
               </p>
             </div>
 
-            <div className="world-map-shell__legend" aria-label="Category legend">
-              {Object.entries(mapCategoryMeta).map(([key, meta]) => (
+            <div className="world-map-shell__legend" aria-label={t("categoryLegend")}>
+              {Object.entries(mapCategoryMeta).map(([key, rawMeta]) => {
+                const meta = localizeMapCategory(key, rawMeta);
+                return (
                 <div key={key} className="world-map-shell__legendItem">
                   <span
                     className="world-map-shell__legendDot"
@@ -100,7 +119,8 @@ function WorldMap() {
                   />
                   <span>{meta.label}</span>
                 </div>
-              ))}
+                );
+              })}
             </div>
           </header>
 
@@ -113,7 +133,7 @@ function WorldMap() {
                     event.stopPropagation();
                     changeZoom(1);
                   }}
-                  aria-label="Zoom in"
+                  aria-label={t("zoomIn")}
                 >
                   +
                 </button>
@@ -123,7 +143,7 @@ function WorldMap() {
                     event.stopPropagation();
                     changeZoom(-1);
                   }}
-                  aria-label="Zoom out"
+                  aria-label={t("zoomOut")}
                 >
                   -
                 </button>
@@ -134,9 +154,9 @@ function WorldMap() {
                     setZoom(1);
                     setPan({ x: 0, y: 0 });
                   }}
-                  aria-label="Reset map view"
+                  aria-label={t("resetMap")}
                 >
-                  Center
+                  {t("center")}
                 </button>
               </div>
 
@@ -158,8 +178,8 @@ function WorldMap() {
                   <div className="world-map-stage__map" aria-hidden="true" />
                   <div className="world-map-stage__grid" aria-hidden="true" />
 
-                  {literaryWorldMarkers.map((marker) => {
-                    const meta = mapCategoryMeta[marker.category];
+                  {localizedMarkers.map((marker) => {
+                    const meta = localizeMapCategory(marker.category, mapCategoryMeta[marker.category]);
                     const isHovered = hoveredMarkerId === marker.id;
                     const isSelected = selectedMarkerId === marker.id;
                     const isVisible = marker.startYear <= selectedYear;
@@ -189,7 +209,7 @@ function WorldMap() {
                           if (isVisible) setSelectedMarkerId(marker.id);
                         }}
                         disabled={!isVisible}
-                        aria-label={`Open ${marker.name}`}
+                        aria-label={t("openMarker", { name: marker.name })}
                       >
                         <span className="world-map-marker__book" aria-hidden="true">
                           <span />
@@ -221,7 +241,7 @@ function WorldMap() {
                   max={mapBounds.maxYear}
                   value={selectedYear}
                   onChange={(event) => setSelectedYear(Number(event.target.value))}
-                  aria-label="Literary timeline"
+                  aria-label={t("literaryMapTimeline")}
                 />
               </div>
             </section>
@@ -235,7 +255,7 @@ function WorldMap() {
                   type="button"
                   className="world-map-panel__close"
                   onClick={closePanelFromControl}
-                  aria-label="Close book panel"
+                  aria-label={t("closeBookPanel")}
                 >
                   x
                 </button>
@@ -253,12 +273,14 @@ function WorldMap() {
                   <p className="world-map-panel__bio">{selectedMarker.context}</p>
 
                   <div className="world-map-panel__meta">
-                    <span>{mapCategoryMeta[selectedMarker.category].label}</span>
+                    <span>
+                      {localizeMapCategory(selectedMarker.category, mapCategoryMeta[selectedMarker.category]).label}
+                    </span>
                     <span>{selectedMarker.city}</span>
                   </div>
 
                   <div className="world-map-panel__works">
-                    <p className="world-map-panel__worksLabel">Book info</p>
+                    <p className="world-map-panel__worksLabel">{t("bookInfo")}</p>
                     <ul>
                       <li>{selectedMarker.originNote}</li>
                       <li>{selectedMarker.themes.join(", ")}</li>
@@ -269,7 +291,7 @@ function WorldMap() {
                     to={`/reading/${selectedMarker.workId}`}
                     className="world-map-panel__action"
                   >
-                    Open book
+                    {t("openBook")}
                   </Link>
                 </div>
               </aside>

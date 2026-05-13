@@ -8,12 +8,14 @@ import {
 } from "../data/stories";
 import { useProgressStore } from "../store/useProgressStore";
 import "./ChapterReading.css";
+import { useI18n } from "../i18n/I18nContext";
 
 function ChapterReading() {
+  const { t, localizeStory, localizeStoryBook, localizeWork } = useI18n();
   const { id, chapterNumber } = useParams();
-  const work = works.find((item) => item.id === id);
-  const storyBook = getStoryBookByWorkId(id);
-  const chapter = getStoryChapterByWorkAndNumber(id, chapterNumber);
+  const work = localizeWork(works.find((item) => item.id === id));
+  const storyBook = localizeStoryBook(getStoryBookByWorkId(id));
+  const chapter = localizeStory(getStoryChapterByWorkAndNumber(id, chapterNumber));
 
   const {
     xp,
@@ -42,12 +44,12 @@ function ChapterReading() {
       <main className="chapter-page">
         <div className="chapter-page__container">
           <div className="chapter-fallback">
-            <h1 className="chapter-fallback__title">Chapter not found</h1>
+            <h1 className="chapter-fallback__title">{t("chapterNotFound")}</h1>
             <p className="chapter-fallback__text">
-              This reading route could not be opened from the current archive.
+              {t("chapterNotFoundText")}
             </p>
             <Link to="/explore" className="chapter-fallback__action">
-              Back to explore
+              {t("backToExplore")}
             </Link>
           </div>
         </div>
@@ -150,14 +152,14 @@ function ChapterReading() {
 
         <section className="chapter-topbar">
           <div className="chapter-topbar__header">
-            <Link to={`/reading/${work.id}`} className="chapter-topbar__backButton" aria-label="Back to book page">
+            <Link to={`/reading/${work.id}`} className="chapter-topbar__backButton" aria-label={t("backToBookPage")}>
               ‹
             </Link>
 
             <div className="chapter-topbar__main">
               <h1 className="chapter-topbar__title">{work.title}</h1>
               <p className="chapter-topbar__subtitle">
-                Chapter {chapter.chapterNumber} · {chapter.chapterTitle}
+                {t("chapter", { number: chapter.chapterNumber })} · {chapter.chapterTitle}
               </p>
             </div>
           </div>
@@ -165,8 +167,8 @@ function ChapterReading() {
           <div className="chapter-topbar__status">
             <div className="chapter-topbar__progressBlock">
               <div className="chapter-topbar__progressLabels">
-                <span>Scene {visibleSceneNumber} of {chapter.scenes.length}</span>
-                <span>{chapterProgressPercent}% route</span>
+                <span>{t("sceneOf", { current: visibleSceneNumber, total: chapter.scenes.length })}</span>
+                <span>{t("routePercent", { percent: chapterProgressPercent })}</span>
               </div>
               <div className="chapter-topbar__progressTrack" aria-hidden="true">
                 <div
@@ -204,17 +206,17 @@ function ChapterReading() {
 
         {isCompleted ? (
           <section className="chapter-completion">
-            <p className="chapter-completion__eyebrow">Chapter complete</p>
+            <p className="chapter-completion__eyebrow">{t("chapterComplete")}</p>
             <h2 className="chapter-completion__title">
-              {chapter.chapterTitle} is complete
+              {t("isComplete", { title: chapter.chapterTitle })}
             </h2>
             <div className="chapter-completion__stats">
               <article>
-                <span>XP earned</span>
+                <span>{t("xpEarned")}</span>
                 <strong>{progress.earnedXp}</strong>
               </article>
               <article>
-                <span>Correct answers</span>
+                <span>{t("correctAnswers")}</span>
                 <strong>
                   {correctAnswers}/{chapter.scenes.length}
                 </strong>
@@ -227,31 +229,31 @@ function ChapterReading() {
                   to={getChapterPath(work.id, nextChapter.chapterNumber)}
                   className="chapter-completion__action is-primary"
                 >
-                  To the next chapter
+                  {t("nextChapter")}
                 </Link>
               ) : (
                 <Link
                   to={`/reading/${work.id}`}
                   className="chapter-completion__action is-primary"
                 >
-                  Return to book
+                  {t("returnToBook")}
                 </Link>
               )}
 
               <Link to="/progress" className="chapter-completion__action">
-                View progress
+                {t("viewProgress")}
               </Link>
             </div>
           </section>
         ) : (
           <article className="chapter-sceneCard">
             <div className="chapter-sceneCard__head">
-              <p className="chapter-sceneCard__eyebrow">Scene focus</p>
+              <p className="chapter-sceneCard__eyebrow">{t("sceneFocus")}</p>
               <h2 className="chapter-sceneCard__title">{currentScene.title}</h2>
             </div>
 
             <section className="chapter-sceneCard__section">
-              <p className="chapter-sceneCard__label">Context</p>
+              <p className="chapter-sceneCard__label">{t("context")}</p>
               <div className="chapter-sceneCard__text">
                 {currentScene.context.map((paragraph) => (
                   <p key={paragraph}>{paragraph}</p>
@@ -260,12 +262,12 @@ function ChapterReading() {
             </section>
 
             <section className="chapter-sceneCard__section">
-              <p className="chapter-sceneCard__label">Question</p>
+              <p className="chapter-sceneCard__label">{t("question")}</p>
               <p className="chapter-sceneCard__question">{currentScene.prompt}</p>
             </section>
 
             <section className="chapter-sceneCard__section">
-              <p className="chapter-sceneCard__label">Options</p>
+              <p className="chapter-sceneCard__label">{t("options")}</p>
               <div className="chapter-sceneCard__choices" role="list">
                 {currentScene.choices.map((choice) => (
                   <button
@@ -291,7 +293,7 @@ function ChapterReading() {
               <section className="chapter-result">
                 <div className="chapter-result__top">
                   <div>
-                    <p className="chapter-result__label">Result</p>
+                    <p className="chapter-result__label">{t("result")}</p>
                     <h3 className={`chapter-result__status is-${selectedChoice.result.tone}`}>
                       {selectedChoice.result.status}
                     </h3>
@@ -301,12 +303,12 @@ function ChapterReading() {
 
                 <div className="chapter-result__grid">
                   <article className="chapter-result__card">
-                    <p className="chapter-result__cardLabel">Explanation</p>
+                    <p className="chapter-result__cardLabel">{t("explanation")}</p>
                     <p>{selectedChoice.result.explanation}</p>
                   </article>
                   <article className="chapter-result__card">
                     <p className="chapter-result__cardLabel">
-                      How it appears in the work
+                      {t("appearsInWork")}
                     </p>
                     <p>{selectedChoice.result.canonNote}</p>
                   </article>
@@ -318,7 +320,7 @@ function ChapterReading() {
                     className="chapter-result__action"
                     onClick={handleContinue}
                   >
-                    {isLastScene ? "Finish chapter" : "Next"}
+                    {isLastScene ? t("finishChapter") : t("next")}
                   </button>
                 </div>
               </section>

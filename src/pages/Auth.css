@@ -1,0 +1,141 @@
+.auth-page {
+  min-height: 100vh;
+  padding: 120px 20px 80px;
+  background: var(--page-bg);
+  color: var(--text);
+}
+
+.auth-page__container {
+  width: min(100%, 980px);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(320px, 1fr);
+  gap: 28px;
+  align-items: start;
+}
+
+.auth-page__intro {
+  padding: 28px 0;
+}
+
+.auth-page__eyebrow {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.auth-page__title {
+  margin: 12px 0 0;
+  font-size: clamp(42px, 6vw, 72px);
+  line-height: 1.02;
+}
+
+.auth-page__text {
+  margin: 18px 0 0;
+  color: var(--text-muted);
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+.auth-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 26px;
+  box-shadow: 0 18px 42px var(--shadow);
+}
+
+.auth-card__tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.auth-card__tab,
+.auth-card__submit,
+.auth-card__link {
+  min-height: 44px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.auth-card__tab {
+  background: transparent;
+  color: var(--text);
+}
+
+.auth-card__tab.is-active,
+.auth-card__submit {
+  background: var(--text);
+  color: var(--page-bg);
+}
+
+.auth-card__form {
+  display: grid;
+  gap: 14px;
+}
+
+.auth-card__field {
+  display: grid;
+  gap: 8px;
+  color: var(--text-muted);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.auth-card__field input {
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface-strong);
+  color: var(--text);
+  padding: 0 14px;
+  font: inherit;
+}
+
+.auth-card__message {
+  margin: 2px 0 0;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(43, 106, 97, 0.1);
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.auth-card__message.is-error {
+  background: rgba(180, 54, 54, 0.14);
+}
+
+.auth-card__config {
+  display: grid;
+  gap: 14px;
+}
+
+.auth-card__config code {
+  display: block;
+  white-space: pre-wrap;
+  padding: 14px;
+  border-radius: 14px;
+  background: var(--surface-strong);
+  color: var(--text);
+}
+
+.auth-card__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: var(--text);
+}
+
+@media (max-width: 820px) {
+  .auth-page__container {
+    grid-template-columns: 1fr;
+  }
+}

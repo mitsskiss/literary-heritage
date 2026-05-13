@@ -1,6 +1,7 @@
-import React, { useCallback, useLayoutEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { gsap } from "gsap";
+import { useI18n } from "../i18n/I18nContext";
 import "./StaggeredMenu.css";
 
 function StaggeredMenu({
@@ -17,9 +18,14 @@ function StaggeredMenu({
   changeMenuColorOnOpen = true,
   isFixed = false,
   closeOnClickAway = true,
+  menuText = "Menu",
+  closeText = "Close",
+  openLabel = "Open menu",
+  closeLabel = "Close menu",
   onMenuOpen,
   onMenuClose,
 }) {
+  const { t } = useI18n();
   const [open, setOpen] = useState(false);
   const openRef = useRef(false);
   const panelRef = useRef(null);
@@ -29,7 +35,13 @@ function StaggeredMenu({
   const plusVRef = useRef(null);
   const iconRef = useRef(null);
   const textInnerRef = useRef(null);
-  const [textLines, setTextLines] = useState(["Menu", "Close"]);
+  const [textLines, setTextLines] = useState([menuText, closeText]);
+
+  useEffect(() => {
+    if (!openRef.current) {
+      setTextLines([menuText, closeText]);
+    }
+  }, [closeText, menuText]);
 
   const openTlRef = useRef(null);
   const closeTweenRef = useRef(null);
@@ -162,8 +174,8 @@ function StaggeredMenu({
     if (!inner) return;
 
     const sequence = opening
-      ? ["Menu", "Close", "Menu", "Close", "Close"]
-      : ["Close", "Menu", "Close", "Menu", "Menu"];
+      ? [menuText, closeText, menuText, closeText, closeText]
+      : [closeText, menuText, closeText, menuText, menuText];
 
     setTextLines(sequence);
     gsap.set(inner, { yPercent: 0 });
@@ -173,7 +185,7 @@ function StaggeredMenu({
       duration: 0.72,
       ease: "power4.out",
     });
-  }, []);
+  }, [closeText, menuText]);
 
   const toggleMenu = useCallback(() => {
     const target = !openRef.current;
@@ -232,7 +244,7 @@ function StaggeredMenu({
       <button
         type="button"
         className="sm-overlay"
-        aria-label="Close menu overlay"
+        aria-label={t("closeMenuOverlay")}
         onClick={closeMenu}
       />
 
@@ -245,7 +257,7 @@ function StaggeredMenu({
       <button
         ref={toggleBtnRef}
         className="sm-toggle"
-        aria-label={open ? "Close menu" : "Open menu"}
+        aria-label={open ? closeLabel : openLabel}
         aria-expanded={open}
         onClick={toggleMenu}
         type="button"
@@ -284,8 +296,8 @@ function StaggeredMenu({
           </ul>
 
           {displaySocials && socialItems.length > 0 ? (
-            <div className="sm-socials" aria-label="Social links">
-              <h3 className="sm-socials-title">Socials</h3>
+            <div className="sm-socials" aria-label={t("socialLinks")}>
+              <h3 className="sm-socials-title">{t("socials")}</h3>
               <ul className="sm-socials-list" role="list">
                 {socialItems.map((item) => (
                   <li key={item.link} className="sm-socials-item">

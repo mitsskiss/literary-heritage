@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import { useI18n } from "../i18n/I18nContext";
 import "./PillNav.css";
 
 function PillNav({
@@ -9,6 +10,7 @@ function PillNav({
   hoveredPillTextColor = "#f7f1e8",
   pillTextColor = "#163a35",
 }) {
+  const { t } = useI18n();
   return (
     <div
       className={`pill-nav-container ${className}`.trim()}
@@ -19,7 +21,7 @@ function PillNav({
         "--pill-text": pillTextColor,
       }}
     >
-      <nav className="pill-nav" aria-label="Desktop navigation">
+      <nav className="pill-nav" aria-label={t("desktopNavigation")}>
         <div className="pill-nav-items">
           <ul className="pill-list">
             {items.map((item) => (

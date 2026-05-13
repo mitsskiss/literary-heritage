@@ -1,6 +1,9 @@
+import { useI18n } from "../../i18n/I18nContext";
+
 function StoryChoices({ choices, selectedChoiceId, onSelect }) {
+  const { t } = useI18n();
   return (
-    <div className="story-choices" role="list" aria-label="Scene choices">
+    <div className="story-choices" role="list" aria-label={t("sceneChoices")}>
       {choices.map((choice) => {
         const isSelected = selectedChoiceId === choice.id;
 

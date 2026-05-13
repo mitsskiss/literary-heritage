@@ -1,4 +1,7 @@
+import { useI18n } from "../../i18n/I18nContext";
+
 function ThemeCard({ theme, relatedWorks, onExplore }) {
+  const { t } = useI18n();
   return (
     <article className="explore-theme-card">
       <h3 className="explore-theme-card__title">{theme.name}</h3>
@@ -11,7 +14,7 @@ function ThemeCard({ theme, relatedWorks, onExplore }) {
       </ul>
 
       <button type="button" className="explore-theme-card__button" onClick={onExplore}>
-        Open theme
+        {t("openTheme")}
       </button>
     </article>
   );

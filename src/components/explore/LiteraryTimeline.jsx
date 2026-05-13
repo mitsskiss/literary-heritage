@@ -4,6 +4,7 @@ import {
   literaryTimelineEntries,
   timelineBounds,
 } from "../../data/literaryTimeline";
+import { useI18n } from "../../i18n/I18nContext";
 
 function clamp(value, min, max) {
   return Math.min(Math.max(value, min), max);
@@ -14,17 +15,18 @@ function easeOutCubic(value) {
 }
 
 function LiteraryTimeline() {
+  const { t, localizeTimelineEntries } = useI18n();
   const scrollerRef = useRef(null);
   const animationFrameRef = useRef(null);
   const yearAnimationFrameRef = useRef(null);
   const displayYearRef = useRef(timelineBounds.defaultYear);
   const orderedEntries = useMemo(
     () =>
-      [...literaryTimelineEntries].sort((left, right) => {
+      localizeTimelineEntries(literaryTimelineEntries).sort((left, right) => {
         if (left.year !== right.year) return left.year - right.year;
         return left.title.localeCompare(right.title);
       }),
-    []
+    [localizeTimelineEntries]
   );
   const [timelineYear, setTimelineYear] = useState(timelineBounds.defaultYear);
   const [displayYear, setDisplayYear] = useState(timelineBounds.defaultYear);
@@ -191,16 +193,15 @@ function LiteraryTimeline() {
     <section className="explore-timeline">
       <div className="explore-timeline__top">
         <div className="explore-timeline__copy">
-          <p className="explore-timeline__eyebrow">Timeline</p>
-          <h2 className="explore-timeline__title">Browse literary history by year.</h2>
+          <p className="explore-timeline__eyebrow">{t("timeline")}</p>
+          <h2 className="explore-timeline__title">{t("browseHistory")}</h2>
           <p className="explore-timeline__subtitle">
-            View books, authors, and literary movements in one timeline. Use the
-            slider or arrows to move between entries.
+            {t("timelineSubtitle")}
           </p>
         </div>
 
         <div key={selectedEntry?.id} className="explore-timeline__panel">
-          <p className="explore-timeline__panelLabel">Selected item</p>
+          <p className="explore-timeline__panelLabel">{t("selectedItem")}</p>
           <h3 className="explore-timeline__panelTitle">
             {selectedEntry?.detailsTitle}
           </h3>
@@ -218,7 +219,7 @@ function LiteraryTimeline() {
             to={selectedEntry?.href ?? "/explore"}
             className="explore-timeline__panelAction"
           >
-            {selectedEntry?.ctaLabel ?? "Explore"}
+            {selectedEntry?.ctaLabel ?? t("explore")}
           </Link>
         </div>
       </div>
@@ -228,7 +229,7 @@ function LiteraryTimeline() {
           type="button"
           className="explore-timeline__nav"
           onClick={() => moveSelection(-1)}
-          aria-label="Scroll timeline left"
+          aria-label={t("timelineLeft")}
         >
           ←
         </button>
@@ -246,7 +247,7 @@ function LiteraryTimeline() {
             max={timelineBounds.max}
             value={displayYear}
             onChange={handleYearChange}
-            aria-label="Literary history timeline"
+            aria-label={t("historyTimeline")}
           />
         </div>
 
@@ -254,7 +255,7 @@ function LiteraryTimeline() {
           type="button"
           className="explore-timeline__nav"
           onClick={() => moveSelection(1)}
-          aria-label="Scroll timeline right"
+          aria-label={t("timelineRight")}
         >
           →
         </button>

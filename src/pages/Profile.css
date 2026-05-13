@@ -1,0 +1,130 @@
+.profile-page {
+  min-height: 100vh;
+  padding: 120px 20px 80px;
+  background: var(--page-bg);
+  color: var(--text);
+}
+
+.profile-page__container {
+  width: min(100%, 1120px);
+  margin: 0 auto;
+}
+
+.profile-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 24px;
+  align-items: end;
+  margin-bottom: 28px;
+}
+
+.profile-hero__eyebrow {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.profile-hero__title {
+  margin: 10px 0 0;
+  font-size: clamp(42px, 6vw, 72px);
+  line-height: 1.02;
+}
+
+.profile-hero__text {
+  margin: 14px 0 0;
+  max-width: 680px;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.profile-hero__actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.profile-button {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--text);
+  color: var(--page-bg);
+  text-decoration: none;
+  padding: 0 18px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.profile-button.is-secondary {
+  background: transparent;
+  color: var(--text);
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.profile-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  padding: 22px;
+  box-shadow: 0 18px 42px var(--shadow);
+}
+
+.profile-card__label {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.profile-card__value {
+  margin: 10px 0 0;
+  font-size: 30px;
+}
+
+.profile-section {
+  margin-top: 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  padding: 22px;
+}
+
+.profile-section h2 {
+  margin: 0 0 14px;
+}
+
+.profile-badges {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.profile-badges span {
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: var(--surface-strong);
+  border: 1px solid var(--border);
+}
+
+@media (max-width: 760px) {
+  .profile-hero,
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-hero__actions {
+    justify-content: flex-start;
+  }
+}

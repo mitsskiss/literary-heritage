@@ -1,28 +1,35 @@
 import { Link } from "react-router-dom";
 import { authors } from "../data/authors";
 import { works } from "../data/works";
+import { useI18n } from "../i18n/I18nContext";
 
 function Authors() {
+  const { t, localizeAuthors, localizeWorks } = useI18n();
+  const localizedAuthors = localizeAuthors(authors);
+  const localizedWorks = localizeWorks(works);
+
   return (
     <main className="authors-page" style={styles.page}>
       <div style={styles.container}>
         <header style={styles.header}>
-          <p style={styles.kicker}>LITERARY DIRECTORY</p>
-          <h1 style={styles.title}>Authors</h1>
+          <p style={styles.kicker}>{t("authorsKicker")}</p>
+          <h1 style={styles.title}>{t("authorsTitle")}</h1>
           <p style={styles.subtitle}>
-            Explore writers whose ideas and works shape the literary journey of the platform.
+            {t("authorsSubtitle")}
           </p>
-          <p style={styles.meta}>{authors.length} writers in the collection</p>
+          <p style={styles.meta}>{t("writersInCollection", { count: authors.length })}</p>
         </header>
 
         <section style={styles.grid}>
-          {authors.map((author) => {
-            const authorWorks = works.filter((work) => work.author === author.name);
+          {localizedAuthors.map((author) => {
+            const authorWorks = localizedWorks.filter(
+              (work) => work.canonicalAuthor === author.canonicalName
+            );
 
             return (
               <Link
-                key={author.name}
-                to={`/author/${encodeURIComponent(author.name)}`}
+                key={author.canonicalName}
+                to={`/author/${encodeURIComponent(author.canonicalName)}`}
                 className="author-card"
                 style={styles.card}
               >
@@ -40,11 +47,11 @@ function Authors() {
                   <p style={styles.description}>{author.description}</p>
 
                   <p style={styles.worksMeta}>
-                    Works in project: {authorWorks.length}
+                    {t("worksInProject", { count: authorWorks.length })}
                   </p>
 
                   <span className="author-link" style={styles.link}>
-                    Open author <span>→</span>
+                    {t("openAuthor")} <span>&gt;</span>
                   </span>
                 </div>
               </Link>
@@ -173,3 +180,4 @@ const styles = {
 };
 
 export default Authors;
+

@@ -112,6 +112,26 @@ function createUpdatedState(baseState) {
   };
 }
 
+const progressStateKeys = [
+  "xp",
+  "streak",
+  "level",
+  "lives",
+  "lastActiveDate",
+  "completedStories",
+  "storyProgress",
+  "reflections",
+  "achievements",
+  "legacyMigrated",
+];
+
+function pickProgressState(state) {
+  return progressStateKeys.reduce((result, key) => {
+    result[key] = state[key];
+    return result;
+  }, {});
+}
+
 export const useProgressStore = create(
   persist(
     (set, get) => ({
@@ -293,6 +313,16 @@ export const useProgressStore = create(
           achievements: [],
           legacyMigrated: true,
         }),
+
+      exportProgress: () => pickProgressState(get()),
+
+      importProgress: (nextProgress) =>
+        set((state) =>
+          sanitizeStateShape({
+            ...state,
+            ...nextProgress,
+          })
+        ),
     }),
     {
       name: STORAGE_KEY,

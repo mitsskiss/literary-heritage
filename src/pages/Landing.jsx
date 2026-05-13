@@ -3,6 +3,7 @@ import { works } from "../data/works";
 import { authors } from "../data/authors";
 import { useEffect, useRef, useState } from "react";
 import MetaBalls from "../components/MetaBalls";
+import { useI18n } from "../i18n/I18nContext";
 
 const INTRO_SESSION_KEY = "literary_intro_seen";
 
@@ -36,9 +37,8 @@ const introNarrative = [
   "Read, explore, and reflect on literary works.",
 ];
 
-const introVisuals = [...works.slice(0, 3), ...authors.slice(0, 2)];
-
 function Landing() {
+  const { t, localizeWorks, localizeAuthors, localizeMisc } = useI18n();
   const sliderRef = useRef(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [introStage, setIntroStage] = useState(() => {
@@ -47,6 +47,22 @@ function Landing() {
   });
   const [isMuted, setIsMuted] = useState(true);
   const [activeNarrativeIndex, setActiveNarrativeIndex] = useState(0);
+  const localizedWorks = localizeWorks(works);
+  const localizedAuthors = localizeAuthors(authors);
+  const localizedMovements = movements.map((movement) => ({
+    ...movement,
+    ...localizeMisc(movement.name, "movements"),
+  }));
+  const localizedIntroHighlights = introHighlights.map((item) =>
+    localizeMisc(item, "introHighlights")
+  );
+  const localizedIntroNarrative = introNarrative.map((item) =>
+    localizeMisc(item, "introNarrative")
+  );
+  const introVisuals = [
+    ...localizedWorks.slice(0, 3),
+    ...localizedAuthors.slice(0, 2),
+  ];
 
   useEffect(() => {
     document.body.style.overflow = introStage === "done" ? "" : "hidden";
@@ -81,11 +97,13 @@ function Landing() {
     if (introStage !== "story") return undefined;
 
     const interval = window.setInterval(() => {
-      setActiveNarrativeIndex((current) => (current + 1) % introNarrative.length);
+      setActiveNarrativeIndex(
+        (current) => (current + 1) % localizedIntroNarrative.length
+      );
     }, 2600);
 
     return () => window.clearInterval(interval);
-  }, [introStage]);
+  }, [introStage, localizedIntroNarrative.length]);
 
   useEffect(() => {
     if (introStage === "done") {
@@ -139,7 +157,7 @@ function Landing() {
             <div className="landing-loader">
               <div className="landing-loader__ring" />
               <div className="landing-loader__ring landing-loader__ring--delayed" />
-              <p className="landing-loader__label">Preparing the archive</p>
+              <p className="landing-loader__label">{t("preparingArchive")}</p>
             </div>
           ) : null}
 
@@ -161,13 +179,13 @@ function Landing() {
                 />
               </div>
               <div className="landing-enter__content">
-                <p className="landing-enter__eyebrow">Literary Heritage</p>
+                <p className="landing-enter__eyebrow">{t("brandTitle")}</p>
                 <button
                   type="button"
                   className="landing-enter__button"
                   onClick={handleEnter}
                 >
-                  Enter
+                  {t("enter")}
                 </button>
               </div>
             </div>
@@ -191,7 +209,7 @@ function Landing() {
               <div className="landing-story__content">
                 <div className="landing-story__narrative">
                   <p key={activeNarrativeIndex} className="landing-story__line is-visible is-current">
-                    {introNarrative[activeNarrativeIndex]}
+                    {localizedIntroNarrative[activeNarrativeIndex]}
                   </p>
                 </div>
               </div>
@@ -207,11 +225,11 @@ function Landing() {
                     <span />
                     <span />
                   </span>
-                  <span>{isMuted ? "Sound off" : "Sound on"}</span>
+                  <span>{isMuted ? t("soundOff") : t("soundOn")}</span>
                 </button>
 
                 <div className="landing-story__chips">
-                  {introHighlights.map((item) => (
+                  {localizedIntroHighlights.map((item) => (
                     <span key={item}>{item}</span>
                   ))}
                 </div>
@@ -221,7 +239,7 @@ function Landing() {
                   className="landing-story__skip"
                   onClick={handleSkipIntro}
                 >
-                  Skip intro
+                  {t("skipIntro")}
                 </button>
               </div>
             </div>
@@ -232,28 +250,28 @@ function Landing() {
       <section style={styles.hero}>
         <div className="hero-quote-mark">“</div>
         <div style={styles.heroOverlay}>
-          <p style={styles.kicker}>INTERACTIVE LITERARY JOURNEY</p>
+          <p style={styles.kicker}>{t("heroKicker")}</p>
 
           <h1 style={styles.title}>
-            Explore famous authors, literary works, and the ideas behind them.
+            {t("heroTitle")}
           </h1>
 
           <p style={styles.subtitle}>
-            Read, explore, and reflect on literary works
+            {t("heroSubtitle")}
           </p>
 
           <div style={styles.actions}>
             <Link to="/explore" style={styles.primaryBtn} className="hero-btn-primary">
-  Begin your journey
+  {t("beginJourney")}
 </Link>
 
             <Link to="/authors" style={styles.secondaryBtn}>
-              Explore authors
+              {t("exploreAuthors")}
             </Link>
           </div>
 
           <p style={styles.smallNote}>
-            just do it
+            {t("smallNote")}
           </p>
         </div>
 
@@ -267,7 +285,7 @@ function Landing() {
 
       <section style={styles.trendingSection}>
         <div style={styles.sectionHeader}>
-          <h2 style={styles.sectionTitle}>Trending Works</h2>
+          <h2 style={styles.sectionTitle}>{t("trendingWorks")}</h2>
 
           <div style={styles.navButtons}>
             <button onClick={scrollLeft} style={styles.arrowBtn}>
@@ -286,7 +304,7 @@ function Landing() {
             style={styles.slider}
             onScroll={handleScroll}
           >
-            {works.map((work, index) => (
+            {localizedWorks.map((work, index) => (
               <Link
                 key={work.id}
                 to={`/reading/${work.id}`}
@@ -338,23 +356,23 @@ function Landing() {
 
       <section style={styles.dualSection}>
         <div style={styles.dualHeader}>
-          <h2 style={styles.dualTitle}>Literary World</h2>
+          <h2 style={styles.dualTitle}>{t("literaryWorld")}</h2>
           <p style={styles.dualSubtitle}>
-            Explore literary heritage through movements and authors.
+            {t("literaryWorldSubtitle")}
           </p>
         </div>
 
         <div style={styles.dualGrid}>
           <div style={styles.dualCard}>
             <div style={styles.blockHeader}>
-              <h3 style={styles.blockTitle}>Literary Movements</h3>
+              <h3 style={styles.blockTitle}>{t("literaryMovements")}</h3>
               <Link to="/explore" style={styles.blockLink}>
-                Explore movements →
+                {t("exploreMovements")} &gt;
               </Link>
             </div>
 
             <div style={styles.movementList}>
-  {movements.map((movement) => (
+  {localizedMovements.map((movement) => (
     <Link
       key={movement.name}
       to="/explore"
@@ -368,7 +386,7 @@ function Landing() {
         <p style={styles.movementDescription}>{movement.description}</p>
       </div>
 
-      <span className="movement-arrow">→</span>
+      <span className="movement-arrow">&gt;</span>
     </Link>
   ))}
 </div>
@@ -376,17 +394,17 @@ function Landing() {
 
           <div style={styles.dualCard}>
             <div style={styles.blockHeader}>
-              <h3 style={styles.blockTitle}>Featured Authors</h3>
+              <h3 style={styles.blockTitle}>{t("featuredAuthors")}</h3>
               <Link to="/authors" style={styles.blockLink}>
-                Explore authors →
+                {t("exploreAuthors")} &gt;
               </Link>
             </div>
 
             <div style={styles.authorList}>
-  {authors.map((author) => (
+  {localizedAuthors.map((author) => (
     <Link
-      key={author.name}
-      to={`/author/${encodeURIComponent(author.name)}`}
+      key={author.canonicalName}
+      to={`/author/${encodeURIComponent(author.canonicalName)}`}
       className="author-item"
       style={styles.authorItem}
     >
@@ -406,7 +424,7 @@ function Landing() {
       </div>
 
       <div className="author-pill">
-        Explore
+        {t("explore")}
       </div>
     </Link>
   ))}
@@ -417,31 +435,31 @@ function Landing() {
       <footer style={styles.footer}>
   <div style={styles.footerTop}>
     <div style={styles.footerBrand}>
-      <h3 style={styles.footerTitle}>Literary Heritage</h3>
+      <h3 style={styles.footerTitle}>{t("brandTitle")}</h3>
       <p style={styles.footerText}>
-        Interactive platform for exploring literature.
+        {t("footerText")}
       </p>
     </div>
 
     <nav style={styles.footerNav}>
       <Link to="/" className="footer-link-hover" style={styles.footerLink}>
-        Home
+        {t("navHome")}
       </Link>
       <Link to="/authors" className="footer-link-hover" style={styles.footerLink}>
-        Authors
+        {t("navAuthors")}
       </Link>
       <Link to="/explore" className="footer-link-hover" style={styles.footerLink}>
-        
+        {t("navExplore")}
       </Link>
       <Link to="/progress" className="footer-link-hover" style={styles.footerLink}>
-        Progress
+        {t("navProgress")}
       </Link>
     </nav>
   </div>
 
   <div style={styles.footerBottom}>
     <p style={styles.footerCopyright}>
-      © 2026 Literary Heritage. Developed by Samal Tleuberdikyzy
+      {t("copyright")}
     </p>
   </div>
 </footer>
@@ -482,7 +500,8 @@ heroOverlay: {
     fontSize: "14px",
     letterSpacing: "0.1em",
     textTransform: "uppercase",
-    opacity: 0.65,
+    color: "#4f5d57",
+    opacity: 1,
   },
 
 title: {
@@ -504,7 +523,8 @@ title: {
     maxWidth: "760px",
     fontSize: "20px",
     lineHeight: 1.7,
-    opacity: 0.82,
+    color: "#46524d",
+    opacity: 1,
   },
 
   actions: {
@@ -542,7 +562,8 @@ title: {
   smallNote: {
     marginTop: "20px",
     fontSize: "14px",
-    opacity: 0.68,
+    color: "#6b5d48",
+    opacity: 1,
   },
 
 
@@ -892,3 +913,4 @@ trendingSection: {
 };
 
 export default Landing;
+
