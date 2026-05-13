@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
+import AchievementNotifier from "./components/AchievementNotifier";
 import ProgressSyncBridge from "./components/ProgressSyncBridge";
 
 import Landing from "./pages/Landing";
@@ -18,6 +19,7 @@ function App() {
     <>
       <Header />
       <ProgressSyncBridge />
+      <AchievementNotifier />
 
       <Routes>
         <Route path="/" element={<Landing />} />

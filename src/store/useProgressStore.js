@@ -21,6 +21,7 @@ function sanitizeStateShape(state) {
     storyProgress,
     reflections: state.reflections ?? {},
     achievements: state.achievements ?? [],
+    visitedMap: state.visitedMap ?? false,
   };
 }
 
@@ -122,6 +123,7 @@ const progressStateKeys = [
   "storyProgress",
   "reflections",
   "achievements",
+  "visitedMap",
   "legacyMigrated",
 ];
 
@@ -144,6 +146,7 @@ export const useProgressStore = create(
       storyProgress: {},
       reflections: {},
       achievements: [],
+      visitedMap: false,
       legacyMigrated: false,
 
       migrateLegacyProgress: () => {
@@ -300,6 +303,8 @@ export const useProgressStore = create(
         });
       },
 
+      markMapVisited: () => set({ visitedMap: true }),
+
       resetAllProgress: () =>
         set({
           xp: 0,
@@ -311,6 +316,7 @@ export const useProgressStore = create(
           storyProgress: {},
           reflections: {},
           achievements: [],
+          visitedMap: false,
           legacyMigrated: true,
         }),
 
@@ -339,6 +345,7 @@ export const useProgressStore = create(
         storyProgress: state.storyProgress,
         reflections: state.reflections,
         achievements: state.achievements,
+        visitedMap: state.visitedMap,
         legacyMigrated: state.legacyMigrated,
       }),
     }

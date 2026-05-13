@@ -8,6 +8,7 @@ import {
 } from "../data/literaryWorldMap";
 import "./WorldMap.css";
 import { useI18n } from "../i18n/I18nContext";
+import { useProgressStore } from "../store/useProgressStore";
 
 function clamp(value, min, max) {
   return Math.min(Math.max(value, min), max);
@@ -15,6 +16,7 @@ function clamp(value, min, max) {
 
 function WorldMap() {
   const { t, localizeMapCategory, localizeMapMarker, localizeWork } = useI18n();
+  const markMapVisited = useProgressStore((state) => state.markMapVisited);
   const [selectedYear, setSelectedYear] = useState(mapBounds.defaultYear);
   const [hoveredMarkerId, setHoveredMarkerId] = useState(null);
   const [selectedMarkerId, setSelectedMarkerId] = useState(null);
@@ -42,6 +44,10 @@ function WorldMap() {
     () => localizedMarkers.filter((marker) => marker.startYear <= selectedYear),
     [localizedMarkers, selectedYear]
   );
+
+  useEffect(() => {
+    markMapVisited();
+  }, [markMapVisited]);
 
   useEffect(() => {
     if (!selectedMarkerId) return;

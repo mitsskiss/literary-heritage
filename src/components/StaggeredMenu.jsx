@@ -24,6 +24,7 @@ function StaggeredMenu({
   closeLabel = "Close menu",
   onMenuOpen,
   onMenuClose,
+  children,
 }) {
   const { t } = useI18n();
   const [open, setOpen] = useState(false);
@@ -294,6 +295,8 @@ function StaggeredMenu({
               </li>
             ))}
           </ul>
+
+          {children ? <div className="sm-panel-controls">{children}</div> : null}
 
           {displaySocials && socialItems.length > 0 ? (
             <div className="sm-socials" aria-label={t("socialLinks")}>

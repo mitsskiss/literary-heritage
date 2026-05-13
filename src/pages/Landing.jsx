@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import { works } from "../data/works";
 import { authors } from "../data/authors";
 import { useEffect, useRef, useState } from "react";
+import GradualBlur from "../components/GradualBlur";
+import LineWaves from "../components/LineWaves";
 import MetaBalls from "../components/MetaBalls";
 import { useI18n } from "../i18n/I18nContext";
 
@@ -248,7 +250,23 @@ function Landing() {
       ) : null}
 
       <section style={styles.hero}>
-        <div className="hero-quote-mark">“</div>
+        <div className="hero-line-waves" aria-hidden="true">
+          <LineWaves
+            speed={0.18}
+            innerLineCount={18}
+            outerLineCount={24}
+            warpIntensity={0.55}
+            rotation={-18}
+            edgeFadeWidth={0.2}
+            colorCycleSpeed={0.35}
+            brightness={0.14}
+            color1="#ACB9C9"
+            color2="#EBD9CB"
+            color3="#5A50B9"
+            enableMouseInteraction
+            mouseInfluence={1.8}
+          />
+        </div>
         <div style={styles.heroOverlay}>
           <p style={styles.kicker}>{t("heroKicker")}</p>
 
@@ -275,12 +293,29 @@ function Landing() {
           </p>
         </div>
 
-        <div className="hero-light" />
+      </section>
 
-        <div className="soft-divider">
-  <div className="divider-line"></div>
-</div>
-
+      <section className="landing-visual-strip" aria-label={t("siteFeatures")}>
+        <Link to="/explore" className="landing-visual-tile">
+          <span className="landing-visual-tile__icon is-book" aria-hidden="true" />
+          <strong>{t("navExplore")}</strong>
+          <small>{t("visualExploreText")}</small>
+        </Link>
+        <Link to="/map" className="landing-visual-tile">
+          <span className="landing-visual-tile__icon is-map" aria-hidden="true" />
+          <strong>{t("navMap")}</strong>
+          <small>{t("visualMapText")}</small>
+        </Link>
+        <Link to="/profile" className="landing-visual-tile">
+          <span className="landing-visual-tile__icon is-profile" aria-hidden="true" />
+          <strong>{t("profile")}</strong>
+          <small>{t("visualProfileText")}</small>
+        </Link>
+        <Link to="/progress" className="landing-visual-tile">
+          <span className="landing-visual-tile__icon is-progress" aria-hidden="true" />
+          <strong>{t("navProgress")}</strong>
+          <small>{t("visualProgressText")}</small>
+        </Link>
       </section>
 
       <section style={styles.trendingSection}>
@@ -298,6 +333,16 @@ function Landing() {
         </div>
 
         <div className="slider-wrapper-fade" style={styles.sliderWrapper}>
+          <GradualBlur
+            target="parent"
+            position="right"
+            height="4.25rem"
+            strength={1.2}
+            divCount={1}
+            curve="linear"
+            opacity={0.95}
+            zIndex={22}
+          />
           <div
             ref={sliderRef}
             className="slider"
@@ -469,8 +514,8 @@ function Landing() {
 
 const styles = {
   page: {
-    background: "#f8f5ef",
-    color: "#1f1f1f",
+    background: "var(--page-bg)",
+    color: "var(--text)",
     minHeight: "100vh",
     position: "relative",
   },
@@ -483,7 +528,7 @@ const styles = {
     justifyContent: "center",
     padding: "40px 20px 120px",
     background:
-      "linear-gradient(to bottom, #faf7f2 0%, #f8f5ef 70%, #f4efe6 100%)",
+      "linear-gradient(to bottom, var(--palette-primary) 0%, var(--page-bg) 64%, var(--palette-secondary) 100%)",
     overflow: "hidden",
   },
 
@@ -500,7 +545,7 @@ heroOverlay: {
     fontSize: "14px",
     letterSpacing: "0.1em",
     textTransform: "uppercase",
-    color: "#4f5d57",
+    color: "var(--text-muted)",
     opacity: 1,
   },
 
@@ -523,7 +568,7 @@ title: {
     maxWidth: "760px",
     fontSize: "20px",
     lineHeight: 1.7,
-    color: "#46524d",
+    color: "var(--text-muted)",
     opacity: 1,
   },
 
@@ -539,8 +584,8 @@ title: {
     display: "inline-block",
     padding: "14px 20px",
     borderRadius: "14px",
-    background: "#1f1f1f",
-    color: "#fff",
+    background: "var(--brand)",
+    color: "var(--brand-contrast)",
     textDecoration: "none",
     fontWeight: 600,
     fontSize: "15px",
@@ -550,19 +595,19 @@ title: {
     display: "inline-block",
     padding: "14px 20px",
     borderRadius: "14px",
-    border: "1px solid rgba(0,0,0,0.14)",
-    color: "#1f1f1f",
+    border: "1px solid var(--border)",
+    color: "var(--text)",
     textDecoration: "none",
     fontWeight: 600,
     fontSize: "15px",
-    background: "rgba(255,255,255,0.55)",
+    background: "var(--surface)",
     backdropFilter: "blur(6px)",
   },
 
   smallNote: {
     marginTop: "20px",
     fontSize: "14px",
-    color: "#6b5d48",
+    color: "var(--text-muted)",
     opacity: 1,
   },
 
@@ -591,7 +636,7 @@ title: {
     height: "44px",
     borderRadius: "12px",
     border: "1px solid rgba(0,0,0,0.08)",
-    background: "#fff",
+    background: "var(--surface-strong)",
     cursor: "pointer",
     fontSize: "24px",
     lineHeight: 1,
@@ -698,7 +743,7 @@ title: {
 
   progressBar: {
     height: "100%",
-    background: "linear-gradient(90deg, #a85c77, #6b7fd9)",
+    background: "linear-gradient(90deg, var(--accent), var(--accent-strong))",
     borderRadius: "999px",
     transition: "width 0.2s ease",
   },
@@ -732,8 +777,8 @@ title: {
   },
 
   dualCard: {
-    background: "rgba(255,255,255,0.82)",
-    border: "1px solid rgba(0,0,0,0.06)",
+    background: "var(--surface)",
+    border: "1px solid var(--border)",
     borderRadius: "22px",
     padding: "26px",
     backdropFilter: "blur(8px)",
@@ -756,7 +801,7 @@ title: {
 
   blockLink: {
     textDecoration: "none",
-    color: "#1f1f1f",
+    color: "var(--text)",
     fontSize: "14px",
     fontWeight: 600,
     opacity: 0.72,
@@ -775,10 +820,10 @@ title: {
     gap: "16px",
     padding: "18px 18px",
     borderRadius: "16px",
-    background: "#fbfaf7",
+    background: "var(--surface-strong)",
     textDecoration: "none",
-    color: "#1f1f1f",
-    border: "1px solid rgba(0,0,0,0.04)",
+    color: "var(--text)",
+    border: "1px solid var(--border)",
     transition:
       "transform 0.25s ease, background 0.25s ease, border-color 0.25s ease",
   },
@@ -814,10 +859,10 @@ title: {
     gap: "14px",
     padding: "14px 16px",
     borderRadius: "16px",
-    background: "#fbfaf7",
+    background: "var(--surface-strong)",
     textDecoration: "none",
-    color: "#1f1f1f",
-    border: "1px solid rgba(0,0,0,0.04)",
+    color: "var(--text)",
+    border: "1px solid var(--border)",
     transition:
       "transform 0.25s ease, background 0.25s ease, border-color 0.25s ease",
   },
@@ -888,7 +933,7 @@ footerNav: {
 
 footerLink: {
   textDecoration: "none",
-  color: "#1f1f1f",
+  color: "var(--text)",
   fontSize: "15px",
   fontWeight: 500,
   opacity: 0.78,

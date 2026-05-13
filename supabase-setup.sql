@@ -2,9 +2,17 @@ create table if not exists public.profiles (
   id uuid primary key references auth.users(id) on delete cascade,
   email text,
   display_name text,
+  bio text,
+  reading_goal text,
+  avatar_data_url text,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
+
+alter table public.profiles
+  add column if not exists bio text,
+  add column if not exists reading_goal text,
+  add column if not exists avatar_data_url text;
 
 create table if not exists public.user_progress (
   user_id uuid primary key references auth.users(id) on delete cascade,

@@ -94,6 +94,28 @@ export function AuthProvider({ children }) {
         if (!supabase) return;
         await supabase.auth.signOut();
       },
+      updateProfile: async (updates) => {
+        if (!supabase || !session?.user) return { data: null, error: null };
+
+        const payload = {
+          id: session.user.id,
+          email: session.user.email,
+          ...updates,
+          updated_at: new Date().toISOString(),
+        };
+
+        const result = await supabase
+          .from("profiles")
+          .upsert(payload, { onConflict: "id" })
+          .select("*")
+          .single();
+
+        if (!result.error) {
+          setProfile(result.data ?? null);
+        }
+
+        return result;
+      },
       refreshProfile: async () => {
         if (!supabase || !session?.user) return null;
         const { data } = await supabase
