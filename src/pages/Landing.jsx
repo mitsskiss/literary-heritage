@@ -152,7 +152,7 @@ function Landing() {
   };
 
   return (
-    <main style={styles.page}>
+    <main className="landing-page" style={styles.page}>
       {introStage !== "done" ? (
         <section className="landing-intro" aria-live="polite">
           <div className="landing-intro__texture" />
@@ -251,7 +251,7 @@ function Landing() {
         </section>
       ) : null}
 
-      <section style={styles.hero}>
+      <section className="landing-hero" style={styles.hero}>
         <div className="hero-line-waves" aria-hidden="true">
           <LineWaves
             speed={0.18}
@@ -269,18 +269,18 @@ function Landing() {
             mouseInfluence={isDark ? 2.4 : 1.8}
           />
         </div>
-        <div style={styles.heroOverlay}>
+        <div className="landing-hero-overlay" style={styles.heroOverlay}>
           <p style={styles.kicker}>{t("heroKicker")}</p>
 
-          <h1 style={styles.title}>
+          <h1 className="landing-hero-title" style={styles.title}>
             {t("heroTitle")}
           </h1>
 
-          <p style={styles.subtitle}>
+          <p className="landing-hero-subtitle" style={styles.subtitle}>
             {t("heroSubtitle")}
           </p>
 
-          <div style={styles.actions}>
+          <div className="landing-hero-actions" style={styles.actions}>
             <Link to="/explore" style={styles.primaryBtn} className="hero-btn-primary">
   {t("beginJourney")}
 </Link>

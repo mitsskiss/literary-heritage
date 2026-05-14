@@ -1452,6 +1452,32 @@ h1 {
   );
 }
 
+.landing-page,
+.landing-hero {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: clip;
+}
+
+.landing-hero-overlay {
+  max-width: min(980px, calc(100vw - 32px)) !important;
+}
+
+.landing-hero-title {
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: auto;
+}
+
+.landing-hero-subtitle {
+  max-width: min(760px, 100%) !important;
+}
+
+.landing-hero-actions {
+  max-width: 100%;
+}
+
 .hero-btn-primary {
   position: relative;
   transition: 
@@ -1631,6 +1657,48 @@ h1 {
 @media (max-width: 460px) {
   .landing-visual-strip {
     grid-template-columns: 1fr;
+  }
+
+  .landing-hero {
+    min-height: calc(82vh - var(--header-safe-offset, 0px)) !important;
+    padding: 30px 14px 96px !important;
+  }
+
+  .landing-hero-title {
+    margin: 16px auto 14px !important;
+    font-size: clamp(30px, 11vw, 38px) !important;
+    line-height: 1.08 !important;
+    letter-spacing: 0 !important;
+  }
+
+  .landing-hero-subtitle {
+    font-size: clamp(15px, 4.6vw, 17px) !important;
+    line-height: 1.55 !important;
+  }
+
+  .landing-hero-actions {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+    width: min(100%, 250px);
+    margin-inline: auto;
+    margin-top: 24px !important;
+  }
+
+  .landing-hero-actions a {
+    width: 100%;
+    padding: 13px 14px !important;
+    text-align: center;
+  }
+}
+
+@media (max-width: 360px) {
+  .landing-hero-title {
+    font-size: clamp(27px, 10vw, 33px) !important;
+  }
+
+  .landing-hero-overlay {
+    max-width: calc(100vw - 24px) !important;
   }
 }
 
