@@ -1025,12 +1025,58 @@
 }
 
 @media (max-width: 640px) {
+  .explore-page {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .explore-page__container {
+    max-width: 100%;
+    overflow-x: clip;
+  }
+
+  .explore-hero {
+    padding: 4px 0 24px;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .explore-hero__copy {
+    max-width: 100%;
+    min-width: 0;
+  }
+
   .explore-hero__title {
-    font-size: clamp(44px, 15vw, 72px);
+    max-width: 100%;
+    font-size: clamp(32px, 12vw, 44px);
+    line-height: 1;
+    letter-spacing: 0;
+    overflow-wrap: anywhere;
   }
 
   .explore-hero__subtitle {
-    font-size: 17px;
+    max-width: 100%;
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  .explore-toolbar {
+    padding: 14px;
+    margin-bottom: 24px;
+    border-radius: 22px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .explore-toolbar__themes {
+    gap: 8px;
+  }
+
+  .explore-hero__theme,
+  .explore-toolbar__reset,
+  .explore-work-card__tag {
+    padding: 9px 12px;
+    font-size: 13px;
   }
 
   .explore-toolbar__controls {
@@ -1063,7 +1109,8 @@
   .explore-signals__card,
   .explore-empty,
   .explore-cta {
-    padding: 20px;
+    padding: 18px;
+    border-radius: 24px;
   }
 
   .explore-spotlight__content,
@@ -1074,7 +1121,9 @@
   .explore-work-card__title,
   .explore-journey-card__title,
   .explore-theme-card__title {
-    font-size: 28px;
+    font-size: clamp(24px, 9vw, 30px);
+    line-height: 1.04;
+    letter-spacing: 0;
   }
 
   .explore-spotlight__title {

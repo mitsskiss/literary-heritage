@@ -1252,6 +1252,41 @@ h1 {
   color: #09080f !important;
 }
 
+:root[data-theme="dark"] .explore-hero {
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+:root[data-theme="dark"] .explore-toolbar {
+  background: rgba(255, 255, 255, 0.035) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  box-shadow: none !important;
+}
+
+:root[data-theme="dark"] .explore-journeys__feature,
+:root[data-theme="dark"] .explore-journey-card,
+:root[data-theme="dark"] .explore-theme-card {
+  background: rgba(255, 255, 255, 0.075) !important;
+  border-color: rgba(255, 255, 255, 0.11) !important;
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.22) !important;
+}
+
+:root[data-theme="dark"] .explore-hero__theme.is-active {
+  background: rgba(172, 185, 201, 0.18) !important;
+  color: #ffffff !important;
+  border-color: rgba(172, 185, 201, 0.34) !important;
+  box-shadow: none !important;
+}
+
+:root[data-theme="dark"] .explore-journeys__featureAction,
+:root[data-theme="dark"] .explore-journey-card__button,
+:root[data-theme="dark"] .explore-theme-card__button {
+  background: rgba(172, 185, 201, 0.16) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(172, 185, 201, 0.28) !important;
+}
+
 :root[data-theme="dark"] .profile-action.is-secondary,
 :root[data-theme="dark"] [style*="background: transparent"] {
   background: transparent !important;
