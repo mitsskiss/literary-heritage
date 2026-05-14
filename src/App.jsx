@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import AchievementNotifier from "./components/AchievementNotifier";
 import ProgressSyncBridge from "./components/ProgressSyncBridge";
+import ScrollToTop from "./components/ScrollToTop";
 
 import Landing from "./pages/Landing";
 import Explore from "./pages/Explore";
@@ -20,6 +21,7 @@ function App() {
   return (
     <>
       <Header />
+      <ScrollToTop />
       <ProgressSyncBridge />
       <AchievementNotifier />
 
