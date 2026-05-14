@@ -11,6 +11,7 @@ import ChapterReading from "./pages/ChapterReading";
 import Progress from "./pages/Progress";
 import Author from "./pages/Author";
 import Authors from "./pages/Authors";
+import Works from "./pages/Works";
 import Auth from "./pages/Auth";
 import Profile from "./pages/Profile";
 
@@ -25,6 +26,7 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/explore" element={<Explore />} />
         <Route path="/map" element={<WorldMap />} />
+        <Route path="/works" element={<Works />} />
         <Route path="/reading/:id" element={<Reading />} />
         <Route path="/reading/:id/chapter/:chapterNumber" element={<ChapterReading />} />
         <Route path="/progress" element={<Progress />} />

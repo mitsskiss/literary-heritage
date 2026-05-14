@@ -1,0 +1,222 @@
+import { Link } from "react-router-dom";
+import { useMemo, useState } from "react";
+import { works } from "../data/works";
+import { workMetadataById } from "../data/exploreData";
+import { useI18n } from "../i18n/I18nContext";
+import CountUp from "../components/CountUp";
+import ShinyText from "../components/ShinyText";
+import BlurText from "../components/BlurText";
+import { useProgressStore } from "../store/useProgressStore";
+import "./Works.css";
+
+function Works() {
+  const { t, localizeWorks, localizeMetadata } = useI18n();
+  const [query, setQuery] = useState("");
+  const [activeTheme, setActiveTheme] = useState("all");
+  const favorites = useProgressStore((state) => state.favorites);
+  const toggleFavorite = useProgressStore((state) => state.toggleFavorite);
+
+  const catalogWorks = useMemo(
+    () =>
+      localizeWorks(works).map((work) => ({
+        ...work,
+        ...localizeMetadata(work.id, workMetadataById[work.id]),
+      })),
+    [localizeMetadata, localizeWorks]
+  );
+
+  const themes = useMemo(
+    () => [...new Set(catalogWorks.flatMap((work) => work.themes))],
+    [catalogWorks]
+  );
+
+  const normalizedQuery = query.trim().toLowerCase();
+  const visibleWorks = catalogWorks.filter((work) => {
+    const matchesTheme = activeTheme === "all" || work.themes.includes(activeTheme);
+    const matchesQuery =
+      normalizedQuery.length === 0 ||
+      [work.title, work.author, work.period, work.type, work.description]
+        .filter(Boolean)
+        .some((value) => value.toLowerCase().includes(normalizedQuery)) ||
+      work.themes.some((theme) => theme.toLowerCase().includes(normalizedQuery));
+
+    return matchesTheme && matchesQuery;
+  });
+
+  const visibleThemes = [...new Set(visibleWorks.flatMap((work) => work.themes))];
+  const isFavorite = (workId) =>
+    favorites.some((favorite) => favorite.type === "work" && favorite.id === workId);
+
+  return (
+    <main className="works-page">
+      <div className="works-page__container">
+        <section className="works-hero">
+          <p className="works-hero__kicker">{t("worksKicker")}</p>
+          <div className="works-hero__content">
+            <div>
+              <h1>
+                <ShinyText
+                  text={t("allWorksTitle")}
+                  speed={2.4}
+                  delay={0.6}
+                  color="var(--text)"
+                  shineColor="var(--accent-strong)"
+                  spread={115}
+                  pauseOnHover
+                  className="works-hero__shinyTitle"
+                />
+              </h1>
+              <BlurText
+                text={t("allWorksSubtitle")}
+                delay={80}
+                animateBy="words"
+                direction="bottom"
+                stepDuration={0.28}
+                className="works-hero__blurSubtitle"
+              />
+            </div>
+            <div className="works-hero__stats" aria-label={t("catalogStats")}>
+              <span>
+                <strong>
+                  <CountUp
+                    from={0}
+                    to={visibleWorks.length}
+                    duration={1.1}
+                    className="count-up-text"
+                  />
+                </strong>
+                {t("works")}
+              </span>
+              <span>
+                <strong>
+                  <CountUp
+                    from={0}
+                    to={visibleThemes.length}
+                    duration={1.25}
+                    delay={0.12}
+                    className="count-up-text"
+                  />
+                </strong>
+                {t("themes")}
+              </span>
+            </div>
+          </div>
+        </section>
+
+        <section className="works-toolbar" aria-label={t("worksFilters")}>
+          <label className="works-toolbar__search">
+            <span>{t("searchArchive")}</span>
+            <input
+              type="search"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder={t("searchPlaceholder")}
+            />
+          </label>
+
+          <div className="works-toolbar__themes" aria-label={t("themes")}>
+            <button
+              type="button"
+              className={activeTheme === "all" ? "is-active" : ""}
+              onClick={() => setActiveTheme("all")}
+            >
+              {t("allThemes")}
+            </button>
+            {themes.map((theme) => (
+              <button
+                key={theme}
+                type="button"
+                className={activeTheme === theme ? "is-active" : ""}
+                onClick={() => setActiveTheme(theme)}
+              >
+                {theme}
+              </button>
+            ))}
+          </div>
+        </section>
+
+        {visibleWorks.length === 0 ? (
+          <section className="works-empty">
+            <h2>{t("noResults")}</h2>
+            <p>{t("noResultsText")}</p>
+          </section>
+        ) : (
+          <section className="works-grid" aria-label={t("allWorksTitle")}>
+            {visibleWorks.map((work) => (
+              <article className="works-card" key={work.id}>
+                <Link
+                  to={`/reading/${work.id}`}
+                  className="works-card__image"
+                  style={{ backgroundImage: `url(${work.image})` }}
+                  aria-label={`${t("openWork")}: ${work.title}`}
+                >
+                  <span>{work.year}</span>
+                </Link>
+                <button
+                  type="button"
+                  className={`works-card__favorite ${isFavorite(work.id) ? "is-favorite" : ""}`}
+                  aria-label={
+                    isFavorite(work.id)
+                      ? `${t("savedFavorite")}: ${work.title}`
+                      : `${t("saveFavorite")}: ${work.title}`
+                  }
+                  title={isFavorite(work.id) ? t("savedFavorite") : t("saveFavorite")}
+                  onClick={() =>
+                    toggleFavorite({
+                      type: "work",
+                      id: work.id,
+                      title: work.title,
+                      subtitle: work.author,
+                      href: `/reading/${work.id}`,
+                    })
+                  }
+                >
+                  {isFavorite(work.id) ? "♥" : "♡"}
+                </button>
+
+                <div className="works-card__body">
+                  <div className="works-card__meta">
+                    <span>{work.period}</span>
+                    <span>{work.readingTime} {t("min")}</span>
+                  </div>
+
+                  <h2>{work.title}</h2>
+                  <Link
+                    to={`/author/${encodeURIComponent(work.canonicalAuthor ?? work.author)}`}
+                    className="works-card__author"
+                  >
+                    {work.author}
+                  </Link>
+                  <p>{work.description}</p>
+
+                  <div className="works-card__themes">
+                    {work.themes.slice(0, 4).map((theme) => (
+                      <button
+                        type="button"
+                        key={theme}
+                        onClick={() => setActiveTheme(theme)}
+                      >
+                        {theme}
+                      </button>
+                    ))}
+                  </div>
+
+                  <div className="works-card__actions">
+                    <Link to={`/reading/${work.id}`} className="works-card__primary">
+                      {t("startReading")}
+                    </Link>
+                    <Link to={`/explore?theme=${encodeURIComponent(work.themes[0])}`}>
+                      {t("exploreTheme")}
+                    </Link>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </section>
+        )}
+      </div>
+    </main>
+  );
+}
+
+export default Works;

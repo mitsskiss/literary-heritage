@@ -22,10 +22,12 @@ function Header() {
     { label: t("navProgress"), href: "/progress", icon: "↯" },
   ];
   const menuItems = [...navItems, { label: t("profile"), href: "/profile", icon: "○" }];
+  navItems.splice(2, 0, { label: t("navWorks"), href: "/works", icon: "▣" });
   const desktopNavItems = navItems.map((item) => ({
     ...item,
     label: `${item.icon} ${item.label}`,
   }));
+  menuItems.splice(2, 0, { label: t("navWorks"), href: "/works", icon: "▣" });
   const mobileItems = menuItems.map((item) => ({
     label: `${item.icon} ${item.label}`,
     ariaLabel: t("goToPage", { page: item.label.toLowerCase() }),

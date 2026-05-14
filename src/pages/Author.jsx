@@ -2,9 +2,11 @@ import { useParams, Link } from "react-router-dom";
 import { works } from "../data/works";
 import { authors } from "../data/authors";
 import { useI18n } from "../i18n/I18nContext";
+import { useProgressStore } from "../store/useProgressStore";
 
 function Author() {
   const { t, localizeAuthors, localizeWorks } = useI18n();
+  const { favorites, toggleFavorite } = useProgressStore();
   const { name } = useParams();
 
   const localizedAuthors = localizeAuthors(authors);
@@ -31,6 +33,9 @@ function Author() {
   }
 
   const themes = [...new Set(authorWorks.flatMap((w) => w.themes))];
+  const isAuthorFavorite = favorites.some(
+    (favorite) => favorite.type === "author" && favorite.id === authorInfo.canonicalName
+  );
 
   const philosophyNotes = [
     ...new Set(
@@ -97,6 +102,24 @@ function Author() {
             )}
 
             <p style={styles.description}>{authorInfo.description}</p>
+
+            <button
+              type="button"
+              className={`author-favorite-button ${
+                isAuthorFavorite ? "is-favorite" : ""
+              }`}
+              onClick={() =>
+                toggleFavorite({
+                  type: "author",
+                  id: authorInfo.canonicalName,
+                  title: authorInfo.name,
+                  subtitle: authorInfo.period,
+                  href: `/author/${encodeURIComponent(authorInfo.canonicalName)}`,
+                })
+              }
+            >
+              {isAuthorFavorite ? t("savedFavorite") : t("saveFavorite")}
+            </button>
 
             <div style={styles.metaRow}>
               <div style={styles.metaPill}>

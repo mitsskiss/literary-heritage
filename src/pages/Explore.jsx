@@ -589,7 +589,7 @@ function Explore() {
           </p>
 
           <div className="explore-cta__actions">
-            <Link to="/explore" className="explore-cta__action is-primary">
+            <Link to="/works" className="explore-cta__action is-primary">
               {t("openAllWorks")}
             </Link>
             <button

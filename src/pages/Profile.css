@@ -440,6 +440,37 @@
   gap: 18px;
 }
 
+.profile-favorites {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 12px;
+}
+
+.profile-favorite-card {
+  display: grid;
+  gap: 6px;
+  min-height: 128px;
+  align-content: start;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface-strong);
+  color: var(--text);
+  padding: 16px;
+  text-decoration: none;
+}
+
+.profile-favorite-card small {
+  color: var(--text-muted);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.profile-favorite-card span,
+.profile-empty-note {
+  color: var(--text-muted);
+}
+
 .profile-reading-row {
   display: grid;
   grid-template-columns: 76px minmax(0, 1fr);
@@ -500,8 +531,8 @@
 
 [data-theme="dark"] .profile-progress-track span,
 [data-theme="dark"] .profile-action {
-  background: #f7ead7;
-  color: #0f1f1b;
+  background: #ffffff;
+  color: #09080f;
 }
 
 [data-theme="dark"] .profile-action.is-secondary {
@@ -509,17 +540,41 @@
   color: var(--text);
 }
 
+[data-theme="dark"] .profile-page {
+  background:
+    radial-gradient(circle at 20% -10%, rgba(90, 80, 185, 0.28), transparent 34%),
+    linear-gradient(180deg, #09080f 0%, #111018 58%, #09080f 100%);
+}
+
+[data-theme="dark"] .profile-topbar__title {
+  color: #ffffff;
+}
+
+[data-theme="dark"] .profile-hero-card,
+[data-theme="dark"] .profile-panel,
+[data-theme="dark"] .profile-stat-card,
+[data-theme="dark"] .profile-favorite-card {
+  background: rgba(30, 28, 38, 0.88);
+  border-color: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.42);
+}
+
+[data-theme="dark"] .profile-stat-card__icon {
+  background: rgba(255, 255, 255, 0.08);
+}
+
 [data-theme="dark"] .profile-achievement {
-  background: rgba(255, 250, 240, 0.08);
+  background: rgba(255, 255, 255, 0.06);
 }
 
 [data-theme="dark"] .profile-achievement.is-unlocked {
-  background: rgba(176, 126, 69, 0.24);
+  background: rgba(90, 80, 185, 0.24);
+  border-color: rgba(172, 185, 201, 0.4);
 }
 
 [data-theme="dark"] .profile-level-pill {
-  background: #d3b66b;
-  color: #101a18;
+  background: rgba(90, 80, 185, 0.88);
+  color: #ffffff;
 }
 
 @media (max-width: 860px) {

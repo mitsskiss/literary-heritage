@@ -6,6 +6,7 @@ import GradualBlur from "../components/GradualBlur";
 import LineWaves from "../components/LineWaves";
 import MetaBalls from "../components/MetaBalls";
 import { useI18n } from "../i18n/I18nContext";
+import { useTheme } from "../theme/ThemeContext";
 
 const INTRO_SESSION_KEY = "literary_intro_seen";
 
@@ -41,6 +42,7 @@ const introNarrative = [
 
 function Landing() {
   const { t, localizeWorks, localizeAuthors, localizeMisc } = useI18n();
+  const { isDark } = useTheme();
   const sliderRef = useRef(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [introStage, setIntroStage] = useState(() => {
@@ -259,12 +261,12 @@ function Landing() {
             rotation={-18}
             edgeFadeWidth={0.2}
             colorCycleSpeed={0.35}
-            brightness={0.14}
-            color1="#ACB9C9"
-            color2="#EBD9CB"
+            brightness={isDark ? 0.32 : 0.14}
+            color1={isDark ? "#ffffff" : "#ACB9C9"}
+            color2={isDark ? "#b8b8c6" : "#EBD9CB"}
             color3="#5A50B9"
             enableMouseInteraction
-            mouseInfluence={1.8}
+            mouseInfluence={isDark ? 2.4 : 1.8}
           />
         </div>
         <div style={styles.heroOverlay}>
@@ -399,19 +401,19 @@ function Landing() {
         </div>
       </section>
 
-      <section style={styles.dualSection}>
-        <div style={styles.dualHeader}>
-          <h2 style={styles.dualTitle}>{t("literaryWorld")}</h2>
-          <p style={styles.dualSubtitle}>
+      <section className="landing-dual-section" style={styles.dualSection}>
+        <div className="landing-dual-header" style={styles.dualHeader}>
+          <h2 className="landing-dual-title" style={styles.dualTitle}>{t("literaryWorld")}</h2>
+          <p className="landing-dual-subtitle" style={styles.dualSubtitle}>
             {t("literaryWorldSubtitle")}
           </p>
         </div>
 
-        <div style={styles.dualGrid}>
-          <div style={styles.dualCard}>
-            <div style={styles.blockHeader}>
-              <h3 style={styles.blockTitle}>{t("literaryMovements")}</h3>
-              <Link to="/explore" style={styles.blockLink}>
+        <div className="landing-dual-grid" style={styles.dualGrid}>
+          <div className="landing-dual-card" style={styles.dualCard}>
+            <div className="landing-block-header" style={styles.blockHeader}>
+              <h3 className="landing-block-title" style={styles.blockTitle}>{t("literaryMovements")}</h3>
+              <Link className="landing-block-link" to="/explore" style={styles.blockLink}>
                 {t("exploreMovements")} &gt;
               </Link>
             </div>
@@ -437,10 +439,10 @@ function Landing() {
 </div>
           </div>
 
-          <div style={styles.dualCard}>
-            <div style={styles.blockHeader}>
-              <h3 style={styles.blockTitle}>{t("featuredAuthors")}</h3>
-              <Link to="/authors" style={styles.blockLink}>
+          <div className="landing-dual-card" style={styles.dualCard}>
+            <div className="landing-block-header" style={styles.blockHeader}>
+              <h3 className="landing-block-title" style={styles.blockTitle}>{t("featuredAuthors")}</h3>
+              <Link className="landing-block-link" to="/authors" style={styles.blockLink}>
                 {t("exploreAuthors")} &gt;
               </Link>
             </div>
@@ -518,11 +520,12 @@ const styles = {
     color: "var(--text)",
     minHeight: "100vh",
     position: "relative",
+    paddingTop: "var(--header-safe-offset, 0px)",
   },
 
   hero: {
     position: "relative",
-    minHeight: "88vh",
+    minHeight: "calc(88vh - var(--header-safe-offset, 0px))",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -557,7 +560,7 @@ title: {
   letterSpacing: "-0.035em",
 
   background:
-    "linear-gradient(90deg, #1f1f1f 0%, #3a3a3a 45%, #1f1f1f 100%)",
+    "linear-gradient(90deg, var(--text) 0%, var(--accent-strong) 48%, var(--text) 100%)",
 
   WebkitBackgroundClip: "text",
   WebkitTextFillColor: "transparent"
@@ -760,19 +763,22 @@ title: {
 
   dualTitle: {
     margin: 0,
-    fontSize: "36px",
+    fontSize: "clamp(28px, 5vw, 36px)",
+    lineHeight: 1.08,
     fontWeight: 700,
   },
 
   dualSubtitle: {
     margin: "8px 0 0",
-    fontSize: "17px",
+    maxWidth: "680px",
+    fontSize: "clamp(15px, 2.8vw, 17px)",
+    lineHeight: 1.55,
     opacity: 0.75,
   },
 
   dualGrid: {
     display: "grid",
-    gridTemplateColumns: "1fr 1fr",
+    gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 520px), 1fr))",
     gap: "22px",
   },
 

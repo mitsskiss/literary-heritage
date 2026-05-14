@@ -17,7 +17,15 @@ function Reading() {
   const work = localizeWork(works.find((item) => item.id === id));
   const metadata = localizeMetadata(id, workMetadataById[id]);
   const storyBook = localizeStoryBook(getStoryBookByWorkId(id));
-  const { xp, level, streak, storyProgress, migrateLegacyProgress } =
+  const {
+    xp,
+    level,
+    streak,
+    storyProgress,
+    favorites,
+    migrateLegacyProgress,
+    toggleFavorite,
+  } =
     useProgressStore();
 
   useEffect(() => {
@@ -91,6 +99,13 @@ function Reading() {
   }, 0);
   const progressPercent =
     totalScenes > 0 ? Math.round((completedScenes / totalScenes) * 100) : 0;
+  const isWorkFavorite = favorites.some(
+    (favorite) => favorite.type === "work" && favorite.id === work.id
+  );
+  const isFavorite = (type, favoriteId) =>
+    favorites.some(
+      (favorite) => favorite.type === type && favorite.id === favoriteId
+    );
 
   return (
     <main className="reading-book-page">
@@ -139,6 +154,23 @@ function Reading() {
             </div>
 
             <div className="reading-book-hero__actions">
+              <button
+                type="button"
+                className={`reading-book-hero__action ${
+                  isWorkFavorite ? "is-favorite" : ""
+                }`}
+                onClick={() =>
+                  toggleFavorite({
+                    type: "work",
+                    id: work.id,
+                    title: work.title,
+                    subtitle: work.author,
+                    href: `/reading/${work.id}`,
+                  })
+                }
+              >
+                {isWorkFavorite ? t("savedFavorite") : t("saveFavorite")}
+              </button>
               <Link
                 to={getChapterPath(work.id, nextChapter.chapterNumber)}
                 className="reading-book-hero__action is-primary"
@@ -154,11 +186,84 @@ function Reading() {
 
             <div className="reading-book-hero__themes">
               {work.themes.map((theme) => (
-                <span key={theme}>{theme}</span>
+                <button
+                  key={theme}
+                  type="button"
+                  className={`reading-book-theme ${
+                    isFavorite("theme", `${work.id}:${theme}`) ? "is-favorite" : ""
+                  }`}
+                  onClick={() =>
+                    toggleFavorite({
+                      type: "theme",
+                      id: `${work.id}:${theme}`,
+                      title: theme,
+                      subtitle: work.title,
+                      href: `/reading/${work.id}`,
+                    })
+                  }
+                >
+                  {theme}
+                </button>
               ))}
             </div>
           </div>
         </section>
+
+        {work.fragments?.length > 0 ? (
+          <section className="reading-book-fragments">
+            <div className="reading-book-fragments__head">
+              <h2>{t("realFragments")}</h2>
+              <p>{t("realFragmentsText")}</p>
+            </div>
+
+            <div className="reading-book-fragments__grid">
+              {work.fragments.map((fragment) => {
+                const favoriteId = `${work.id}:${fragment.id}`;
+                const isFragmentFavorite = isFavorite("quote", favoriteId);
+
+                return (
+                  <article className="reading-fragment-card" key={fragment.id}>
+                    <div className="reading-fragment-card__top">
+                      <p>{t("quoteFragment")}</p>
+                      <button
+                        type="button"
+                        className={`reading-fragment-card__save ${
+                          isFragmentFavorite ? "is-favorite" : ""
+                        }`}
+                        onClick={() =>
+                          toggleFavorite({
+                            type: "quote",
+                            id: favoriteId,
+                            title: fragment.text,
+                            subtitle: work.title,
+                            href: `/reading/${work.id}`,
+                          })
+                        }
+                      >
+                        {isFragmentFavorite ? t("savedFavorite") : t("saveFavorite")}
+                      </button>
+                    </div>
+                    <blockquote>{fragment.text}</blockquote>
+                    <p className="reading-fragment-card__note">
+                      {fragment.authorNote}
+                    </p>
+
+                    {fragment.annotations?.length > 0 ? (
+                      <div className="reading-fragment-card__annotations">
+                        {fragment.annotations.map((annotation) => (
+                          <span key={annotation.word}>
+                            <strong>{annotation.word}</strong>
+                            {annotation.explanation}
+                          </span>
+                        ))}
+                      </div>
+                    ) : null}
+                  </article>
+                );
+              })}
+            </div>
+          </section>
+        ) : null}
 
         <section className="reading-book-summary">
           <article className="reading-book-summary__card">

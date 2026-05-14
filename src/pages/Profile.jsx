@@ -40,6 +40,7 @@ function Profile() {
     storyProgress,
     reflections,
     visitedMap,
+    favorites,
   } = useProgressStore();
   const [personalInfo, setPersonalInfo] = useState(emptyPersonalInfo);
   const [draftInfo, setDraftInfo] = useState(emptyPersonalInfo);
@@ -400,6 +401,34 @@ function Profile() {
               </article>
             ))}
           </div>
+        </section>
+
+        <section className="profile-panel">
+          <div className="profile-section-heading">
+            <h2>
+              <span aria-hidden="true">☆</span>
+              {t("favorites")}
+            </h2>
+            <span>{favorites.length}</span>
+          </div>
+
+          {favorites.length > 0 ? (
+            <div className="profile-favorites">
+              {favorites.slice(0, 8).map((favorite) => (
+                <Link
+                  className="profile-favorite-card"
+                  to={favorite.href || "/profile"}
+                  key={`${favorite.type}-${favorite.id}`}
+                >
+                  <small>{t(`favorite_${favorite.type}`)}</small>
+                  <strong>{favorite.title}</strong>
+                  {favorite.subtitle ? <span>{favorite.subtitle}</span> : null}
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <p className="profile-empty-note">{t("noFavoritesYet")}</p>
+          )}
         </section>
 
         <section className="profile-panel">

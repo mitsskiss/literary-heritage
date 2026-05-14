@@ -22,9 +22,11 @@ function ChapterReading() {
     streak,
     lives,
     storyProgress,
+    finalQuizzes,
     migrateLegacyProgress,
     ensureStory,
     recordChoice,
+    recordFinalQuizAnswer,
     advanceScene,
     completeStory,
   } = useProgressStore();
@@ -90,6 +92,20 @@ function ChapterReading() {
     chapter.scenes.length > 0
       ? Math.round(((visibleSceneNumber - 1) / chapter.scenes.length) * 100)
       : 0;
+  const finalQuizAnswers = finalQuizzes[chapter.id] ?? {};
+  const finalQuiz = chapter.scenes.slice(0, 3).map((scene) => ({
+    id: `final-${scene.id}`,
+    question: scene.prompt,
+    options: scene.choices.map((choice) => ({
+      id: choice.id,
+      label: choice.label,
+      isCorrect: choice.result.isCorrect,
+      explanation: choice.result.explanation,
+    })),
+  }));
+  const answeredFinalQuizCount = finalQuiz.filter(
+    (question) => finalQuizAnswers[question.id]
+  ).length;
 
   const handleChoice = (choice) => {
     recordChoice(chapter.id, currentScene.id, choice.id, choice.xp);
@@ -132,6 +148,10 @@ function ChapterReading() {
     }
 
     advanceScene(chapter.id, chapter.scenes.length);
+  };
+
+  const handleFinalQuizAnswer = (question, option) => {
+    recordFinalQuizAnswer(chapter.id, question.id, option.id, option.isCorrect);
   };
 
   return (
@@ -222,6 +242,62 @@ function ChapterReading() {
                 </strong>
               </article>
             </div>
+
+            <section className="chapter-final-quiz">
+              <div className="chapter-final-quiz__head">
+                <p className="chapter-completion__eyebrow">{t("finalQuiz")}</p>
+                <h3>{t("finalQuizTitle")}</h3>
+                <span>
+                  {answeredFinalQuizCount}/{finalQuiz.length}
+                </span>
+              </div>
+
+              <div className="chapter-final-quiz__list">
+                {finalQuiz.map((question) => {
+                  const selected =
+                    finalQuizAnswers[question.id];
+                  const selectedOption = question.options.find(
+                    (option) => option.id === selected?.optionId
+                  );
+
+                  return (
+                    <article className="chapter-final-question" key={question.id}>
+                      <p>{question.question}</p>
+                      <div className="chapter-final-question__options">
+                        {question.options.map((option) => (
+                          <button
+                            key={option.id}
+                            type="button"
+                            disabled={Boolean(selected)}
+                            onClick={() => handleFinalQuizAnswer(question, option)}
+                            className={
+                              selected?.optionId === option.id
+                                ? option.isCorrect
+                                  ? "is-correct"
+                                  : "is-incorrect"
+                                : ""
+                            }
+                          >
+                            {option.label}
+                          </button>
+                        ))}
+                      </div>
+
+                      {selectedOption ? (
+                        <div className="chapter-final-question__feedback">
+                          <strong>
+                            {selectedOption.isCorrect
+                              ? t("quizCorrect")
+                              : t("quizIncorrect")}
+                          </strong>
+                          <span>{selectedOption.explanation}</span>
+                        </div>
+                      ) : null}
+                    </article>
+                  );
+                })}
+              </div>
+            </section>
 
             <div className="chapter-completion__actions">
               {nextChapter ? (

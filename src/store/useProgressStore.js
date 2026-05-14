@@ -22,6 +22,8 @@ function sanitizeStateShape(state) {
     reflections: state.reflections ?? {},
     achievements: state.achievements ?? [],
     visitedMap: state.visitedMap ?? false,
+    favorites: state.favorites ?? [],
+    finalQuizzes: state.finalQuizzes ?? {},
   };
 }
 
@@ -124,6 +126,8 @@ const progressStateKeys = [
   "reflections",
   "achievements",
   "visitedMap",
+  "favorites",
+  "finalQuizzes",
   "legacyMigrated",
 ];
 
@@ -147,6 +151,8 @@ export const useProgressStore = create(
       reflections: {},
       achievements: [],
       visitedMap: false,
+      favorites: [],
+      finalQuizzes: {},
       legacyMigrated: false,
 
       migrateLegacyProgress: () => {
@@ -303,6 +309,54 @@ export const useProgressStore = create(
         });
       },
 
+      toggleFavorite: (item) => {
+        set((state) => {
+          const exists = state.favorites.some(
+            (favorite) => favorite.id === item.id && favorite.type === item.type
+          );
+
+          return {
+            ...state,
+            favorites: exists
+              ? state.favorites.filter(
+                  (favorite) =>
+                    !(favorite.id === item.id && favorite.type === item.type)
+                )
+              : [
+                  {
+                    ...item,
+                    savedAt: new Date().toISOString(),
+                  },
+                  ...state.favorites,
+                ],
+          };
+        });
+      },
+
+      recordFinalQuizAnswer: (storyId, questionId, optionId, isCorrect) => {
+        set((state) => {
+          const currentQuiz = state.finalQuizzes[storyId] ?? {};
+
+          if (currentQuiz[questionId]) return state;
+
+          return createUpdatedState({
+            ...state,
+            xp: state.xp + (isCorrect ? 10 : 0),
+            lives: isCorrect ? state.lives : Math.max(0, state.lives - 1),
+            finalQuizzes: {
+              ...state.finalQuizzes,
+              [storyId]: {
+                ...currentQuiz,
+                [questionId]: {
+                  optionId,
+                  isCorrect,
+                },
+              },
+            },
+          });
+        });
+      },
+
       markMapVisited: () => set({ visitedMap: true }),
 
       resetAllProgress: () =>
@@ -317,6 +371,8 @@ export const useProgressStore = create(
           reflections: {},
           achievements: [],
           visitedMap: false,
+          favorites: [],
+          finalQuizzes: {},
           legacyMigrated: true,
         }),
 
@@ -346,6 +402,8 @@ export const useProgressStore = create(
         reflections: state.reflections,
         achievements: state.achievements,
         visitedMap: state.visitedMap,
+        favorites: state.favorites,
+        finalQuizzes: state.finalQuizzes,
         legacyMigrated: state.legacyMigrated,
       }),
     }
