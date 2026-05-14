@@ -7,22 +7,31 @@ import CountUp from "../components/CountUp";
 import ShinyText from "../components/ShinyText";
 import BlurText from "../components/BlurText";
 import { useProgressStore } from "../store/useProgressStore";
+import { mergeAdminWorks } from "../admin/adminContent";
+import { useAdminContent } from "../hooks/useAdminContent";
 import "./Works.css";
 
 function Works() {
-  const { t, localizeWorks, localizeMetadata } = useI18n();
+  const { t, language, localizeWorks, localizeMetadata } = useI18n();
   const [query, setQuery] = useState("");
   const [activeTheme, setActiveTheme] = useState("all");
+  const { content: adminContent } = useAdminContent();
   const favorites = useProgressStore((state) => state.favorites);
   const toggleFavorite = useProgressStore((state) => state.toggleFavorite);
 
   const catalogWorks = useMemo(
     () =>
-      localizeWorks(works).map((work) => ({
+      mergeAdminWorks(localizeWorks(works), adminContent, language).map((work) => ({
         ...work,
-        ...localizeMetadata(work.id, workMetadataById[work.id]),
+        ...localizeMetadata(work.id, {
+          ...(workMetadataById[work.id] ?? {}),
+          period: work.period ?? workMetadataById[work.id]?.period,
+          type: work.type ?? workMetadataById[work.id]?.type,
+          mood: work.mood ?? workMetadataById[work.id]?.mood,
+          readingTime: work.readingTime ?? workMetadataById[work.id]?.readingTime,
+        }),
       })),
-    [localizeMetadata, localizeWorks]
+    [adminContent, language, localizeMetadata, localizeWorks]
   );
 
   const themes = useMemo(

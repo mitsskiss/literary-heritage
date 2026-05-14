@@ -2,11 +2,14 @@ import { Link } from "react-router-dom";
 import { authors } from "../data/authors";
 import { works } from "../data/works";
 import { useI18n } from "../i18n/I18nContext";
+import { mergeAdminAuthors, mergeAdminWorks } from "../admin/adminContent";
+import { useAdminContent } from "../hooks/useAdminContent";
 
 function Authors() {
-  const { t, localizeAuthors, localizeWorks } = useI18n();
-  const localizedAuthors = localizeAuthors(authors);
-  const localizedWorks = localizeWorks(works);
+  const { t, language, localizeAuthors, localizeWorks } = useI18n();
+  const { content: adminContent } = useAdminContent();
+  const localizedAuthors = mergeAdminAuthors(localizeAuthors(authors), adminContent, language);
+  const localizedWorks = mergeAdminWorks(localizeWorks(works), adminContent, language);
 
   return (
     <main className="authors-page" style={styles.page}>
@@ -17,7 +20,7 @@ function Authors() {
           <p style={styles.subtitle}>
             {t("authorsSubtitle")}
           </p>
-          <p style={styles.meta}>{t("writersInCollection", { count: authors.length })}</p>
+          <p style={styles.meta}>{t("writersInCollection", { count: localizedAuthors.length })}</p>
         </header>
 
         <section style={styles.grid}>

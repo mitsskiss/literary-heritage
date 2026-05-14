@@ -6,16 +6,29 @@ import {
   getStoryBookByWorkId,
   getStoryChapterByWorkAndNumber,
 } from "../data/stories";
+import {
+  getAdminStoryBookByWorkId,
+  getAdminStoryChapterByWorkAndNumber,
+  mergeAdminWorks,
+} from "../admin/adminContent";
+import { useAdminContent } from "../hooks/useAdminContent";
 import { useProgressStore } from "../store/useProgressStore";
 import "./ChapterReading.css";
 import { useI18n } from "../i18n/I18nContext";
 
 function ChapterReading() {
-  const { t, localizeStory, localizeStoryBook, localizeWork } = useI18n();
+  const { t, language, localizeStory, localizeStoryBook, localizeWork } = useI18n();
   const { id, chapterNumber } = useParams();
-  const work = localizeWork(works.find((item) => item.id === id));
-  const storyBook = localizeStoryBook(getStoryBookByWorkId(id));
-  const chapter = localizeStory(getStoryChapterByWorkAndNumber(id, chapterNumber));
+  const { content: adminContent } = useAdminContent();
+  const work = mergeAdminWorks(works.map(localizeWork), adminContent, language).find(
+    (item) => item.id === id
+  );
+  const staticStoryBook = localizeStoryBook(getStoryBookByWorkId(id));
+  const adminStoryBook = getAdminStoryBookByWorkId(id, adminContent, language);
+  const storyBook = staticStoryBook ?? adminStoryBook;
+  const chapter =
+    localizeStory(getStoryChapterByWorkAndNumber(id, chapterNumber)) ??
+    getAdminStoryChapterByWorkAndNumber(id, chapterNumber, adminContent, language);
 
   const {
     xp,

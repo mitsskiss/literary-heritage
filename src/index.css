@@ -958,7 +958,8 @@ h1 {
 :root[data-theme="dark"] .world-map-page,
 :root[data-theme="dark"] .works-page,
 :root[data-theme="dark"] .authors-page,
-:root[data-theme="dark"] .author-page {
+:root[data-theme="dark"] .author-page,
+:root[data-theme="dark"] .admin-page {
   background: var(--page-bg) !important;
   color: var(--text) !important;
 }
@@ -1495,7 +1496,8 @@ h1 {
 .works-page,
 .authors-page,
 .author-page,
-.profile-page {
+.profile-page,
+.admin-page {
   padding-top: max(124px, calc(env(safe-area-inset-top, 0px) + var(--header-safe-offset) + 20px)) !important;
 }
 
@@ -1508,7 +1510,8 @@ h1 {
   .works-page,
   .authors-page,
   .author-page,
-  .profile-page {
+  .profile-page,
+  .admin-page {
     padding-top: max(108px, calc(env(safe-area-inset-top, 0px) + var(--header-safe-offset) + 18px)) !important;
   }
 }
@@ -1522,7 +1525,8 @@ h1 {
   .works-page,
   .authors-page,
   .author-page,
-  .profile-page {
+  .profile-page,
+  .admin-page {
     padding-top: max(104px, calc(env(safe-area-inset-top, 0px) + var(--header-safe-offset) + 18px)) !important;
   }
 }

@@ -23,11 +23,13 @@ function Header() {
   ];
   const menuItems = [...navItems, { label: t("profile"), href: "/profile", icon: "○" }];
   navItems.splice(2, 0, { label: t("navWorks"), href: "/works", icon: "▣" });
+  navItems.push({ label: t("navAdmin"), href: "/admin", icon: "CMS" });
   const desktopNavItems = navItems.map((item) => ({
     ...item,
     label: `${item.icon} ${item.label}`,
   }));
   menuItems.splice(2, 0, { label: t("navWorks"), href: "/works", icon: "▣" });
+  menuItems.push({ label: t("navAdmin"), href: "/admin", icon: "CMS" });
   const mobileItems = menuItems.map((item) => ({
     label: `${item.icon} ${item.label}`,
     ariaLabel: t("goToPage", { page: item.label.toLowerCase() }),

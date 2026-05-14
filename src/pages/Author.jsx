@@ -3,14 +3,17 @@ import { works } from "../data/works";
 import { authors } from "../data/authors";
 import { useI18n } from "../i18n/I18nContext";
 import { useProgressStore } from "../store/useProgressStore";
+import { mergeAdminAuthors, mergeAdminWorks } from "../admin/adminContent";
+import { useAdminContent } from "../hooks/useAdminContent";
 
 function Author() {
-  const { t, localizeAuthors, localizeWorks } = useI18n();
+  const { t, language, localizeAuthors, localizeWorks } = useI18n();
   const { favorites, toggleFavorite } = useProgressStore();
+  const { content: adminContent } = useAdminContent();
   const { name } = useParams();
 
-  const localizedAuthors = localizeAuthors(authors);
-  const localizedWorks = localizeWorks(works);
+  const localizedAuthors = mergeAdminAuthors(localizeAuthors(authors), adminContent, language);
+  const localizedWorks = mergeAdminWorks(localizeWorks(works), adminContent, language);
   const authorInfo = localizedAuthors.find((a) => a.canonicalName === name);
   const authorWorks = localizedWorks.filter((w) => w.canonicalAuthor === name);
 

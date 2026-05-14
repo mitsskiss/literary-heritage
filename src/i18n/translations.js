@@ -15,6 +15,7 @@ export const ui = {
     navHome: "Home",
     navExplore: "Explore",
     navWorks: "Works",
+    navAdmin: "Admin",
     navMap: "Map",
     navAuthors: "Authors",
     navProgress: "Progress",
@@ -310,6 +311,7 @@ export const ui = {
   },
   ru: {
     navWorks: "Произведения",
+    navAdmin: "Админ",
     worksKicker: "Полная коллекция",
     allWorksTitle: "Все книги и произведения",
     allWorksSubtitle: "Единый каталог всех произведений архива. Ищите, фильтруйте по теме и открывайте маршрут чтения.",
@@ -610,6 +612,7 @@ export const ui = {
   },
   kk: {
     navWorks: "Шығармалар",
+    navAdmin: "Админ",
     worksKicker: "Толық коллекция",
     allWorksTitle: "Барлық кітаптар мен шығармалар",
     allWorksSubtitle: "Архивтегі барлық әдеби шығармалардың ортақ каталогы. Іздеңіз, тақырып бойынша сүзіңіз және оқу маршрутын ашыңыз.",

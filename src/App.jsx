@@ -14,6 +14,7 @@ import Authors from "./pages/Authors";
 import Works from "./pages/Works";
 import Auth from "./pages/Auth";
 import Profile from "./pages/Profile";
+import Admin from "./pages/Admin";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
         <Route path="/progress" element={<Progress />} />
         <Route path="/auth" element={<Auth />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/admin" element={<Admin />} />
         <Route path="/author/:name" element={<Author />} />
         <Route path="/authors" element={<Authors />} />
       </Routes>

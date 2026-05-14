@@ -7,16 +7,27 @@ import {
   getStoryBookByWorkId,
   hasStoryMode,
 } from "../data/stories";
+import { getAdminStoryBookByWorkId, mergeAdminWorks } from "../admin/adminContent";
+import { useAdminContent } from "../hooks/useAdminContent";
 import { useProgressStore } from "../store/useProgressStore";
 import "./Reading.css";
 import { useI18n } from "../i18n/I18nContext";
 
 function Reading() {
-  const { t, localizeMetadata, localizeStoryBook, localizeWork } = useI18n();
+  const { t, language, localizeMetadata, localizeStoryBook, localizeWork } = useI18n();
   const { id } = useParams();
-  const work = localizeWork(works.find((item) => item.id === id));
-  const metadata = localizeMetadata(id, workMetadataById[id]);
-  const storyBook = localizeStoryBook(getStoryBookByWorkId(id));
+  const { content: adminContent } = useAdminContent();
+  const allWorks = mergeAdminWorks(works.map(localizeWork), adminContent, language);
+  const work = allWorks.find((item) => item.id === id);
+  const metadata = localizeMetadata(id, {
+    ...(workMetadataById[id] ?? {}),
+    period: work?.period ?? workMetadataById[id]?.period,
+    type: work?.type ?? workMetadataById[id]?.type,
+    mood: work?.mood ?? workMetadataById[id]?.mood,
+  });
+  const staticStoryBook = localizeStoryBook(getStoryBookByWorkId(id));
+  const adminStoryBook = getAdminStoryBookByWorkId(id, adminContent, language);
+  const storyBook = staticStoryBook ?? adminStoryBook;
   const {
     xp,
     level,
@@ -50,7 +61,7 @@ function Reading() {
     );
   }
 
-  if (!hasStoryMode(id) || !storyBook) {
+  if ((!hasStoryMode(id) && !adminStoryBook) || !storyBook) {
     return (
       <main className="reading-book-page">
         <div className="reading-book-page__container">
