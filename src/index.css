@@ -17,6 +17,7 @@ body,
   width: 100%;
   max-width: 100vw;
   overflow-x: clip;
+  overscroll-behavior-x: none;
 }
 
 body {
@@ -146,6 +147,7 @@ h1 {
   max-width: 1400px;
   margin: 0 auto;
   width: 100%;
+  min-width: 0;
   padding: 18px 24px 14px;
   display: flex;
   align-items: center;
@@ -159,6 +161,7 @@ h1 {
   gap: 14px;
   text-decoration: none;
   color: #163a35;
+  flex: 1 1 auto;
   min-width: 0;
 }
 
@@ -212,6 +215,7 @@ h1 {
   display: inline-flex;
   align-items: center;
   gap: 10px;
+  flex: 0 0 auto;
   margin-left: 0;
 }
 
@@ -492,11 +496,13 @@ h1 {
   .site-header__container {
     gap: 8px;
     padding: 10px 12px;
+    max-width: 100dvw;
   }
 
   .site-header__brand {
     gap: 9px;
     min-width: 0;
+    max-width: calc(100dvw - 112px);
   }
 
   .site-header__brand-mark {
@@ -507,7 +513,7 @@ h1 {
   }
 
   .site-header__brand-title {
-    max-width: min(44vw, 190px);
+    max-width: 100%;
     font-size: 18px;
     line-height: 1.12;
     white-space: normal;
@@ -544,8 +550,12 @@ h1 {
 }
 
 @media (max-width: 380px) {
+  .site-header__brand {
+    max-width: calc(100dvw - 94px);
+  }
+
   .site-header__brand-title {
-    max-width: 136px;
+    max-width: 100%;
     font-size: 16px;
   }
 

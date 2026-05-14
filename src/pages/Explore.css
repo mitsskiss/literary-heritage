@@ -1084,6 +1084,24 @@
     grid-template-columns: 1fr;
   }
 
+  .explore-collection,
+  .explore-journeys__grid,
+  .explore-themes,
+  .explore-signals {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .explore-work-card,
+  .explore-journey-card,
+  .explore-theme-card,
+  .explore-signals__card,
+  .explore-spotlight,
+  .explore-timeline,
+  .explore-toolbar {
+    max-width: 100%;
+    min-width: 0;
+  }
+
   .explore-timeline__top,
   .explore-timeline__controls {
     padding-left: 18px;
