@@ -1179,11 +1179,17 @@ h1 {
 :root[data-theme="dark"] .explore-work-card__tag,
 :root[data-theme="dark"] .explore-hero__theme,
 :root[data-theme="dark"] .explore-signals__badges span,
-:root[data-theme="dark"] .world-map-shell__legendItem,
 :root[data-theme="dark"] .world-map-panel__meta span {
   background: rgba(255, 255, 255, 0.08) !important;
   color: var(--text) !important;
   border-color: var(--border) !important;
+  box-shadow: none !important;
+}
+
+:root[data-theme="dark"] .world-map-shell__legendItem {
+  background: transparent !important;
+  color: var(--text-muted) !important;
+  border-color: transparent !important;
   box-shadow: none !important;
 }
 

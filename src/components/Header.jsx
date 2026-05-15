@@ -31,7 +31,7 @@ function Header() {
   menuItems.splice(2, 0, { label: t("navWorks"), href: "/works", icon: "▣" });
   menuItems.push({ label: t("navAdmin"), href: "/admin", icon: "CMS" });
   const mobileItems = menuItems.map((item) => ({
-    label: `${item.icon} ${item.label}`,
+    label: item.label,
     ariaLabel: t("goToPage", { page: item.label.toLowerCase() }),
     link: item.href,
   }));
