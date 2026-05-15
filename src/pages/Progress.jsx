@@ -10,6 +10,7 @@ import {
 import { useProgressStore } from "../store/useProgressStore";
 import "./Progress.css";
 import { useI18n } from "../i18n/I18nContext";
+import ShinyText from "../components/ShinyText";
 
 function Progress() {
   const { t, localizeAchievement, localizeStory, localizeWorks } = useI18n();
@@ -73,7 +74,17 @@ function Progress() {
         <section className="progress-hero">
           <div className="progress-hero__copy">
             <p className="progress-hero__eyebrow">{t("dashboard")}</p>
-            <h1 className="progress-hero__title">{t("progressTitle")}</h1>
+            <h1 className="progress-hero__title">
+              <ShinyText
+                text={t("progressTitle")}
+                speed={3.2}
+                delay={1.2}
+                color="var(--text)"
+                shineColor="var(--accent-strong)"
+                spread={118}
+                className="page-shiny-title"
+              />
+            </h1>
             <p className="progress-hero__subtitle">
               {t("progressSubtitle")}
             </p>

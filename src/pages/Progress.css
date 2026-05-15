@@ -227,6 +227,76 @@
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 }
 
+[data-theme="dark"] .progress-page {
+  background:
+    radial-gradient(circle at 18% -10%, rgba(90, 80, 185, 0.28), transparent 34%),
+    linear-gradient(180deg, #09080f 0%, #111018 58%, #09080f 100%);
+  color: var(--text);
+}
+
+[data-theme="dark"] .progress-hero,
+[data-theme="dark"] .progress-overview__card,
+[data-theme="dark"] .progress-story-card,
+[data-theme="dark"] .progress-reflection-card,
+[data-theme="dark"] .progress-empty {
+  background: rgba(30, 28, 38, 0.9);
+  border-color: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.42);
+}
+
+[data-theme="dark"] .progress-stat {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme="dark"] .progress-hero__eyebrow,
+[data-theme="dark"] .progress-overview__label,
+[data-theme="dark"] .progress-story-card__eyebrow,
+[data-theme="dark"] .progress-reflection-card__eyebrow,
+[data-theme="dark"] .progress-stat span,
+[data-theme="dark"] .progress-section__head span,
+[data-theme="dark"] .progress-overview__row span {
+  color: rgba(235, 233, 244, 0.72);
+}
+
+[data-theme="dark"] .progress-hero__subtitle,
+[data-theme="dark"] .progress-empty p,
+[data-theme="dark"] .progress-story-card p,
+[data-theme="dark"] .progress-reflection-card p {
+  color: rgba(245, 243, 250, 0.82);
+}
+
+[data-theme="dark"] .progress-hero__title,
+[data-theme="dark"] .progress-section__head h2,
+[data-theme="dark"] .progress-overview__row h2,
+[data-theme="dark"] .progress-story-card h3,
+[data-theme="dark"] .progress-reflection-card h3,
+[data-theme="dark"] .progress-empty h3,
+[data-theme="dark"] .progress-stat strong,
+[data-theme="dark"] .progress-story-card a,
+[data-theme="dark"] .progress-empty a {
+  color: var(--text);
+}
+
+[data-theme="dark"] .progress-overview__badges span,
+[data-theme="dark"] .progress-story-card__meta span {
+  border-color: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(245, 243, 250, 0.9);
+}
+
+[data-theme="dark"] .progress-overview__track {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .progress-overview__fill {
+  background: linear-gradient(90deg, #acb9c9, #ffffff);
+}
+
+[data-theme="dark"] .progress-story-card.is-complete {
+  background: rgba(36, 34, 46, 0.94);
+}
+
 @media (max-width: 720px) {
   .progress-page {
     padding: 98px 16px 72px;

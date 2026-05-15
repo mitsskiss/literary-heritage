@@ -4,6 +4,7 @@ import { works } from "../data/works";
 import { useI18n } from "../i18n/I18nContext";
 import { mergeAdminAuthors, mergeAdminWorks } from "../admin/adminContent";
 import { useAdminContent } from "../hooks/useAdminContent";
+import ShinyText from "../components/ShinyText";
 
 function Authors() {
   const { t, language, localizeAuthors, localizeWorks } = useI18n();
@@ -16,7 +17,17 @@ function Authors() {
       <div style={styles.container}>
         <header style={styles.header}>
           <p style={styles.kicker}>{t("authorsKicker")}</p>
-          <h1 style={styles.title}>{t("authorsTitle")}</h1>
+          <h1 style={styles.title}>
+            <ShinyText
+              text={t("authorsTitle")}
+              speed={3.2}
+              delay={1.2}
+              color="var(--text)"
+              shineColor="var(--accent-strong)"
+              spread={118}
+              className="page-shiny-title"
+            />
+          </h1>
           <p style={styles.subtitle}>
             {t("authorsSubtitle")}
           </p>

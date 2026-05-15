@@ -1881,6 +1881,10 @@ h1 {
   color: var(--brand) !important;
 }
 
+.page-shiny-title {
+  max-width: 100%;
+}
+
 .sm-socials-title {
   color: var(--text-muted) !important;
 }

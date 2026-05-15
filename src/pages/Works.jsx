@@ -77,10 +77,16 @@ function Works() {
               </h1>
               <BlurText
                 text={t("allWorksSubtitle")}
-                delay={80}
+                delay={70}
                 animateBy="words"
                 direction="bottom"
-                stepDuration={0.28}
+                stepDuration={0.46}
+                animationFrom={{ filter: "blur(6px)", opacity: 0, y: 18 }}
+                animationTo={[
+                  { filter: "blur(2px)", opacity: 0.72, y: 4 },
+                  { filter: "blur(0px)", opacity: 1, y: 0 },
+                ]}
+                easing={(value) => 1 - Math.pow(1 - value, 3)}
                 className="works-hero__blurSubtitle"
               />
             </div>
@@ -90,7 +96,7 @@ function Works() {
                   <CountUp
                     from={0}
                     to={visibleWorks.length}
-                    duration={1.1}
+                    duration={1.65}
                     className="count-up-text"
                   />
                 </strong>
@@ -101,8 +107,8 @@ function Works() {
                   <CountUp
                     from={0}
                     to={visibleThemes.length}
-                    duration={1.25}
-                    delay={0.12}
+                    duration={1.8}
+                    delay={0.16}
                     className="count-up-text"
                   />
                 </strong>

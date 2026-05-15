@@ -13,6 +13,7 @@ import JourneyCard from "../components/explore/JourneyCard";
 import ExploreWorkCard from "../components/explore/ExploreWorkCard";
 import LiteraryTimeline from "../components/explore/LiteraryTimeline";
 import ThemeCard from "../components/explore/ThemeCard";
+import ShinyText from "../components/ShinyText";
 import "./Explore.css";
 import { useI18n } from "../i18n/I18nContext";
 
@@ -228,7 +229,17 @@ function Explore() {
       <div className="explore-page__container">
         <section className="explore-hero explore-reveal">
           <div className="explore-hero__copy">
-            <h1 className="explore-hero__title">{t("exploreTitle")}</h1>
+            <h1 className="explore-hero__title">
+              <ShinyText
+                text={t("exploreTitle")}
+                speed={3.2}
+                delay={1.2}
+                color="var(--text)"
+                shineColor="var(--accent-strong)"
+                spread={118}
+                className="page-shiny-title"
+              />
+            </h1>
             <p className="explore-hero__subtitle">
               {t("exploreSubtitle")}
             </p>

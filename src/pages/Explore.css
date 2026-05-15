@@ -15,12 +15,12 @@
 
 .explore-reveal {
   opacity: 0;
-  transform: translateY(28px);
-  filter: blur(8px);
+  transform: translateY(22px);
+  filter: blur(6px);
   transition:
-    opacity 0.72s ease,
-    transform 0.72s cubic-bezier(.22,.61,.36,1),
-    filter 0.72s ease;
+    opacity 0.92s ease,
+    transform 0.92s cubic-bezier(.22,.61,.36,1),
+    filter 0.92s ease;
   transition-delay: var(--reveal-delay, 0ms);
 }
 
