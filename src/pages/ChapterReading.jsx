@@ -17,17 +17,34 @@ import "./ChapterReading.css";
 import { useI18n } from "../i18n/I18nContext";
 
 function ChapterReading() {
-  const { t, language, localizeStory, localizeStoryBook, localizeWork } = useI18n();
+  const {
+    t,
+    language,
+    languages,
+    localizeStory,
+    localizeStoryInLanguage,
+    localizeStoryBook,
+    localizeWork,
+  } = useI18n();
   const { id, chapterNumber } = useParams();
   const { content: adminContent } = useAdminContent();
   const work = mergeAdminWorks(works.map(localizeWork), adminContent, language).find(
     (item) => item.id === id
   );
-  const staticStoryBook = localizeStoryBook(getStoryBookByWorkId(id));
+  const rawStaticStoryBook = getStoryBookByWorkId(id);
+  const rawStaticChapter = getStoryChapterByWorkAndNumber(id, chapterNumber);
+  const rawAdminChapter = getAdminStoryChapterByWorkAndNumber(
+    id,
+    chapterNumber,
+    adminContent,
+    "en"
+  );
+  const baseChapter = rawStaticChapter ?? rawAdminChapter;
+  const staticStoryBook = localizeStoryBook(rawStaticStoryBook);
   const adminStoryBook = getAdminStoryBookByWorkId(id, adminContent, language);
   const storyBook = staticStoryBook ?? adminStoryBook;
   const chapter =
-    localizeStory(getStoryChapterByWorkAndNumber(id, chapterNumber)) ??
+    localizeStory(rawStaticChapter) ??
     getAdminStoryChapterByWorkAndNumber(id, chapterNumber, adminContent, language);
 
   const {
@@ -45,6 +62,11 @@ function ChapterReading() {
   } = useProgressStore();
   const [xpPulse, setXpPulse] = useState(null);
   const [progressGlow, setProgressGlow] = useState(false);
+  const [isComparisonOpen, setIsComparisonOpen] = useState(false);
+  const [leftComparisonLanguage, setLeftComparisonLanguage] = useState(language);
+  const [rightComparisonLanguage, setRightComparisonLanguage] = useState(
+    language === "en" ? "ru" : "en"
+  );
 
   useEffect(() => {
     migrateLegacyProgress();
@@ -80,6 +102,14 @@ function ChapterReading() {
   };
 
   const currentScene = chapter.scenes[progress.currentSceneIndex];
+  const leftComparisonScene = localizeStoryInLanguage(
+    baseChapter,
+    leftComparisonLanguage
+  )?.scenes?.[progress.currentSceneIndex];
+  const rightComparisonScene = localizeStoryInLanguage(
+    baseChapter,
+    rightComparisonLanguage
+  )?.scenes?.[progress.currentSceneIndex];
   const selectedChoiceId = currentScene
     ? progress.choices[currentScene.id]
     : null;
@@ -229,6 +259,20 @@ function ChapterReading() {
               </span>
             </div>
           </div>
+
+          {!isCompleted && currentScene ? (
+            <div className="chapter-topbar__tools">
+              <button
+                type="button"
+                className="chapter-language-toggle"
+                onClick={() => setIsComparisonOpen((current) => !current)}
+              >
+                {isComparisonOpen
+                  ? t("hideLanguageComparison")
+                  : t("compareLanguages")}
+              </button>
+            </div>
+          ) : null}
         </section>
 
         <div
@@ -236,6 +280,28 @@ function ChapterReading() {
           style={{ backgroundImage: `url(${work.image})` }}
           aria-hidden="true"
         />
+
+        {!isCompleted && isComparisonOpen && currentScene ? (
+          <section className="chapter-language-compare">
+            <p className="chapter-sceneCard__eyebrow">{t("comparisonContext")}</p>
+            <div className="chapter-language-compare__grid">
+              <LanguageComparisonColumn
+                languageLabel={t("language")}
+                languages={languages}
+                selectedLanguage={leftComparisonLanguage}
+                onLanguageChange={setLeftComparisonLanguage}
+                scene={leftComparisonScene ?? currentScene}
+              />
+              <LanguageComparisonColumn
+                languageLabel={t("language")}
+                languages={languages}
+                selectedLanguage={rightComparisonLanguage}
+                onLanguageChange={setRightComparisonLanguage}
+                scene={rightComparisonScene ?? currentScene}
+              />
+            </div>
+          </section>
+        ) : null}
 
         {isCompleted ? (
           <section className="chapter-completion">
@@ -418,6 +484,40 @@ function ChapterReading() {
         )}
       </div>
     </main>
+  );
+}
+
+function LanguageComparisonColumn({
+  languageLabel,
+  languages,
+  selectedLanguage,
+  onLanguageChange,
+  scene,
+}) {
+  return (
+    <article className="chapter-language-column">
+      <label>
+        <span>{languageLabel}</span>
+        <select
+          value={selectedLanguage}
+          onChange={(event) => onLanguageChange(event.target.value)}
+        >
+          {languages.map((item) => (
+            <option key={item.code} value={item.code}>
+              {item.shortLabel}
+            </option>
+          ))}
+        </select>
+      </label>
+
+      <h3>{scene.title}</h3>
+      <div className="chapter-language-column__context">
+        {scene.context.map((paragraph) => (
+          <p key={paragraph}>{paragraph}</p>
+        ))}
+      </div>
+      <p className="chapter-language-column__prompt">{scene.prompt}</p>
+    </article>
   );
 }
 

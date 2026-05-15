@@ -162,6 +162,14 @@ function localizeGeneratedMurakamiStory(story, language) {
   };
 }
 
+function localizeStoryForLanguage(story, language) {
+  if (!story) return story;
+  if (story.id?.startsWith("murakami-identity-chapter-")) {
+    return localizeGeneratedMurakamiStory(story, language);
+  }
+  return mergeStory(story, storyTranslations[story.id]?.[language] ?? {});
+}
+
 function localizeLabel(value, dictionary, language) {
   if (language === defaultLanguage) return value;
   return dictionary[value]?.[language] ?? value;
@@ -231,13 +239,7 @@ export function I18nProvider({ children }) {
     const localizeTimelineEntries = (entries) =>
       entries.map(localizeTimelineEntry);
 
-    const localizeStory = (story) => {
-      if (!story) return story;
-      if (story.id?.startsWith("murakami-identity-chapter-")) {
-        return localizeGeneratedMurakamiStory(story, language);
-      }
-      return mergeStory(story, storyTranslations[story.id]?.[language] ?? {});
-    };
+    const localizeStory = (story) => localizeStoryForLanguage(story, language);
 
     const localizeStoryBook = (book) => {
       if (!book) return book;
@@ -331,6 +333,7 @@ export function I18nProvider({ children }) {
       localizeTimelineEntries,
       localizeTimelineEntry,
       localizeStory,
+      localizeStoryInLanguage: localizeStoryForLanguage,
       localizeStoryBook,
       localizeJourney,
       localizeJourneys,
