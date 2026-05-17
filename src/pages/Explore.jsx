@@ -324,49 +324,38 @@ function Explore() {
             </div>
 
             <div className="explore-toolbar__controls">
-              <label className="explore-toolbar__field">
-                <select
-                  value={typeFilter}
-                  onChange={(event) => setTypeFilter(event.target.value)}
-                  aria-label={t("filterByType")}
-                >
-                  <option value="all">{t("allTypes")}</option>
-                  {typeOptions.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
-              </label>
+              <ExploreSelect
+                value={typeFilter}
+                onChange={setTypeFilter}
+                ariaLabel={t("filterByType")}
+                options={[
+                  { value: "all", label: t("allTypes") },
+                  ...typeOptions.map((option) => ({
+                    value: option,
+                    label: option,
+                  })),
+                ]}
+              />
 
-              <label className="explore-toolbar__field">
-                <select
-                  value={periodFilter}
-                  onChange={(event) => setPeriodFilter(event.target.value)}
-                  aria-label={t("filterByPeriod")}
-                >
-                  <option value="all">{t("allPeriods")}</option>
-                  {periodOptions.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
-              </label>
+              <ExploreSelect
+                value={periodFilter}
+                onChange={setPeriodFilter}
+                ariaLabel={t("filterByPeriod")}
+                options={[
+                  { value: "all", label: t("allPeriods") },
+                  ...periodOptions.map((option) => ({
+                    value: option,
+                    label: option,
+                  })),
+                ]}
+              />
 
-              <label className="explore-toolbar__field">
-                <select
-                  value={sortValue}
-                  onChange={(event) => setSortValue(event.target.value)}
-                  aria-label={t("sortWorks")}
-                >
-                  {sortOptions.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
-              </label>
+              <ExploreSelect
+                value={sortValue}
+                onChange={setSortValue}
+                ariaLabel={t("sortWorks")}
+                options={sortOptions}
+              />
 
               <button
                 type="button"
@@ -617,6 +606,62 @@ function Explore() {
         </section>
       </div>
     </main>
+  );
+}
+
+function ExploreSelect({ value, onChange, options, ariaLabel }) {
+  const rootRef = useRef(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const selectedOption =
+    options.find((option) => option.value === value) ?? options[0];
+
+  useEffect(() => {
+    if (!isOpen) return undefined;
+
+    const handlePointerDown = (event) => {
+      if (!rootRef.current?.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("pointerdown", handlePointerDown);
+    return () => document.removeEventListener("pointerdown", handlePointerDown);
+  }, [isOpen]);
+
+  return (
+    <div className={`explore-select ${isOpen ? "is-open" : ""}`} ref={rootRef}>
+      <button
+        type="button"
+        className="explore-select__trigger"
+        aria-label={ariaLabel}
+        aria-haspopup="listbox"
+        aria-expanded={isOpen}
+        onClick={() => setIsOpen((current) => !current)}
+      >
+        <span>{selectedOption.label}</span>
+        <i aria-hidden="true" />
+      </button>
+
+      {isOpen ? (
+        <div className="explore-select__menu" role="listbox" aria-label={ariaLabel}>
+          {options.map((option) => (
+            <button
+              key={option.value}
+              type="button"
+              role="option"
+              aria-selected={option.value === value}
+              className={option.value === value ? "is-selected" : ""}
+              onClick={() => {
+                onChange(option.value);
+                setIsOpen(false);
+              }}
+            >
+              {option.label}
+            </button>
+          ))}
+        </div>
+      ) : null}
+    </div>
   );
 }
 

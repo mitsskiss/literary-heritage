@@ -230,7 +230,7 @@ h1 {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  border: 1px solid var(--border);
+  border: 0;
   border-radius: 999px;
   background: var(--surface);
   color: var(--brand);
@@ -254,9 +254,7 @@ h1 {
 }
 
 .site-header__quickStats .is-xp::before {
-  content: "★";
-  background: color-mix(in srgb, var(--accent) 35%, white 65%);
-  color: var(--accent-strong);
+  content: none;
 }
 
 .site-header__quickStats .is-lives::before {
@@ -281,7 +279,7 @@ h1 {
   height: 40px;
   display: inline-grid;
   place-items: center;
-  border: 1px solid var(--border);
+  border: 0;
   border-radius: 999px;
   background: var(--surface);
   color: var(--brand);
@@ -405,7 +403,7 @@ h1 {
 :root[data-theme="dark"] .site-header__profileLink,
 :root[data-theme="dark"] .site-header__quickStats span,
 :root[data-theme="dark"] .site-header__menuSetting select {
-  border-color: var(--border);
+  border-color: transparent;
   background: rgba(255, 255, 255, 0.06);
   color: var(--brand);
 }
@@ -471,6 +469,11 @@ h1 {
     font-size: 0;
   }
 
+  .site-header__quickStats .is-xp {
+    gap: 4px;
+    font-size: 11px;
+  }
+
   .site-header__quickStats strong {
     font-size: 12px;
   }
@@ -485,6 +488,10 @@ h1 {
 
   .site-header__quickStats span {
     font-size: 0;
+  }
+
+  .site-header__quickStats .is-xp {
+    font-size: 11px;
   }
 
   .site-header__quickStats strong {
@@ -1113,6 +1120,9 @@ h1 {
 :root[data-theme="dark"] .explore-journey-card,
 :root[data-theme="dark"] .explore-theme-card,
 :root[data-theme="dark"] .explore-signals__card,
+:root[data-theme="dark"] .explore-signals__stats div,
+:root[data-theme="dark"] .explore-signals__recommendation,
+:root[data-theme="dark"] .explore-signals__media article,
 :root[data-theme="dark"] .explore-spotlight,
 :root[data-theme="dark"] .explore-empty,
 :root[data-theme="dark"] .explore-cta,
@@ -1124,6 +1134,7 @@ h1 {
 :root[data-theme="dark"] .chapter-sceneCard,
 :root[data-theme="dark"] .chapter-result__card,
 :root[data-theme="dark"] .chapter-completion,
+:root[data-theme="dark"] .chapter-completion__stats article,
 :root[data-theme="dark"] .progress-stat,
 :root[data-theme="dark"] .progress-overview__card,
 :root[data-theme="dark"] .progress-story-card,

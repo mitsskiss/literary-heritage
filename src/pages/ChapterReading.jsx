@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { works } from "../data/works";
 import {
@@ -65,6 +65,7 @@ function ChapterReading() {
   const [progressGlow, setProgressGlow] = useState(false);
   const [isComparisonOpen, setIsComparisonOpen] = useState(false);
   const [activeAnnotation, setActiveAnnotation] = useState(null);
+  const annotationAreaRef = useRef(null);
   const [leftComparisonLanguage, setLeftComparisonLanguage] = useState(language);
   const [rightComparisonLanguage, setRightComparisonLanguage] = useState(
     language === "en" ? "ru" : "en"
@@ -274,6 +275,19 @@ function ChapterReading() {
   useEffect(() => {
     setActiveAnnotation(null);
   }, [progress.currentSceneIndex]);
+
+  useEffect(() => {
+    if (!activeAnnotation) return undefined;
+
+    const handlePointerDown = (event) => {
+      if (!annotationAreaRef.current?.contains(event.target)) {
+        setActiveAnnotation(null);
+      }
+    };
+
+    document.addEventListener("pointerdown", handlePointerDown);
+    return () => document.removeEventListener("pointerdown", handlePointerDown);
+  }, [activeAnnotation]);
 
   const handleContinue = () => {
     if (isLastScene) {
@@ -570,7 +584,10 @@ function ChapterReading() {
             </section>
 
             {currentFragment ? (
-              <section className="chapter-sceneCard__section chapter-fragment">
+              <section
+                ref={annotationAreaRef}
+                className="chapter-sceneCard__section chapter-fragment"
+              >
                 <p className="chapter-sceneCard__label">{t("quoteFragment")}</p>
                 <blockquote>
                   {renderAnnotatedText(

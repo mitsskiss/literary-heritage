@@ -116,12 +116,12 @@ function Author() {
             </button>
 
             <div className="author-profile-hero__meta" style={styles.metaRow}>
-              <div style={styles.metaPill}>
+              <div className="author-profile-meta-pill" style={styles.metaPill}>
                 <span style={styles.metaLabel}>{t("works")}</span>
                 <span style={styles.metaValue}>{authorWorks.length}</span>
               </div>
 
-              <div style={styles.metaPill}>
+              <div className="author-profile-meta-pill" style={styles.metaPill}>
                 <span style={styles.metaLabel}>{t("themes")}</span>
                 <span style={styles.metaValue}>{themes.length}</span>
               </div>
@@ -136,7 +136,7 @@ function Author() {
 
           <div className="author-profile-themes" style={styles.themeRow}>
             {themes.map((theme) => (
-              <span key={theme} style={styles.themeTag}>
+              <span key={theme} className="author-profile-theme-tag" style={styles.themeTag}>
                 {theme}
               </span>
             ))}
@@ -188,7 +188,7 @@ function Author() {
 
                   <div style={styles.timelineThemes}>
                     {item.themes.map((theme, themeIdx) => (
-                      <span key={themeIdx}>{theme}</span>
+                      <span key={themeIdx} className="author-profile-timeline__theme">{theme}</span>
                     ))}
                   </div>
                 </div>
@@ -228,7 +228,7 @@ function Author() {
 
                   <div style={styles.workThemes}>
                     {work.themes.map((theme) => (
-                      <span key={theme} style={styles.workTag}>
+                      <span key={theme} className="author-work-card__tag" style={styles.workTag}>
                         {theme}
                       </span>
                     ))}

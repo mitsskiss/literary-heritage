@@ -420,7 +420,7 @@
 [data-theme="dark"] .reading-book-summary__card,
 [data-theme="dark"] .reading-chapter-card,
 [data-theme="dark"] .reading-book-fallback,
-[data-theme="dark"] .reading-book-fragment-card {
+[data-theme="dark"] .reading-fragment-card {
   background: rgba(30, 28, 38, 0.88);
   border-color: rgba(255, 255, 255, 0.14);
   box-shadow: 0 18px 48px rgba(0, 0, 0, 0.42);
@@ -434,6 +434,17 @@
 [data-theme="dark"] .reading-chapter-card__state.is-complete {
   background: rgba(255, 255, 255, 0.08);
   border-color: rgba(255, 255, 255, 0.14);
+  color: var(--text);
+}
+
+[data-theme="dark"] .reading-fragment-card__annotations span {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.14);
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .reading-fragment-card__annotations strong,
+[data-theme="dark"] .reading-fragment-card blockquote {
   color: var(--text);
 }
 

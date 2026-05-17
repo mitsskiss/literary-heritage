@@ -439,6 +439,264 @@ const manualChapterStories = [
       },
     ],
   },
+  {
+    id: "camus-stranger",
+    workId: "camus-stranger",
+    chapterNumber: 1,
+    chapterTitle: "The Weight of Indifference",
+    shortTitle: "The Weight of Indifference",
+    tagline: "Absurdity, judgment, and freedom",
+    estimatedMinutes: 9,
+    completionXp: 34,
+    scenes: [
+      {
+        id: "distance",
+        sceneNumber: 1,
+        title: "Scene 1 — A Distance from the World",
+        context: [
+          "Meursault does not react in the expected social way, and this quiet difference unsettles everyone around him.",
+          "Camus begins by showing a gap between lived experience and the roles society expects people to perform.",
+        ],
+        prompt: "What makes Meursault difficult for others to understand?",
+        choices: [
+          createSceneChoice(
+            "honesty",
+            "A. He refuses to pretend to feel what he does not feel.",
+            12,
+            "correct",
+            "His distance is disturbing because it exposes how much social life depends on expected performances.",
+            "The scene helps the reader see that Meursault is judged not only for actions, but for failing to display approved emotions.",
+            "Camus uses emotional plainness to reveal the pressure of social scripts."
+          ),
+          createSceneChoice(
+            "cruelty",
+            "B. He enjoys hurting people around him.",
+            4,
+            "not quite accurate",
+            "The novel does not present him as sadistic; the discomfort comes from detachment rather than cruelty.",
+            "This choice clarifies that the social conflict is about emotional mismatch, not active malice.",
+            "The text repeatedly shows absence of convention more than desire to wound."
+          ),
+          createSceneChoice(
+            "confusion",
+            "C. He simply does not understand what happens around him.",
+            6,
+            "partially correct",
+            "He is not unaware; he notices the world sharply, but without translating it into expected feeling.",
+            "The reader sees that perception and conformity are different things.",
+            "Camus makes Meursault lucid, not merely confused."
+          ),
+        ],
+      },
+      {
+        id: "trial",
+        sceneNumber: 2,
+        title: "Scene 2 — Judgment Beyond the Crime",
+        context: [
+          "At trial, society judges Meursault's character as fiercely as the act itself.",
+          "His behavior at his mother's funeral becomes evidence against him, as if emotional difference were another offense.",
+        ],
+        prompt: "What is society really condemning here?",
+        choices: [
+          createSceneChoice(
+            "nonconformity",
+            "A. His refusal to fit the expected moral image.",
+            12,
+            "correct",
+            "The trial reveals that society punishes difference in feeling as much as the legal crime.",
+            "This scene makes visible the novel's critique of judgment built on appearances.",
+            "The courtroom turns emotion into proof and convention into law."
+          ),
+          createSceneChoice(
+            "silence",
+            "B. Only the fact that he speaks too little.",
+            6,
+            "partially correct",
+            "His silence matters, but only because others fill it with moral suspicion.",
+            "The deeper issue is not quantity of speech, but failure to perform a familiar self.",
+            "Camus shows interpretation hardening into condemnation."
+          ),
+          createSceneChoice(
+            "poverty",
+            "C. His social class more than anything else.",
+            3,
+            "not quite accurate",
+            "Class is present in the world of the novel, but this sequence focuses on emotional conformity.",
+            "The reader is pushed toward the trial's moral theater, not an economic explanation.",
+            "The courtroom is obsessed with meaning, grief, and character."
+          ),
+        ],
+      },
+      {
+        id: "clarity",
+        sceneNumber: 3,
+        title: "Scene 3 — Facing the Absurd",
+        context: [
+          "Near the end, Meursault stops asking the world to provide a hidden order it never promised.",
+          "That recognition is harsh, but it also opens a strange form of freedom.",
+        ],
+        prompt: "Why does this final clarity matter?",
+        choices: [
+          createSceneChoice(
+            "freedom",
+            "A. It lets him face life without false consolation.",
+            10,
+            "correct",
+            "Camus links freedom to seeing the world without invented guarantees.",
+            "The reader encounters acceptance not as comfort, but as lucidity.",
+            "The novel closes on a difficult peace with the world's indifference."
+          ),
+          createSceneChoice(
+            "victory",
+            "B. It proves that he defeats society completely.",
+            4,
+            "not quite accurate",
+            "The ending is not a simple victory; it is an inward recognition.",
+            "This choice helps distinguish existential clarity from triumph.",
+            "Camus resists neat heroic closure."
+          ),
+          createSceneChoice(
+            "escape",
+            "C. It allows him to forget everything that happened.",
+            5,
+            "partially correct",
+            "He does not forget; he sees more directly than before.",
+            "The shift is toward awareness, not avoidance.",
+            "The absurd is confronted, not erased."
+          ),
+        ],
+      },
+    ],
+  },
+  {
+    id: "woolf-dalloway",
+    workId: "woolf-dalloway",
+    chapterNumber: 1,
+    chapterTitle: "One Day, Many Selves",
+    shortTitle: "One Day, Many Selves",
+    tagline: "Memory, society, and inner life",
+    estimatedMinutes: 9,
+    completionXp: 34,
+    scenes: [
+      {
+        id: "morning",
+        sceneNumber: 1,
+        title: "Scene 1 — A Morning Opens",
+        context: [
+          "Clarissa steps into London for flowers, but the present immediately opens into memory.",
+          "Woolf lets one ordinary action hold many layers of time at once.",
+        ],
+        prompt: "What does the opening reveal about consciousness?",
+        choices: [
+          createSceneChoice(
+            "layers",
+            "A. The present is constantly braided with memory.",
+            12,
+            "correct",
+            "Woolf treats consciousness as layered rather than linear.",
+            "The reader learns to follow thought as it moves through time instead of marching straight ahead.",
+            "The novel's form turns a city walk into a map of inner life."
+          ),
+          createSceneChoice(
+            "routine",
+            "B. Daily routine leaves no room for memory.",
+            4,
+            "not quite accurate",
+            "The scene does the opposite: routine becomes a doorway into remembered life.",
+            "This answer highlights how much the novel depends on associative movement.",
+            "Ordinary acts carry emotional history."
+          ),
+          createSceneChoice(
+            "plot",
+            "C. Only major events deserve attention.",
+            6,
+            "partially correct",
+            "Major events matter, but Woolf finds significance inside fleeting perception too.",
+            "The reader is invited to value small transitions of feeling.",
+            "The novel expands what counts as literary action."
+          ),
+        ],
+      },
+      {
+        id: "society",
+        sceneNumber: 2,
+        title: "Scene 2 — A Room Full of Roles",
+        context: [
+          "The party gathers people together, yet each person arrives with a private inward life.",
+          "Public grace and private uncertainty exist in the same room.",
+        ],
+        prompt: "What tension does the party reveal?",
+        choices: [
+          createSceneChoice(
+            "public-private",
+            "A. Social performance and inner feeling do not fully match.",
+            12,
+            "correct",
+            "The party is both connection and theater.",
+            "This scene shows how identity is negotiated between what is shown and what is felt.",
+            "Woolf keeps society vivid while exposing the solitude inside it."
+          ),
+          createSceneChoice(
+            "harmony",
+            "B. Everyone becomes fully known to one another.",
+            4,
+            "not quite accurate",
+            "The gathering creates contact, but not complete transparency.",
+            "The reader senses nearness without full access.",
+            "The novel values connection while preserving mystery."
+          ),
+          createSceneChoice(
+            "escape",
+            "C. Social life erases personal history.",
+            6,
+            "partially correct",
+            "Social roles can cover history, but they do not erase it.",
+            "The party keeps awakening memory beneath polite surfaces.",
+            "Past and present remain intertwined."
+          ),
+        ],
+      },
+      {
+        id: "echo",
+        sceneNumber: 3,
+        title: "Scene 3 — Lives That Echo",
+        context: [
+          "Clarissa and Septimus never meet, yet the novel places their experiences in relation.",
+          "Their parallel lives suggest that private suffering and public life are more connected than they appear.",
+        ],
+        prompt: "Why place these characters beside one another?",
+        choices: [
+          createSceneChoice(
+            "mirror",
+            "A. To show different responses to isolation and meaning.",
+            10,
+            "correct",
+            "The pairing deepens the novel's meditation on life, death, and social belonging.",
+            "The reader sees that separate stories can illuminate each other without direct contact.",
+            "Woolf builds resonance rather than simple plot intersection."
+          ),
+          createSceneChoice(
+            "romance",
+            "B. To prepare a hidden romance between them.",
+            3,
+            "not quite accurate",
+            "Their relation is thematic, not romantic.",
+            "This helps the reader notice structural echoes rather than conventional pairing.",
+            "The novel links consciousnesses through form."
+          ),
+          createSceneChoice(
+            "contrast",
+            "C. Only to make Clarissa seem happier.",
+            5,
+            "partially correct",
+            "Contrast matters, but the relation is more searching than simple comparison.",
+            "The novel asks how different lives answer the pressure of existence.",
+            "Their stories widen one another's meaning."
+          ),
+        ],
+      },
+    ],
+  },
 ];
 
 const kafkaChapterStories = parseKafkaOnTheShoreStories(kafkaOnTheShoreRaw);
@@ -465,6 +723,18 @@ const storyBooks = {
     overview:
       "A multi-chapter story route through escape, memory, symbolic space, and the shifting borders between reality and inner life.",
     chapterIds: kafkaChapterStories.map((story) => story.id),
+  },
+  "camus-stranger": {
+    workId: "camus-stranger",
+    overview:
+      "A short route through emotional distance, social judgment, and the lucid freedom of facing the absurd.",
+    chapterIds: ["camus-stranger"],
+  },
+  "woolf-dalloway": {
+    workId: "woolf-dalloway",
+    overview:
+      "A compact route through memory, social performance, and the layered movement of consciousness.",
+    chapterIds: ["woolf-dalloway"],
   },
 };
 

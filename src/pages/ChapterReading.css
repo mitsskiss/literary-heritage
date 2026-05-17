@@ -272,7 +272,7 @@
 
 .chapter-annotation-popover {
   position: absolute;
-  left: 50%;
+  left: 0;
   bottom: calc(100% + 10px);
   z-index: 5;
   width: min(240px, calc(100vw - 48px));
@@ -284,7 +284,7 @@
   box-shadow: 0 16px 30px rgba(18, 39, 35, 0.14);
   font-size: 13px;
   line-height: 1.5;
-  transform: translateX(-50%);
+  transform: none;
   animation: chapter-popover-in 0.32s ease both;
 }
 
@@ -912,6 +912,7 @@
 [data-theme="dark"] .chapter-challenges,
 [data-theme="dark"] .chapter-challenge,
 [data-theme="dark"] .chapter-recommendation article,
+[data-theme="dark"] .chapter-completion__stats article,
 [data-theme="dark"] .chapter-language-compare,
 [data-theme="dark"] .chapter-language-column,
 [data-theme="dark"] .chapter-sceneCard,
@@ -931,6 +932,7 @@
 [data-theme="dark"] .chapter-challenge small,
 [data-theme="dark"] .chapter-recommendation span,
 [data-theme="dark"] .chapter-recommendation p,
+[data-theme="dark"] .chapter-completion__stats span,
 [data-theme="dark"] .chapter-language-column label span,
 [data-theme="dark"] .chapter-language-column__context p,
 [data-theme="dark"] .chapter-language-column__prompt,
@@ -947,6 +949,10 @@
 [data-theme="dark"] .chapter-language-column select {
   border-color: rgba(255, 255, 255, 0.14);
   background: rgba(255, 255, 255, 0.08);
+  color: var(--text);
+}
+
+[data-theme="dark"] .chapter-completion__stats strong {
   color: var(--text);
 }
 
@@ -1186,12 +1192,12 @@
 @keyframes chapter-popover-in {
   from {
     opacity: 0;
-    transform: translate(-50%, 6px);
+    transform: translateY(6px);
   }
 
   to {
     opacity: 1;
-    transform: translate(-50%, 0);
+    transform: translateY(0);
   }
 }
 
