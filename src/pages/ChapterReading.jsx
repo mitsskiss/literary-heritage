@@ -28,9 +28,8 @@ function ChapterReading() {
   } = useI18n();
   const { id, chapterNumber } = useParams();
   const { content: adminContent } = useAdminContent();
-  const work = mergeAdminWorks(works.map(localizeWork), adminContent, language).find(
-    (item) => item.id === id
-  );
+  const localizedWorks = mergeAdminWorks(works.map(localizeWork), adminContent, language);
+  const work = localizedWorks.find((item) => item.id === id);
   const rawStaticStoryBook = getStoryBookByWorkId(id);
   const rawStaticChapter = getStoryChapterByWorkAndNumber(id, chapterNumber);
   const rawAdminChapter = getAdminStoryChapterByWorkAndNumber(
@@ -61,6 +60,8 @@ function ChapterReading() {
     completeStory,
   } = useProgressStore();
   const [xpPulse, setXpPulse] = useState(null);
+  const [choiceCelebration, setChoiceCelebration] = useState(null);
+  const [streakReward, setStreakReward] = useState(null);
   const [progressGlow, setProgressGlow] = useState(false);
   const [isComparisonOpen, setIsComparisonOpen] = useState(false);
   const [leftComparisonLanguage, setLeftComparisonLanguage] = useState(language);
@@ -102,6 +103,7 @@ function ChapterReading() {
   };
 
   const currentScene = chapter.scenes[progress.currentSceneIndex];
+  const currentFragment = work.fragments?.[progress.currentSceneIndex] ?? work.fragments?.[0];
   const leftComparisonScene = localizeStoryInLanguage(
     baseChapter,
     leftComparisonLanguage
@@ -127,13 +129,22 @@ function ChapterReading() {
   const nextChapter = storyBook.chapters.find(
     (item) => item.chapterNumber === chapter.chapterNumber + 1
   );
+  const preferredTheme = work.themes?.[0];
+  const recommendedWork =
+    localizedWorks.find(
+      (item) =>
+        item.id !== work.id &&
+        preferredTheme &&
+        item.themes?.includes(preferredTheme)
+    ) ?? localizedWorks.find((item) => item.id !== work.id);
   const visibleSceneNumber = Math.min(
     progress.currentSceneIndex + 1,
     chapter.scenes.length
   );
+  const answeredSceneCount = Object.keys(progress.choices).length;
   const chapterProgressPercent =
     chapter.scenes.length > 0
-      ? Math.round(((visibleSceneNumber - 1) / chapter.scenes.length) * 100)
+      ? Math.round((answeredSceneCount / chapter.scenes.length) * 100)
       : 0;
   const finalQuizAnswers = finalQuizzes[chapter.id] ?? {};
   const finalQuiz = chapter.scenes.slice(0, 3).map((scene) => ({
@@ -149,8 +160,46 @@ function ChapterReading() {
   const answeredFinalQuizCount = finalQuiz.filter(
     (question) => finalQuizAnswers[question.id]
   ).length;
+  const chapterChallenges = [
+    {
+      id: "answer-three",
+      title: t("challengeAnswerThree"),
+      hint: t("challengeAnswerThreeHint", {
+        done: Math.min(answeredSceneCount, 3),
+        total: 3,
+      }),
+      complete: answeredSceneCount >= 3,
+    },
+    {
+      id: "three-correct",
+      title: t("challengeThreeCorrect"),
+      hint: t("challengeThreeCorrectHint", {
+        done: Math.min(correctAnswers, 3),
+        total: 3,
+      }),
+      complete: correctAnswers >= 3,
+    },
+    {
+      id: "compare-languages",
+      title: t("challengeCompareLanguages"),
+      hint: t("challengeCompareLanguagesHint"),
+      complete: isComparisonOpen,
+    },
+    {
+      id: "finish-chapter",
+      title: t("challengeFinishChapter"),
+      hint: t("challengeFinishChapterHint", {
+        done: answeredSceneCount,
+        total: chapter.scenes.length,
+      }),
+      complete: isCompleted || answeredSceneCount >= chapter.scenes.length,
+    },
+  ];
 
   const handleChoice = (choice) => {
+    const nextCorrectAnswers =
+      correctAnswers + (choice.result.isCorrect && !selectedChoiceId ? 1 : 0);
+
     recordChoice(chapter.id, currentScene.id, choice.id, choice.xp);
     setXpPulse({
       id: `${chapter.id}-${currentScene.id}-${choice.id}`,
@@ -158,9 +207,26 @@ function ChapterReading() {
       tone: choice.result.tone,
       status: choice.result.status,
     });
+    setChoiceCelebration({
+      id: `${chapter.id}-${currentScene.id}-${choice.id}-celebration`,
+      tone: choice.result.tone,
+      title: choice.result.isCorrect
+        ? t("choiceCongratsCorrect")
+        : choice.result.tone === "partial"
+          ? t("choiceCongratsPartial")
+          : t("choiceCongratsIncorrect"),
+    });
 
     if (choice.result.isCorrect) {
       setProgressGlow(true);
+
+      if (nextCorrectAnswers > 0 && nextCorrectAnswers % 3 === 0) {
+        setStreakReward({
+          id: `${chapter.id}-${currentScene.id}-streak`,
+          title: t("insightStreak"),
+          text: t("insightStreakText"),
+        });
+      }
     }
   };
 
@@ -183,6 +249,26 @@ function ChapterReading() {
 
     return () => window.clearTimeout(timeoutId);
   }, [progressGlow]);
+
+  useEffect(() => {
+    if (!choiceCelebration) return undefined;
+
+    const timeoutId = window.setTimeout(() => {
+      setChoiceCelebration(null);
+    }, 1800);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [choiceCelebration]);
+
+  useEffect(() => {
+    if (!streakReward) return undefined;
+
+    const timeoutId = window.setTimeout(() => {
+      setStreakReward(null);
+    }, 2200);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [streakReward]);
 
   const handleContinue = () => {
     if (isLastScene) {
@@ -281,9 +367,34 @@ function ChapterReading() {
           aria-hidden="true"
         />
 
+        {!isCompleted ? (
+          <section className="chapter-challenges">
+            <p className="chapter-sceneCard__eyebrow">{t("miniChallenges")}</p>
+            <div className="chapter-challenges__grid">
+              {chapterChallenges.map((challenge) => (
+                <article
+                  key={challenge.id}
+                  className={`chapter-challenge ${
+                    challenge.complete ? "is-complete" : ""
+                  }`}
+                >
+                  <span aria-hidden="true">{challenge.complete ? "✓" : "•"}</span>
+                  <div>
+                    <strong>{challenge.title}</strong>
+                    <small>{challenge.hint}</small>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+        ) : null}
+
         {!isCompleted && isComparisonOpen && currentScene ? (
           <section className="chapter-language-compare">
-            <p className="chapter-sceneCard__eyebrow">{t("comparisonContext")}</p>
+            <div className="chapter-language-compare__head">
+              <p className="chapter-sceneCard__eyebrow">{t("comparisonContext")}</p>
+              <span>{t("compareDifferences")}</span>
+            </div>
             <div className="chapter-language-compare__grid">
               <LanguageComparisonColumn
                 languageLabel={t("language")}
@@ -291,6 +402,7 @@ function ChapterReading() {
                 selectedLanguage={leftComparisonLanguage}
                 onLanguageChange={setLeftComparisonLanguage}
                 scene={leftComparisonScene ?? currentScene}
+                comparisonScene={rightComparisonScene ?? currentScene}
               />
               <LanguageComparisonColumn
                 languageLabel={t("language")}
@@ -298,9 +410,42 @@ function ChapterReading() {
                 selectedLanguage={rightComparisonLanguage}
                 onLanguageChange={setRightComparisonLanguage}
                 scene={rightComparisonScene ?? currentScene}
+                comparisonScene={leftComparisonScene ?? currentScene}
               />
             </div>
+            <div className="chapter-language-compare__glossary">
+              <h3>{t("difficultWords")}</h3>
+              <p>{t("difficultWordsHint")}</p>
+              {currentFragment?.annotations?.length ? (
+                <div>
+                  {currentFragment.annotations.map((annotation) => (
+                    <article key={annotation.word}>
+                      <strong>{annotation.word}</strong>
+                      <span>{annotation.explanation}</span>
+                    </article>
+                  ))}
+                </div>
+              ) : (
+                <p>{t("noAnnotationsYet")}</p>
+              )}
+            </div>
           </section>
+        ) : null}
+
+        {choiceCelebration ? (
+          <div
+            className={`chapter-choice-toast is-${choiceCelebration.tone}`}
+            aria-live="polite"
+          >
+            {choiceCelebration.title}
+          </div>
+        ) : null}
+
+        {streakReward ? (
+          <div className="chapter-reward-toast" aria-live="polite">
+            <strong>{streakReward.title}</strong>
+            <span>{streakReward.text}</span>
+          </div>
         ) : null}
 
         {isCompleted ? (
@@ -399,6 +544,30 @@ function ChapterReading() {
                 {t("viewProgress")}
               </Link>
             </div>
+
+            {recommendedWork && preferredTheme ? (
+              <section className="chapter-recommendation">
+                <p className="chapter-completion__eyebrow">{t("recommendedNext")}</p>
+                <div className="chapter-recommendation__grid">
+                  <article>
+                    <span>{t("recommendedByTheme", { theme: preferredTheme })}</span>
+                    <h3>{recommendedWork.title}</h3>
+                    <p>{recommendedWork.author}</p>
+                    <Link to={`/reading/${recommendedWork.id}`}>
+                      {t("openRecommendedWork")}
+                    </Link>
+                  </article>
+                  <article>
+                    <span>{t("continueWithTheme")}</span>
+                    <h3>{preferredTheme}</h3>
+                    <p>{work.title}</p>
+                    <Link to={`/explore?theme=${encodeURIComponent(preferredTheme)}`}>
+                      {t("exploreTheme")}
+                    </Link>
+                  </article>
+                </div>
+              </section>
+            ) : null}
           </section>
         ) : (
           <article className="chapter-sceneCard">
@@ -493,7 +662,16 @@ function LanguageComparisonColumn({
   selectedLanguage,
   onLanguageChange,
   scene,
+  comparisonScene,
 }) {
+  const comparisonWords = new Set(
+    `${comparisonScene.title} ${comparisonScene.context.join(" ")} ${comparisonScene.prompt}`
+      .toLowerCase()
+      .split(/\s+/)
+      .map(normalizeWord)
+      .filter(Boolean)
+  );
+
   return (
     <article className="chapter-language-column">
       <label>
@@ -510,15 +688,36 @@ function LanguageComparisonColumn({
         </select>
       </label>
 
-      <h3>{scene.title}</h3>
+      <h3>{renderComparedText(scene.title, comparisonWords)}</h3>
       <div className="chapter-language-column__context">
         {scene.context.map((paragraph) => (
-          <p key={paragraph}>{paragraph}</p>
+          <p key={paragraph}>{renderComparedText(paragraph, comparisonWords)}</p>
         ))}
       </div>
-      <p className="chapter-language-column__prompt">{scene.prompt}</p>
+      <p className="chapter-language-column__prompt">
+        {renderComparedText(scene.prompt, comparisonWords)}
+      </p>
     </article>
   );
+}
+
+function normalizeWord(value) {
+  return value.toLowerCase().replace(/[^\p{L}\p{N}-]+/gu, "");
+}
+
+function renderComparedText(text, comparisonWords) {
+  return text.split(/(\s+)/).map((token, index) => {
+    const normalized = normalizeWord(token);
+    const isDifferent = normalized && !comparisonWords.has(normalized);
+
+    return isDifferent ? (
+      <mark className="chapter-language-difference" key={`${token}-${index}`}>
+        {token}
+      </mark>
+    ) : (
+      <span key={`${token}-${index}`}>{token}</span>
+    );
+  });
 }
 
 export default ChapterReading;

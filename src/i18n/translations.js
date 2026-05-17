@@ -164,6 +164,23 @@ export const ui = {
     compareLanguages: "Compare languages",
     hideLanguageComparison: "Hide comparison",
     comparisonContext: "Scene comparison",
+    compareDifferences: "Highlighted differences",
+    difficultWords: "Key words",
+    difficultWordsHint: "Short explanations help you keep reading without leaving the scene.",
+    noAnnotationsYet: "No key words for this scene yet.",
+    miniChallenges: "Mini challenges",
+    challengeAnswerThree: "Answer 3 scenes",
+    challengeAnswerThreeHint: "{done}/{total} scenes answered",
+    challengeThreeCorrect: "Find 3 strong answers",
+    challengeThreeCorrectHint: "{done}/{total} strong answers",
+    challengeCompareLanguages: "Compare two languages",
+    challengeCompareLanguagesHint: "Open the comparison panel",
+    challengeFinishChapter: "Finish the chapter",
+    challengeFinishChapterHint: "{done}/{total} scenes completed",
+    recommendedNext: "Recommended next",
+    recommendedByTheme: "Because you explored {theme}",
+    continueWithTheme: "Continue with theme",
+    openRecommendedWork: "Open recommended work",
     options: "Options",
     result: "Result",
     explanation: "Explanation",
@@ -311,6 +328,11 @@ export const ui = {
     finalQuizTitle: "Check the meaning after reading",
     quizCorrect: "Correct",
     quizIncorrect: "Not quite",
+    choiceCongratsCorrect: "Great insight",
+    choiceCongratsPartial: "Good direction",
+    choiceCongratsIncorrect: "Keep exploring",
+    insightStreak: "Insight streak",
+    insightStreakText: "Three strong choices in a row",
   },
   ru: {
     navWorks: "Произведения",
@@ -468,6 +490,23 @@ export const ui = {
     compareLanguages: "Сравнение языков",
     hideLanguageComparison: "Скрыть сравнение",
     comparisonContext: "Сравнение сцены",
+    compareDifferences: "Подсветка различий",
+    difficultWords: "Ключевые слова",
+    difficultWordsHint: "Короткие пояснения помогают читать дальше, не выходя из сцены.",
+    noAnnotationsYet: "Для этой сцены пока нет ключевых слов.",
+    miniChallenges: "Мини-челленджи",
+    challengeAnswerThree: "Ответить на 3 сцены",
+    challengeAnswerThreeHint: "{done}/{total} сцен отвечено",
+    challengeThreeCorrect: "Найти 3 сильных ответа",
+    challengeThreeCorrectHint: "{done}/{total} сильных ответа",
+    challengeCompareLanguages: "Сравнить два языка",
+    challengeCompareLanguagesHint: "Откройте панель сравнения",
+    challengeFinishChapter: "Завершить главу",
+    challengeFinishChapterHint: "{done}/{total} сцен завершено",
+    recommendedNext: "Что читать дальше",
+    recommendedByTheme: "Потому что вы изучали тему «{theme}»",
+    continueWithTheme: "Продолжить тему",
+    openRecommendedWork: "Открыть рекомендацию",
     options: "Варианты",
     result: "Результат",
     explanation: "Объяснение",
@@ -615,6 +654,11 @@ export const ui = {
     finalQuizTitle: "Проверьте смысл после чтения",
     quizCorrect: "Верно",
     quizIncorrect: "Не совсем",
+    choiceCongratsCorrect: "Отличное понимание",
+    choiceCongratsPartial: "Хорошее направление",
+    choiceCongratsIncorrect: "Продолжайте исследовать",
+    insightStreak: "Серия озарений",
+    insightStreakText: "Три сильных выбора подряд",
   },
   kk: {
     navWorks: "Шығармалар",
@@ -772,6 +816,23 @@ export const ui = {
     compareLanguages: "Тілдерді салыстыру",
     hideLanguageComparison: "Салыстыруды жасыру",
     comparisonContext: "Сахнаны салыстыру",
+    compareDifferences: "Айырмашылықтарды белгілеу",
+    difficultWords: "Негізгі сөздер",
+    difficultWordsHint: "Қысқа түсіндірмелер сахнадан шықпай-ақ оқуды жалғастыруға көмектеседі.",
+    noAnnotationsYet: "Бұл сахна үшін негізгі сөздер әзірге жоқ.",
+    miniChallenges: "Мини-челлендждер",
+    challengeAnswerThree: "3 сахнаға жауап беру",
+    challengeAnswerThreeHint: "{done}/{total} сахнаға жауап берілді",
+    challengeThreeCorrect: "3 мықты жауап табу",
+    challengeThreeCorrectHint: "{done}/{total} мықты жауап",
+    challengeCompareLanguages: "Екі тілді салыстыру",
+    challengeCompareLanguagesHint: "Салыстыру панелін ашыңыз",
+    challengeFinishChapter: "Тарауды аяқтау",
+    challengeFinishChapterHint: "{done}/{total} сахна аяқталды",
+    recommendedNext: "Келесі ұсыныс",
+    recommendedByTheme: "Сіз «{theme}» тақырыбын зерттегендіктен",
+    continueWithTheme: "Тақырыпты жалғастыру",
+    openRecommendedWork: "Ұсынылған шығарманы ашу",
     options: "Нұсқалар",
     result: "Нәтиже",
     explanation: "Түсіндіру",
@@ -919,6 +980,11 @@ export const ui = {
     finalQuizTitle: "Оқудан кейін мағынаны тексеріңіз",
     quizCorrect: "Дұрыс",
     quizIncorrect: "Толық емес",
+    choiceCongratsCorrect: "Тамаша түсінік",
+    choiceCongratsPartial: "Жақсы бағыт",
+    choiceCongratsIncorrect: "Зерттеуді жалғастырыңыз",
+    insightStreak: "Түсінік сериясы",
+    insightStreakText: "Қатарынан үш мықты таңдау",
   },
 };
 
@@ -1799,6 +1865,99 @@ export const storyTranslations = {
           ],
         },
       ],
+    },
+  },
+};
+
+export const storyResultTranslations = {
+  "abai-words": {
+    ru: {
+      curiosity: {
+        foundation: {
+          explanation: "Любознательность показана как начало образования и самопознания, а не как второстепенная черта.",
+          canonNote: "В прозе Абая любознательность тесно связана с образованием, нравственным сознанием и развитием мыслящей личности.",
+        },
+        distraction: {
+          explanation: "Абай не согласился бы с этим: он считает любознательность необходимой для осмысленного развития.",
+          canonNote: "«Слова назидания» снова и снова возвращаются к учению как к серьёзной человеческой задаче, а не отвлечению.",
+        },
+        neutral: {
+          explanation: "В этом фрагменте любознательность является одним из первых признаков внутреннего пробуждения.",
+          canonNote: "Абай придаёт любознательности нравственный и интеллектуальный вес, а не оставляет её фоном.",
+        },
+      },
+      discipline: {
+        effort: {
+          explanation: "Текст показывает учение как длительную практику, а не единичный момент вдохновения.",
+          canonNote: "Абай часто связывает образование с трудом: знать значит возвращаться, проверять и формировать себя.",
+        },
+        talent: {
+          explanation: "Абай делает больший акцент на труде и настойчивости, чем на врождённых способностях.",
+          canonNote: "Текст снова указывает на дисциплину, а не талант, как на более глубокое условие учения.",
+        },
+        luck: {
+          explanation: "Обстоятельства важны, но этот фрагмент явно говорит об усилии, внимании и внутренней дисциплине.",
+          canonNote: "Абай настаивает, что человек должен активно участвовать в создании знания.",
+        },
+      },
+      responsibility: {
+        character: {
+          explanation: "Знание ценно потому, что меняет самого человека, а не просто украшает его.",
+          canonNote: "Абай предлагает судить об учении по его нравственному эффекту: оно должно углублять ответственность и совесть.",
+        },
+        status: {
+          explanation: "Статус вторичен. Абая больше интересует нравственное применение знания.",
+          canonNote: "Текст ведёт не к репутации, а к совести, суждению и ответственности.",
+        },
+        memory: {
+          explanation: "Здесь важнее не количество фактов, а то, как знание влияет на совесть и характер.",
+          canonNote: "Абай связывает образование с формированием личности, а не только с накоплением сведений.",
+        },
+      },
+    },
+    kk: {
+      curiosity: {
+        foundation: {
+          explanation: "Құмарлық білім мен өзін танудың бастауы ретінде беріледі, жай ғана ұсақ қасиет емес.",
+          canonNote: "Абай прозасында құмарлық біліммен, адамгершілік санамен және ойлы тұлғаның дамуымен тығыз байланысты.",
+        },
+        distraction: {
+          explanation: "Абай бұған келіспес еді: ол құмарлықты мағыналы дамудың қажетті шарты деп көреді.",
+          canonNote: "«Қара сөздер» оқуды алаңдату емес, маңызды адамдық міндет ретінде қайта-қайта көрсетеді.",
+        },
+        neutral: {
+          explanation: "Бұл үзіндіде құмарлық ішкі оянудың алғашқы белгілерінің бірі.",
+          canonNote: "Абай құмарлыққа жай фон емес, адамгершілік әрі зияткерлік салмақ береді.",
+        },
+      },
+      discipline: {
+        effort: {
+          explanation: "Мәтін оқуды бір сәттік шабыт емес, ұзақ тәжірибе ретінде көрсетеді.",
+          canonNote: "Абай білімді еңбекпен байланыстырады: білу дегеніміз қайта оралу, тексеру және өзін қалыптастыру.",
+        },
+        talent: {
+          explanation: "Абай табиғи қабілеттен гөрі еңбек пен табандылыққа көбірек мән береді.",
+          canonNote: "Мәтін таланттан гөрі тәртіпті оқудың терең шарты ретінде көрсетеді.",
+        },
+        luck: {
+          explanation: "Жағдай маңызды, бірақ бұл үзінді күш-жігер, зейін және ішкі тәртіп туралы.",
+          canonNote: "Абай адамның білімді қалыптастыруға өзі белсенді қатысуы керегін айтады.",
+        },
+      },
+      responsibility: {
+        character: {
+          explanation: "Білім адамды өзгерткенде ғана маңызды, тек сыртқы әшекей болғанда емес.",
+          canonNote: "Абай оқуды оның адамгершілік әсерімен бағалауды ұсынады: ол жауапкершілік пен ар-ұжданды тереңдетуі керек.",
+        },
+        status: {
+          explanation: "Мәртебе екінші орында. Абай білімнің адамгершілік қолданысына көбірек мән береді.",
+          canonNote: "Мәтін беделге емес, ар-ұжданға, пайымға және жауапкершілікке жетелейді.",
+        },
+        memory: {
+          explanation: "Мұнда дерек саны емес, білімнің ар-ұждан мен мінезге әсері маңызды.",
+          canonNote: "Абай білімді жай жинақтаумен емес, тұлғаны қалыптастырумен байланыстырады.",
+        },
+      },
     },
   },
 };

@@ -15,6 +15,7 @@ import {
   multimediaTranslations,
   miscTranslations,
   storyBookTranslations,
+  storyResultTranslations,
   storyTranslations,
   themeCollectionTranslations,
   themeLabels,
@@ -71,7 +72,7 @@ function mergeWork(base, translated = {}) {
   };
 }
 
-function mergeStory(base, translated = {}) {
+function mergeStory(base, translated = {}, resultTranslations = {}) {
   return {
     ...base,
     ...translated,
@@ -86,6 +87,9 @@ function mergeStory(base, translated = {}) {
             result: {
               ...base.scenes[sceneIndex]?.choices?.[choiceIndex]?.result,
               ...translated.scenes[sceneIndex]?.choices?.[choiceIndex]?.result,
+              ...(resultTranslations[base.scenes[sceneIndex]?.id]?.[
+                base.scenes[sceneIndex]?.choices?.[choiceIndex]?.id
+              ] ?? {}),
             },
           })),
         }))
@@ -167,7 +171,11 @@ function localizeStoryForLanguage(story, language) {
   if (story.id?.startsWith("murakami-identity-chapter-")) {
     return localizeGeneratedMurakamiStory(story, language);
   }
-  return mergeStory(story, storyTranslations[story.id]?.[language] ?? {});
+  return mergeStory(
+    story,
+    storyTranslations[story.id]?.[language] ?? {},
+    storyResultTranslations[story.id]?.[language] ?? {}
+  );
 }
 
 function localizeLabel(value, dictionary, language) {
