@@ -83,7 +83,7 @@ const styles = {
     minHeight: "100vh",
     background: "#f8f5ef",
     color: "#1f1f1f",
-    padding: "56px 20px 80px",
+    padding: "110px 20px 80px",
   },
 
   container: {
@@ -126,7 +126,7 @@ const styles = {
 
   grid: {
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+    gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 320px), 1fr))",
     gap: "28px",
   },
 

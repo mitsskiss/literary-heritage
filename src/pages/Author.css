@@ -1,0 +1,111 @@
+.author-page__container,
+.author-profile-hero,
+.author-profile-hero__content,
+.author-profile-timeline__content,
+.author-work-card,
+.author-work-card__body {
+  min-width: 0;
+}
+
+.author-profile-hero__title,
+.author-profile-hero__description,
+.author-profile-timeline__content,
+.author-work-card__body {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 760px) {
+  .author-page {
+    padding: 100px 14px 64px !important;
+  }
+
+  .author-page__container {
+    width: 100%;
+  }
+
+  .author-page__back {
+    margin-bottom: 18px !important;
+  }
+
+  .author-profile-hero {
+    grid-template-columns: 1fr !important;
+    gap: 18px !important;
+    padding: 18px !important;
+    border-radius: 22px !important;
+    align-items: start !important;
+  }
+
+  .author-profile-hero__media {
+    justify-content: flex-start !important;
+  }
+
+  .author-profile-hero__portrait,
+  .author-profile-hero__fallback {
+    width: min(100%, 180px) !important;
+    height: auto !important;
+    aspect-ratio: 1 !important;
+  }
+
+  .author-profile-hero__title {
+    font-size: clamp(32px, 10vw, 46px) !important;
+    line-height: 0.98 !important;
+  }
+
+  .author-profile-hero__description {
+    font-size: 16px !important;
+    line-height: 1.7 !important;
+  }
+
+  .author-profile-hero__meta {
+    margin-top: 18px !important;
+  }
+
+  .author-profile-section {
+    margin-bottom: 28px !important;
+  }
+
+  .author-profile-philosophy {
+    padding: 18px !important;
+  }
+
+  .author-profile-timeline {
+    padding-left: 18px !important;
+  }
+
+  .author-profile-timeline__item {
+    padding-left: 18px !important;
+  }
+
+  .author-profile-timeline__content {
+    padding: 16px !important;
+  }
+
+  .author-profile-works {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  .author-work-card__body {
+    padding: 16px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .author-page {
+    padding-inline: 10px !important;
+  }
+
+  .author-profile-hero {
+    padding: 16px !important;
+  }
+
+  .author-profile-hero__portrait,
+  .author-profile-hero__fallback {
+    width: 100% !important;
+    max-width: 160px;
+  }
+
+  .author-profile-themes {
+    gap: 8px !important;
+  }
+}

@@ -5,6 +5,7 @@ import { useI18n } from "../i18n/I18nContext";
 import { useProgressStore } from "../store/useProgressStore";
 import { mergeAdminAuthors, mergeAdminWorks } from "../admin/adminContent";
 import { useAdminContent } from "../hooks/useAdminContent";
+import "./Author.css";
 
 function Author() {
   const { t, language, localizeAuthors, localizeWorks } = useI18n();
@@ -19,9 +20,9 @@ function Author() {
 
   if (!authorInfo || !authorWorks.length) {
     return (
-      <main style={styles.page}>
-        <div style={styles.container}>
-          <div style={styles.notFoundBox}>
+      <main className="author-page" style={styles.page}>
+        <div className="author-page__container" style={styles.container}>
+          <div className="author-page__notFound" style={styles.notFoundBox}>
             <h2 style={styles.notFoundTitle}>{t("authorNotFound")}</h2>
             <p style={styles.notFoundText}>
               {t("authorNotFoundText")}
@@ -40,27 +41,16 @@ function Author() {
     (favorite) => favorite.type === "author" && favorite.id === authorInfo.canonicalName
   );
 
-  const philosophyNotes = [
-    ...new Set(
-      authorWorks
-        .flatMap((w) => w.fragments)
-        .map((f) => f.authorNote)
-        .filter(Boolean)
-    ),
-  ];
+  const philosophyNotes = [...new Set(authorWorks.map((work) => work.description).filter(Boolean))];
 
   const timelineItems = authorWorks
     .map((work) => {
-      const notes = work.fragments
-        .map((f) => f.authorNote)
-        .filter(Boolean);
-
       return {
         id: work.id,
         title: work.title,
         year: work.year || "—",
         themes: work.themes || [],
-        focus: notes[0] || work.description,
+        focus: work.description,
       };
     })
     .sort((a, b) => {
@@ -71,21 +61,22 @@ function Author() {
 
   return (
     <main className="author-page" style={styles.page}>
-      <div style={styles.container}>
-        <Link to="/authors" style={styles.topBackLink}>
+      <div className="author-page__container" style={styles.container}>
+        <Link to="/authors" className="author-page__back" style={styles.topBackLink}>
           &lt; {t("backToAuthors")}
         </Link>
 
-        <section style={styles.heroCard}>
-          <div style={styles.heroLeft}>
+        <section className="author-profile-hero" style={styles.heroCard}>
+          <div className="author-profile-hero__media" style={styles.heroLeft}>
             {authorInfo.image ? (
               <img
                 src={authorInfo.image}
                 alt={authorInfo.name}
+                className="author-profile-hero__portrait"
                 style={styles.authorPortrait}
               />
             ) : (
-              <div style={styles.authorFallback}>
+              <div className="author-profile-hero__fallback" style={styles.authorFallback}>
                 {authorInfo.name
                   .split(" ")
                   .map((part) => part[0])
@@ -96,15 +87,15 @@ function Author() {
             )}
           </div>
 
-          <div style={styles.heroRight}>
+          <div className="author-profile-hero__content" style={styles.heroRight}>
             <p style={styles.kicker}>{t("literaryProfile")}</p>
-            <h1 style={styles.title}>{authorInfo.name}</h1>
+            <h1 className="author-profile-hero__title" style={styles.title}>{authorInfo.name}</h1>
 
             {authorInfo.period && (
               <p style={styles.period}>{authorInfo.period}</p>
             )}
 
-            <p style={styles.description}>{authorInfo.description}</p>
+            <p className="author-profile-hero__description" style={styles.description}>{authorInfo.description}</p>
 
             <button
               type="button"
@@ -124,7 +115,7 @@ function Author() {
               {isAuthorFavorite ? t("savedFavorite") : t("saveFavorite")}
             </button>
 
-            <div style={styles.metaRow}>
+            <div className="author-profile-hero__meta" style={styles.metaRow}>
               <div style={styles.metaPill}>
                 <span style={styles.metaLabel}>{t("works")}</span>
                 <span style={styles.metaValue}>{authorWorks.length}</span>
@@ -138,12 +129,12 @@ function Author() {
           </div>
         </section>
 
-        <section style={styles.section}>
+        <section className="author-profile-section" style={styles.section}>
           <div style={styles.sectionHeader}>
             <h2 style={styles.sectionTitle}>{t("themesExplored")}</h2>
           </div>
 
-          <div style={styles.themeRow}>
+          <div className="author-profile-themes" style={styles.themeRow}>
             {themes.map((theme) => (
               <span key={theme} style={styles.themeTag}>
                 {theme}
@@ -153,12 +144,12 @@ function Author() {
         </section>
 
         {philosophyNotes.length > 0 && (
-          <section style={styles.section}>
+          <section className="author-profile-section" style={styles.section}>
             <div style={styles.sectionHeader}>
               <h2 style={styles.sectionTitle}>{t("philosophyFocus")}</h2>
             </div>
 
-            <div style={styles.philosophyCard}>
+            <div className="author-profile-philosophy" style={styles.philosophyCard}>
               {philosophyNotes.slice(0, 3).map((note, idx) => (
                 <p
                   key={idx}
@@ -174,19 +165,19 @@ function Author() {
           </section>
         )}
 
-        <section style={styles.section}>
+        <section className="author-profile-section" style={styles.section}>
           <div style={styles.sectionHeader}>
             <h2 style={styles.sectionTitle}>{t("evolutionIdeas")}</h2>
           </div>
 
-          <div style={styles.timeline}>
+          <div className="author-profile-timeline" style={styles.timeline}>
             <div style={styles.timelineLine} />
 
             {timelineItems.map((item, idx) => (
-              <div key={item.id} style={styles.timelineItem}>
+              <div key={item.id} className="author-profile-timeline__item" style={styles.timelineItem}>
                 <div style={styles.timelineDot} />
 
-                <div style={styles.timelineContent}>
+                <div className="author-profile-timeline__content" style={styles.timelineContent}>
                   <div style={styles.timelineYear}>{item.year}</div>
 
                   <Link to={`/reading/${item.id}`} style={styles.timelineTitle}>
@@ -206,12 +197,12 @@ function Author() {
           </div>
         </section>
 
-        <section style={styles.section}>
+        <section className="author-profile-section" style={styles.section}>
           <div style={styles.sectionHeader}>
             <h2 style={styles.sectionTitle}>{t("works")}</h2>
           </div>
 
-          <div style={styles.worksGrid}>
+          <div className="author-profile-works" style={styles.worksGrid}>
             {authorWorks.map((work) => (
               <Link
                 key={work.id}
@@ -230,7 +221,7 @@ function Author() {
                   <div style={styles.workImageOverlay} />
                 </div>
 
-                <div style={styles.workBody}>
+                <div className="author-work-card__body" style={styles.workBody}>
                   <div style={styles.workYear}>{work.year || t("unknownYear")}</div>
                   <h3 style={styles.workTitle}>{work.title}</h3>
                   <p style={styles.workDesc}>{work.description}</p>
@@ -262,7 +253,7 @@ const styles = {
     minHeight: "100vh",
     background: "#f8f5ef",
     color: "#1f1f1f",
-    padding: "48px 20px 80px",
+    padding: "110px 20px 80px",
   },
 
   container: {
