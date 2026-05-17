@@ -64,6 +64,7 @@ function ChapterReading() {
   const [streakReward, setStreakReward] = useState(null);
   const [progressGlow, setProgressGlow] = useState(false);
   const [isComparisonOpen, setIsComparisonOpen] = useState(false);
+  const [activeAnnotation, setActiveAnnotation] = useState(null);
   const [leftComparisonLanguage, setLeftComparisonLanguage] = useState(language);
   const [rightComparisonLanguage, setRightComparisonLanguage] = useState(
     language === "en" ? "ru" : "en"
@@ -235,7 +236,7 @@ function ChapterReading() {
 
     const timeoutId = window.setTimeout(() => {
       setXpPulse(null);
-    }, 1600);
+    }, 2400);
 
     return () => window.clearTimeout(timeoutId);
   }, [xpPulse]);
@@ -255,7 +256,7 @@ function ChapterReading() {
 
     const timeoutId = window.setTimeout(() => {
       setChoiceCelebration(null);
-    }, 1800);
+    }, 2500);
 
     return () => window.clearTimeout(timeoutId);
   }, [choiceCelebration]);
@@ -265,10 +266,14 @@ function ChapterReading() {
 
     const timeoutId = window.setTimeout(() => {
       setStreakReward(null);
-    }, 2200);
+    }, 2800);
 
     return () => window.clearTimeout(timeoutId);
   }, [streakReward]);
+
+  useEffect(() => {
+    setActiveAnnotation(null);
+  }, [progress.currentSceneIndex]);
 
   const handleContinue = () => {
     if (isLastScene) {
@@ -391,10 +396,7 @@ function ChapterReading() {
 
         {!isCompleted && isComparisonOpen && currentScene ? (
           <section className="chapter-language-compare">
-            <div className="chapter-language-compare__head">
-              <p className="chapter-sceneCard__eyebrow">{t("comparisonContext")}</p>
-              <span>{t("compareDifferences")}</span>
-            </div>
+            <p className="chapter-sceneCard__eyebrow">{t("comparisonContext")}</p>
             <div className="chapter-language-compare__grid">
               <LanguageComparisonColumn
                 languageLabel={t("language")}
@@ -402,7 +404,6 @@ function ChapterReading() {
                 selectedLanguage={leftComparisonLanguage}
                 onLanguageChange={setLeftComparisonLanguage}
                 scene={leftComparisonScene ?? currentScene}
-                comparisonScene={rightComparisonScene ?? currentScene}
               />
               <LanguageComparisonColumn
                 languageLabel={t("language")}
@@ -410,24 +411,7 @@ function ChapterReading() {
                 selectedLanguage={rightComparisonLanguage}
                 onLanguageChange={setRightComparisonLanguage}
                 scene={rightComparisonScene ?? currentScene}
-                comparisonScene={leftComparisonScene ?? currentScene}
               />
-            </div>
-            <div className="chapter-language-compare__glossary">
-              <h3>{t("difficultWords")}</h3>
-              <p>{t("difficultWordsHint")}</p>
-              {currentFragment?.annotations?.length ? (
-                <div>
-                  {currentFragment.annotations.map((annotation) => (
-                    <article key={annotation.word}>
-                      <strong>{annotation.word}</strong>
-                      <span>{annotation.explanation}</span>
-                    </article>
-                  ))}
-                </div>
-              ) : (
-                <p>{t("noAnnotationsYet")}</p>
-              )}
             </div>
           </section>
         ) : null}
@@ -585,6 +569,20 @@ function ChapterReading() {
               </div>
             </section>
 
+            {currentFragment ? (
+              <section className="chapter-sceneCard__section chapter-fragment">
+                <p className="chapter-sceneCard__label">{t("quoteFragment")}</p>
+                <blockquote>
+                  {renderAnnotatedText(
+                    currentFragment.text,
+                    currentFragment.annotations,
+                    activeAnnotation,
+                    setActiveAnnotation
+                  )}
+                </blockquote>
+              </section>
+            ) : null}
+
             <section className="chapter-sceneCard__section">
               <p className="chapter-sceneCard__label">{t("question")}</p>
               <p className="chapter-sceneCard__question">{currentScene.prompt}</p>
@@ -662,16 +660,7 @@ function LanguageComparisonColumn({
   selectedLanguage,
   onLanguageChange,
   scene,
-  comparisonScene,
 }) {
-  const comparisonWords = new Set(
-    `${comparisonScene.title} ${comparisonScene.context.join(" ")} ${comparisonScene.prompt}`
-      .toLowerCase()
-      .split(/\s+/)
-      .map(normalizeWord)
-      .filter(Boolean)
-  );
-
   return (
     <article className="chapter-language-column">
       <label>
@@ -688,15 +677,13 @@ function LanguageComparisonColumn({
         </select>
       </label>
 
-      <h3>{renderComparedText(scene.title, comparisonWords)}</h3>
+      <h3>{scene.title}</h3>
       <div className="chapter-language-column__context">
         {scene.context.map((paragraph) => (
-          <p key={paragraph}>{renderComparedText(paragraph, comparisonWords)}</p>
+          <p key={paragraph}>{paragraph}</p>
         ))}
       </div>
-      <p className="chapter-language-column__prompt">
-        {renderComparedText(scene.prompt, comparisonWords)}
-      </p>
+      <p className="chapter-language-column__prompt">{scene.prompt}</p>
     </article>
   );
 }
@@ -705,15 +692,32 @@ function normalizeWord(value) {
   return value.toLowerCase().replace(/[^\p{L}\p{N}-]+/gu, "");
 }
 
-function renderComparedText(text, comparisonWords) {
+function renderAnnotatedText(text, annotations = [], activeAnnotation, onToggle) {
+  const annotationMap = new Map(
+    annotations.map((annotation) => [normalizeWord(annotation.word), annotation])
+  );
+
   return text.split(/(\s+)/).map((token, index) => {
     const normalized = normalizeWord(token);
-    const isDifferent = normalized && !comparisonWords.has(normalized);
+    const annotation = annotationMap.get(normalized);
+    const isOpen = activeAnnotation === normalized;
 
-    return isDifferent ? (
-      <mark className="chapter-language-difference" key={`${token}-${index}`}>
-        {token}
-      </mark>
+    return annotation ? (
+      <span className="chapter-annotated-word-wrap" key={`${token}-${index}`}>
+        <button
+          type="button"
+          className="chapter-annotated-word"
+          aria-expanded={isOpen}
+          onClick={() => onToggle(isOpen ? null : normalized)}
+        >
+          {token}
+        </button>
+        {isOpen ? (
+          <span className="chapter-annotation-popover" role="tooltip">
+            {annotation.explanation}
+          </span>
+        ) : null}
+      </span>
     ) : (
       <span key={`${token}-${index}`}>{token}</span>
     );
