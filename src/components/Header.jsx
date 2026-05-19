@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
-import PillNav from "./PillNav";
 import StaggeredMenu from "./StaggeredMenu";
 import { useI18n } from "../i18n/I18nContext";
 import { useProgressStore } from "../store/useProgressStore";
@@ -24,10 +23,6 @@ function Header() {
   const menuItems = [...navItems, { label: t("profile"), href: "/profile", icon: "○" }];
   navItems.splice(2, 0, { label: t("navWorks"), href: "/works", icon: "▣" });
   navItems.push({ label: t("navAdmin"), href: "/admin", icon: "CMS" });
-  const desktopNavItems = navItems.map((item) => ({
-    ...item,
-    label: `${item.icon} ${item.label}`,
-  }));
   menuItems.splice(2, 0, { label: t("navWorks"), href: "/works", icon: "▣" });
   menuItems.push({ label: t("navAdmin"), href: "/admin", icon: "CMS" });
   const mobileItems = menuItems.map((item) => ({
@@ -74,21 +69,8 @@ function Header() {
           </span>
           <span className="site-header__brand-copy">
             <span className="site-header__brand-title">{t("brandTitle")}</span>
-            <span className="site-header__brand-subtitle">
-              {t("brandSubtitle")}
-            </span>
           </span>
         </NavLink>
-
-        <div className="site-header__desktop-nav">
-          <PillNav
-            items={desktopNavItems}
-            baseColor="var(--brand)"
-            pillColor="var(--surface-strong)"
-            hoveredPillTextColor="var(--brand-contrast)"
-            pillTextColor="var(--brand)"
-          />
-        </div>
 
         <div className="site-header__controls">
           <div className="site-header__quickStats" aria-label={t("headerProgress")}>
