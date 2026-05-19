@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useMemo, useState } from "react";
 import { works } from "../data/works";
 import { workMetadataById } from "../data/exploreData";
+import fallbackCover from "../assets/logo.png";
 import { useI18n } from "../i18n/I18nContext";
 import CountUp from "../components/CountUp";
 import ShinyText from "../components/ShinyText";
@@ -162,9 +163,15 @@ function Works() {
                 <Link
                   to={`/reading/${work.id}`}
                   className="works-card__image"
-                  style={{ backgroundImage: `url(${work.image})` }}
                   aria-label={`${t("openWork")}: ${work.title}`}
                 >
+                  <img
+                    src={work.image || fallbackCover}
+                    alt=""
+                    onError={(event) => {
+                      event.currentTarget.src = fallbackCover;
+                    }}
+                  />
                   <span>{work.year}</span>
                 </Link>
                 <button
