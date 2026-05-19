@@ -2,18 +2,32 @@ import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { isSupabaseConfigured, supabase } from "../lib/supabaseClient";
 
 const AuthContext = createContext(null);
-const PRODUCTION_AUTH_URL = "https://mitsskiss.github.io/literary-heritage/#/auth";
+const PRODUCTION_SITE_URL = "https://mitsskiss.github.io/literary-heritage/";
+const PRODUCTION_AUTH_URL = `${PRODUCTION_SITE_URL}#/auth`;
+
+function isLocalHost() {
+  if (typeof window === "undefined") return false;
+
+  return (
+    window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1"
+  );
+}
+
+function getSiteUrl() {
+  if (typeof window === "undefined" || isLocalHost()) return PRODUCTION_SITE_URL;
+
+  return `${window.location.origin}${window.location.pathname}`;
+}
 
 function getAuthRedirectUrl() {
-  if (typeof window === "undefined") return PRODUCTION_AUTH_URL;
+  if (typeof window === "undefined" || isLocalHost()) return PRODUCTION_AUTH_URL;
 
-  const isLocalHost =
-    window.location.hostname === "localhost" ||
-    window.location.hostname === "127.0.0.1";
+  return `${getSiteUrl()}#/auth`;
+}
 
-  if (isLocalHost) return PRODUCTION_AUTH_URL;
-
-  return `${window.location.origin}${window.location.pathname}#/auth`;
+function getPasswordRecoveryRedirectUrl() {
+  return getSiteUrl();
 }
 
 export function AuthProvider({ children }) {
@@ -120,7 +134,7 @@ export function AuthProvider({ children }) {
       resetPassword: async ({ email }) => {
         if (!supabase) throw new Error("Supabase is not configured");
         return supabase.auth.resetPasswordForEmail(email.trim(), {
-          redirectTo: getAuthRedirectUrl(),
+          redirectTo: getPasswordRecoveryRedirectUrl(),
         });
       },
       updatePassword: async ({ password }) => {

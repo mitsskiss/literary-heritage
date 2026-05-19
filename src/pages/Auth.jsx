@@ -88,6 +88,9 @@ function Auth() {
     if (normalized.includes("email not confirmed")) {
       return t("authEmailNotConfirmed");
     }
+    if (normalized.includes("auth session missing") || normalized.includes("session missing")) {
+      return t("authSessionMissing");
+    }
     if (normalized.includes("already registered") || normalized.includes("already exists")) {
       return t("authAlreadyRegistered");
     }
@@ -239,22 +242,24 @@ function Auth() {
                 <h2 id="auth-card-title">{currentCopy.action}</h2>
               </div>
 
-              <div className="auth-card__tabs" aria-label={t("authModeTabs")}>
-                <button
-                  type="button"
-                  className={`auth-card__tab ${mode === "signin" ? "is-active" : ""}`}
-                  onClick={() => switchMode("signin")}
-                >
-                  {t("signIn")}
-                </button>
-                <button
-                  type="button"
-                  className={`auth-card__tab ${mode === "signup" ? "is-active" : ""}`}
-                  onClick={() => switchMode("signup")}
-                >
-                  {t("signUp")}
-                </button>
-              </div>
+              {mode === "signin" || mode === "signup" ? (
+                <div className="auth-card__tabs" aria-label={t("authModeTabs")}>
+                  <button
+                    type="button"
+                    className={`auth-card__tab ${mode === "signin" ? "is-active" : ""}`}
+                    onClick={() => switchMode("signin")}
+                  >
+                    {t("signIn")}
+                  </button>
+                  <button
+                    type="button"
+                    className={`auth-card__tab ${mode === "signup" ? "is-active" : ""}`}
+                    onClick={() => switchMode("signup")}
+                  >
+                    {t("signUp")}
+                  </button>
+                </div>
+              ) : null}
 
               <form className="auth-card__form" onSubmit={handleSubmit}>
                 {mode === "signup" ? (
@@ -343,14 +348,16 @@ function Auth() {
                   ) : null}
                 </div>
 
-                <button
-                  className="auth-card__resend"
-                  type="button"
-                  disabled={!canResendConfirmation}
-                  onClick={handleResendConfirmation}
-                >
-                  {isResending ? t("pleaseWait") : t("resendConfirmationEmail")}
-                </button>
+                {!isPasswordUpdate ? (
+                  <button
+                    className="auth-card__resend"
+                    type="button"
+                    disabled={!canResendConfirmation}
+                    onClick={handleResendConfirmation}
+                  >
+                    {isResending ? t("pleaseWait") : t("resendConfirmationEmail")}
+                  </button>
+                ) : null}
               </form>
             </>
           )}

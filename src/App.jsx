@@ -1,4 +1,6 @@
-import { Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
+import { useAuth } from "./auth/AuthContext";
 import Header from "./components/Header";
 import AchievementNotifier from "./components/AchievementNotifier";
 import ProgressSyncBridge from "./components/ProgressSyncBridge";
@@ -17,11 +19,25 @@ import Auth from "./pages/Auth";
 import Profile from "./pages/Profile";
 import Admin from "./pages/Admin";
 
+function AuthRecoveryBridge() {
+  const { authEvent } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (authEvent === "PASSWORD_RECOVERY") {
+      navigate("/auth", { replace: true });
+    }
+  }, [authEvent, navigate]);
+
+  return null;
+}
+
 function App() {
   return (
     <>
       <Header />
       <ScrollToTop />
+      <AuthRecoveryBridge />
       <ProgressSyncBridge />
       <AchievementNotifier />
 
