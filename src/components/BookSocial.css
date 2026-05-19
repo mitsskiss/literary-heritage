@@ -1,0 +1,212 @@
+.book-social {
+  margin-top: 30px;
+  padding: clamp(20px, 3vw, 30px);
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  background: var(--surface);
+  box-shadow: 0 18px 40px var(--shadow);
+}
+
+.book-social__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.book-social__header p {
+  margin: 0 0 8px;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.book-social__header h2 {
+  margin: 0;
+  color: var(--text);
+  font-size: clamp(28px, 4vw, 46px);
+  line-height: 1;
+}
+
+.book-social__actions,
+.book-social__formFooter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.book-social button,
+.book-social__formFooter a {
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface-strong);
+  color: var(--text);
+  padding: 0 16px;
+  font: inherit;
+  font-weight: 900;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.book-social button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.book-social__actions button.is-active,
+.book-social__formFooter button {
+  background: var(--brand);
+  color: var(--brand-contrast);
+  border-color: var(--brand);
+}
+
+.book-social__message {
+  margin: 16px 0 0;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface-strong);
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+
+.book-social__form {
+  display: grid;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.book-social__form label {
+  display: grid;
+  gap: 8px;
+  color: var(--text);
+  font-weight: 900;
+}
+
+.book-social__form textarea {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--surface-strong);
+  color: var(--text);
+  padding: 14px 16px;
+  font: inherit;
+  line-height: 1.6;
+  resize: vertical;
+}
+
+.book-social__form textarea:focus {
+  outline: 3px solid color-mix(in srgb, var(--accent-strong) 24%, transparent);
+  outline-offset: 2px;
+}
+
+.book-social__formFooter {
+  justify-content: space-between;
+}
+
+.book-social__formFooter small {
+  color: var(--text-muted);
+}
+
+.book-social__comments {
+  display: grid;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.book-social__commentsTitle {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--text);
+}
+
+.book-social__commentsTitle span {
+  color: var(--text-muted);
+}
+
+.book-social__comment {
+  display: grid;
+  gap: 10px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--surface-strong);
+  padding: 16px;
+}
+
+.book-social__comment > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.book-social__comment strong {
+  color: var(--text);
+}
+
+.book-social__comment span,
+.book-social__empty {
+  color: var(--text-muted);
+}
+
+.book-social__comment p {
+  margin: 0;
+  color: var(--text);
+  line-height: 1.65;
+  white-space: pre-wrap;
+}
+
+.book-social__comment button {
+  justify-self: start;
+  min-height: 34px;
+  padding: 0 12px;
+  font-size: 13px;
+}
+
+.book-social__empty {
+  margin: 0;
+  padding: 16px;
+  border: 1px dashed var(--border);
+  border-radius: 18px;
+}
+
+[data-theme="dark"] .book-social,
+[data-theme="dark"] .book-social__comment {
+  background: rgba(30, 28, 38, 0.88);
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+[data-theme="dark"] .book-social__message,
+[data-theme="dark"] .book-social__form textarea,
+[data-theme="dark"] .book-social button,
+[data-theme="dark"] .book-social__formFooter a {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.14);
+  color: var(--text);
+}
+
+[data-theme="dark"] .book-social__actions button.is-active,
+[data-theme="dark"] .book-social__formFooter button {
+  background: #ffffff;
+  color: #09080f;
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+@media (max-width: 560px) {
+  .book-social__actions,
+  .book-social__actions button,
+  .book-social__formFooter,
+  .book-social__formFooter button,
+  .book-social__formFooter a {
+    width: 100%;
+  }
+}

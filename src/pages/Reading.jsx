@@ -10,6 +10,7 @@ import {
 import { getAdminStoryBookByWorkId, mergeAdminWorks } from "../admin/adminContent";
 import { useAdminContent } from "../hooks/useAdminContent";
 import { useProgressStore } from "../store/useProgressStore";
+import BookSocial from "../components/BookSocial";
 import "./Reading.css";
 import { useI18n } from "../i18n/I18nContext";
 
@@ -302,6 +303,8 @@ function Reading() {
             </div>
           </article>
         </section>
+
+        <BookSocial work={work} />
 
         <section className="reading-book-chapters">
           <div className="reading-book-chapters__head">
