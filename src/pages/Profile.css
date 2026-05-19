@@ -279,7 +279,8 @@
 }
 
 .profile-field input,
-.profile-field textarea {
+.profile-field textarea,
+.profile-field select {
   width: 100%;
   border: 1px solid var(--border);
   border-radius: 12px;
@@ -291,7 +292,8 @@
 }
 
 .profile-field input:focus,
-.profile-field textarea:focus {
+.profile-field textarea:focus,
+.profile-field select:focus {
   outline: 2px solid rgba(163, 109, 62, 0.32);
   outline-offset: 2px;
 }
@@ -300,6 +302,54 @@
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
+}
+
+.profile-settings-panel .profile-section-heading p {
+  margin: 8px 0 0;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.profile-settings-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.profile-settings-form .is-wide,
+.profile-settings-form .profile-action {
+  grid-column: 1 / -1;
+}
+
+.profile-toggle-row {
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface-strong);
+  padding: 14px;
+}
+
+.profile-toggle-row input {
+  width: 22px;
+  height: 22px;
+  accent-color: var(--accent-strong);
+  flex: 0 0 auto;
+}
+
+.profile-toggle-row span {
+  display: grid;
+  gap: 4px;
+}
+
+.profile-toggle-row strong {
+  color: var(--text);
+}
+
+.profile-toggle-row small {
+  color: var(--text-muted);
 }
 
 .profile-stat-grid {
@@ -594,7 +644,8 @@
   }
 
   .profile-stat-grid,
-  .profile-achievements {
+  .profile-achievements,
+  .profile-settings-form {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
@@ -612,6 +663,7 @@
 
   .profile-stat-grid,
   .profile-achievements,
+  .profile-settings-form,
   .profile-summary-card__grid {
     grid-template-columns: 1fr;
   }

@@ -1,0 +1,212 @@
+.about-page {
+  min-height: 100vh;
+  padding: 118px 18px 72px;
+  background:
+    radial-gradient(circle at 14% -8%, color-mix(in srgb, var(--accent) 30%, transparent), transparent 32rem),
+    var(--page-bg);
+  color: var(--text);
+}
+
+.about-shell {
+  width: min(100%, 1180px);
+  margin: 0 auto;
+}
+
+.about-hero,
+.about-card,
+.about-contact {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  box-shadow: 0 18px 42px var(--shadow);
+}
+
+.about-hero {
+  padding: clamp(28px, 5vw, 56px);
+  border-radius: 28px;
+}
+
+.about-kicker {
+  margin: 0 0 10px;
+  color: var(--accent-strong);
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.about-hero h1,
+.about-card h2,
+.about-contact h2 {
+  margin: 0;
+  line-height: 1;
+}
+
+.about-hero h1 {
+  max-width: 900px;
+  font-size: clamp(46px, 8vw, 88px);
+}
+
+.about-hero p,
+.about-card p,
+.about-contact p {
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.about-hero > p {
+  max-width: 760px;
+  font-size: clamp(17px, 2vw, 21px);
+}
+
+.about-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 26px;
+}
+
+.about-hero__actions a,
+.about-contact a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--brand-contrast);
+  background: var(--brand);
+  padding: 0 18px;
+  text-decoration: none;
+  font-weight: 900;
+}
+
+.about-hero__actions a + a {
+  color: var(--text);
+  background: var(--surface-strong);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.about-card {
+  margin-top: 18px;
+  padding: clamp(22px, 3vw, 34px);
+  border-radius: 24px;
+}
+
+.about-grid .about-card {
+  margin-top: 0;
+}
+
+.about-card h2,
+.about-contact h2 {
+  font-size: clamp(28px, 4vw, 44px);
+}
+
+.about-section-heading {
+  margin-bottom: 20px;
+}
+
+.about-team,
+.about-sources {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.about-team article,
+.about-sources article {
+  display: grid;
+  gap: 8px;
+  min-height: 150px;
+  align-content: start;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--surface-strong);
+  padding: 18px;
+}
+
+.about-team span {
+  color: var(--accent-strong);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.about-team strong,
+.about-sources strong {
+  font-size: 19px;
+}
+
+.about-team small {
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+
+.about-checklist {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.about-checklist span {
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface-strong);
+  padding: 0 14px;
+  color: var(--text);
+  font-weight: 800;
+}
+
+.about-contact {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-top: 18px;
+  padding: clamp(22px, 3vw, 34px);
+  border-radius: 24px;
+}
+
+[data-theme="dark"] .about-page {
+  background:
+    radial-gradient(circle at 18% -10%, rgba(90, 80, 185, 0.28), transparent 34%),
+    linear-gradient(180deg, #09080f 0%, #111018 58%, #09080f 100%);
+}
+
+[data-theme="dark"] .about-hero,
+[data-theme="dark"] .about-card,
+[data-theme="dark"] .about-contact {
+  background: rgba(30, 28, 38, 0.88);
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+[data-theme="dark"] .about-team article,
+[data-theme="dark"] .about-sources article,
+[data-theme="dark"] .about-checklist span {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+@media (max-width: 760px) {
+  .about-page {
+    padding: 96px 12px 52px;
+  }
+
+  .about-grid,
+  .about-contact {
+    grid-template-columns: 1fr;
+  }
+
+  .about-contact {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

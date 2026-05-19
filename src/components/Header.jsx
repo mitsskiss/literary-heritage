@@ -24,6 +24,7 @@ function Header() {
   navItems.splice(2, 0, { label: t("navWorks"), href: "/works", icon: "▣" });
   navItems.push({ label: t("navAdmin"), href: "/admin", icon: "CMS" });
   menuItems.splice(2, 0, { label: t("navWorks"), href: "/works", icon: "▣" });
+  menuItems.push({ label: t("navAbout"), href: "/about", icon: "i" });
   menuItems.push({ label: t("navAdmin"), href: "/admin", icon: "CMS" });
   const mobileItems = menuItems.map((item) => ({
     label: item.label,

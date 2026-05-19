@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useAuth } from "../auth/AuthContext";
 import { useProgressSync } from "../hooks/useProgressSync";
 import { useI18n } from "../i18n/I18nContext";
+import { useTheme } from "../theme/ThemeContext";
 import {
   getAchievementDefinitions,
   getReadingStats,
@@ -12,6 +13,7 @@ import "./Profile.css";
 
 const XP_PER_LEVEL = 120;
 const PROFILE_STORAGE_KEY = "literary_heritage_profile_details";
+const PROFILE_SETTINGS_KEY = "literary_heritage_user_settings";
 const MAX_AVATAR_SIZE = 900 * 1024;
 
 const emptyPersonalInfo = {
@@ -19,6 +21,12 @@ const emptyPersonalInfo = {
   bio: "",
   readingGoal: "",
   avatarDataUrl: "",
+};
+
+const emptyUserSettings = {
+  notifications: true,
+  personalizedContent: true,
+  readingInterests: "",
 };
 
 function formatTemplate(template, values) {
@@ -29,7 +37,8 @@ function formatTemplate(template, values) {
 }
 
 function Profile() {
-  const { t, localizeWork } = useI18n();
+  const { language, languages, setLanguage, t, localizeWork } = useI18n();
+  const { theme, setTheme } = useTheme();
   const { user, profile, signOut, isConfigured, updateProfile } = useAuth();
   const { isSyncing, lastSyncedAt, syncNow } = useProgressSync();
   const {
@@ -46,6 +55,8 @@ function Profile() {
   const [draftInfo, setDraftInfo] = useState(emptyPersonalInfo);
   const [isEditing, setIsEditing] = useState(false);
   const [profileMessage, setProfileMessage] = useState("");
+  const [userSettings, setUserSettings] = useState(emptyUserSettings);
+  const [draftSettings, setDraftSettings] = useState(emptyUserSettings);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -59,6 +70,18 @@ function Profile() {
         setDraftInfo({ ...emptyPersonalInfo, ...parsed });
       } catch {
         window.localStorage.removeItem(PROFILE_STORAGE_KEY);
+      }
+    }
+
+    const savedSettings = window.localStorage.getItem(PROFILE_SETTINGS_KEY);
+
+    if (savedSettings) {
+      try {
+        const parsed = JSON.parse(savedSettings);
+        setUserSettings({ ...emptyUserSettings, ...parsed });
+        setDraftSettings({ ...emptyUserSettings, ...parsed });
+      } catch {
+        window.localStorage.removeItem(PROFILE_SETTINGS_KEY);
       }
     }
   }, []);
@@ -176,6 +199,27 @@ function Profile() {
         setProfileMessage(t("profileSavedLocalOnly"));
       }
     }
+  };
+
+  const updateDraftSettings = (field, value) => {
+    setDraftSettings((current) => ({
+      ...current,
+      [field]: value,
+    }));
+  };
+
+  const saveUserSettings = (event) => {
+    event.preventDefault();
+
+    const nextSettings = {
+      notifications: Boolean(draftSettings.notifications),
+      personalizedContent: Boolean(draftSettings.personalizedContent),
+      readingInterests: draftSettings.readingInterests.trim(),
+    };
+
+    setUserSettings(nextSettings);
+    window.localStorage.setItem(PROFILE_SETTINGS_KEY, JSON.stringify(nextSettings));
+    setProfileMessage(t("settingsSaved"));
   };
 
   return (
@@ -352,6 +396,84 @@ function Profile() {
             </form>
           </section>
         ) : null}
+
+        <section className="profile-panel profile-settings-panel">
+          <div className="profile-section-heading">
+            <div>
+              <h2>{t("profileSettings")}</h2>
+              <p>{t("profileSettingsText")}</p>
+            </div>
+          </div>
+
+          <form className="profile-settings-form" onSubmit={saveUserSettings}>
+            <label className="profile-field">
+              <span>{t("preferredLanguage")}</span>
+              <select
+                value={language}
+                onChange={(event) => setLanguage(event.target.value)}
+              >
+                {languages.map((item) => (
+                  <option key={item.code} value={item.code}>
+                    {item.label}
+                  </option>
+                ))}
+              </select>
+            </label>
+
+            <label className="profile-field">
+              <span>{t("preferredTheme")}</span>
+              <select
+                value={theme}
+                onChange={(event) => setTheme(event.target.value)}
+              >
+                <option value="light">{t("lightMode")}</option>
+                <option value="dark">{t("darkMode")}</option>
+              </select>
+            </label>
+
+            <label className="profile-toggle-row">
+              <input
+                type="checkbox"
+                checked={draftSettings.notifications}
+                onChange={(event) => updateDraftSettings("notifications", event.target.checked)}
+              />
+              <span>
+                <strong>{t("notifications")}</strong>
+                <small>
+                  {draftSettings.notifications ? t("notificationsOn") : t("notificationsOff")}
+                </small>
+              </span>
+            </label>
+
+            <label className="profile-toggle-row">
+              <input
+                type="checkbox"
+                checked={draftSettings.personalizedContent}
+                onChange={(event) =>
+                  updateDraftSettings("personalizedContent", event.target.checked)
+                }
+              />
+              <span>
+                <strong>{t("personalizedContent")}</strong>
+                <small>{t("recommendedNext")}</small>
+              </span>
+            </label>
+
+            <label className="profile-field is-wide">
+              <span>{t("readingInterests")}</span>
+              <input
+                value={draftSettings.readingInterests}
+                onChange={(event) => updateDraftSettings("readingInterests", event.target.value)}
+                placeholder={t("interestsPlaceholder")}
+                maxLength={120}
+              />
+            </label>
+
+            <button type="submit" className="profile-action">
+              {t("saveSettings")}
+            </button>
+          </form>
+        </section>
 
         <section className="profile-stat-grid" aria-label={t("yourStatistics")}>
           <article className="profile-stat-card">

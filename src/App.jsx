@@ -18,6 +18,7 @@ import Works from "./pages/Works";
 import Auth from "./pages/Auth";
 import Profile from "./pages/Profile";
 import Admin from "./pages/Admin";
+import About from "./pages/About";
 
 function AuthRecoveryBridge() {
   const { authEvent } = useAuth();
@@ -51,6 +52,7 @@ function App() {
         <Route path="/progress" element={<Progress />} />
         <Route path="/auth" element={<Auth />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/about" element={<About />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/author/:name" element={<Author />} />
         <Route path="/authors" element={<Authors />} />
