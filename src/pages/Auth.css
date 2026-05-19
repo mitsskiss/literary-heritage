@@ -56,7 +56,8 @@
 
 .auth-card__tab,
 .auth-card__submit,
-.auth-card__link {
+.auth-card__link,
+.auth-card__resend {
   min-height: 44px;
   border: 1px solid var(--border);
   border-radius: 999px;
@@ -73,6 +74,17 @@
 .auth-card__submit {
   background: var(--text);
   color: var(--page-bg);
+}
+
+.auth-card__resend {
+  background: transparent;
+  color: var(--text);
+}
+
+.auth-card__submit:disabled,
+.auth-card__resend:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
 }
 
 .auth-card__form {

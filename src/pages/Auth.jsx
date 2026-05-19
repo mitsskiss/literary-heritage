@@ -6,7 +6,7 @@ import "./Auth.css";
 
 function Auth() {
   const { t } = useI18n();
-  const { isConfigured, signIn, signUp } = useAuth();
+  const { isConfigured, signIn, signUp, resendConfirmation } = useAuth();
   const navigate = useNavigate();
   const [mode, setMode] = useState("signin");
   const [displayName, setDisplayName] = useState("");
@@ -15,6 +15,29 @@ function Auth() {
   const [message, setMessage] = useState("");
   const [isError, setIsError] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isResending, setIsResending] = useState(false);
+
+  const normalizedEmail = email.trim();
+  const canResendConfirmation = Boolean(
+    isConfigured && normalizedEmail && !isSubmitting && !isResending
+  );
+
+  const getAuthErrorMessage = (errorMessage = "") => {
+    const normalized = errorMessage.toLowerCase();
+    if (normalized.includes("invalid login credentials")) {
+      return t("authInvalidCredentials");
+    }
+    if (normalized.includes("already registered") || normalized.includes("already exists")) {
+      return t("authAlreadyRegistered");
+    }
+    return errorMessage;
+  };
+
+  const switchMode = (nextMode) => {
+    setMode(nextMode);
+    setMessage("");
+    setIsError(false);
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -30,7 +53,7 @@ function Auth() {
 
       if (result.error) {
         setIsError(true);
-        setMessage(result.error.message);
+        setMessage(getAuthErrorMessage(result.error.message));
         return;
       }
 
@@ -42,9 +65,37 @@ function Auth() {
       navigate("/profile");
     } catch (error) {
       setIsError(true);
-      setMessage(error.message);
+      setMessage(getAuthErrorMessage(error.message));
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handleResendConfirmation = async () => {
+    if (!normalizedEmail) {
+      setIsError(true);
+      setMessage(t("authEnterEmailFirst"));
+      return;
+    }
+
+    setIsResending(true);
+    setMessage("");
+    setIsError(false);
+
+    try {
+      const result = await resendConfirmation({ email: normalizedEmail });
+      if (result.error) {
+        setIsError(true);
+        setMessage(getAuthErrorMessage(result.error.message));
+        return;
+      }
+
+      setMessage(t("authConfirmationResent"));
+    } catch (error) {
+      setIsError(true);
+      setMessage(getAuthErrorMessage(error.message));
+    } finally {
+      setIsResending(false);
     }
   };
 
@@ -75,14 +126,14 @@ function Auth() {
                 <button
                   type="button"
                   className={`auth-card__tab ${mode === "signin" ? "is-active" : ""}`}
-                  onClick={() => setMode("signin")}
+                  onClick={() => switchMode("signin")}
                 >
                   {t("signIn")}
                 </button>
                 <button
                   type="button"
                   className={`auth-card__tab ${mode === "signup" ? "is-active" : ""}`}
-                  onClick={() => setMode("signup")}
+                  onClick={() => switchMode("signup")}
                 >
                   {t("signUp")}
                 </button>
@@ -135,6 +186,15 @@ function Auth() {
                     : mode === "signin"
                       ? t("signIn")
                       : t("createAccount")}
+                </button>
+
+                <button
+                  className="auth-card__resend"
+                  type="button"
+                  disabled={!canResendConfirmation}
+                  onClick={handleResendConfirmation}
+                >
+                  {isResending ? t("pleaseWait") : t("resendConfirmationEmail")}
                 </button>
               </form>
             </>

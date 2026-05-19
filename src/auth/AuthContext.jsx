@@ -2,6 +2,19 @@ import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { isSupabaseConfigured, supabase } from "../lib/supabaseClient";
 
 const AuthContext = createContext(null);
+const PRODUCTION_AUTH_URL = "https://mitsskiss.github.io/literary-heritage/#/auth";
+
+function getAuthRedirectUrl() {
+  if (typeof window === "undefined") return PRODUCTION_AUTH_URL;
+
+  const isLocalHost =
+    window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1";
+
+  if (isLocalHost) return PRODUCTION_AUTH_URL;
+
+  return `${window.location.origin}${window.location.pathname}#/auth`;
+}
 
 export function AuthProvider({ children }) {
   const [session, setSession] = useState(null);
@@ -80,15 +93,26 @@ export function AuthProvider({ children }) {
       signUp: async ({ email, password, displayName }) => {
         if (!supabase) throw new Error("Supabase is not configured");
         const result = await supabase.auth.signUp({
-          email,
+          email: email.trim(),
           password,
           options: {
+            emailRedirectTo: getAuthRedirectUrl(),
             data: {
               display_name: displayName,
             },
           },
         });
         return result;
+      },
+      resendConfirmation: async ({ email }) => {
+        if (!supabase) throw new Error("Supabase is not configured");
+        return supabase.auth.resend({
+          type: "signup",
+          email: email.trim(),
+          options: {
+            emailRedirectTo: getAuthRedirectUrl(),
+          },
+        });
       },
       signOut: async () => {
         if (!supabase) return;
