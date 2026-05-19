@@ -304,8 +304,6 @@ function Reading() {
           </article>
         </section>
 
-        <BookSocial work={work} />
-
         <section className="reading-book-chapters">
           <div className="reading-book-chapters__head">
             <h2 className="reading-book-chapters__title">{t("chapterRoute")}</h2>
@@ -353,6 +351,8 @@ function Reading() {
             ))}
           </div>
         </section>
+
+        <BookSocial work={work} />
       </div>
     </main>
   );

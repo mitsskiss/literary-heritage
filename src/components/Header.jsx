@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
 import StaggeredMenu from "./StaggeredMenu";
+import { useAuth } from "../auth/AuthContext";
 import { useI18n } from "../i18n/I18nContext";
 import { useProgressStore } from "../store/useProgressStore";
 import { useTheme } from "../theme/ThemeContext";
@@ -8,11 +9,14 @@ import { useTheme } from "../theme/ThemeContext";
 function Header() {
   const { language, languages, setLanguage, t } = useI18n();
   const { isDark, toggleTheme } = useTheme();
+  const { profile } = useAuth();
   const xp = useProgressStore((state) => state.xp);
   const lives = useProgressStore((state) => state.lives);
   const streak = useProgressStore((state) => state.streak);
   const [isHeaderHidden, setIsHeaderHidden] = useState(false);
+  const [localAvatar, setLocalAvatar] = useState("");
   const lastScrollYRef = useRef(0);
+  const avatarDataUrl = profile?.avatar_data_url || localAvatar;
   const navItems = [
     { label: t("navHome"), href: "/", icon: "⌂" },
     { label: t("navExplore"), href: "/explore", icon: "□" },
@@ -60,6 +64,27 @@ function Header() {
     };
   }, []);
 
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const readLocalAvatar = () => {
+      try {
+        const saved = window.localStorage.getItem("literary_heritage_profile_details");
+        const parsed = saved ? JSON.parse(saved) : null;
+        setLocalAvatar(parsed?.avatarDataUrl || "");
+      } catch {
+        setLocalAvatar("");
+      }
+    };
+
+    readLocalAvatar();
+    window.addEventListener("storage", readLocalAvatar);
+
+    return () => {
+      window.removeEventListener("storage", readLocalAvatar);
+    };
+  }, []);
+
   return (
     <header className={`site-header ${isHeaderHidden ? "is-hidden" : ""}`}>
       <div className="site-header__scrollline" aria-hidden="true" />
@@ -95,7 +120,11 @@ function Header() {
             aria-label={t("profile")}
             title={t("profile")}
           >
-            <span aria-hidden="true" />
+            {avatarDataUrl ? (
+              <img src={avatarDataUrl} alt="" />
+            ) : (
+              <span aria-hidden="true" />
+            )}
           </NavLink>
 
           <StaggeredMenu

@@ -184,6 +184,7 @@ function Profile() {
 
     setPersonalInfo(nextInfo);
     window.localStorage.setItem(PROFILE_STORAGE_KEY, JSON.stringify(nextInfo));
+    window.dispatchEvent(new Event("storage"));
     setIsEditing(false);
     setProfileMessage(t("profileSaved"));
 
