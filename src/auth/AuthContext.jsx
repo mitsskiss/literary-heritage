@@ -20,6 +20,7 @@ export function AuthProvider({ children }) {
   const [session, setSession] = useState(null);
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(isSupabaseConfigured);
+  const [authEvent, setAuthEvent] = useState(null);
 
   useEffect(() => {
     if (!supabase) {
@@ -36,7 +37,8 @@ export function AuthProvider({ children }) {
     });
 
     const { data: listener } = supabase.auth.onAuthStateChange(
-      (_event, nextSession) => {
+      (event, nextSession) => {
+        setAuthEvent(event);
         setSession(nextSession ?? null);
       }
     );
@@ -85,10 +87,11 @@ export function AuthProvider({ children }) {
       user: session?.user ?? null,
       profile,
       loading,
+      authEvent,
       isConfigured: isSupabaseConfigured,
       signIn: async ({ email, password }) => {
         if (!supabase) throw new Error("Supabase is not configured");
-        return supabase.auth.signInWithPassword({ email, password });
+        return supabase.auth.signInWithPassword({ email: email.trim(), password });
       },
       signUp: async ({ email, password, displayName }) => {
         if (!supabase) throw new Error("Supabase is not configured");
@@ -113,6 +116,16 @@ export function AuthProvider({ children }) {
             emailRedirectTo: getAuthRedirectUrl(),
           },
         });
+      },
+      resetPassword: async ({ email }) => {
+        if (!supabase) throw new Error("Supabase is not configured");
+        return supabase.auth.resetPasswordForEmail(email.trim(), {
+          redirectTo: getAuthRedirectUrl(),
+        });
+      },
+      updatePassword: async ({ password }) => {
+        if (!supabase) throw new Error("Supabase is not configured");
+        return supabase.auth.updateUser({ password });
       },
       signOut: async () => {
         if (!supabase) return;
@@ -151,7 +164,7 @@ export function AuthProvider({ children }) {
         return data ?? null;
       },
     }),
-    [loading, profile, session]
+    [authEvent, loading, profile, session]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
