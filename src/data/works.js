@@ -1,8 +1,8 @@
-import abaiCover from "../assets/works/abay.png";
-import murakamiCover from "../assets/works/murakami.png";
-import dostoevskyCover from "../assets/works/dostoevsky.png";
-import camusCover from "../assets/works/camus.png";
-import woolfCover from "../assets/works/woolf.png";
+import abaiCover from "../assets/authors/abai.png";
+import murakamiCover from "../assets/authors/murakami.png";
+import dostoevskyCover from "../assets/authors/dostoevsky.png";
+import camusCover from "../assets/authors/camus.png";
+import woolfCover from "../assets/authors/woolf.png";
 
 export const works = [
   {
