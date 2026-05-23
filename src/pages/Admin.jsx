@@ -87,6 +87,8 @@ function Admin() {
   const [translationForm, setTranslationForm] = useState(initialTranslation);
   const [importValue, setImportValue] = useState("");
   const [message, setMessage] = useState("");
+  const syncLabel = syncStatus === "remote" ? "Supabase" : "Локальное хранилище";
+  const activeTabLabel = tabs.find((tab) => tab.id === activeTab)?.label ?? "Раздел";
 
   const workOptions = useMemo(
     () => content.works.map((work) => ({ id: work.id, title: work.title })),
@@ -263,10 +265,12 @@ function Admin() {
               Добавляйте авторов, произведения, главы, вопросы и переводы прямо
               из интерфейса. Новые материалы сразу появляются в каталоге и чтении.
             </p>
-            <p className="admin-hero__sync">
-              Синхронизация: {syncStatus === "remote" ? "Supabase" : "локально"}
-              {syncError ? ` · ${syncError}` : ""}
-            </p>
+            <div className="admin-hero__meta" aria-label="Статус админ-панели">
+              <span>Доступ: администратор</span>
+              <span>Синхронизация: {syncLabel}</span>
+              <span>Активно: {activeTabLabel}</span>
+            </div>
+            {syncError ? <p className="admin-hero__sync">{syncError}</p> : null}
           </div>
           <Link to="/works" className="admin-hero__link">
             Открыть каталог

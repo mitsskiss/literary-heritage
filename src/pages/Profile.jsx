@@ -478,22 +478,18 @@ function Profile() {
 
         <section className="profile-stat-grid" aria-label={t("yourStatistics")}>
           <article className="profile-stat-card">
-            <span className="profile-stat-card__icon is-gold">☆</span>
             <strong>{xp}</strong>
             <small>{t("totalXp")}</small>
           </article>
           <article className="profile-stat-card">
-            <span className="profile-stat-card__icon is-amber">⌁</span>
             <strong>{streak}</strong>
             <small>{t("daysInRow")}</small>
           </article>
           <article className="profile-stat-card">
-            <span className="profile-stat-card__icon is-rose">♡</span>
             <strong>{lives}/5</strong>
             <small>{t("lives")}</small>
           </article>
           <article className="profile-stat-card">
-            <span className="profile-stat-card__icon is-blue">□</span>
             <strong>{completedChapters}</strong>
             <small>{t("chaptersPassed")}</small>
           </article>
@@ -501,10 +497,7 @@ function Profile() {
 
         <section className="profile-panel">
           <div className="profile-section-heading">
-            <h2>
-              <span aria-hidden="true">♕</span>
-              {t("achievements")}
-            </h2>
+            <h2>{t("achievements")}</h2>
             <span>{unlockedCount}/{achievements.length}</span>
           </div>
 
@@ -516,9 +509,6 @@ function Profile() {
                 }`}
                 key={achievement.id}
               >
-                <span className="profile-achievement__icon">
-                  {achievement.unlocked ? achievement.icon : "□"}
-                </span>
                 <strong>{t(`achievement_${achievement.id}`)}</strong>
                 <small>{t(`achievement_${achievement.id}_desc`)}</small>
               </article>
@@ -528,10 +518,7 @@ function Profile() {
 
         <section className="profile-panel">
           <div className="profile-section-heading">
-            <h2>
-              <span aria-hidden="true">☆</span>
-              {t("favorites")}
-            </h2>
+            <h2>{t("favorites")}</h2>
             <span>{favorites.length}</span>
           </div>
 
@@ -556,10 +543,7 @@ function Profile() {
 
         <section className="profile-panel">
           <div className="profile-section-heading">
-            <h2>
-              <span aria-hidden="true">□</span>
-              {t("readingHistory")}
-            </h2>
+            <h2>{t("readingHistory")}</h2>
           </div>
 
           <div className="profile-reading-list">

@@ -25,6 +25,12 @@ const requirementKeys = [
   "aboutRequirementInteractive",
 ];
 
+const productMetrics = [
+  { value: "3", labelKey: "aboutMetricLanguages" },
+  { value: "CMS", labelKey: "aboutMetricCms" },
+  { value: "AA", labelKey: "aboutMetricAccess" },
+];
+
 function About() {
   const { t } = useI18n();
 
@@ -35,6 +41,14 @@ function About() {
           <p className="about-kicker">{t("aboutKicker")}</p>
           <h1>{t("aboutTitle")}</h1>
           <p>{t("aboutIntro")}</p>
+          <div className="about-hero__metrics" aria-label="Project highlights">
+            {productMetrics.map((metric) => (
+              <article key={metric.labelKey}>
+                <strong>{metric.value}</strong>
+                <span>{t(metric.labelKey)}</span>
+              </article>
+            ))}
+          </div>
           <div className="about-hero__actions">
             <Link to="/works">{t("navWorks")}</Link>
             <Link to="/explore">{t("navExplore")}</Link>
@@ -91,7 +105,7 @@ function About() {
             <p className="about-kicker">{t("aboutComplianceKicker")}</p>
             <h2>{t("aboutComplianceTitle")}</h2>
           </div>
-          <div className="about-checklist">
+          <div className="about-checklist" aria-label="Requirement checklist">
             {requirementKeys.map((key) => (
               <span key={key}>{t(key)}</span>
             ))}

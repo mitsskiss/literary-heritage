@@ -1,8 +1,9 @@
 .about-page {
   min-height: 100vh;
-  padding: 118px 18px 72px;
+  padding: 112px 18px 72px;
   background:
-    radial-gradient(circle at 14% -8%, color-mix(in srgb, var(--accent) 30%, transparent), transparent 32rem),
+    radial-gradient(circle at 10% -8%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 30rem),
+    linear-gradient(180deg, color-mix(in srgb, var(--surface) 58%, transparent), transparent 34rem),
     var(--page-bg);
   color: var(--text);
 }
@@ -16,13 +17,31 @@
 .about-card,
 .about-contact {
   border: 1px solid var(--border);
-  background: var(--surface);
-  box-shadow: 0 18px 42px var(--shadow);
+  background: color-mix(in srgb, var(--surface) 94%, transparent);
+  box-shadow: 0 18px 42px color-mix(in srgb, var(--shadow) 72%, transparent);
 }
 
 .about-hero {
+  position: relative;
+  overflow: hidden;
   padding: clamp(28px, 5vw, 56px);
-  border-radius: 28px;
+  border-radius: 24px;
+}
+
+.about-hero::after {
+  content: "";
+  position: absolute;
+  right: clamp(18px, 5vw, 56px);
+  bottom: clamp(18px, 4vw, 42px);
+  width: min(32vw, 300px);
+  aspect-ratio: 1;
+  border: 1px solid color-mix(in srgb, var(--accent-strong) 30%, transparent);
+  border-radius: 50%;
+  background:
+    linear-gradient(135deg, transparent 48%, color-mix(in srgb, var(--accent-strong) 18%, transparent) 49% 51%, transparent 52%),
+    radial-gradient(circle, color-mix(in srgb, var(--accent) 18%, transparent), transparent 64%);
+  opacity: 0.48;
+  pointer-events: none;
 }
 
 .about-kicker {
@@ -42,8 +61,11 @@
 }
 
 .about-hero h1 {
+  position: relative;
+  z-index: 1;
   max-width: 900px;
-  font-size: clamp(46px, 8vw, 88px);
+  font-size: clamp(42px, 7.4vw, 82px);
+  letter-spacing: 0;
 }
 
 .about-hero p,
@@ -54,11 +76,49 @@
 }
 
 .about-hero > p {
+  position: relative;
+  z-index: 1;
   max-width: 760px;
   font-size: clamp(17px, 2vw, 21px);
 }
 
+.about-hero__metrics {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 150px));
+  gap: 10px;
+  width: min(100%, 520px);
+  margin-top: 26px;
+}
+
+.about-hero__metrics article {
+  min-height: 92px;
+  display: grid;
+  align-content: center;
+  gap: 4px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--surface-strong) 84%, transparent);
+  padding: 14px;
+}
+
+.about-hero__metrics strong {
+  color: var(--heading);
+  font-size: clamp(24px, 4vw, 38px);
+  line-height: 1;
+}
+
+.about-hero__metrics span {
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 850;
+  line-height: 1.25;
+}
+
 .about-hero__actions {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
@@ -85,9 +145,15 @@
   background: var(--surface-strong);
 }
 
+.about-hero__actions a:focus-visible,
+.about-contact a:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--accent-strong) 40%, transparent);
+  outline-offset: 2px;
+}
+
 .about-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
+  grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
   gap: 18px;
   margin-top: 18px;
 }
@@ -95,7 +161,7 @@
 .about-card {
   margin-top: 18px;
   padding: clamp(22px, 3vw, 34px);
-  border-radius: 24px;
+  border-radius: 20px;
 }
 
 .about-grid .about-card {
@@ -125,7 +191,7 @@
   min-height: 150px;
   align-content: start;
   border: 1px solid var(--border);
-  border-radius: 18px;
+  border-radius: 16px;
   background: var(--surface-strong);
   padding: 18px;
 }
@@ -159,7 +225,7 @@
   display: inline-flex;
   align-items: center;
   border: 1px solid var(--border);
-  border-radius: 999px;
+  border-radius: 14px;
   background: var(--surface-strong);
   padding: 0 14px;
   color: var(--text);
@@ -173,7 +239,7 @@
   gap: 18px;
   margin-top: 18px;
   padding: clamp(22px, 3vw, 34px);
-  border-radius: 24px;
+  border-radius: 20px;
 }
 
 [data-theme="dark"] .about-page {
@@ -191,7 +257,8 @@
 
 [data-theme="dark"] .about-team article,
 [data-theme="dark"] .about-sources article,
-[data-theme="dark"] .about-checklist span {
+[data-theme="dark"] .about-checklist span,
+[data-theme="dark"] .about-hero__metrics article {
   background: rgba(255, 255, 255, 0.06);
 }
 
@@ -203,6 +270,15 @@
   .about-grid,
   .about-contact {
     grid-template-columns: 1fr;
+  }
+
+  .about-hero__metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .about-hero::after {
+    width: 190px;
+    opacity: 0.22;
   }
 
   .about-contact {
