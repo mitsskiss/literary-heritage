@@ -90,9 +90,6 @@ function Header() {
       <div className="site-header__scrollline" aria-hidden="true" />
       <div className="site-header__container">
         <NavLink to="/" className="site-header__brand">
-          <span className="site-header__brand-mark" aria-hidden="true">
-            LH
-          </span>
           <span className="site-header__brand-copy">
             <span className="site-header__brand-title">{t("brandTitle")}</span>
           </span>

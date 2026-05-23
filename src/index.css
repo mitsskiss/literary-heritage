@@ -158,10 +158,10 @@ h1 {
 .site-header__brand {
   display: inline-flex;
   align-items: center;
-  gap: 14px;
+  gap: 0;
   text-decoration: none;
   color: #163a35;
-  flex: 1 1 auto;
+  flex: 0 1 auto;
   min-width: 0;
 }
 
@@ -488,16 +488,8 @@ h1 {
   }
 
   .site-header__brand {
-    gap: 9px;
     min-width: 0;
     max-width: calc(100dvw - 112px);
-  }
-
-  .site-header__brand-mark {
-    width: 42px;
-    height: 42px;
-    border-radius: 16px;
-    flex: 0 0 42px;
   }
 
   .site-header__brand-title {
