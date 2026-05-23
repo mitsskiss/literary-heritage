@@ -30,11 +30,14 @@ create table if not exists public.work_likes (
 create table if not exists public.work_comments (
   id uuid primary key default gen_random_uuid(),
   work_id text not null,
-  user_id uuid not null references auth.users(id) on delete cascade,
+  user_id uuid references auth.users(id) on delete set null,
   author_name text not null default 'Reader',
   body text not null check (char_length(body) between 1 and 800),
   created_at timestamptz not null default now()
 );
+
+alter table public.work_comments
+  alter column user_id drop not null;
 
 alter table public.profiles enable row level security;
 alter table public.user_progress enable row level security;
@@ -93,19 +96,24 @@ using (auth.uid() = user_id);
 drop policy if exists "Anyone can read work comments" on public.work_comments;
 create policy "Anyone can read work comments"
 on public.work_comments for select
+to anon, authenticated
 using (true);
 
 drop policy if exists "Users can comment on works" on public.work_comments;
 create policy "Users can comment on works"
 on public.work_comments for insert
-to authenticated
-with check (auth.uid() = user_id);
+to anon, authenticated
+with check (user_id is null or auth.uid() = user_id);
 
 drop policy if exists "Users can delete own work comments" on public.work_comments;
 create policy "Users can delete own work comments"
 on public.work_comments for delete
 to authenticated
 using (auth.uid() = user_id);
+
+grant select on public.work_likes to anon, authenticated;
+grant select, insert on public.work_comments to anon, authenticated;
+grant delete on public.work_comments to authenticated;
 
 create or replace function public.handle_new_user()
 returns trigger

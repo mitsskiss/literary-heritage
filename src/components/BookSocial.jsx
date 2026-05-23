@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 import { isSupabaseConfigured, supabase } from "../lib/supabaseClient";
 import { useI18n } from "../i18n/I18nContext";
@@ -25,7 +24,7 @@ function BookSocial({ work }) {
 
   const workUrl = useMemo(() => getWorkUrl(work.id), [work.id]);
   const authorName =
-    profile?.display_name || user?.user_metadata?.display_name || user?.email?.split("@")[0] || t("reader");
+    profile?.display_name || user?.user_metadata?.display_name || user?.email?.split("@")[0] || t("guestReader");
 
   const loadSocialData = useCallback(async () => {
     if (!isSupabaseConfigured || !supabase || !work?.id) return;
@@ -130,11 +129,6 @@ function BookSocial({ work }) {
   const handleSubmitComment = async (event) => {
     event.preventDefault();
 
-    if (!user) {
-      setMessage(t("signInToComment"));
-      return;
-    }
-
     const body = draftComment.trim();
     if (!body) return;
 
@@ -145,7 +139,7 @@ function BookSocial({ work }) {
       .from("work_comments")
       .insert({
         work_id: work.id,
-        user_id: user.id,
+        user_id: user?.id ?? null,
         author_name: authorName,
         body,
       })
@@ -155,7 +149,8 @@ function BookSocial({ work }) {
     setIsSubmitting(false);
 
     if (error) {
-      setMessage(t("socialActionFailed"));
+      const needsSetup = ["23502", "42501", "PGRST301"].includes(error.code);
+      setMessage(needsSetup ? t("socialSetupRequired") : t("socialActionFailed"));
       return;
     }
 
@@ -214,20 +209,16 @@ function BookSocial({ work }) {
             onChange={(event) => setDraftComment(event.target.value)}
             maxLength={MAX_COMMENT_LENGTH}
             rows={4}
-            placeholder={user ? t("commentPlaceholder") : t("signInToComment")}
+            placeholder={t("commentPlaceholder")}
           />
         </label>
         <div className="book-social__formFooter">
           <small>
             {draftComment.length}/{MAX_COMMENT_LENGTH}
           </small>
-          {user ? (
-            <button type="submit" disabled={isSubmitting || !draftComment.trim()}>
-              {isSubmitting ? t("pleaseWait") : t("publishComment")}
-            </button>
-          ) : (
-            <Link to="/auth">{t("signIn")}</Link>
-          )}
+          <button type="submit" disabled={isSubmitting || !draftComment.trim()}>
+            {isSubmitting ? t("pleaseWait") : t("publishComment")}
+          </button>
         </div>
       </form>
 
