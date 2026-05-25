@@ -1,350 +1,147 @@
 import { Link } from "react-router-dom";
-import { works } from "../data/works";
 import { authors } from "../data/authors";
-import { useEffect, useState } from "react";
-import LineWaves from "../components/LineWaves";
-import MetaBalls from "../components/MetaBalls";
+import { works } from "../data/works";
 import { useI18n } from "../i18n/I18nContext";
-import { useTheme } from "../theme/ThemeContext";
-
-const INTRO_SESSION_KEY = "literary_intro_seen";
-
-const movements = [
-  {
-    name: "Modernism",
-    description:
-      "Explores fragmented identity, inner consciousness, and new forms of literary expression.",
-  },
-  {
-    name: "Existentialism",
-    description:
-      "Focuses on freedom, absurdity, isolation, and the search for meaning.",
-  },
-  {
-    name: "Kazakh Enlightenment",
-    description:
-      "Highlights morality, education, cultural awareness, and intellectual development.",
-  },
-];
-
-const introHighlights = [
-  "Poetry and philosophy",
-  "Voices across generations",
-  "Stories that shape identity",
-];
-
-const introNarrative = [
-  "Explore famous authors, literary works, and the ideas behind them.",
-  "Every great work of literature is a conversation - not just between the author and their time, but between the text and you.",
-  "Read, explore, and reflect on literary works.",
-];
 
 function Landing() {
-  const { t, localizeWorks, localizeAuthors, localizeMisc } = useI18n();
-  const { isDark } = useTheme();
-  const [introStage, setIntroStage] = useState("done");
-  const [isMuted, setIsMuted] = useState(true);
-  const [activeNarrativeIndex, setActiveNarrativeIndex] = useState(0);
-  const localizedWorks = localizeWorks(works);
+  const { language, languages, setLanguage, t, localizeAuthors, localizeWorks } = useI18n();
   const localizedAuthors = localizeAuthors(authors);
-  const localizedMovements = movements.map((movement) => ({
-    ...movement,
-    ...localizeMisc(movement.name, "movements"),
-  }));
-  const localizedIntroHighlights = introHighlights.map((item) =>
-    localizeMisc(item, "introHighlights")
-  );
-  const localizedIntroNarrative = introNarrative.map((item) =>
-    localizeMisc(item, "introNarrative")
-  );
-  const introVisuals = [
-    ...localizedWorks.slice(0, 3),
-    ...localizedAuthors.slice(0, 2),
-  ];
-  const gatewayCards = [
+  const localizedWorks = localizeWorks(works);
+
+  const portalCards = [
     {
       title: t("navAuthors"),
-      text: t("authorsSubtitle"),
-      to: "/authors",
+      text: t("landingAuthorsText"),
+      href: "/authors",
       image: localizedAuthors[0]?.image,
-      label: localizedAuthors[0]?.name,
     },
     {
       title: t("navWorks"),
-      text: t("allWorksSubtitle"),
-      to: "/works",
+      text: t("landingWorksText"),
+      href: "/works",
       image: localizedWorks[0]?.image,
-      label: localizedWorks[0]?.title,
     },
     {
-      title: t("literaryMovements"),
-      text: t("literaryWorldSubtitle"),
-      to: "/explore",
+      title: t("landingEpochs"),
+      text: t("landingEpochsText"),
+      href: "/explore",
       image: localizedWorks[2]?.image,
-      label: t("exploreMovements"),
     },
     {
       title: t("favorite_quote"),
-      text: t("quoteFragment"),
-      to: "/explore",
+      text: t("landingQuotesText"),
+      href: "/explore",
       image: localizedWorks[3]?.image,
-      label: localizedWorks[3]?.author,
     },
   ];
-  const statItems = [
-    { value: `${localizedAuthors.length}+`, label: t("navAuthors") },
-    { value: `${localizedWorks.length * 100}+`, label: t("navWorks") },
+
+  const stats = [
+    { value: "100+", label: t("navAuthors") },
+    { value: "500+", label: t("navWorks") },
     { value: "3", label: t("language") },
-    { value: "∞", label: t("startGuidedRoute") },
+    { value: t("landingRoutes"), label: t("startGuidedRoute") },
   ];
-  const collectionCards = localizedWorks.slice(0, 5).map((work) => ({
-    title: work.title,
-    image: work.image,
-    to: `/reading/${work.id}`,
-  }));
+
+  const collections = [
+    { title: t("landingPoetry"), image: localizedWorks[0]?.image, href: "/works" },
+    { title: t("landingProse"), image: localizedWorks[1]?.image, href: "/works" },
+    { title: t("landingFolklore"), image: localizedWorks[2]?.image, href: "/explore" },
+    { title: t("landingThoughts"), image: localizedWorks[3]?.image, href: "/explore" },
+    { title: t("landingRoutesTitle"), image: localizedWorks[4]?.image, href: "/map" },
+  ];
+
   const platformFeatures = [
-    { title: t("visualExploreText"), text: t("exploreSubtitle") },
-    { title: t("compareLanguages"), text: t("aboutRequirementLocalization") },
-    { title: t("interactiveReading"), text: t("aboutRequirementInteractive") },
-    { title: t("headerProgress"), text: t("profileSettingsText") },
+    { title: t("compareLanguages"), text: t("landingMultilingualText") },
+    { title: t("landingCompareTexts"), text: t("landingCompareText") },
+    { title: t("interactiveReading"), text: t("landingInteractiveText") },
+    { title: t("headerProgress"), text: t("landingProgressText") },
   ];
-
-  useEffect(() => {
-    document.body.style.overflow = introStage === "done" ? "" : "hidden";
-
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [introStage]);
-
-  useEffect(() => {
-    if (introStage !== "loading") return undefined;
-
-    const timer = window.setTimeout(() => {
-      setIntroStage("enter");
-    }, 1800);
-
-    return () => window.clearTimeout(timer);
-  }, [introStage]);
-
-  useEffect(() => {
-    if (introStage !== "story") return undefined;
-
-    const timer = window.setTimeout(() => {
-      setIntroStage("done");
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }, 6500);
-
-    return () => window.clearTimeout(timer);
-  }, [introStage]);
-
-  useEffect(() => {
-    if (introStage !== "story") return undefined;
-
-    const interval = window.setInterval(() => {
-      setActiveNarrativeIndex(
-        (current) => (current + 1) % localizedIntroNarrative.length
-      );
-    }, 2600);
-
-    return () => window.clearInterval(interval);
-  }, [introStage, localizedIntroNarrative.length]);
-
-  useEffect(() => {
-    if (introStage === "done") {
-      window.sessionStorage.setItem(INTRO_SESSION_KEY, "true");
-    }
-  }, [introStage]);
-
-  const handleEnter = () => {
-    setActiveNarrativeIndex(0);
-    setIntroStage("story");
-  };
-
-  const handleSkipIntro = () => {
-    window.sessionStorage.setItem(INTRO_SESSION_KEY, "true");
-    setIntroStage("done");
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
-  const toggleMute = () => {
-    setIsMuted((current) => !current);
-  };
 
   return (
-    <main className="landing-page" style={styles.page}>
-      {introStage !== "done" ? (
-        <section className="landing-intro" aria-live="polite">
-          <div className="landing-intro__texture" />
+    <main className="miras-home">
+      <section className="miras-hero">
+        <header className="miras-nav">
+          <Link className="miras-brand" to="/">
+            <span className="miras-brand__mark" aria-hidden="true" />
+            <span>
+              <strong>MIRAS</strong>
+              <small>{t("brandTitle")}</small>
+            </span>
+          </Link>
 
-          {introStage === "loading" ? (
-            <div className="landing-loader">
-              <div className="landing-loader__ring" />
-              <div className="landing-loader__ring landing-loader__ring--delayed" />
-              <p className="landing-loader__label">{t("preparingArchive")}</p>
-            </div>
-          ) : null}
+          <nav className="miras-nav__links" aria-label={t("navigation")}>
+            <Link to="/authors">{t("navAuthors")}</Link>
+            <Link to="/works">{t("navWorks")}</Link>
+            <Link to="/explore">{t("landingEpochs")}</Link>
+            <Link to="/explore">{t("themes")}</Link>
+            <Link to="/explore">{t("favorite_quote")}</Link>
+            <Link to="/about">{t("navAbout")}</Link>
+          </nav>
 
-          {introStage === "enter" ? (
-            <div className="landing-enter">
-              <div className="landing-enter__meta-field">
-                <MetaBalls
-                  color="#17453f"
-                  cursorBallColor="#2f7c70"
-                  cursorBallSize={1.2}
-                  ballCount={12}
-                  animationSize={28}
-                  enableMouseInteraction
-                  enableTransparency
-                  hoverSmoothness={0.15}
-                  clumpFactor={0.64}
-                  offsetY={4.6}
-                  speed={0.3}
-                />
-              </div>
-              <div className="landing-enter__content">
-                <p className="landing-enter__eyebrow">{t("brandTitle")}</p>
-                <button
-                  type="button"
-                  className="landing-enter__button"
-                  onClick={handleEnter}
-                >
-                  {t("enter")}
-                </button>
-              </div>
-            </div>
-          ) : null}
+          <div className="miras-nav__tools">
+            <span aria-hidden="true" className="miras-search-icon" />
+            <select
+              value={language}
+              onChange={(event) => setLanguage(event.target.value)}
+              aria-label={t("language")}
+            >
+              {languages.map((item) => (
+                <option key={item.code} value={item.code}>
+                  {item.shortLabel}
+                </option>
+              ))}
+            </select>
+          </div>
+        </header>
 
-          {introStage === "story" ? (
-            <div className="landing-story">
-              <div className="landing-story__visual">
-                {introVisuals.map((item, index) => (
-                  <div
-                    key={item.id ?? item.name}
-                    className={`landing-story__panel landing-story__panel--${index + 1}`}
-                    style={{ backgroundImage: `url(${item.image})` }}
-                  />
-                ))}
-                <div className="landing-story__glow landing-story__glow--one" />
-                <div className="landing-story__glow landing-story__glow--two" />
-                <div className="landing-story__shade" />
-              </div>
+        <div className="miras-ornament miras-ornament--left" aria-hidden="true" />
+        <div className="miras-ornament miras-ornament--right" aria-hidden="true" />
 
-              <div className="landing-story__content">
-                <div className="landing-story__narrative">
-                  <p key={activeNarrativeIndex} className="landing-story__line is-visible is-current">
-                    {localizedIntroNarrative[activeNarrativeIndex]}
-                  </p>
-                </div>
-              </div>
-
-              <div className="landing-story__footer">
-                <button
-                  type="button"
-                  className={`landing-story__sound ${isMuted ? "is-muted" : ""}`}
-                  onClick={toggleMute}
-                >
-                  <span className="landing-story__sound-icon" aria-hidden="true">
-                    <span />
-                    <span />
-                    <span />
-                  </span>
-                  <span>{isMuted ? t("soundOff") : t("soundOn")}</span>
-                </button>
-
-                <div className="landing-story__chips">
-                  {localizedIntroHighlights.map((item) => (
-                    <span key={item}>{item}</span>
-                  ))}
-                </div>
-
-                <button
-                  type="button"
-                  className="landing-story__skip"
-                  onClick={handleSkipIntro}
-                >
-                  {t("skipIntro")}
-                </button>
-              </div>
-            </div>
-          ) : null}
-        </section>
-      ) : null}
-
-      <section className="landing-hero" style={styles.hero}>
-        <div className="hero-line-waves" aria-hidden="true">
-          <LineWaves
-            speed={0.18}
-            innerLineCount={18}
-            outerLineCount={24}
-            warpIntensity={0.55}
-            rotation={-18}
-            edgeFadeWidth={0.2}
-            colorCycleSpeed={0.35}
-            brightness={isDark ? 0.32 : 0.14}
-            color1={isDark ? "#ffffff" : "#ACB9C9"}
-            color2={isDark ? "#b8b8c6" : "#EBD9CB"}
-            color3="#5A50B9"
-            enableMouseInteraction
-            mouseInfluence={isDark ? 2.4 : 1.8}
-          />
-        </div>
-        <div className="landing-hero-overlay" style={styles.heroOverlay}>
-          <p style={styles.kicker}>{t("heroKicker")}</p>
-
-          <h1 className="landing-hero-title" style={styles.title}>
-            {t("heroTitle")}
-          </h1>
-
-          <p className="landing-hero-subtitle" style={styles.subtitle}>
-            {t("heroSubtitle")}
-          </p>
-
-          <div className="landing-hero-actions" style={styles.actions}>
-            <Link to="/explore" style={styles.primaryBtn} className="hero-btn-primary">
-  {t("beginJourney")}
-</Link>
-
-            <Link to="/authors" style={styles.secondaryBtn}>
+        <div className="miras-hero__content">
+          <p className="miras-kicker">{t("heroKicker")}</p>
+          <h1>{t("heroTitle")}</h1>
+          <p>{t("heroSubtitle")}</p>
+          <div className="miras-hero__actions">
+            <Link className="miras-button miras-button--primary" to="/works">
+              {t("beginJourney")}
+            </Link>
+            <Link className="miras-button" to="/authors">
               {t("exploreAuthors")}
             </Link>
           </div>
-
-          <p style={styles.smallNote}>
-            {t("smallNote")}
-          </p>
         </div>
 
-        <div className="landing-hero-scene" aria-hidden="true">
-          <div className="landing-hero-scene__mountains" />
-          <div className="landing-hero-scene__sun" />
-          <div className="landing-hero-scene__book">
+        <div className="miras-scene" aria-hidden="true">
+          <div className="miras-scene__mountains" />
+          <div className="miras-scene__desk" />
+          <div className="miras-scene__book">
             <span />
             <span />
           </div>
-          <div className="landing-hero-scene__inkwell" />
-          <div className="landing-hero-scene__quill" />
+          <div className="miras-scene__ink" />
+          <div className="miras-scene__quill" />
+          <div className="miras-scene__books" />
         </div>
       </section>
 
-      <section className="landing-portal-grid" aria-label={t("siteFeatures")}>
-        {gatewayCards.map((card) => (
-          <Link className="landing-portal-card" to={card.to} key={card.title}>
-            <div
-              className="landing-portal-card__image"
-              style={{ backgroundImage: `url(${card.image})` }}
-            />
-            <div className="landing-portal-card__body">
-              <span>{card.title}</span>
-              <strong>{card.label}</strong>
+      <section className="miras-cards" aria-label={t("siteFeatures")}>
+        {portalCards.map((card) => (
+          <Link className="miras-card" key={card.title} to={card.href}>
+            <div className="miras-card__top">
+              <span className="miras-card__symbol" aria-hidden="true" />
+              <strong>{card.title}</strong>
+            </div>
+            <div className="miras-card__image" style={{ backgroundImage: `url(${card.image})` }} />
+            <div className="miras-card__bottom">
               <p>{card.text}</p>
+              <span aria-hidden="true">›</span>
             </div>
           </Link>
         ))}
       </section>
 
-      <section className="landing-stat-band" aria-label={t("catalogStats")}>
-        {statItems.map((item) => (
+      <section className="miras-stats" aria-label={t("catalogStats")}>
+        {stats.map((item) => (
           <article key={item.label}>
             <strong>{item.value}</strong>
             <span>{item.label}</span>
@@ -352,34 +149,34 @@ function Landing() {
         ))}
       </section>
 
-      <section className="landing-collections">
-        <div className="landing-collections__intro">
+      <section className="miras-collections">
+        <div className="miras-collections__intro">
           <p>{t("worksKicker")}</p>
-          <h2>{t("trendingWorks")}</h2>
-          <span>{t("allWorksSubtitle")}</span>
+          <h2>{t("landingCollections")}</h2>
+          <span>{t("landingCollectionsText")}</span>
           <Link to="/works">{t("openAllWorks")}</Link>
         </div>
 
-        <div className="landing-collections__rail">
-          {collectionCards.map((card) => (
-            <Link className="landing-collection-card" to={card.to} key={card.title}>
-              <img src={card.image} alt="" />
-              <strong>{card.title}</strong>
+        <div className="miras-collections__rail">
+          {collections.map((item) => (
+            <Link className="miras-collection" key={item.title} to={item.href}>
+              <img src={item.image} alt="" />
+              <strong>{item.title}</strong>
             </Link>
           ))}
         </div>
       </section>
 
-      <section className="landing-platform">
-        <div>
+      <section className="miras-platform">
+        <div className="miras-platform__intro">
           <p>{t("aboutKicker")}</p>
-          <h2>{t("aboutTitle")}</h2>
-          <span>{t("aboutIntro")}</span>
+          <h2>{t("landingPlatformTitle")}</h2>
+          <span>{t("landingPlatformText")}</span>
         </div>
-
-        <div className="landing-platform__features">
+        <div className="miras-platform__features">
           {platformFeatures.map((feature) => (
             <article key={feature.title}>
+              <span className="miras-feature-icon" aria-hidden="true" />
               <strong>{feature.title}</strong>
               <p>{feature.text}</p>
             </article>
@@ -387,570 +184,30 @@ function Landing() {
         </div>
       </section>
 
-      <section className="landing-dual-section" style={styles.dualSection}>
-        <div className="landing-dual-header" style={styles.dualHeader}>
-          <h2 className="landing-dual-title" style={styles.dualTitle}>{t("literaryWorld")}</h2>
-          <p className="landing-dual-subtitle" style={styles.dualSubtitle}>
-            {t("literaryWorldSubtitle")}
-          </p>
+      <footer className="miras-footer">
+        <div className="miras-footer__brand">
+          <span className="miras-brand__mark" aria-hidden="true" />
+          <strong>MIRAS</strong>
+          <p>{t("footerText")}</p>
         </div>
-
-        <div className="landing-dual-grid" style={styles.dualGrid}>
-          <div className="landing-dual-card" style={styles.dualCard}>
-            <div className="landing-block-header" style={styles.blockHeader}>
-              <h3 className="landing-block-title" style={styles.blockTitle}>{t("literaryMovements")}</h3>
-              <Link className="landing-block-link" to="/explore" style={styles.blockLink}>
-                {t("exploreMovements")} &gt;
-              </Link>
-            </div>
-
-            <div style={styles.movementList}>
-  {localizedMovements.map((movement) => (
-    <Link
-      key={movement.name}
-      to="/explore"
-      className="movement-item"
-      style={styles.movementItem}
-    >
-      <div style={styles.movementTextWrap}>
-        <h4 className="movement-name" style={styles.movementName}>
-          {movement.name}
-        </h4>
-        <p style={styles.movementDescription}>{movement.description}</p>
-      </div>
-
-      <span className="movement-arrow">&gt;</span>
-    </Link>
-  ))}
-</div>
-          </div>
-
-          <div className="landing-dual-card" style={styles.dualCard}>
-            <div className="landing-block-header" style={styles.blockHeader}>
-              <h3 className="landing-block-title" style={styles.blockTitle}>{t("featuredAuthors")}</h3>
-              <Link className="landing-block-link" to="/authors" style={styles.blockLink}>
-                {t("exploreAuthors")} &gt;
-              </Link>
-            </div>
-
-            <div style={styles.authorList}>
-  {localizedAuthors.map((author) => (
-    <Link
-      key={author.canonicalName}
-      to={`/author/${encodeURIComponent(author.canonicalName)}`}
-      className="author-item"
-      style={styles.authorItem}
-    >
-      <img
-        src={author.image}
-        alt={author.name}
-        style={styles.authorPortrait}
-      />
-
-      <div style={styles.authorInfo}>
-        <h4 className="author-name" style={styles.authorName}>
-          {author.name}
-        </h4>
-        <p className="author-meta" style={styles.authorMeta}>
-          {author.period}
-        </p>
-      </div>
-
-      <div className="author-pill">
-        {t("explore")}
-      </div>
-    </Link>
-  ))}
-</div>
+        <nav aria-label={t("navigation")}>
+          <Link to="/authors">{t("navAuthors")}</Link>
+          <Link to="/works">{t("navWorks")}</Link>
+          <Link to="/explore">{t("navExplore")}</Link>
+          <Link to="/about">{t("navAbout")}</Link>
+        </nav>
+        <div className="miras-footer__subscribe">
+          <span>{t("landingSubscribe")}</span>
+          <div>
+            <input aria-label="Email" placeholder="Ваш e-mail" />
+            <button type="button" aria-label={t("landingSubscribe")}>
+              →
+            </button>
           </div>
         </div>
-      </section>
-      <footer style={styles.footer}>
-  <div style={styles.footerTop}>
-    <div style={styles.footerBrand}>
-      <h3 style={styles.footerTitle}>{t("brandTitle")}</h3>
-      <p style={styles.footerText}>
-        {t("footerText")}
-      </p>
-    </div>
-
-    <nav style={styles.footerNav}>
-      <Link to="/" className="footer-link-hover" style={styles.footerLink}>
-        {t("navHome")}
-      </Link>
-      <Link to="/authors" className="footer-link-hover" style={styles.footerLink}>
-        {t("navAuthors")}
-      </Link>
-      <Link to="/explore" className="footer-link-hover" style={styles.footerLink}>
-        {t("navExplore")}
-      </Link>
-      <Link to="/progress" className="footer-link-hover" style={styles.footerLink}>
-        {t("navProgress")}
-      </Link>
-    </nav>
-  </div>
-
-  <div style={styles.footerBottom}>
-    <p style={styles.footerCopyright}>
-      {t("copyright")}
-    </p>
-  </div>
-</footer>
+      </footer>
     </main>
   );
 }
 
-const styles = {
-  page: {
-    background: "var(--page-bg)",
-    color: "var(--text)",
-    minHeight: "100vh",
-    position: "relative",
-    paddingTop: "var(--header-safe-offset, 0px)",
-  },
-
-  hero: {
-    position: "relative",
-    minHeight: "calc(82vh - var(--header-safe-offset, 0px))",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    gap: "clamp(24px, 5vw, 72px)",
-    padding: "70px clamp(18px, 6vw, 90px) 92px",
-    background:
-      "radial-gradient(circle at 52% 24%, rgba(184, 143, 80, 0.18), transparent 22rem), linear-gradient(110deg, #f7efe2 0%, #ead8c8 48%, #d8e1df 100%)",
-    overflow: "hidden",
-  },
-
-heroOverlay: {
-  maxWidth: "720px",
-  width: "min(100%, 720px)",
-  textAlign: "left",
-  zIndex: 2,
-  position: "relative"
-},
-
-  kicker: {
-    margin: 0,
-    fontSize: "14px",
-    letterSpacing: "0.1em",
-    textTransform: "uppercase",
-    color: "var(--text-muted)",
-    opacity: 1,
-    fontWeight: 800,
-  },
-
-title: {
-  margin: "20px 0 18px",
-  fontSize: "clamp(44px, 6.8vw, 92px)",
-  lineHeight: 0.95,
-  fontWeight: 700,
-  letterSpacing: "0",
-
-  background:
-    "linear-gradient(90deg, #063f3b 0%, #0f615c 54%, #8f6c33 100%)",
-
-  WebkitBackgroundClip: "text",
-  WebkitTextFillColor: "transparent"
-},
-
-  subtitle: {
-    margin: "0 auto",
-    marginLeft: 0,
-    maxWidth: "760px",
-    fontSize: "20px",
-    lineHeight: 1.7,
-    color: "var(--text-muted)",
-    opacity: 1,
-  },
-
-  actions: {
-    display: "flex",
-    justifyContent: "flex-start",
-    gap: "14px",
-    flexWrap: "wrap",
-    marginTop: "30px",
-  },
-
-  primaryBtn: {
-    display: "inline-block",
-    padding: "14px 20px",
-    borderRadius: "999px",
-    background: "#035b56",
-    color: "#fff8ec",
-    textDecoration: "none",
-    fontWeight: 600,
-    fontSize: "15px",
-  },
-
-  secondaryBtn: {
-    display: "inline-block",
-    padding: "14px 20px",
-    borderRadius: "999px",
-    border: "1px solid var(--border)",
-    color: "var(--text)",
-    textDecoration: "none",
-    fontWeight: 600,
-    fontSize: "15px",
-    background: "var(--surface)",
-    backdropFilter: "blur(6px)",
-  },
-
-  smallNote: {
-    marginTop: "20px",
-    fontSize: "14px",
-    color: "var(--text-muted)",
-    opacity: 1,
-  },
-
-
-  sectionHeader: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    gap: "16px",
-    marginBottom: "22px",
-  },
-
-  sectionTitle: {
-    margin: 0,
-    fontSize: "36px",
-    fontWeight: 700,
-  },
-
-  navButtons: {
-    display: "flex",
-    gap: "10px",
-  },
-
-  arrowBtn: {
-    width: "44px",
-    height: "44px",
-    borderRadius: "12px",
-    border: "1px solid rgba(0,0,0,0.08)",
-    background: "var(--surface-strong)",
-    cursor: "pointer",
-    fontSize: "24px",
-    lineHeight: 1,
-  },
-
-  sliderWrapper: {
-    position: "relative",
-  },
-
-  slider: {
-    display: "flex",
-    gap: "22px",
-    overflowX: "auto",
-    overflowY: "visible",
-    scrollBehavior: "smooth",
-    padding: "18px 64px 24px 34px",
-  },
-
-  cardLink: {
-    textDecoration: "none",
-    color: "inherit",
-    flex: "0 0 auto",
-  },
-
-  workCard: {
-    position: "relative",
-    width: "300px",
-    paddingLeft: "42px",
-    overflow: "visible",
-    isolation: "isolate",
-  },
-
-  rank: {
-    position: "absolute",
-    left: "0px",
-    bottom: "8px",
-    fontSize: "96px",
-    fontWeight: 700,
-    color: "rgba(255,255,255,0.18)",
-    WebkitTextStroke: "2px rgba(31,31,31,0.34)",
-    zIndex: 8,
-    pointerEvents: "none",
-    lineHeight: 1,
-  },
-
-  cardImageArea: {
-    position: "relative",
-    zIndex: 2,
-    height: "380px",
-    borderRadius: "18px",
-    overflow: "hidden",
-    background:
-      "linear-gradient(135deg, #d9cdbd 0%, #b89f86 35%, #8e6e5b 100%)",
-    boxShadow: "0 6px 18px rgba(0,0,0,0.06)",
-  },
-
-  cardGradient: {
-    position: "absolute",
-    inset: 0,
-    background:
-      "linear-gradient(to top, rgba(18,18,18,0.82) 0%, rgba(18,18,18,0.28) 45%, rgba(18,18,18,0.08) 100%)",
-  },
-
-  cardContent: {
-    position: "absolute",
-    inset: 0,
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "flex-end",
-    padding: "20px",
-    zIndex: 2,
-  },
-
-  cardAuthor: {
-    margin: "0 0 8px",
-    fontSize: "13px",
-    color: "rgba(255,255,255,0.8)",
-    textTransform: "uppercase",
-    letterSpacing: "0.06em",
-  },
-
-  cardTitle: {
-    margin: "0 0 10px",
-    fontSize: "28px",
-    lineHeight: 1.1,
-    color: "#fff",
-    fontWeight: 700,
-  },
-
-  cardDesc: {
-    margin: 0,
-    fontSize: "14px",
-    lineHeight: 1.55,
-    color: "rgba(255,255,255,0.86)",
-  },
-
-  progressTrack: {
-    height: "4px",
-    background: "rgba(0,0,0,0.08)",
-    borderRadius: "999px",
-    marginTop: "16px",
-    overflow: "hidden",
-  },
-
-  progressBar: {
-    height: "100%",
-    background: "linear-gradient(90deg, var(--accent), var(--accent-strong))",
-    borderRadius: "999px",
-    transition: "width 0.2s ease",
-  },
-
-  dualSection: {
-    maxWidth: "1400px",
-    margin: "0 auto",
-    padding: "20px 28px 70px",
-  },
-
-  dualHeader: {
-    marginBottom: "24px",
-  },
-
-  dualTitle: {
-    margin: 0,
-    fontSize: "clamp(28px, 5vw, 36px)",
-    lineHeight: 1.08,
-    fontWeight: 700,
-  },
-
-  dualSubtitle: {
-    margin: "8px 0 0",
-    maxWidth: "680px",
-    fontSize: "clamp(15px, 2.8vw, 17px)",
-    lineHeight: 1.55,
-    opacity: 0.75,
-  },
-
-  dualGrid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 520px), 1fr))",
-    gap: "22px",
-  },
-
-  dualCard: {
-    background: "var(--surface)",
-    border: "1px solid var(--border)",
-    borderRadius: "22px",
-    padding: "26px",
-    backdropFilter: "blur(8px)",
-    boxShadow: "0 8px 24px rgba(0,0,0,0.03)",
-  },
-
-  blockHeader: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    gap: "14px",
-    marginBottom: "22px",
-  },
-
-  blockTitle: {
-    margin: 0,
-    fontSize: "24px",
-    fontWeight: 700,
-  },
-
-  blockLink: {
-    textDecoration: "none",
-    color: "var(--text)",
-    fontSize: "14px",
-    fontWeight: 600,
-    opacity: 0.72,
-  },
-
-  movementList: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "12px",
-  },
-
-  movementItem: {
-    display: "grid",
-    gridTemplateColumns: "1fr auto",
-    alignItems: "center",
-    gap: "16px",
-    padding: "18px 18px",
-    borderRadius: "16px",
-    background: "var(--surface-strong)",
-    textDecoration: "none",
-    color: "var(--text)",
-    border: "1px solid var(--border)",
-    transition:
-      "transform 0.25s ease, background 0.25s ease, border-color 0.25s ease",
-  },
-
-  movementTextWrap: {
-    minWidth: 0,
-  },
-
-  movementName: {
-    margin: 0,
-    fontSize: "18px",
-    fontWeight: 700,
-    position: "relative",
-  },
-
-  movementDescription: {
-    margin: "6px 0 0",
-    fontSize: "14px",
-    lineHeight: 1.6,
-    opacity: 0.75,
-  },
-
-  authorList: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "12px",
-  },
-
-  authorItem: {
-    display: "grid",
-    gridTemplateColumns: "56px 1fr auto",
-    alignItems: "center",
-    gap: "14px",
-    padding: "14px 16px",
-    borderRadius: "16px",
-    background: "var(--surface-strong)",
-    textDecoration: "none",
-    color: "var(--text)",
-    border: "1px solid var(--border)",
-    transition:
-      "transform 0.25s ease, background 0.25s ease, border-color 0.25s ease",
-  },
-
-  authorPortrait: {
-    width: "56px",
-    height: "56px",
-    borderRadius: "50%",
-    objectFit: "cover",
-    flexShrink: 0,
-    border: "1px solid rgba(0,0,0,0.06)",
-  },
-
-  authorInfo: {
-    minWidth: 0,
-  },
-
-  authorName: {
-    margin: 0,
-    fontSize: "17px",
-    fontWeight: 700,
-  },
-
-  authorMeta: {
-    margin: "5px 0 0",
-    fontSize: "14px",
-    opacity: 0.68,
-  },
-  footer: {
-  maxWidth: "1400px",
-  margin: "0 auto",
-  padding: "10px 28px 40px",
-},
-
-footerTop: {
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "flex-start",
-  gap: "32px",
-  paddingTop: "28px",
-  borderTop: "1px solid rgba(0,0,0,0.08)",
-  flexWrap: "wrap",
-},
-
-footerBrand: {
-  maxWidth: "520px",
-},
-
-footerTitle: {
-  margin: 0,
-  fontSize: "22px",
-  fontWeight: 700,
-},
-
-footerText: {
-  margin: "10px 0 0",
-  fontSize: "15px",
-  lineHeight: 1.7,
-  opacity: 0.76,
-},
-
-footerNav: {
-  display: "flex",
-  gap: "18px",
-  flexWrap: "wrap",
-  alignItems: "center",
-},
-
-footerLink: {
-  textDecoration: "none",
-  color: "var(--text)",
-  fontSize: "15px",
-  fontWeight: 500,
-  opacity: 0.78,
-},
-
-footerBottom: {
-  marginTop: "22px",
-},
-
-footerCopyright: {
-  margin: 0,
-  fontSize: "13px",
-  opacity: 0.58,
-},
-trendingSection: {
-  padding: "100px 28px 60px",
-  maxWidth: "1400px",
-  margin: "0 auto",
-  position: "relative",
-  zIndex: 4,
-},
-};
-
 export default Landing;
-
