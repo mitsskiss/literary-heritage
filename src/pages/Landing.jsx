@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
 import { works } from "../data/works";
 import { authors } from "../data/authors";
-import { useEffect, useRef, useState } from "react";
-import GradualBlur from "../components/GradualBlur";
+import { useEffect, useState } from "react";
 import LineWaves from "../components/LineWaves";
 import MetaBalls from "../components/MetaBalls";
 import { useI18n } from "../i18n/I18nContext";
@@ -43,8 +42,6 @@ const introNarrative = [
 function Landing() {
   const { t, localizeWorks, localizeAuthors, localizeMisc } = useI18n();
   const { isDark } = useTheme();
-  const sliderRef = useRef(null);
-  const [scrollProgress, setScrollProgress] = useState(0);
   const [introStage, setIntroStage] = useState("done");
   const [isMuted, setIsMuted] = useState(true);
   const [activeNarrativeIndex, setActiveNarrativeIndex] = useState(0);
@@ -63,6 +60,53 @@ function Landing() {
   const introVisuals = [
     ...localizedWorks.slice(0, 3),
     ...localizedAuthors.slice(0, 2),
+  ];
+  const gatewayCards = [
+    {
+      title: t("navAuthors"),
+      text: t("authorsSubtitle"),
+      to: "/authors",
+      image: localizedAuthors[0]?.image,
+      label: localizedAuthors[0]?.name,
+    },
+    {
+      title: t("navWorks"),
+      text: t("allWorksSubtitle"),
+      to: "/works",
+      image: localizedWorks[0]?.image,
+      label: localizedWorks[0]?.title,
+    },
+    {
+      title: t("literaryMovements"),
+      text: t("literaryWorldSubtitle"),
+      to: "/explore",
+      image: localizedWorks[2]?.image,
+      label: t("exploreMovements"),
+    },
+    {
+      title: t("favorite_quote"),
+      text: t("quoteFragment"),
+      to: "/explore",
+      image: localizedWorks[3]?.image,
+      label: localizedWorks[3]?.author,
+    },
+  ];
+  const statItems = [
+    { value: `${localizedAuthors.length}+`, label: t("navAuthors") },
+    { value: `${localizedWorks.length * 100}+`, label: t("navWorks") },
+    { value: "3", label: t("language") },
+    { value: "∞", label: t("startGuidedRoute") },
+  ];
+  const collectionCards = localizedWorks.slice(0, 5).map((work) => ({
+    title: work.title,
+    image: work.image,
+    to: `/reading/${work.id}`,
+  }));
+  const platformFeatures = [
+    { title: t("visualExploreText"), text: t("exploreSubtitle") },
+    { title: t("compareLanguages"), text: t("aboutRequirementLocalization") },
+    { title: t("interactiveReading"), text: t("aboutRequirementInteractive") },
+    { title: t("headerProgress"), text: t("profileSettingsText") },
   ];
 
   useEffect(() => {
@@ -125,27 +169,6 @@ function Landing() {
 
   const toggleMute = () => {
     setIsMuted((current) => !current);
-  };
-
-  const scrollLeft = () => {
-    if (sliderRef.current) {
-      sliderRef.current.scrollBy({ left: -320, behavior: "smooth" });
-    }
-  };
-
-  const scrollRight = () => {
-    if (sliderRef.current) {
-      sliderRef.current.scrollBy({ left: 320, behavior: "smooth" });
-    }
-  };
-
-  const handleScroll = () => {
-    const el = sliderRef.current;
-    if (!el) return;
-
-    const maxScroll = el.scrollWidth - el.clientWidth;
-    const progress = maxScroll > 0 ? (el.scrollLeft / maxScroll) * 100 : 0;
-    setScrollProgress(progress);
   };
 
   return (
@@ -293,123 +316,74 @@ function Landing() {
         </div>
 
         <div className="landing-hero-scene" aria-hidden="true">
-          <div className="landing-hero-scene__halo" />
-          <div
-            className="landing-hero-scene__main"
-            style={{ backgroundImage: `url(${localizedWorks[0]?.image})` }}
-          />
-          <div
-            className="landing-hero-scene__card is-one"
-            style={{ backgroundImage: `url(${localizedWorks[1]?.image})` }}
-          />
-          <div
-            className="landing-hero-scene__card is-two"
-            style={{ backgroundImage: `url(${localizedWorks[2]?.image})` }}
-          />
+          <div className="landing-hero-scene__mountains" />
+          <div className="landing-hero-scene__sun" />
+          <div className="landing-hero-scene__book">
+            <span />
+            <span />
+          </div>
+          <div className="landing-hero-scene__inkwell" />
+          <div className="landing-hero-scene__quill" />
         </div>
       </section>
 
-      <section className="landing-visual-strip" aria-label={t("siteFeatures")}>
-        <Link to="/explore" className="landing-visual-tile">
-          <span className="landing-visual-tile__icon is-book" aria-hidden="true" />
-          <strong>{t("navExplore")}</strong>
-          <small>{t("visualExploreText")}</small>
-        </Link>
-        <Link to="/map" className="landing-visual-tile">
-          <span className="landing-visual-tile__icon is-map" aria-hidden="true" />
-          <strong>{t("navMap")}</strong>
-          <small>{t("visualMapText")}</small>
-        </Link>
-        <Link to="/profile" className="landing-visual-tile">
-          <span className="landing-visual-tile__icon is-profile" aria-hidden="true" />
-          <strong>{t("profile")}</strong>
-          <small>{t("visualProfileText")}</small>
-        </Link>
-        <Link to="/progress" className="landing-visual-tile">
-          <span className="landing-visual-tile__icon is-progress" aria-hidden="true" />
-          <strong>{t("navProgress")}</strong>
-          <small>{t("visualProgressText")}</small>
-        </Link>
-      </section>
-
-      <section style={styles.trendingSection}>
-        <div style={styles.sectionHeader}>
-          <h2 style={styles.sectionTitle}>{t("trendingWorks")}</h2>
-
-          <div style={styles.navButtons}>
-            <button onClick={scrollLeft} style={styles.arrowBtn}>
-              ‹
-            </button>
-            <button onClick={scrollRight} style={styles.arrowBtn}>
-              ›
-            </button>
-          </div>
-        </div>
-
-        <div className="slider-wrapper-fade" style={styles.sliderWrapper}>
-          <GradualBlur
-            target="parent"
-            position="right"
-            height="4.25rem"
-            strength={1.2}
-            divCount={1}
-            curve="linear"
-            opacity={0.95}
-            zIndex={22}
-          />
-          <div
-            ref={sliderRef}
-            className="slider"
-            style={styles.slider}
-            onScroll={handleScroll}
-          >
-            {localizedWorks.map((work, index) => (
-              <Link
-                key={work.id}
-                to={`/reading/${work.id}`}
-                style={styles.cardLink}
-              >
-                <div
-                  className="trending-card"
-                  style={{
-                    ...styles.workCard,
-                    marginLeft: index === 0 ? "28px" : "0",
-                  }}
-                >
-                  <div style={styles.rank}>{index + 1}</div>
-
-                  <div
-                    className="cardImageArea"
-                    style={{
-                      ...styles.cardImageArea,
-                      backgroundImage: work.image
-                        ? `url(${work.image})`
-                        : undefined,
-                      backgroundSize: "cover",
-                      backgroundPosition: "center",
-                    }}
-                  >
-                    <div className="cardGradient" style={styles.cardGradient} />
-
-                    <div style={styles.cardContent}>
-                      <p style={styles.cardAuthor}>{work.author}</p>
-                      <h3 style={styles.cardTitle}>{work.title}</h3>
-                      <p style={styles.cardDesc}>{work.description}</p>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-
-          <div style={styles.progressTrack}>
+      <section className="landing-portal-grid" aria-label={t("siteFeatures")}>
+        {gatewayCards.map((card) => (
+          <Link className="landing-portal-card" to={card.to} key={card.title}>
             <div
-              style={{
-                ...styles.progressBar,
-                width: `${Math.max(scrollProgress, 18)}%`,
-              }}
+              className="landing-portal-card__image"
+              style={{ backgroundImage: `url(${card.image})` }}
             />
-          </div>
+            <div className="landing-portal-card__body">
+              <span>{card.title}</span>
+              <strong>{card.label}</strong>
+              <p>{card.text}</p>
+            </div>
+          </Link>
+        ))}
+      </section>
+
+      <section className="landing-stat-band" aria-label={t("catalogStats")}>
+        {statItems.map((item) => (
+          <article key={item.label}>
+            <strong>{item.value}</strong>
+            <span>{item.label}</span>
+          </article>
+        ))}
+      </section>
+
+      <section className="landing-collections">
+        <div className="landing-collections__intro">
+          <p>{t("worksKicker")}</p>
+          <h2>{t("trendingWorks")}</h2>
+          <span>{t("allWorksSubtitle")}</span>
+          <Link to="/works">{t("openAllWorks")}</Link>
+        </div>
+
+        <div className="landing-collections__rail">
+          {collectionCards.map((card) => (
+            <Link className="landing-collection-card" to={card.to} key={card.title}>
+              <img src={card.image} alt="" />
+              <strong>{card.title}</strong>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <section className="landing-platform">
+        <div>
+          <p>{t("aboutKicker")}</p>
+          <h2>{t("aboutTitle")}</h2>
+          <span>{t("aboutIntro")}</span>
+        </div>
+
+        <div className="landing-platform__features">
+          {platformFeatures.map((feature) => (
+            <article key={feature.title}>
+              <strong>{feature.title}</strong>
+              <p>{feature.text}</p>
+            </article>
+          ))}
         </div>
       </section>
 
