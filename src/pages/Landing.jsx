@@ -45,10 +45,7 @@ function Landing() {
   const { isDark } = useTheme();
   const sliderRef = useRef(null);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [introStage, setIntroStage] = useState(() => {
-    if (typeof window === "undefined") return "done";
-    return window.sessionStorage.getItem(INTRO_SESSION_KEY) ? "done" : "loading";
-  });
+  const [introStage, setIntroStage] = useState("done");
   const [isMuted, setIsMuted] = useState(true);
   const [activeNarrativeIndex, setActiveNarrativeIndex] = useState(0);
   const localizedWorks = localizeWorks(works);
@@ -295,6 +292,21 @@ function Landing() {
           </p>
         </div>
 
+        <div className="landing-hero-scene" aria-hidden="true">
+          <div className="landing-hero-scene__halo" />
+          <div
+            className="landing-hero-scene__main"
+            style={{ backgroundImage: `url(${localizedWorks[0]?.image})` }}
+          />
+          <div
+            className="landing-hero-scene__card is-one"
+            style={{ backgroundImage: `url(${localizedWorks[1]?.image})` }}
+          />
+          <div
+            className="landing-hero-scene__card is-two"
+            style={{ backgroundImage: `url(${localizedWorks[2]?.image})` }}
+          />
+        </div>
       </section>
 
       <section className="landing-visual-strip" aria-label={t("siteFeatures")}>
@@ -525,20 +537,21 @@ const styles = {
 
   hero: {
     position: "relative",
-    minHeight: "calc(88vh - var(--header-safe-offset, 0px))",
+    minHeight: "calc(82vh - var(--header-safe-offset, 0px))",
     display: "flex",
     alignItems: "center",
-    justifyContent: "center",
-    padding: "40px 20px 120px",
+    justifyContent: "space-between",
+    gap: "clamp(24px, 5vw, 72px)",
+    padding: "70px clamp(18px, 6vw, 90px) 92px",
     background:
-      "linear-gradient(to bottom, var(--palette-primary) 0%, var(--page-bg) 64%, var(--palette-secondary) 100%)",
+      "radial-gradient(circle at 52% 24%, rgba(184, 143, 80, 0.18), transparent 22rem), linear-gradient(110deg, #f7efe2 0%, #ead8c8 48%, #d8e1df 100%)",
     overflow: "hidden",
   },
 
 heroOverlay: {
-  maxWidth: "980px",
-  width: "100%",
-  textAlign: "center",
+  maxWidth: "720px",
+  width: "min(100%, 720px)",
+  textAlign: "left",
   zIndex: 2,
   position: "relative"
 },
@@ -550,17 +563,18 @@ heroOverlay: {
     textTransform: "uppercase",
     color: "var(--text-muted)",
     opacity: 1,
+    fontWeight: 800,
   },
 
 title: {
   margin: "20px 0 18px",
-  fontSize: "clamp(42px, 7vw, 78px)",
-  lineHeight: 1.05,
+  fontSize: "clamp(44px, 6.8vw, 92px)",
+  lineHeight: 0.95,
   fontWeight: 700,
-  letterSpacing: "-0.035em",
+  letterSpacing: "0",
 
   background:
-    "linear-gradient(90deg, var(--text) 0%, var(--accent-strong) 48%, var(--text) 100%)",
+    "linear-gradient(90deg, #063f3b 0%, #0f615c 54%, #8f6c33 100%)",
 
   WebkitBackgroundClip: "text",
   WebkitTextFillColor: "transparent"
@@ -568,6 +582,7 @@ title: {
 
   subtitle: {
     margin: "0 auto",
+    marginLeft: 0,
     maxWidth: "760px",
     fontSize: "20px",
     lineHeight: 1.7,
@@ -577,7 +592,7 @@ title: {
 
   actions: {
     display: "flex",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     gap: "14px",
     flexWrap: "wrap",
     marginTop: "30px",
@@ -586,9 +601,9 @@ title: {
   primaryBtn: {
     display: "inline-block",
     padding: "14px 20px",
-    borderRadius: "14px",
-    background: "var(--brand)",
-    color: "var(--brand-contrast)",
+    borderRadius: "999px",
+    background: "#035b56",
+    color: "#fff8ec",
     textDecoration: "none",
     fontWeight: 600,
     fontSize: "15px",
@@ -597,7 +612,7 @@ title: {
   secondaryBtn: {
     display: "inline-block",
     padding: "14px 20px",
-    borderRadius: "14px",
+    borderRadius: "999px",
     border: "1px solid var(--border)",
     color: "var(--text)",
     textDecoration: "none",
