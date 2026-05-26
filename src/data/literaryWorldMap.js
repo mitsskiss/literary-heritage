@@ -1,120 +1,150 @@
-import { works } from "./works";
-
-const bookOrigins = {
-  "dostoevsky-crime": {
-    year: 1866,
-    years: "1865-1866",
-    category: "classics",
-    country: "Russia",
-    city: "Saint Petersburg",
-    position: { x: 56.7, y: 30.5 },
-    originNote:
-      "Written in Saint Petersburg and first published serially in 1866.",
-    context:
-      "A psychological journey through guilt, poverty, conscience, and the question of whether any idea can justify violence.",
-    sourceLabel: "Publication: 1866",
-  },
-  "woolf-dalloway": {
-    year: 1925,
-    years: "1925",
-    category: "novels",
-    country: "United Kingdom",
-    city: "London",
-    position: { x: 46.6, y: 31.8 },
-    originNote:
-      "Published in 1925 and built around one day in London after World War I.",
-    context:
-      "A modernist portrait of memory, time, social performance, and the private life hidden inside ordinary movement.",
-    sourceLabel: "Publication: 1925",
-  },
-  "camus-stranger": {
-    year: 1942,
-    years: "1942",
-    category: "philosophy",
-    country: "Algeria / France",
-    city: "Algiers context",
-    position: { x: 48.8, y: 45.4 },
-    originNote:
-      "Published in France in 1942; its central world is French Algeria and Algiers.",
-    context:
-      "A spare, unsettling story about emotional detachment, judgment, absurdity, and the pressure to perform meaning.",
-    sourceLabel: "Publication: 1942",
-  },
-  "abai-words": {
-    year: 1890,
-    years: "1890-1898",
-    category: "philosophy",
-    country: "Kazakhstan",
-    city: "Semey region",
-    position: { x: 64.3, y: 35.4 },
-    originNote:
-      "A cycle of philosophical prose reflections written across the 1890s.",
-    context:
-      "Abai turns literature into ethical self-education: knowledge, responsibility, character, and cultural renewal.",
-    sourceLabel: "Written: 1890-1898",
-  },
-  "murakami-identity": {
-    year: 2002,
-    years: "2002",
-    category: "novels",
-    country: "Japan",
-    city: "Tokyo / Takamatsu",
-    position: { x: 79.5, y: 40.2 },
-    originNote:
-      "First published in Japan in 2002.",
-    context:
-      "A dreamlike coming-of-age novel where fate, memory, music, and myth reshape the border between inner and outer life.",
-    sourceLabel: "Publication: 2002",
-  },
-};
+import mapPlaceImage from "../assets/mura/map-place-abai.png";
 
 export const mapCategoryMeta = {
-  novels: {
-    label: "Novels",
-    color: "#5274ff",
-  },
-  poetry: {
-    label: "Poetry",
-    color: "#e95d4f",
-  },
-  drama: {
-    label: "Drama",
-    color: "#43a96f",
-  },
-  philosophy: {
-    label: "Philosophy",
-    color: "#8c67df",
-  },
-  classics: {
-    label: "Classics",
-    color: "#d79a22",
-  },
+  museum: { label: "Museum", color: "#c89531" },
+  memorial: { label: "Memorial", color: "#4a3321" },
+  archive: { label: "Archive", color: "#8f6b2f" },
+  route: { label: "Route point", color: "#1c5b52" },
 };
 
-export const literaryWorldMarkers = works
-  .map((work) => {
-    const details = bookOrigins[work.id];
-
-    if (!details) return null;
-
-    return {
-      id: work.id,
-      workId: work.id,
-      name: work.title,
-      author: work.author,
-      image: work.image,
-      themes: work.themes,
-      description: work.description,
-      startYear: details.year,
-      endYear: 2025,
-      ...details,
-    };
-  })
-  .filter(Boolean)
-  .sort((a, b) => a.startYear - b.startYear);
+export const literaryWorldMarkers = [
+  {
+    id: "zhidebai-abai",
+    name: "Abai Memorial Complex",
+    author: "Abai Kunanbayev",
+    city: "Zhidebai / Semey",
+    region: "Abai region",
+    category: "memorial",
+    type: "Memorial",
+    image: mapPlaceImage,
+    position: { x: 78, y: 45 },
+    description:
+      "A key place connected with Abai's life, memory, and the cultural landscape of Kazakh enlightenment.",
+    relatedWorks: 24,
+    relatedAuthors: 3,
+    relatedRoutes: 2,
+    routeId: "abai-path",
+    startYear: 1890,
+    years: "XIX century",
+  },
+  {
+    id: "auezov-almaty",
+    name: "M. Auezov House Museum",
+    author: "Mukhtar Auezov",
+    city: "Almaty",
+    region: "Almaty",
+    category: "museum",
+    type: "Museum",
+    image: mapPlaceImage,
+    position: { x: 62, y: 70 },
+    description:
+      "Museum space associated with Mukhtar Auezov, The Path of Abai, and Kazakh literary scholarship.",
+    relatedWorks: 18,
+    relatedAuthors: 2,
+    relatedRoutes: 2,
+    routeId: "abai-path",
+    startYear: 1942,
+    years: "XX century",
+  },
+  {
+    id: "astana-literary",
+    name: "Astana Literary Center",
+    author: "Kazakh writers",
+    city: "Astana",
+    region: "Akmola",
+    category: "archive",
+    type: "Cultural center",
+    image: mapPlaceImage,
+    position: { x: 55, y: 33 },
+    description:
+      "A symbolic center for contemporary literary education, archives, and cultural events.",
+    relatedWorks: 30,
+    relatedAuthors: 8,
+    relatedRoutes: 5,
+    routeId: "alash-voice",
+    startYear: 1991,
+    years: "Modern period",
+  },
+  {
+    id: "karaganda-seifullin",
+    name: "Saken Seifullin Memory Route",
+    author: "Saken Seifullin",
+    city: "Karaganda",
+    region: "Karaganda",
+    category: "route",
+    type: "Route point",
+    image: mapPlaceImage,
+    position: { x: 56, y: 50 },
+    description:
+      "A regional memory point for twentieth-century literature, civic courage, and historical change.",
+    relatedWorks: 12,
+    relatedAuthors: 2,
+    relatedRoutes: 2,
+    routeId: "memory-repression",
+    startYear: 1927,
+    years: "XX century",
+  },
+  {
+    id: "kyzylzhar-magzhan",
+    name: "Magzhan Zhumabayev Literary Place",
+    author: "Magzhan Zhumabayev",
+    city: "Kyzylzhar",
+    region: "North Kazakhstan",
+    category: "memorial",
+    type: "Memorial",
+    image: mapPlaceImage,
+    position: { x: 48, y: 20 },
+    description:
+      "Northern literary memory connected with lyric poetry, Alash feeling, and national imagination.",
+    relatedWorks: 9,
+    relatedAuthors: 2,
+    relatedRoutes: 2,
+    routeId: "alash-voice",
+    startYear: 1923,
+    years: "Alash period",
+  },
+  {
+    id: "jetisu-ilyas",
+    name: "Ilyas Zhansugurov Jetisu Route",
+    author: "Ilyas Zhansugurov",
+    city: "Taldykorgan",
+    region: "Jetisu",
+    category: "route",
+    type: "Route point",
+    image: mapPlaceImage,
+    position: { x: 67, y: 72 },
+    description:
+      "A poetic landscape tied to Kulager, music, memory, and the emotional geography of Jetisu.",
+    relatedWorks: 10,
+    relatedAuthors: 2,
+    relatedRoutes: 2,
+    routeId: "steppe-poetry",
+    startYear: 1936,
+    years: "XX century",
+  },
+  {
+    id: "torgai-akhmet",
+    name: "Akhmet Baitursynuly Torgai Route",
+    author: "Akhmet Baitursynuly",
+    city: "Torgai",
+    region: "Kostanay",
+    category: "memorial",
+    type: "Memorial",
+    image: mapPlaceImage,
+    position: { x: 38, y: 42 },
+    description:
+      "A place of language reform, education, and Alash intellectual heritage.",
+    relatedWorks: 11,
+    relatedAuthors: 2,
+    relatedRoutes: 2,
+    routeId: "alash-voice",
+    startYear: 1911,
+    years: "Alash period",
+  },
+];
 
 export const mapBounds = {
-  minYear: 1600,
-  maxYear: 2025,
-  defaultYear: 2025,
+  minYear: 1800,
+  maxYear: 2026,
+  defaultYear: 2026,
 };

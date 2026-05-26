@@ -19,6 +19,8 @@ import Auth from "./pages/Auth";
 import Profile from "./pages/Profile";
 import Admin from "./pages/Admin";
 import About from "./pages/About";
+import Epochs from "./pages/Epochs";
+import RoutePage from "./pages/RoutePage";
 
 function AuthRecoveryBridge() {
   const { authEvent } = useAuth();
@@ -45,6 +47,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/explore" element={<Explore />} />
+        <Route path="/epochs" element={<Epochs />} />
+        <Route path="/route/:routeId" element={<RoutePage />} />
         <Route path="/map" element={<WorldMap />} />
         <Route path="/works" element={<Works />} />
         <Route path="/reading/:id" element={<Reading />} />

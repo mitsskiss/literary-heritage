@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { NavLink } from "react-router-dom";
-import StaggeredMenu from "./StaggeredMenu";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 import { useI18n } from "../i18n/I18nContext";
 import { useProgressStore } from "../store/useProgressStore";
@@ -10,59 +9,41 @@ function Header() {
   const { language, languages, setLanguage, t } = useI18n();
   const { isDark, toggleTheme } = useTheme();
   const { profile } = useAuth();
+  const location = useLocation();
   const xp = useProgressStore((state) => state.xp);
   const lives = useProgressStore((state) => state.lives);
   const streak = useProgressStore((state) => state.streak);
-  const [isHeaderHidden, setIsHeaderHidden] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [localAvatar, setLocalAvatar] = useState("");
-  const lastScrollYRef = useRef(0);
+  const menuRef = useRef(null);
   const avatarDataUrl = profile?.avatar_data_url || localAvatar;
+
   const navItems = [
-    { label: t("navHome"), href: "/", icon: "⌂" },
-    { label: t("navExplore"), href: "/explore", icon: "□" },
-    { label: t("navMap"), href: "/map", icon: "◇" },
-    { label: t("navAuthors"), href: "/authors", icon: "✎" },
-    { label: t("navProgress"), href: "/progress", icon: "↯" },
+    { label: t("navHome"), href: "/", kind: "home" },
+    { label: t("navWorks"), href: "/works", kind: "library" },
+    { label: t("navAuthors"), href: "/authors", kind: "authors" },
+    { label: t("landingEpochs"), href: "/epochs", kind: "epochs" },
+    { label: t("navExplore"), href: "/explore", kind: "routes" },
+    { label: t("navMap"), href: "/map", kind: "map" },
+    { label: t("navAbout"), href: "/about", kind: "about" },
   ];
-  const menuItems = [...navItems, { label: t("profile"), href: "/profile", icon: "○" }];
-  navItems.splice(2, 0, { label: t("navWorks"), href: "/works", icon: "▣" });
-  navItems.push({ label: t("navAdmin"), href: "/admin", icon: "CMS" });
-  menuItems.splice(2, 0, { label: t("navWorks"), href: "/works", icon: "▣" });
-  menuItems.push({ label: t("navAbout"), href: "/about", icon: "i" });
-  menuItems.push({ label: t("navAdmin"), href: "/admin", icon: "CMS" });
-  const mobileItems = menuItems.map((item) => ({
-    label: item.label,
-    ariaLabel: t("goToPage", { page: item.label.toLowerCase() }),
-    link: item.href,
-  }));
 
   useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      const previousScrollY = lastScrollYRef.current;
-      const delta = currentScrollY - previousScrollY;
+    setIsMenuOpen(false);
+  }, [location.pathname]);
 
-      if (currentScrollY <= 16) {
-        setIsHeaderHidden(false);
-        lastScrollYRef.current = currentScrollY;
-        return;
+  useEffect(() => {
+    if (!isMenuOpen) return undefined;
+
+    const handlePointerDown = (event) => {
+      if (!menuRef.current?.contains(event.target)) {
+        setIsMenuOpen(false);
       }
-
-      if (delta > 10 && currentScrollY > 120) {
-        setIsHeaderHidden(true);
-      } else if (delta < -8) {
-        setIsHeaderHidden(false);
-      }
-
-      lastScrollYRef.current = currentScrollY;
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+    document.addEventListener("pointerdown", handlePointerDown);
+    return () => document.removeEventListener("pointerdown", handlePointerDown);
+  }, [isMenuOpen]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -79,100 +60,117 @@ function Header() {
 
     readLocalAvatar();
     window.addEventListener("storage", readLocalAvatar);
-
-    return () => {
-      window.removeEventListener("storage", readLocalAvatar);
-    };
+    return () => window.removeEventListener("storage", readLocalAvatar);
   }, []);
 
+  const isRoutesSection = location.pathname === "/explore" || location.pathname.startsWith("/route/");
+
   return (
-    <header className={`site-header ${isHeaderHidden ? "is-hidden" : ""}`}>
-      <div className="site-header__scrollline" aria-hidden="true" />
-      <div className="site-header__container">
-        <NavLink to="/" className="site-header__brand">
-          <span className="site-header__brand-copy">
-            <span className="site-header__brand-title">{t("brandTitle")}</span>
-          </span>
-        </NavLink>
+    <>
+      <header className="site-header heritage-topbar">
+        <div className="heritage-topbar__inner">
+          <Link to="/" className="heritage-brand" aria-label="MURA">
+            <span className="heritage-brand__mark" aria-hidden="true" />
+            <span className="heritage-brand__copy">
+              <strong>MURA</strong>
+              <small>{t("brandSubtitle")}</small>
+            </span>
+          </Link>
 
-        <div className="site-header__controls">
-          <div className="site-header__quickStats" aria-label={t("headerProgress")}>
-            <span className="is-xp" title={t("totalXp")}>
-              <strong>{xp}</strong>
-              XP
-            </span>
-            <span className="is-lives" title={t("lives")}>
-              <strong>{lives}</strong>
-              {t("lifeShort")}
-            </span>
-            <span className="is-streak" title={t("daysInRow")}>
-              <strong>{streak}</strong>
-              {t("daysShort")}
-            </span>
+          <nav className="heritage-topnav" aria-label={t("navigation")}>
+            {navItems.map((item) => (
+              <NavLink
+                key={`${item.href}-${item.label}`}
+                to={item.href}
+                end={item.href === "/"}
+                className={({ isActive }) =>
+                  isActive || (isRoutesSection && item.kind === "routes") ? "is-active" : ""
+                }
+              >
+                {item.label}
+              </NavLink>
+            ))}
+          </nav>
+
+          <div className="heritage-tools">
+            <button type="button" className="heritage-icon-button" aria-label={t("searchArchive")}>
+              <span className="heritage-icon heritage-icon--search" aria-hidden="true" />
+            </button>
+            <button type="button" className="heritage-icon-button" aria-label={t("notifications")}>
+              <span className="heritage-icon heritage-icon--bell" aria-hidden="true" />
+            </button>
+            <NavLink to="/profile" className="heritage-avatar" aria-label={t("profile")}>
+              {avatarDataUrl ? <img src={avatarDataUrl} alt="" /> : <span aria-hidden="true" />}
+            </NavLink>
+            <select
+              className="heritage-language"
+              value={language}
+              onChange={(event) => setLanguage(event.target.value)}
+              aria-label={t("language")}
+            >
+              {languages.map((item) => (
+                <option key={item.code} value={item.code}>
+                  {item.shortLabel}
+                </option>
+              ))}
+            </select>
+            <button
+              type="button"
+              className="heritage-theme"
+              onClick={toggleTheme}
+              aria-label={isDark ? t("switchToLight") : t("switchToDark")}
+            >
+              {isDark ? "Light" : "Dark"}
+            </button>
+            <button
+              type="button"
+              className="heritage-menu-toggle"
+              onClick={() => setIsMenuOpen((current) => !current)}
+              aria-expanded={isMenuOpen}
+              aria-label={isMenuOpen ? t("closeMenu") : t("openMenu")}
+            >
+              <span />
+              <span />
+            </button>
           </div>
-
-          <NavLink
-            to="/profile"
-            className="site-header__profileLink"
-            aria-label={t("profile")}
-            title={t("profile")}
-          >
-            {avatarDataUrl ? (
-              <img src={avatarDataUrl} alt="" />
-            ) : (
-              <span aria-hidden="true" />
-            )}
-          </NavLink>
-
-          <StaggeredMenu
-            position="right"
-            items={mobileItems}
-            menuText={t("menu")}
-            closeText={t("close")}
-            openLabel={t("openMenu")}
-            closeLabel={t("closeMenu")}
-            socialItems={[]}
-            displaySocials={false}
-            displayItemNumbering
-            menuButtonColor="var(--brand)"
-            openMenuButtonColor="var(--brand)"
-            changeMenuColorOnOpen
-            colors={["var(--palette-secondary)", "var(--palette-primary)"]}
-            accentColor="var(--accent-strong)"
-          >
-            <div className="site-header__menuSettings">
-              <div className="site-header__menuSetting">
-                <span>{t("theme")}</span>
-                <button
-                  type="button"
-                  className="site-header__themeToggle"
-                  onClick={toggleTheme}
-                  aria-label={isDark ? t("switchToLight") : t("switchToDark")}
-                >
-                  <span aria-hidden="true">{isDark ? "L" : "D"}</span>
-                  <span>{isDark ? t("lightMode") : t("darkMode")}</span>
-                </button>
-              </div>
-
-              <label className="site-header__menuSetting">
-                <span>{t("language")}</span>
-                <select
-                  value={language}
-                  onChange={(event) => setLanguage(event.target.value)}
-                  aria-label={t("language")}
-                >
-                  {languages.map((item) => (
-                    <option key={item.code} value={item.code}>
-                      {item.shortLabel}
-                    </option>
-                  ))}
-                </select>
-              </label>
-            </div>
-          </StaggeredMenu>
         </div>
+      </header>
+      {isMenuOpen ? (
+        <div className="heritage-mobile-menu" ref={menuRef}>
+          <div className="heritage-mobile-menu__head">
+            <strong>{t("brandTitle")}</strong>
+            <button type="button" onClick={() => setIsMenuOpen(false)}>
+              {t("close")}
+            </button>
+          </div>
+          <nav>
+            {[...navItems, { label: t("profile"), href: "/profile", kind: "profile" }, { label: t("navAdmin"), href: "/admin", kind: "admin" }].map((item) => (
+              <NavLink key={`${item.href}-${item.kind}-mobile`} to={item.href} end={item.href === "/"}>
+                {item.label}
+              </NavLink>
+            ))}
+          </nav>
+          <div className="heritage-mobile-menu__settings">
+            <button type="button" onClick={toggleTheme}>
+              {isDark ? t("lightMode") : t("darkMode")}
+            </button>
+            <select value={language} onChange={(event) => setLanguage(event.target.value)}>
+              {languages.map((item) => (
+                <option key={item.code} value={item.code}>
+                  {item.shortLabel}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+      ) : null}
+
+      <div className="heritage-status-strip" aria-label={t("headerProgress")}>
+        <span>{xp} XP</span>
+        <span>{lives} {t("lifeShort")}</span>
+        <span>{streak} {t("daysShort")}</span>
       </div>
-    </header>
+    </>
   );
 }
 

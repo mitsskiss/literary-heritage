@@ -1,21 +1,13 @@
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { authors } from "../data/authors";
 import { works } from "../data/works";
-import {
-  communityPreview,
-  gamificationData,
-  literaryJourneys,
-  multimediaContext,
-  themeCollections,
-  workMetadataById,
-} from "../data/exploreData";
-import JourneyCard from "../components/explore/JourneyCard";
-import ExploreWorkCard from "../components/explore/ExploreWorkCard";
-import LiteraryTimeline from "../components/explore/LiteraryTimeline";
-import ThemeCard from "../components/explore/ThemeCard";
-import ShinyText from "../components/ShinyText";
-import "./Explore.css";
+import { workMetadataById } from "../data/exploreData";
+import { readingRoutes } from "../data/routes";
 import { useI18n } from "../i18n/I18nContext";
+import { useProgressStore } from "../store/useProgressStore";
+import exploreHero from "../assets/mura/routes-hero.png";
+import "./Explore.css";
 
 const THEME_ORDER = [
   "Identity",
@@ -28,144 +20,72 @@ const THEME_ORDER = [
   "Fate",
 ];
 
-function highlightMatch(text, query) {
-  const normalizedText = text.toLowerCase();
-  const normalizedQuery = query.trim().toLowerCase();
-
-  if (!normalizedQuery) return text;
-
-  const matchIndex = normalizedText.indexOf(normalizedQuery);
-  if (matchIndex === -1) return text;
-
-  const matchEnd = matchIndex + normalizedQuery.length;
-
-  return (
-    <>
-      {text.slice(0, matchIndex)}
-      <mark className="explore-toolbar__highlight">
-        {text.slice(matchIndex, matchEnd)}
-      </mark>
-      {text.slice(matchEnd)}
-    </>
-  );
-}
-
 function Explore() {
   const {
     t,
     label,
-    localizeCommunity,
-    localizeGamification,
     localizeJourneys,
     localizeMetadata,
-    localizeMultimedia,
-    localizeThemeCollections,
     localizeWorks,
+    localizeAuthors,
   } = useI18n();
-  const pageRef = useRef(null);
-  const [searchValue, setSearchValue] = useState("");
-  const [typeFilter, setTypeFilter] = useState("all");
-  const [periodFilter, setPeriodFilter] = useState("all");
-  const [sortValue, setSortValue] = useState("featured");
-  const [isSearchFocused, setIsSearchFocused] = useState(false);
   const navigate = useNavigate();
+  const pageRef = useRef(null);
   const [searchParams, setSearchParams] = useSearchParams();
+  const [authorFilter, setAuthorFilter] = useState("all");
+  const [periodFilter, setPeriodFilter] = useState("all");
+  const [languageFilter, setLanguageFilter] = useState("all");
+  const [durationFilter, setDurationFilter] = useState("all");
+  const [searchValue, setSearchValue] = useState("");
+  const xp = useProgressStore((state) => state.xp);
+  const completedStories = useProgressStore((state) => state.completedStories);
+  const storyProgress = useProgressStore((state) => state.storyProgress);
+  const reflections = useProgressStore((state) => state.reflections);
 
   const activeTheme = searchParams.get("theme") || "all";
-
-  const sortOptions = [
-    { value: "featured", label: t("featured") },
-    { value: "title-asc", label: t("titleAz") },
-    { value: "time-asc", label: t("shortestRead") },
-    { value: "period-asc", label: t("period") },
-  ];
-
-  const localizedWorks = localizeWorks(works);
-  const localizedJourneys = localizeJourneys(literaryJourneys);
-  const localizedThemeCollections = localizeThemeCollections(themeCollections);
-  const localizedGamification = localizeGamification(gamificationData);
-  const localizedCommunity = localizeCommunity(communityPreview);
-  const localizedMultimedia = localizeMultimedia(multimediaContext);
-  const enrichedWorks = localizedWorks.map((work) => ({
+  const localizedWorks = localizeWorks(works).map((work) => ({
     ...work,
     ...localizeMetadata(work.id, workMetadataById[work.id]),
   }));
+  const localizedAuthors = localizeAuthors(authors);
+  const localizedJourneys = localizeJourneys(readingRoutes);
 
-  const typeOptions = [...new Set(enrichedWorks.map((work) => work.type))];
-  const periodOptions = [...new Set(enrichedWorks.map((work) => work.period))];
-  const themeOptions = THEME_ORDER.map((theme) => label(theme)).filter((theme) =>
-    enrichedWorks.some((work) => work.themes.includes(theme))
-  );
+  const themeOptions = THEME_ORDER.map((theme) => label(theme));
+  const authorOptions = [...new Set(localizedWorks.map((work) => work.author))];
+  const periodOptions = [...new Set(localizedWorks.map((work) => work.period))];
 
-  const normalizedQuery = searchValue.trim().toLowerCase();
-  const searchSuggestions =
-    normalizedQuery.length === 0
-      ? []
-      : enrichedWorks
-          .filter(
-            (work) =>
-              work.title.toLowerCase().includes(normalizedQuery) ||
-              work.author.toLowerCase().includes(normalizedQuery)
-          )
-          .sort((a, b) => {
-            const aStarts = a.title.toLowerCase().startsWith(normalizedQuery);
-            const bStarts = b.title.toLowerCase().startsWith(normalizedQuery);
-            const aAuthorStarts = a.author.toLowerCase().startsWith(normalizedQuery);
-            const bAuthorStarts = b.author.toLowerCase().startsWith(normalizedQuery);
-
-            if (aStarts && !bStarts) return -1;
-            if (!aStarts && bStarts) return 1;
-            if (aAuthorStarts && !bAuthorStarts) return -1;
-            if (!aAuthorStarts && bAuthorStarts) return 1;
-            return a.title.localeCompare(b.title);
-          })
-          .slice(0, 6);
-
-  const filteredWorks = enrichedWorks
-    .filter((work) => {
+  const filteredJourneys = useMemo(() => {
+    return localizedJourneys.filter((journey) => {
+      const routeWorks = journey.works
+        .map((id) => localizedWorks.find((work) => work.id === id))
+        .filter(Boolean);
+      const routeAuthors = routeWorks.map((work) => work.author);
+      const routePeriods = routeWorks.map((work) => work.period);
+      const normalizedSearch = searchValue.trim().toLowerCase();
       const matchesTheme =
-        activeTheme === "all" || work.themes.includes(activeTheme);
-      const matchesType = typeFilter === "all" || work.type === typeFilter;
-      const matchesPeriod =
-        periodFilter === "all" || work.period === periodFilter;
+        activeTheme === "all" || label(journey.focusTheme) === activeTheme || journey.focusTheme === activeTheme;
+      const matchesAuthor = authorFilter === "all" || routeAuthors.includes(authorFilter);
+      const matchesPeriod = periodFilter === "all" || routePeriods.includes(periodFilter);
+      const matchesDuration =
+        durationFilter === "all" ||
+        (durationFilter === "short" && journey.minutes <= 25) ||
+        (durationFilter === "medium" && journey.minutes > 25 && journey.minutes <= 35) ||
+        (durationFilter === "long" && journey.minutes > 35);
       const matchesSearch =
-        normalizedQuery.length === 0 ||
-        work.title.toLowerCase().includes(normalizedQuery) ||
-        work.author.toLowerCase().includes(normalizedQuery) ||
-        work.description.toLowerCase().includes(normalizedQuery) ||
-        work.themes.some((theme) => theme.toLowerCase().includes(normalizedQuery));
+        !normalizedSearch ||
+        journey.title.toLowerCase().includes(normalizedSearch) ||
+        journey.description.toLowerCase().includes(normalizedSearch) ||
+        routeWorks.some((work) => work.title.toLowerCase().includes(normalizedSearch));
 
-      return matchesTheme && matchesType && matchesPeriod && matchesSearch;
-    })
-    .sort((a, b) => {
-      if (sortValue === "title-asc") return a.title.localeCompare(b.title);
-      if (sortValue === "time-asc") return a.readingTime - b.readingTime;
-      if (sortValue === "period-asc") return a.period.localeCompare(b.period);
-      return 0;
+      return matchesTheme && matchesAuthor && matchesPeriod && matchesDuration && matchesSearch;
     });
+  }, [activeTheme, authorFilter, durationFilter, label, localizedJourneys, localizedWorks, periodFilter, searchValue]);
 
-  const spotlightWork =
-    filteredWorks[0] ??
-    enrichedWorks.find((work) => work.id === "dostoevsky-crime") ??
-    enrichedWorks[0];
-
-  const recommendationTheme =
-    activeTheme !== "all"
-      ? activeTheme
-      : spotlightWork?.themes?.[0] ?? themeOptions[0];
-
-  const primaryJourney =
-    localizedJourneys.find((journey) => journey.focusTheme === recommendationTheme) ??
-    localizedJourneys[0];
-
-  const recommendedWorks = enrichedWorks
-    .filter(
-      (work) =>
-        work.id !== spotlightWork.id && work.themes.includes(recommendationTheme)
-    )
-    .slice(0, 2);
-
-  const visibleThemes = localizedThemeCollections.slice(0, 4);
+  const primaryJourney = filteredJourneys[0] ?? localizedJourneys[0];
+  const primaryWork = localizedWorks.find((work) => work.id === primaryJourney?.works?.[0]) ?? localizedWorks[0];
+  const completedCount = completedStories.length;
+  const progressPercent = Math.min(100, Math.round((completedCount / Math.max(localizedJourneys.length, 1)) * 100));
+  const continueStep = Object.values(storyProgress).find((story) => !story?.completed);
 
   const handleThemeSelect = (theme) => {
     const next = new URLSearchParams(searchParams);
@@ -177,30 +97,24 @@ function Explore() {
     setSearchParams(next, { replace: true });
   };
 
-  const beginJourney = (theme) => {
-    handleThemeSelect(label(theme));
-  };
-
   const resetFilters = () => {
-    setSearchValue("");
-    setTypeFilter("all");
+    setAuthorFilter("all");
     setPeriodFilter("all");
-    setSortValue("featured");
+    setLanguageFilter("all");
+    setDurationFilter("all");
+    setSearchValue("");
     handleThemeSelect("all");
   };
 
-  const openSuggestedWork = (workId) => {
-    setIsSearchFocused(false);
-    navigate(`/reading/${workId}`);
+  const openRoute = (journey) => {
+    handleThemeSelect(label(journey.focusTheme));
+    navigate(`/route/${journey.id}`);
   };
 
   useEffect(() => {
     const root = pageRef.current;
     if (!root) return undefined;
-
     const items = [...root.querySelectorAll(".explore-reveal")];
-    if (!items.length) return undefined;
-
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -210,458 +124,177 @@ function Explore() {
           }
         });
       },
-      {
-        threshold: 0.14,
-        rootMargin: "0px 0px -8% 0px",
-      }
+      { threshold: 0.12, rootMargin: "0px 0px -6% 0px" }
     );
-
     items.forEach((item, index) => {
-      item.style.setProperty("--reveal-delay", `${Math.min(index * 55, 260)}ms`);
+      item.style.setProperty("--reveal-delay", `${Math.min(index * 60, 300)}ms`);
       observer.observe(item);
     });
-
     return () => observer.disconnect();
   }, []);
 
   return (
-    <main ref={pageRef} className="explore-page">
-      <div className="explore-page__container">
-        <section className="explore-hero explore-reveal">
-          <div className="explore-hero__copy">
-            <h1 className="explore-hero__title">
-              <ShinyText
-                text={t("exploreTitle")}
-                speed={3.2}
-                delay={1.2}
-                color="var(--text)"
-                shineColor="var(--accent-strong)"
-                spread={118}
-                className="page-shiny-title"
-              />
-            </h1>
-            <p className="explore-hero__subtitle">
-              {t("exploreSubtitle")}
-            </p>
-          </div>
-        </section>
-
-        <div className="explore-reveal">
-          <LiteraryTimeline />
-        </div>
-
-        <section
-          className="explore-toolbar explore-reveal"
-          aria-label={t("exploreFilters")}
-        >
-          <div className="explore-toolbar__filters">
-            <div className="explore-toolbar__searchBox">
-              <label className="explore-toolbar__search">
-                <input
-                  id="explore-search"
-                  type="search"
-                  value={searchValue}
-                  onChange={(event) => setSearchValue(event.target.value)}
-                  onFocus={() => setIsSearchFocused(true)}
-                  onBlur={() => {
-                    window.setTimeout(() => {
-                      setIsSearchFocused(false);
-                    }, 120);
-                  }}
-                  onKeyDown={(event) => {
-                    if (event.key === "Enter" && searchSuggestions.length > 0) {
-                      event.preventDefault();
-                      openSuggestedWork(searchSuggestions[0].id);
-                    }
-                  }}
-                  placeholder={t("searchPlaceholder")}
-                  aria-label={t("searchArchive")}
-                  aria-expanded={isSearchFocused && searchSuggestions.length > 0}
-                  aria-controls="explore-search-suggestions"
-                />
-              </label>
-
-              {isSearchFocused && searchSuggestions.length > 0 ? (
-                <div
-                  id="explore-search-suggestions"
-                  className="explore-toolbar__suggestions"
-                  role="listbox"
-                  aria-label={t("suggestedBooks")}
-                >
-                  {searchSuggestions.map((work) => (
-                    <button
-                      key={work.id}
-                      type="button"
-                      className="explore-toolbar__suggestion"
-                      onMouseDown={(event) => event.preventDefault()}
-                      onClick={() => openSuggestedWork(work.id)}
-                    >
-                      <span className="explore-toolbar__suggestionTitle">
-                        {highlightMatch(work.title, normalizedQuery)}
-                      </span>
-                      <span className="explore-toolbar__suggestionMeta">
-                        {work.author}
-                      </span>
-                    </button>
-                  ))}
-                </div>
-              ) : null}
-            </div>
-
-            <div className="explore-toolbar__themes">
-              {themeOptions.map((theme) => (
-                <button
-                  key={theme}
-                  type="button"
-                  className={`explore-hero__theme ${
-                    activeTheme === theme ? "is-active" : ""
-                  }`}
-                  onClick={() => handleThemeSelect(theme)}
-                >
-                  {theme}
-                </button>
-              ))}
-            </div>
-
-            <div className="explore-toolbar__controls">
-              <ExploreSelect
-                value={typeFilter}
-                onChange={setTypeFilter}
-                ariaLabel={t("filterByType")}
-                options={[
-                  { value: "all", label: t("allTypes") },
-                  ...typeOptions.map((option) => ({
-                    value: option,
-                    label: option,
-                  })),
-                ]}
-              />
-
-              <ExploreSelect
-                value={periodFilter}
-                onChange={setPeriodFilter}
-                ariaLabel={t("filterByPeriod")}
-                options={[
-                  { value: "all", label: t("allPeriods") },
-                  ...periodOptions.map((option) => ({
-                    value: option,
-                    label: option,
-                  })),
-                ]}
-              />
-
-              <ExploreSelect
-                value={sortValue}
-                onChange={setSortValue}
-                ariaLabel={t("sortWorks")}
-                options={sortOptions}
-              />
-
-              <button
-                type="button"
-                className="explore-toolbar__reset"
-                onClick={resetFilters}
-              >
-                {t("resetFilters")}
-              </button>
-            </div>
-          </div>
-        </section>
-
-        <section className="explore-section explore-reveal">
-          <div className="explore-section__head">
-            <h2 className="explore-section__title">{t("startGuidedRoute")}</h2>
-          </div>
-
-          <div className="explore-journeys">
-            <article className="explore-journeys__feature">
-              <h3 className="explore-journeys__featureTitle">{primaryJourney.title}</h3>
-              <p className="explore-journeys__featureText">
-                {primaryJourney.description}
-              </p>
-
-              <div className="explore-journeys__featureMeta">
-                <span>{primaryJourney.works.length} {t("works").toLowerCase()}</span>
-                <span>{primaryJourney.minutes} {t("min")}</span>
-                <span>{primaryJourney.level}</span>
-              </div>
-
-              <button
-                type="button"
-                className="explore-journeys__featureAction"
-                onClick={() => beginJourney(primaryJourney.focusTheme)}
-              >
-                {t("startRoute")}
-              </button>
-            </article>
-
-            <div className="explore-journeys__grid">
-              {localizedJourneys
-                .filter((journey) => journey.id !== primaryJourney.id)
-                .slice(0, 3)
-                .map((journey) => (
-                  <JourneyCard
-                    key={journey.id}
-                    journey={journey}
-                    worksCount={journey.works.length}
-                    onBegin={() => beginJourney(journey.focusTheme)}
-                  />
-                ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="explore-section explore-reveal">
-          <div className="explore-section__head">
-            <h2 className="explore-section__title">{t("openOneWork")}</h2>
-          </div>
-
-          <div className="explore-spotlight">
-            <div
-              className="explore-spotlight__visual"
-              style={{ backgroundImage: `url(${spotlightWork.image})` }}
-            />
-
-            <div className="explore-spotlight__content">
-              <div className="explore-spotlight__meta">
-                <span>{spotlightWork.author}</span>
-                <span>{spotlightWork.period}</span>
-                <span>{spotlightWork.readingTime} {t("min")}</span>
-              </div>
-
-              <h3 className="explore-spotlight__title">{spotlightWork.title}</h3>
-              <p className="explore-spotlight__intro">
-                {spotlightWork.spotlightIntro}
-              </p>
-
-              <div className="explore-spotlight__question">
-                <span className="explore-spotlight__label">{t("mainQuestion")}</span>
-                <p>{spotlightWork.conflict}</p>
-              </div>
-
-              <p className="explore-spotlight__why">
-                {t("today")}: {spotlightWork.whyNow}
-              </p>
-
-              <Link
-                to={`/reading/${spotlightWork.id}`}
-                className="explore-spotlight__action"
-              >
-                {t("startReading")}
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        <section className="explore-section explore-reveal">
-          <div className="explore-section__head explore-section__head--split">
-            <h2 className="explore-section__title">{t("browseCollection")}</h2>
-            <p className="explore-section__meta">
-              {t("visibleWorks", { count: filteredWorks.length })}
-            </p>
-          </div>
-
-          {filteredWorks.length === 0 ? (
-            <div className="explore-empty">
-              <h3 className="explore-empty__title">{t("noResults")}</h3>
-              <p className="explore-empty__text">
-                {t("noResultsText")}
-              </p>
-              <button
-                type="button"
-                className="explore-empty__action"
-                onClick={resetFilters}
-              >
-                {t("resetFilters")}
-              </button>
-            </div>
-          ) : (
-            <div className="explore-collection">
-              {filteredWorks.map((work) => (
-                <ExploreWorkCard
-                  key={work.id}
-                  work={work}
-                  onThemeSelect={handleThemeSelect}
-                />
-              ))}
-            </div>
-          )}
-        </section>
-
-        <section className="explore-section explore-reveal">
-          <div className="explore-section__head">
-            <h2 className="explore-section__title">{t("exploreByTheme")}</h2>
-          </div>
-
-          <div className="explore-themes">
-            {visibleThemes.map((theme) => (
-              <ThemeCard
-                key={theme.name}
-                theme={theme}
-                relatedWorks={enrichedWorks.filter((work) =>
-                  theme.works.includes(work.id)
-                )}
-                onExplore={() => beginJourney(theme.name)}
-              />
-            ))}
-          </div>
-        </section>
-
-        <section className="explore-section explore-reveal">
-          <div className="explore-section__head">
-            <h2 className="explore-section__title">{t("trackActivity")}</h2>
-          </div>
-
-          <div className="explore-signals">
-            <section className="explore-signals__card">
-              <p className="explore-signals__label">{t("progress")}</p>
-              <div className="explore-signals__stats">
-                <div>
-                  <span>{t("exploredWorks")}</span>
-                  <strong>{localizedGamification.progress.exploredWorks}</strong>
-                </div>
-                <div>
-                  <span>{t("reflectionsSaved")}</span>
-                  <strong>{localizedGamification.progress.reflectionsSaved}</strong>
-                </div>
-                <div>
-                  <span>{t("activeJourney")}</span>
-                  <strong>{localizedGamification.progress.activeJourney}</strong>
-                </div>
-              </div>
-
-              <div className="explore-signals__badges">
-                {localizedGamification.badges.slice(0, 4).map((badge) => (
-                  <span key={badge}>{badge}</span>
-                ))}
-              </div>
-            </section>
-
-            <section className="explore-signals__card">
-              <p className="explore-signals__label">{t("recommendedForYou")}</p>
-              <div className="explore-signals__recommendations">
-                {recommendedWorks.map((work) => (
-                  <article key={work.id} className="explore-signals__recommendation">
-                    <p>
-                      {t("basedOn")}{" "}
-                      <strong>{recommendationTheme.toLowerCase()}</strong>
-                    </p>
-                    <h3>{work.title}</h3>
-                    <span>{work.author}</span>
-                    <Link to={`/reading/${work.id}`}>{t("openWork")}</Link>
-                  </article>
-                ))}
-              </div>
-            </section>
-
-            <section className="explore-signals__card">
-              <p className="explore-signals__label">{t("communityPulse")}</p>
-              <ul className="explore-signals__list">
-                {localizedCommunity.discussions.slice(0, 3).map((discussion) => (
-                  <li key={discussion}>{discussion}</li>
-                ))}
-              </ul>
-              <div className="explore-signals__footnote">
-                <span>{t("comments", { count: localizedCommunity.counters.comments })}</span>
-                <span>{t("likes", { count: localizedCommunity.counters.likes })}</span>
-              </div>
-            </section>
-
-            <section className="explore-signals__card">
-              <p className="explore-signals__label">{t("contextMaterials")}</p>
-              <div className="explore-signals__media">
-                {localizedMultimedia.slice(0, 3).map((item) => (
-                  <article key={item.title}>
-                    <span>{item.type}</span>
-                    <h3>{item.title}</h3>
-                    <p>{item.description}</p>
-                  </article>
-                ))}
-              </div>
-            </section>
-          </div>
-        </section>
-
-        <section className="explore-cta explore-reveal">
-          <h2 className="explore-cta__title">{t("continueArchive")}</h2>
-          <p className="explore-cta__text">
-            {t("continueArchiveText")}
-          </p>
-
-          <div className="explore-cta__actions">
-            <Link to="/works" className="explore-cta__action is-primary">
-              {t("openAllWorks")}
-            </Link>
-            <button
-              type="button"
-              className="explore-cta__action"
-              onClick={() => beginJourney(primaryJourney.focusTheme)}
-            >
+    <main ref={pageRef} className="explore-page heritage-archive-page">
+      <section className="explore-archive-hero" style={{ backgroundImage: `url(${exploreHero})` }}>
+        <div className="explore-archive-hero__content explore-reveal">
+          <p className="heritage-kicker">{t("interactiveRoutesKicker")}</p>
+          <h1>{t("interactiveRoutesTitle")}</h1>
+          <p>{t("interactiveRoutesSubtitle")}</p>
+          <div className="explore-archive-hero__rule" aria-hidden="true" />
+          <div className="explore-archive-hero__actions">
+            <button type="button" onClick={() => openRoute(primaryJourney)} className="heritage-button is-gold">
               {t("startRoute")}
             </button>
-            <button type="button" className="explore-cta__action">
-              {t("createAccount")}
-            </button>
+            <a href="#routes" className="heritage-button">
+              {t("viewAllRoutes")}
+            </a>
           </div>
+        </div>
+      </section>
+
+      <div className="explore-archive-layout">
+        <section className="explore-archive-main">
+          <div className="explore-stat-band explore-reveal" aria-label={t("catalogStats")}>
+            <article>
+              <span className="heritage-stat-icon is-book" aria-hidden="true" />
+              <strong>{localizedJourneys.length}</strong>
+              <small>{t("routesCount")}</small>
+            </article>
+            <article>
+              <span className="heritage-stat-icon is-quill" aria-hidden="true" />
+              <strong>{localizedAuthors.length}+</strong>
+              <small>{t("navAuthors")}</small>
+            </article>
+            <article>
+              <span className="heritage-stat-icon is-stack" aria-hidden="true" />
+              <strong>{localizedWorks.length}+</strong>
+              <small>{t("navWorks")}</small>
+            </article>
+            <article>
+              <span className="heritage-stat-icon is-globe" aria-hidden="true" />
+              <strong>3</strong>
+              <small>{t("language")}</small>
+            </article>
+          </div>
+
+          <section id="routes" className="explore-recommendations explore-reveal">
+            <div className="heritage-section-head">
+              <h2>{t("recommendedRoutes")}</h2>
+              <button type="button" onClick={resetFilters}>{t("resetFilters")}</button>
+            </div>
+
+            <div className="explore-route-grid">
+              {filteredJourneys.slice(0, 4).map((journey, index) => {
+                const routeWorks = journey.works
+                  .map((id) => localizedWorks.find((work) => work.id === id))
+                  .filter(Boolean);
+                const cover = routeWorks[index % Math.max(routeWorks.length, 1)]?.image ?? primaryWork?.image;
+                const completedSteps = routeWorks.filter((work) => completedStories.includes(work.id)).length;
+
+                return (
+                  <article className="explore-route-card" key={journey.id}>
+                    <div className="explore-route-card__image" style={{ backgroundImage: `url(${cover})` }} />
+                    <div className="explore-route-card__body">
+                      <h3>{journey.title}</h3>
+                      <p>{journey.description}</p>
+                      <div className="explore-route-card__steps" aria-label={t("routeProgress")}>
+                        {routeWorks.map((work, stepIndex) => (
+                          <span
+                            key={work.id}
+                            className={stepIndex < Math.max(completedSteps, 1) ? "is-complete" : ""}
+                          />
+                        ))}
+                      </div>
+                      <div className="explore-route-card__meta">
+                        <span>{routeWorks.length} {t("works").toLowerCase()}</span>
+                        <span>{journey.minutes} {t("min")}</span>
+                      </div>
+                      <button type="button" onClick={() => openRoute(journey)}>
+                        {completedSteps > 0 ? t("continue") : t("startRoute")}
+                      </button>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          </section>
+
+          <section className="explore-continue-panel explore-reveal">
+            <div className="explore-continue-panel__image" style={{ backgroundImage: `url(${primaryWork?.image})` }} />
+            <div>
+              <p className="heritage-kicker">{t("continueReading")}</p>
+              <h2>{primaryJourney?.title}</h2>
+              <span>{t("currentRoute")}</span>
+              <strong>{t("stage")} {continueStep?.currentSceneIndex ? continueStep.currentSceneIndex + 1 : 3} {t("of")} {primaryJourney?.works?.length ?? 3}</strong>
+              <div className="heritage-progress-line">
+                <span style={{ width: `${progressPercent || 40}%` }} />
+              </div>
+            </div>
+            <button type="button" onClick={() => openRoute(primaryJourney)} className="heritage-button is-gold">
+              {t("continueReading")}
+            </button>
+            <aside>
+              <p>{t("recommendedForYou")}</p>
+              {localizedWorks.slice(0, 2).map((work) => (
+                <Link key={work.id} to={`/reading/${work.id}`}>
+                  <img src={work.image} alt="" />
+                  <span>
+                    <strong>{work.title}</strong>
+                    <small>{work.themes.slice(0, 2).join(", ")}</small>
+                  </span>
+                </Link>
+              ))}
+            </aside>
+          </section>
         </section>
+
+        <aside className="explore-archive-aside">
+          <section className="explore-progress-card explore-reveal">
+            <h2>{t("yourProgress")}</h2>
+            <div className="explore-progress-ring" style={{ "--value": `${progressPercent}%` }}>
+              <strong>{progressPercent}%</strong>
+            </div>
+            <p>{t("completedRoutesText", { completed: completedCount, total: localizedJourneys.length })}</p>
+            <Link to="/progress">{t("viewProgress")}</Link>
+          </section>
+
+          <section className="explore-filter-card explore-reveal" aria-label={t("exploreFilters")}>
+            <h2>{t("routeFilters")}</h2>
+            <label>
+              <span>{t("searchArchive")}</span>
+              <input value={searchValue} onChange={(event) => setSearchValue(event.target.value)} placeholder={t("searchPlaceholder")} />
+            </label>
+            <FilterSelect label={t("navAuthors")} value={authorFilter} onChange={setAuthorFilter} options={[{ value: "all", label: t("allAuthors") }, ...authorOptions.map((author) => ({ value: author, label: author }))]} />
+            <FilterSelect label={t("period")} value={periodFilter} onChange={setPeriodFilter} options={[{ value: "all", label: t("allPeriods") }, ...periodOptions.map((period) => ({ value: period, label: period }))]} />
+            <FilterSelect label={t("themes")} value={activeTheme} onChange={handleThemeSelect} options={[{ value: "all", label: t("allThemes") }, ...themeOptions.map((theme) => ({ value: theme, label: theme }))]} />
+            <FilterSelect label={t("language")} value={languageFilter} onChange={setLanguageFilter} options={[{ value: "all", label: t("allLanguages") }, { value: "kk", label: "KZ" }, { value: "ru", label: "RU" }, { value: "en", label: "EN" }]} />
+            <FilterSelect label={t("duration")} value={durationFilter} onChange={setDurationFilter} options={[{ value: "all", label: t("anyDuration") }, { value: "short", label: t("shortRoute") }, { value: "medium", label: t("mediumRoute") }, { value: "long", label: t("longRoute") }]} />
+            <button type="button" onClick={resetFilters}>{t("apply")}</button>
+          </section>
+
+          <section className="explore-notes-card explore-reveal">
+            <h2>{t("reflectionsSaved")}</h2>
+            <strong>{Object.keys(reflections).length}</strong>
+            <p>{t("archiveNotesHint")}</p>
+          </section>
+        </aside>
       </div>
     </main>
   );
 }
 
-function ExploreSelect({ value, onChange, options, ariaLabel }) {
-  const rootRef = useRef(null);
-  const [isOpen, setIsOpen] = useState(false);
-  const selectedOption =
-    options.find((option) => option.value === value) ?? options[0];
-
-  useEffect(() => {
-    if (!isOpen) return undefined;
-
-    const handlePointerDown = (event) => {
-      if (!rootRef.current?.contains(event.target)) {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener("pointerdown", handlePointerDown);
-    return () => document.removeEventListener("pointerdown", handlePointerDown);
-  }, [isOpen]);
-
+function FilterSelect({ label, value, onChange, options }) {
   return (
-    <div className={`explore-select ${isOpen ? "is-open" : ""}`} ref={rootRef}>
-      <button
-        type="button"
-        className="explore-select__trigger"
-        aria-label={ariaLabel}
-        aria-haspopup="listbox"
-        aria-expanded={isOpen}
-        onClick={() => setIsOpen((current) => !current)}
-      >
-        <span>{selectedOption.label}</span>
-        <i aria-hidden="true" />
-      </button>
-
-      {isOpen ? (
-        <div className="explore-select__menu" role="listbox" aria-label={ariaLabel}>
-          {options.map((option) => (
-            <button
-              key={option.value}
-              type="button"
-              role="option"
-              aria-selected={option.value === value}
-              className={option.value === value ? "is-selected" : ""}
-              onClick={() => {
-                onChange(option.value);
-                setIsOpen(false);
-              }}
-            >
-              {option.label}
-            </button>
-          ))}
-        </div>
-      ) : null}
-    </div>
+    <label>
+      <span>{label}</span>
+      <select value={value} onChange={(event) => onChange(event.target.value)}>
+        {options.map((option) => (
+          <option value={option.value} key={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+    </label>
   );
 }
 

@@ -1,33 +1,47 @@
 import abaiCover from "../assets/authors/abai.png";
-import murakamiCover from "../assets/authors/murakami.png";
-import dostoevskyCover from "../assets/authors/dostoevsky.png";
-import woolfCover from "../assets/authors/woolf.png";
-import abaiPortrait from "../assets/authors/abai.png";
-import murakamiPortrait from "../assets/authors/murakami.png";
-import camusPortrait from "../assets/authors/camus.png";
+import auezovCover from "../assets/authors/dostoevsky.png";
+import seifullinCover from "../assets/authors/camus.png";
+import magzhanCover from "../assets/authors/murakami.png";
+import ilyasCover from "../assets/authors/woolf.png";
 
 export const timelineBounds = {
-  min: 1600,
-  max: 2000,
-  defaultYear: 1925,
+  min: 1400,
+  max: 2026,
+  defaultYear: 1917,
 };
 
 export const literaryTimelineEntries = [
   {
-    id: "realism-rise",
-    year: 1820,
+    id: "oral-heritage-entry",
+    year: 1450,
     type: "movement",
-    title: "The Rise of Realism",
+    title: "Oral heritage",
     description:
-      "Literature turns toward social pressure, moral conflict, and the texture of everyday life.",
-    image: dostoevskyCover,
-    accent: "Russian Realism",
-    ctaLabel: "Explore movement",
-    href: "/authors",
-    detailsTitle: "Russian Realism",
+      "Epics, proverbs, songs, and storytelling preserve memory before the written archive.",
+    image: ilyasCover,
+    accent: "Folklore",
+    ctaLabel: "Explore epoch",
+    href: "/epochs",
+    detailsTitle: "Oral heritage",
     detailsText:
-      "Realism made the novel feel like a moral laboratory. It brought class, ethics, poverty, and human contradiction into the center of reading.",
-    related: ["Fyodor Dostoevsky", "Moral conflict", "Urban modernity"],
+      "Kazakh oral tradition carries ethics, genealogy, humor, grief, and the rhythm of nomadic life.",
+    related: ["Folklore", "Epic memory", "Steppe culture"],
+  },
+  {
+    id: "zhyrau-entry",
+    year: 1700,
+    type: "movement",
+    title: "Zhyrau poetry",
+    description:
+      "Poets and singers shape public memory, counsel, courage, and historical imagination.",
+    image: magzhanCover,
+    accent: "Poetic voice",
+    ctaLabel: "Explore epoch",
+    href: "/epochs",
+    detailsTitle: "Zhyrau poetry",
+    detailsText:
+      "The zhyrau tradition joins poetry, music, leadership, and communal reflection.",
+    related: ["Song", "Counsel", "Memory"],
   },
   {
     id: "abai-author",
@@ -36,109 +50,77 @@ export const literaryTimelineEntries = [
     title: "Abai Kunanbayev",
     description:
       "A poet, thinker, and reforming voice who connected learning, conscience, and cultural renewal.",
-    image: abaiPortrait,
+    image: abaiCover,
     accent: "Kazakh Enlightenment",
     ctaLabel: "Explore author",
     href: "/author/Abai%20Kunanbayev",
     detailsTitle: "Abai Kunanbayev",
     detailsText:
-      "Abai's work helps younger readers connect literary heritage with education, ethics, and the making of a thoughtful self.",
+      "Abai helps readers connect literary heritage with education, ethics, and the making of a thoughtful self.",
     related: ["Book of Words", "Poetry", "Moral education"],
   },
   {
-    id: "crime-book",
-    year: 1866,
-    type: "book",
-    title: "Crime and Punishment",
-    description:
-      "A psychological descent into guilt, pride, and the impossible weight of moral justification.",
-    image: dostoevskyCover,
-    accent: "Novel",
-    ctaLabel: "Explore",
-    href: "/reading/dostoevsky-crime",
-    detailsTitle: "Crime and Punishment",
-    detailsText:
-      "Dostoevsky's novel turns thought itself into drama. It remains intensely current because it asks whether intelligence can excuse harm.",
-    related: ["1866", "Fyodor Dostoevsky", "Conscience"],
-  },
-  {
-    id: "modernism-movement",
-    year: 1910,
+    id: "alash-entry",
+    year: 1911,
     type: "movement",
-    title: "Modernism Opens the Inner World",
+    title: "Alash and early XX century",
     description:
-      "Time fragments, consciousness becomes central, and the page starts to feel like thought in motion.",
-    image: woolfCover,
-    accent: "Modernism",
-    ctaLabel: "Explore movement",
-    href: "/authors",
-    detailsTitle: "Modernism",
+      "Literature becomes a language of education, nationhood, freedom, and responsibility.",
+    image: magzhanCover,
+    accent: "Alash",
+    ctaLabel: "Start route",
+    href: "/route/alash-voice",
+    detailsTitle: "Alash and early XX century",
     detailsText:
-      "Modernist writing shifted attention from external action to perception, memory, and the instability of identity.",
-    related: ["Virginia Woolf", "Interior monologue", "Time and memory"],
+      "Akhmet Baitursynuly and Magzhan Zhumabayev turn language, poetry, and public thought into cultural action.",
+    related: ["Masa", "Batyr Bayan", "Education"],
   },
   {
-    id: "mrs-dalloway-book",
-    year: 1925,
-    type: "book",
-    title: "Mrs Dalloway",
-    description:
-      "One day unfolds into an entire interior landscape shaped by memory, loneliness, and social performance.",
-    image: woolfCover,
-    accent: "Novel",
-    ctaLabel: "Explore",
-    href: "/reading/woolf-dalloway",
-    detailsTitle: "Mrs Dalloway",
-    detailsText:
-      "Woolf shows how a modern life is built from subtle impressions, half-hidden grief, and the tension between public identity and private feeling.",
-    related: ["Virginia Woolf", "1925", "Modernism"],
-  },
-  {
-    id: "camus-author",
+    id: "auezov-entry",
     year: 1942,
-    type: "author",
-    title: "Albert Camus",
-    description:
-      "A writer-philosopher who shaped how readers think about absurdity, freedom, and emotional distance.",
-    image: camusPortrait,
-    accent: "Existentialism",
-    ctaLabel: "Explore author",
-    href: "/author/Albert%20Camus",
-    detailsTitle: "Albert Camus",
-    detailsText:
-      "Camus sits at the border of literature and philosophy, offering young readers a language for uncertainty without sentimentality.",
-    related: ["The Stranger", "Absurdity", "Freedom"],
-  },
-  {
-    id: "murakami-book",
-    year: 2000,
     type: "book",
-    title: "Kafka on the Shore",
+    title: "The Path of Abai",
     description:
-      "A dreamlike route through memory, solitude, symbolic space, and the instability of selfhood.",
-    image: murakamiCover,
-    accent: "Contemporary novel",
-    ctaLabel: "Explore",
-    href: "/reading/murakami-identity",
-    detailsTitle: "Kafka on the Shore",
+      "Mukhtar Auezov transforms Abai's life and epoch into a major literary memory of the nation.",
+    image: auezovCover,
+    accent: "Epic novel",
+    ctaLabel: "Open work",
+    href: "/reading/auezov-abai-path",
+    detailsTitle: "The Path of Abai",
     detailsText:
-      "Murakami's fiction makes literary discovery feel immersive and open-ended, which is why it works so well as a storytelling gateway on the platform.",
-    related: ["Haruki Murakami", "Identity", "Memory"],
+      "The novel links biography, landscape, education, social change, and the moral growth of a people.",
+    related: ["Mukhtar Auezov", "Abai", "XX century"],
   },
   {
-    id: "murakami-author",
-    year: 1980,
-    type: "author",
-    title: "Haruki Murakami",
+    id: "soviet-entry",
+    year: 1936,
+    type: "movement",
+    title: "Soviet Kazakh literature",
     description:
-      "A contemporary literary voice where music, memory, surrealism, and identity drift into one another.",
-    image: murakamiPortrait,
-    accent: "Contemporary Literature",
-    ctaLabel: "Explore author",
-    href: "/author/Haruki%20Murakami",
-    detailsTitle: "Haruki Murakami",
+      "Writers explore modernization, repression, memory, and the pressure of historical change.",
+    image: seifullinCover,
+    accent: "Historical memory",
+    ctaLabel: "Start route",
+    href: "/route/memory-repression",
+    detailsTitle: "Soviet Kazakh literature",
     detailsText:
-      "Murakami helps connect literary heritage with contemporary reading habits by creating emotionally open, atmospheric worlds.",
-    related: ["Kafka on the Shore", "Dreamlike fiction", "Japan"],
+      "Saken Seifullin and Ilyas Zhansugurov show how lyric beauty and civic tragedy can exist side by side.",
+    related: ["Thorny Path", "Kulager", "Memory"],
+  },
+  {
+    id: "modern-entry",
+    year: 1991,
+    type: "movement",
+    title: "Independence and modern literature",
+    description:
+      "A new literary space revisits memory, identity, language, and contemporary responsibility.",
+    image: ilyasCover,
+    accent: "Modern Kazakhstan",
+    ctaLabel: "Explore works",
+    href: "/works",
+    detailsTitle: "Independence and modern literature",
+    detailsText:
+      "Modern Kazakh writing continues the archive by connecting personal voice with national memory.",
+    related: ["Identity", "Language", "Future"],
   },
 ];

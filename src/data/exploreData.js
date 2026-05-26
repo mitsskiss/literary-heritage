@@ -1,121 +1,158 @@
 export const workMetadataById = {
   "abai-words": {
-    type: "Essay",
+    type: "Philosophical prose",
     period: "Kazakh Enlightenment",
     mood: "Contemplative",
-    experience: "Guided Reflection",
+    experience: "Guided reflection",
     readingTime: 14,
     whyNow:
-      "It helps young readers connect moral responsibility with personal growth and cultural identity.",
+      "It helps readers connect moral responsibility with personal growth and cultural identity.",
     spotlightIntro:
       "Abai invites the reader into a quiet but demanding conversation about learning, conscience, and becoming human.",
     conflict:
       "What happens when a society stops asking difficult moral questions?",
   },
-  "murakami-identity": {
+  "auezov-abai-path": {
     type: "Novel",
-    period: "Contemporary Literature",
-    mood: "Dreamlike",
-    experience: "Immersive Journey",
-    readingTime: 18,
+    period: "Soviet Kazakh literature",
+    mood: "Epic",
+    experience: "Historical journey",
+    readingTime: 32,
     whyNow:
-      "Its uncertainty feels familiar in a digital age shaped by memory, identity, and inner fragmentation.",
+      "It shows how one author's life can become a map of national memory.",
     spotlightIntro:
-      "Murakami opens a space where memory and selfhood drift, blur, and return in unexpected forms.",
+      "Auezov turns the steppe, education, family, and public life into a living literary archive.",
     conflict:
-      "Can identity remain stable when memory itself becomes unreliable?",
+      "How does a person become a moral voice for an entire culture?",
   },
-  "dostoevsky-crime": {
-    type: "Novel",
-    period: "Russian Realism",
-    mood: "Intense",
-    experience: "Deep Analysis",
+  "auezov-enlik-kebek": {
+    type: "Drama",
+    period: "Early XX century",
+    mood: "Tragic",
+    experience: "Cultural context",
     readingTime: 20,
     whyNow:
-      "It speaks directly to modern questions of guilt, ethics, social pressure, and inner justification.",
+      "It reveals how love, custom, and social pressure collide in Kazakh dramatic memory.",
     spotlightIntro:
-      "Dostoevsky turns the page into a moral battleground where every thought becomes a test of conscience.",
+      "The play turns a well-known legend into a study of fate, authority, and human dignity.",
     conflict:
-      "Can intelligence justify a choice that violates the human soul?",
+      "Can private feeling survive when collective rules become absolute?",
   },
-  "camus-stranger": {
-    type: "Novel",
-    period: "Existentialism",
-    mood: "Detached",
-    experience: "Philosophical Reading",
-    readingTime: 12,
+  "seifullin-thorny-path": {
+    type: "Memoir novel",
+    period: "Soviet Kazakh literature",
+    mood: "Civic",
+    experience: "Memory route",
+    readingTime: 28,
     whyNow:
-      "Its emotional distance mirrors the disconnection many readers feel in contemporary life.",
+      "It helps students understand literature as testimony, not only imagination.",
     spotlightIntro:
-      "Camus strips meaning to the bone and asks what remains when the world offers no comforting answers.",
+      "Seifullin writes through upheaval, public duty, and the painful price of historical change.",
     conflict:
-      "What does freedom mean in a universe that feels indifferent?",
+      "How does a writer carry truth through a violent century?",
   },
-  "woolf-dalloway": {
-    type: "Novel",
-    period: "Modernism",
-    mood: "Reflective",
-    experience: "Inner Monologue",
+  "zhumabayev-batyr-bayan": {
+    type: "Poem",
+    period: "Alash and early XX century",
+    mood: "Lyric-heroic",
+    experience: "Poetry analysis",
+    readingTime: 18,
+    whyNow:
+      "It shows how poetry preserves courage, longing, and national imagination.",
+    spotlightIntro:
+      "Magzhan makes history feel emotional, musical, and inwardly alive.",
+    conflict:
+      "What does loyalty mean when love, homeland, and tragedy meet?",
+  },
+  "zhansugurov-kulager": {
+    type: "Poem",
+    period: "Soviet Kazakh literature",
+    mood: "Elegiac",
+    experience: "Symbolic reading",
+    readingTime: 22,
+    whyNow:
+      "It teaches readers to see how an animal, a song, and a loss can become cultural symbols.",
+    spotlightIntro:
+      "Kulager turns beauty and violence into a poetic memory of the steppe.",
+    conflict:
+      "Why does the loss of beauty become a wound for an entire community?",
+  },
+  "baitursynuly-masa": {
+    type: "Poetry and essays",
+    period: "Alash and early XX century",
+    mood: "Awakening",
+    experience: "Civic reading",
     readingTime: 16,
     whyNow:
-      "Its attention to mental life, loneliness, and social performance feels deeply contemporary.",
+      "It connects language, education, and public responsibility.",
     spotlightIntro:
-      "Woolf transforms a single day into a vast emotional landscape shaped by memory, loss, and perception.",
+      "Baitursynuly's voice calls the reader toward literacy, attention, and cultural action.",
     conflict:
-      "How much of the self remains hidden beneath everyday social roles?",
+      "How can language itself become a form of freedom?",
+  },
+  "shakarim-three-truths": {
+    type: "Philosophical prose",
+    period: "Kazakh Enlightenment",
+    mood: "Spiritual",
+    experience: "Ethical inquiry",
+    readingTime: 18,
+    whyNow:
+      "It invites readers to compare knowledge, conscience, and faith as living questions.",
+    spotlightIntro:
+      "Shakarim searches for a moral language that joins reason and inner purity.",
+    conflict:
+      "What kind of truth can guide a human life?",
   },
 };
 
 export const literaryJourneys = [
   {
-    id: "who-am-i",
-    title: "Who Am I?",
+    id: "abai-path",
+    title: "The Path of Abai",
     description:
-      "A reflective path through identity, memory, and the search for the self.",
-    works: ["murakami-identity", "woolf-dalloway", "abai-words"],
-    minutes: 28,
+      "A reflective route through Abai's words, Auezov's novel, education, conscience, and renewal.",
+    works: ["abai-words", "auezov-abai-path"],
+    minutes: 42,
     level: "Reflective",
-    focusTheme: "Identity",
+    focusTheme: "Knowledge",
+    coverImage: "abai-words",
+    routeSteps: 8,
+    completedSteps: 2,
+    difficulty: "Reflective",
+    language: "EN/RU/KZ",
+    epoch: "Kazakh Enlightenment",
   },
   {
-    id: "weight-of-choice",
-    title: "The Weight of Choice",
+    id: "alash-voice",
+    title: "Voice of Alash",
     description:
-      "Follow moral conflict, difficult decisions, and the burden of consequence.",
-    works: ["dostoevsky-crime", "camus-stranger", "abai-words"],
-    minutes: 32,
-    level: "Deep",
-    focusTheme: "Morality",
-  },
-  {
-    id: "voices-of-society",
-    title: "Voices of Society",
-    description:
-      "Read texts that ask how the individual moves through culture, norms, and public life.",
-    works: ["woolf-dalloway", "abai-words", "dostoevsky-crime"],
-    minutes: 24,
+      "Read writers who made language, education, and poetry part of cultural responsibility.",
+    works: ["baitursynuly-masa", "zhumabayev-batyr-bayan"],
+    minutes: 35,
     level: "Contextual",
-    focusTheme: "Society",
-  },
-  {
-    id: "love-beyond-time",
-    title: "Love Beyond Time",
-    description:
-      "Move through tenderness, distance, and memory to see how feeling survives historical change.",
-    works: ["woolf-dalloway", "murakami-identity", "camus-stranger"],
-    minutes: 22,
-    level: "Emotional",
-    focusTheme: "Love",
-  },
-  {
-    id: "search-for-meaning",
-    title: "The Search for Meaning",
-    description:
-      "A thematic route through absurdity, reflection, and the desire for inner clarity.",
-    works: ["camus-stranger", "murakami-identity", "abai-words"],
-    minutes: 26,
-    level: "Philosophical",
     focusTheme: "Freedom",
+    coverImage: "baitursynuly-masa",
+    routeSteps: 8,
+    completedSteps: 1,
+    difficulty: "Contextual",
+    language: "EN/RU/KZ",
+    epoch: "Alash and early XX century",
+  },
+  {
+    id: "steppe-poetry",
+    title: "Poetry of the Steppe",
+    description:
+      "Follow image, rhythm, music, and landscape through Kazakh poetic memory.",
+    works: ["zhansugurov-kulager", "zhumabayev-batyr-bayan"],
+    minutes: 30,
+    level: "Poetic",
+    focusTheme: "Memory",
+    coverImage: "zhansugurov-kulager",
+    routeSteps: 8,
+    completedSteps: 1,
+    difficulty: "Poetic",
+    language: "EN/RU/KZ",
+    epoch: "XX century",
   },
 ];
 
@@ -123,50 +160,38 @@ export const themeCollections = [
   {
     name: "Identity",
     description:
-      "Texts that ask how the self is shaped through memory, society, and inner experience.",
-    works: ["murakami-identity", "woolf-dalloway", "dostoevsky-crime"],
+      "Texts that ask how a person and a culture recognize themselves through memory and language.",
+    works: ["abai-words", "auezov-abai-path", "shakarim-three-truths"],
   },
   {
     name: "Morality",
     description:
-      "Works focused on conscience, accountability, and the difficult texture of ethical choices.",
-    works: ["dostoevsky-crime", "camus-stranger", "abai-words"],
+      "Works focused on conscience, accountability, justice, and the difficult texture of ethical choices.",
+    works: ["abai-words", "shakarim-three-truths", "auezov-enlik-kebek"],
   },
   {
     name: "Knowledge",
     description:
-      "A reading route through learning, intellectual growth, and the search for understanding.",
-    works: ["abai-words", "murakami-identity", "woolf-dalloway"],
+      "A reading route through learning, intellectual growth, literacy, and the search for understanding.",
+    works: ["abai-words", "baitursynuly-masa", "auezov-abai-path"],
   },
   {
     name: "Society",
     description:
-      "Literature that places the individual within social expectations, structures, and change.",
-    works: ["woolf-dalloway", "dostoevsky-crime", "murakami-identity"],
+      "Literature that places the individual within custom, public duty, history, and social change.",
+    works: ["auezov-enlik-kebek", "seifullin-thorny-path", "baitursynuly-masa"],
   },
   {
     name: "Memory",
     description:
-      "Stories where recollection, fragmentation, and emotional echoes shape interpretation.",
-    works: ["murakami-identity", "woolf-dalloway", "camus-stranger"],
+      "Texts where recollection, loss, repression, and cultural continuity shape interpretation.",
+    works: ["zhansugurov-kulager", "seifullin-thorny-path", "auezov-abai-path"],
   },
   {
     name: "Freedom",
     description:
-      "Texts that test autonomy, existential choice, and the cost of personal agency.",
-    works: ["camus-stranger", "dostoevsky-crime", "abai-words"],
-  },
-  {
-    name: "Love",
-    description:
-      "A reading path through tenderness, emotional distance, and the forms intimacy can take.",
-    works: ["woolf-dalloway", "murakami-identity", "camus-stranger"],
-  },
-  {
-    name: "Fate",
-    description:
-      "Works that question whether human lives are chosen, inherited, or carried by unseen forces.",
-    works: ["murakami-identity", "camus-stranger", "dostoevsky-crime"],
+      "Works that test autonomy, national thought, language, and the cost of public agency.",
+    works: ["baitursynuly-masa", "zhumabayev-batyr-bayan", "seifullin-thorny-path"],
   },
 ];
 
@@ -174,7 +199,7 @@ export const gamificationData = {
   progress: {
     exploredWorks: 4,
     reflectionsSaved: 7,
-    activeJourney: "Who Am I?",
+    activeJourney: "The Path of Abai",
     weeklyGoal: "3 sessions",
   },
   badges: [
@@ -187,7 +212,7 @@ export const gamificationData = {
   weeklyChallenges: [
     {
       title: "Read Across Eras",
-      detail: "Complete one work from a different literary period.",
+      detail: "Complete one work from another Kazakh literary period.",
     },
     {
       title: "Write One Reflection",
@@ -205,13 +230,13 @@ export const gamificationData = {
 
 export const communityPreview = {
   discussions: [
-    "Is loneliness always visible in Woolf's prose?",
-    "Can Camus be read as a writer of freedom rather than indifference?",
-    "What makes Abai feel contemporary for young readers today?",
+    "Why does Abai still feel contemporary for young readers?",
+    "How does Auezov turn biography into national memory?",
+    "What makes Alash literature a language of responsibility?",
   ],
   reflections: [
-    "A recent reader connected Murakami's memory theme to digital identity.",
-    "One discussion compared Dostoevsky's guilt with modern online accountability.",
+    "A recent reader connected Abai's moral questions with personal discipline.",
+    "One discussion compared Baitursynuly's language reform with modern education.",
   ],
   counters: {
     comments: 128,
@@ -223,7 +248,7 @@ export const communityPreview = {
 export const multimediaContext = [
   {
     type: "Video",
-    title: "Literary period mini-guides",
+    title: "Kazakh literary period mini-guides",
     description:
       "Short explainers that place each work in its cultural and historical moment.",
   },
@@ -237,12 +262,12 @@ export const multimediaContext = [
     type: "Timeline",
     title: "Authors across centuries",
     description:
-      "Trace connections between writers, movements, and recurring themes.",
+      "Trace connections between writers, epochs, and recurring cultural themes.",
   },
   {
     type: "Quotes",
     title: "Context cards",
     description:
-      "Save, compare, and revisit resonant passages that speak to modern life.",
+      "Save, compare, and revisit resonant passages that speak to Kazakh literary memory.",
   },
 ];

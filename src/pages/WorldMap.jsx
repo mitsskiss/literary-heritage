@@ -1,311 +1,148 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import literaryMapImage from "../assets/map/map.png";
-import {
-  literaryWorldMarkers,
-  mapBounds,
-  mapCategoryMeta,
-} from "../data/literaryWorldMap";
-import "./WorldMap.css";
+import kazakhstanMap from "../assets/mura/map-kazakhstan-v2.png";
+import { literaryWorldMarkers, mapCategoryMeta } from "../data/literaryWorldMap";
 import { useI18n } from "../i18n/I18nContext";
 import { useProgressStore } from "../store/useProgressStore";
-
-function clamp(value, min, max) {
-  return Math.min(Math.max(value, min), max);
-}
+import "./WorldMap.css";
 
 function WorldMap() {
-  const { t, localizeMapCategory, localizeMapMarker, localizeWork } = useI18n();
+  const { t } = useI18n();
   const markMapVisited = useProgressStore((state) => state.markMapVisited);
-  const [selectedYear, setSelectedYear] = useState(mapBounds.defaultYear);
-  const [hoveredMarkerId, setHoveredMarkerId] = useState(null);
-  const [selectedMarkerId, setSelectedMarkerId] = useState(null);
-  const [zoom, setZoom] = useState(1);
-  const [pan, setPan] = useState({ x: 0, y: 0 });
-  const [dragState, setDragState] = useState(null);
-
-  const localizedMarkers = useMemo(
-    () =>
-      literaryWorldMarkers.map((marker) => {
-        const work = localizeWork(marker);
-        const localizedMarker = localizeMapMarker(marker);
-        return {
-          ...localizedMarker,
-          name: work.title,
-          author: work.author,
-          description: work.description,
-          themes: work.themes,
-        };
-      }),
-    [localizeWork]
-  );
-
-  const visibleMarkers = useMemo(
-    () => localizedMarkers.filter((marker) => marker.startYear <= selectedYear),
-    [localizedMarkers, selectedYear]
-  );
+  const [regionFilter, setRegionFilter] = useState("all");
+  const [authorFilter, setAuthorFilter] = useState("all");
+  const [typeFilter, setTypeFilter] = useState("all");
+  const [selectedId, setSelectedId] = useState("zhidebai-abai");
 
   useEffect(() => {
     markMapVisited();
   }, [markMapVisited]);
 
-  useEffect(() => {
-    if (!selectedMarkerId) return;
+  const regions = [...new Set(literaryWorldMarkers.map((place) => place.region))];
+  const authors = [...new Set(literaryWorldMarkers.map((place) => place.author))];
+  const types = [...new Set(literaryWorldMarkers.map((place) => place.type))];
 
-    const selectedIsVisible = visibleMarkers.some(
-      (marker) => marker.id === selectedMarkerId
-    );
+  const visiblePlaces = useMemo(
+    () =>
+      literaryWorldMarkers.filter(
+        (place) =>
+          (regionFilter === "all" || place.region === regionFilter) &&
+          (authorFilter === "all" || place.author === authorFilter) &&
+          (typeFilter === "all" || place.type === typeFilter)
+      ),
+    [authorFilter, regionFilter, typeFilter]
+  );
 
-    if (!selectedIsVisible) {
-      setSelectedMarkerId(null);
-    }
-  }, [selectedMarkerId, visibleMarkers]);
+  const selectedPlace =
+    visiblePlaces.find((place) => place.id === selectedId) ?? visiblePlaces[0] ?? literaryWorldMarkers[0];
 
-  const selectedMarker =
-    visibleMarkers.find((marker) => marker.id === selectedMarkerId) ?? null;
-
-  const handlePointerDown = (event) => {
-    setDragState({
-      startX: event.clientX,
-      startY: event.clientY,
-      initialX: pan.x,
-      initialY: pan.y,
-    });
-  };
-
-  const handlePointerMove = (event) => {
-    if (!dragState) return;
-
-    const nextX = dragState.initialX + (event.clientX - dragState.startX);
-    const nextY = dragState.initialY + (event.clientY - dragState.startY);
-
-    setPan({
-      x: clamp(nextX, -180, 180),
-      y: clamp(nextY, -120, 120),
-    });
-  };
-
-  const handlePointerUp = () => {
-    setDragState(null);
-  };
-
-  const changeZoom = (direction) => {
-    setZoom((current) => clamp(current + direction * 0.12, 0.84, 1.6));
-  };
-
-  const closePanel = () => {
-    setSelectedMarkerId(null);
-  };
-
-  const closePanelFromControl = (event) => {
-    event.stopPropagation();
-    closePanel();
+  const resetFilters = () => {
+    setRegionFilter("all");
+    setAuthorFilter("all");
+    setTypeFilter("all");
+    setSelectedId("zhidebai-abai");
   };
 
   return (
     <main className="world-map-page">
-      <div className="world-map-page__container">
-        <section className="world-map-shell">
-          <header className="world-map-shell__top">
-            <div className="world-map-shell__copy">
-              <h1 className="world-map-shell__title">{t("mapTitle")}</h1>
-              <p className="world-map-shell__subtitle">
-                {t("mapSubtitle")}
-              </p>
+      <section className="mura-map-hero">
+        <p className="heritage-kicker">{t("navMap")}</p>
+        <h1>{t("mapTitle")}</h1>
+        <p>{t("mapSubtitle")}</p>
+      </section>
+
+      <section className="mura-map-layout">
+        <div className="mura-map-board">
+          <div className="mura-map-canvas" style={{ backgroundImage: `url(${kazakhstanMap})` }}>
+            <div className="mura-map-controls">
+              <button type="button">+</button>
+              <button type="button">-</button>
+              <button type="button">{t("center")}</button>
             </div>
-
-            <div className="world-map-shell__legend" aria-label={t("categoryLegend")}>
-              {Object.entries(mapCategoryMeta).map(([key, rawMeta]) => {
-                const meta = localizeMapCategory(key, rawMeta);
-                return (
-                <div key={key} className="world-map-shell__legendItem">
-                  <span
-                    className="world-map-shell__legendDot"
-                    style={{ "--legend-color": meta.color }}
-                  />
-                  <span>{meta.label}</span>
-                </div>
-                );
-              })}
-            </div>
-          </header>
-
-          <div className="world-map-layout" onClick={closePanel}>
-            <section className="world-map-canvasWrap">
-              <div className="world-map-canvasControls">
+            {visiblePlaces.map((place) => {
+              const meta = mapCategoryMeta[place.category] ?? mapCategoryMeta.museum;
+              return (
                 <button
                   type="button"
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    changeZoom(1);
-                  }}
-                  aria-label={t("zoomIn")}
+                  key={place.id}
+                  className={`mura-map-marker ${selectedPlace?.id === place.id ? "is-selected" : ""}`}
+                  style={{ left: `${place.position.x}%`, top: `${place.position.y}%`, "--marker": meta.color }}
+                  onClick={() => setSelectedId(place.id)}
+                  aria-label={t("openMarker", { name: place.name })}
                 >
-                  +
+                  <span aria-hidden="true" />
+                  <strong>{place.city}</strong>
+                  <small>{place.name}</small>
                 </button>
-                <button
-                  type="button"
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    changeZoom(-1);
-                  }}
-                  aria-label={t("zoomOut")}
-                >
-                  -
-                </button>
-                <button
-                  type="button"
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    setZoom(1);
-                    setPan({ x: 0, y: 0 });
-                  }}
-                  aria-label={t("resetMap")}
-                >
-                  {t("center")}
-                </button>
-              </div>
-
-              <div
-                className="world-map-canvas"
-                onPointerDown={handlePointerDown}
-                onPointerMove={handlePointerMove}
-                onPointerUp={handlePointerUp}
-                onPointerLeave={handlePointerUp}
-                role="presentation"
-              >
-                <div
-                  className="world-map-stage"
-                  style={{
-                    transform: `translate(${pan.x}px, ${pan.y}px) scale(${zoom})`,
-                    "--map-image": `url(${literaryMapImage})`,
-                  }}
-                >
-                  <div className="world-map-stage__map" aria-hidden="true" />
-                  <div className="world-map-stage__grid" aria-hidden="true" />
-
-                  {localizedMarkers.map((marker) => {
-                    const meta = localizeMapCategory(marker.category, mapCategoryMeta[marker.category]);
-                    const isHovered = hoveredMarkerId === marker.id;
-                    const isSelected = selectedMarkerId === marker.id;
-                    const isVisible = marker.startYear <= selectedYear;
-
-                    return (
-                      <button
-                        key={marker.id}
-                        type="button"
-                        className={[
-                          "world-map-marker",
-                          isVisible ? "is-visible" : "is-hidden",
-                          isSelected ? "is-selected" : "",
-                        ]
-                          .filter(Boolean)
-                          .join(" ")}
-                        style={{
-                          left: `${marker.position.x}%`,
-                          top: `${marker.position.y}%`,
-                          "--marker-color": meta.color,
-                        }}
-                        onMouseEnter={() => setHoveredMarkerId(marker.id)}
-                        onMouseLeave={() => setHoveredMarkerId(null)}
-                        onFocus={() => setHoveredMarkerId(marker.id)}
-                        onBlur={() => setHoveredMarkerId(null)}
-                        onClick={(event) => {
-                          event.stopPropagation();
-                          if (isVisible) setSelectedMarkerId(marker.id);
-                        }}
-                        disabled={!isVisible}
-                        aria-label={t("openMarker", { name: marker.name })}
-                      >
-                        <span className="world-map-marker__book" aria-hidden="true">
-                          <span />
-                        </span>
-                        <span className="world-map-marker__pin" aria-hidden="true" />
-                        {isVisible && (isHovered || isSelected) && (
-                          <span className="world-map-marker__tooltip">
-                            <strong>{marker.name}</strong>
-                            <span>{marker.years}</span>
-                            <span>{marker.author}</span>
-                          </span>
-                        )}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
-              <div className="world-map-timeline" onClick={(event) => event.stopPropagation()}>
-                <div className="world-map-timeline__labels">
-                  <span>{mapBounds.minYear}</span>
-                  <strong key={selectedYear}>{selectedYear}</strong>
-                  <span>{mapBounds.maxYear}</span>
-                </div>
-                <input
-                  className="world-map-timeline__input"
-                  type="range"
-                  min={mapBounds.minYear}
-                  max={mapBounds.maxYear}
-                  value={selectedYear}
-                  onChange={(event) => setSelectedYear(Number(event.target.value))}
-                  aria-label={t("literaryMapTimeline")}
-                />
-              </div>
-            </section>
-
-            {selectedMarker && (
-              <aside
-                className="world-map-panel"
-                onClick={(event) => event.stopPropagation()}
-              >
-                <button
-                  type="button"
-                  className="world-map-panel__close"
-                  onClick={closePanelFromControl}
-                  aria-label={t("closeBookPanel")}
-                >
-                  x
-                </button>
-                <div
-                  className="world-map-panel__portrait"
-                  style={{ backgroundImage: `url(${selectedMarker.image})` }}
-                />
-                <div className="world-map-panel__body">
-                  <p className="world-map-panel__eyebrow">
-                    {selectedMarker.country} | {selectedMarker.sourceLabel}
-                  </p>
-                  <h2 className="world-map-panel__title">{selectedMarker.name}</h2>
-                  <p className="world-map-panel__author">{selectedMarker.author}</p>
-                  <p className="world-map-panel__bio">{selectedMarker.description}</p>
-                  <p className="world-map-panel__bio">{selectedMarker.context}</p>
-
-                  <div className="world-map-panel__meta">
-                    <span>
-                      {localizeMapCategory(selectedMarker.category, mapCategoryMeta[selectedMarker.category]).label}
-                    </span>
-                    <span>{selectedMarker.city}</span>
-                  </div>
-
-                  <div className="world-map-panel__works">
-                    <p className="world-map-panel__worksLabel">{t("bookInfo")}</p>
-                    <ul>
-                      <li>{selectedMarker.originNote}</li>
-                      <li>{selectedMarker.themes.join(", ")}</li>
-                    </ul>
-                  </div>
-
-                  <Link
-                    to={`/reading/${selectedMarker.workId}`}
-                    className="world-map-panel__action"
-                  >
-                    {t("openBook")}
-                  </Link>
-                </div>
-              </aside>
-            )}
+              );
+            })}
           </div>
-        </section>
-      </div>
+
+          {selectedPlace ? (
+            <article className="mura-map-place">
+              <img src={selectedPlace.image} alt="" />
+              <div>
+                <h2>{selectedPlace.name}</h2>
+                <p className="mura-map-place__region">{selectedPlace.region}</p>
+                <p>{selectedPlace.description}</p>
+                <div className="mura-map-place__stats">
+                  <span>{selectedPlace.relatedWorks} {t("works").toLowerCase()}</span>
+                  <span>{selectedPlace.relatedAuthors} {t("navAuthors").toLowerCase()}</span>
+                  <span>{selectedPlace.relatedRoutes} {t("landingRoutes").toLowerCase()}</span>
+                </div>
+              </div>
+              <Link to={`/route/${selectedPlace.routeId}`}>{t("learnMore")}</Link>
+            </article>
+          ) : null}
+        </div>
+
+        <aside className="mura-map-sidebar">
+          <section>
+            <h2>{t("routeFilters")}</h2>
+            <MapSelect label={t("regions")} value={regionFilter} onChange={setRegionFilter} options={[{ value: "all", label: t("allRegions") }, ...regions.map((region) => ({ value: region, label: region }))]} />
+            <MapSelect label={t("navAuthors")} value={authorFilter} onChange={setAuthorFilter} options={[{ value: "all", label: t("allAuthors") }, ...authors.map((author) => ({ value: author, label: author }))]} />
+            <MapSelect label={t("placeType")} value={typeFilter} onChange={setTypeFilter} options={[{ value: "all", label: t("allPlaceTypes") }, ...types.map((type) => ({ value: type, label: type }))]} />
+            <button type="button" onClick={resetFilters}>{t("resetFilters")}</button>
+          </section>
+
+          <section>
+            <h2>{t("popularPlaces")}</h2>
+            <div className="mura-map-popular">
+              {literaryWorldMarkers.slice(0, 5).map((place) => (
+                <button type="button" key={place.id} onClick={() => setSelectedId(place.id)}>
+                  <img src={place.image} alt="" />
+                  <span>
+                    <strong>{place.name}</strong>
+                    <small>{place.region}</small>
+                  </span>
+                </button>
+              ))}
+            </div>
+          </section>
+        </aside>
+      </section>
+
+      <section className="mura-map-stats">
+        <article><strong>{literaryWorldMarkers.length * 6}+</strong><span>{t("literaryPlaces")}</span></article>
+        <article><strong>{regions.length}+</strong><span>{t("regions")}</span></article>
+        <article><strong>100+</strong><span>{t("relatedWorks")}</span></article>
+        <article><strong>30+</strong><span>{t("navAuthors")}</span></article>
+        <article><strong>5</strong><span>{t("landingRoutes")}</span></article>
+      </section>
     </main>
+  );
+}
+
+function MapSelect({ label, value, onChange, options }) {
+  return (
+    <label>
+      <span>{label}</span>
+      <select value={value} onChange={(event) => onChange(event.target.value)}>
+        {options.map((option) => (
+          <option value={option.value} key={option.value}>{option.label}</option>
+        ))}
+      </select>
+    </label>
   );
 }
 

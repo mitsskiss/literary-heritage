@@ -1,37 +1,43 @@
 import { Link } from "react-router-dom";
-import { authors } from "../data/authors";
-import { works } from "../data/works";
 import { useI18n } from "../i18n/I18nContext";
+import homeHero from "../assets/mura/home-hero-reference.png";
+import collectionPoetry from "../assets/mura/collection-poetry.png";
+import collectionProse from "../assets/mura/collection-prose.png";
+import collectionFolklore from "../assets/mura/collection-folklore.png";
+import collectionThoughts from "../assets/mura/collection-thoughts.png";
+import collectionRoutes from "../assets/mura/collection-routes.png";
+import portalAuthors from "../assets/mura/portal-authors.png";
+import portalWorks from "../assets/mura/portal-works.png";
+import portalEpochs from "../assets/mura/portal-epochs.png";
+import portalQuotes from "../assets/mura/portal-quotes.png";
 
 function Landing() {
-  const { language, languages, setLanguage, t, localizeAuthors, localizeWorks } = useI18n();
-  const localizedAuthors = localizeAuthors(authors);
-  const localizedWorks = localizeWorks(works);
+  const { t } = useI18n();
 
   const portalCards = [
     {
       title: t("navAuthors"),
       text: t("landingAuthorsText"),
       href: "/authors",
-      image: localizedAuthors[0]?.image,
+      image: portalAuthors,
     },
     {
       title: t("navWorks"),
       text: t("landingWorksText"),
       href: "/works",
-      image: localizedWorks[0]?.image,
+      image: portalWorks,
     },
     {
       title: t("landingEpochs"),
       text: t("landingEpochsText"),
-      href: "/explore",
-      image: localizedWorks[2]?.image,
+      href: "/epochs",
+      image: portalEpochs,
     },
     {
       title: t("favorite_quote"),
       text: t("landingQuotesText"),
       href: "/explore",
-      image: localizedWorks[3]?.image,
+      image: portalQuotes,
     },
   ];
 
@@ -43,11 +49,11 @@ function Landing() {
   ];
 
   const collections = [
-    { title: t("landingPoetry"), image: localizedWorks[0]?.image, href: "/works" },
-    { title: t("landingProse"), image: localizedWorks[1]?.image, href: "/works" },
-    { title: t("landingFolklore"), image: localizedWorks[2]?.image, href: "/explore" },
-    { title: t("landingThoughts"), image: localizedWorks[3]?.image, href: "/explore" },
-    { title: t("landingRoutesTitle"), image: localizedWorks[4]?.image, href: "/map" },
+    { title: t("landingPoetry"), image: collectionPoetry, href: "/works" },
+    { title: t("landingProse"), image: collectionProse, href: "/works" },
+    { title: t("landingFolklore"), image: collectionFolklore, href: "/explore" },
+    { title: t("landingThoughts"), image: collectionThoughts, href: "/explore" },
+    { title: t("landingRoutesTitle"), image: collectionRoutes, href: "/map" },
   ];
 
   const platformFeatures = [
@@ -59,41 +65,7 @@ function Landing() {
 
   return (
     <main className="miras-home">
-      <section className="miras-hero">
-        <header className="miras-nav">
-          <Link className="miras-brand" to="/">
-            <span className="miras-brand__mark" aria-hidden="true" />
-            <span>
-              <strong>MIRAS</strong>
-              <small>{t("brandTitle")}</small>
-            </span>
-          </Link>
-
-          <nav className="miras-nav__links" aria-label={t("navigation")}>
-            <Link to="/authors">{t("navAuthors")}</Link>
-            <Link to="/works">{t("navWorks")}</Link>
-            <Link to="/explore">{t("landingEpochs")}</Link>
-            <Link to="/explore">{t("themes")}</Link>
-            <Link to="/explore">{t("favorite_quote")}</Link>
-            <Link to="/about">{t("navAbout")}</Link>
-          </nav>
-
-          <div className="miras-nav__tools">
-            <span aria-hidden="true" className="miras-search-icon" />
-            <select
-              value={language}
-              onChange={(event) => setLanguage(event.target.value)}
-              aria-label={t("language")}
-            >
-              {languages.map((item) => (
-                <option key={item.code} value={item.code}>
-                  {item.shortLabel}
-                </option>
-              ))}
-            </select>
-          </div>
-        </header>
-
+      <section className="miras-hero" style={{ "--mura-home-hero": `url(${homeHero})` }}>
         <div className="miras-ornament miras-ornament--left" aria-hidden="true" />
         <div className="miras-ornament miras-ornament--right" aria-hidden="true" />
 
@@ -187,7 +159,7 @@ function Landing() {
       <footer className="miras-footer">
         <div className="miras-footer__brand">
           <span className="miras-brand__mark" aria-hidden="true" />
-          <strong>MIRAS</strong>
+          <strong>MURA</strong>
           <p>{t("footerText")}</p>
         </div>
         <nav aria-label={t("navigation")}>
