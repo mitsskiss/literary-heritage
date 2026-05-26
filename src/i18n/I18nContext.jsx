@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+﻿import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import {
   authorTranslations,
   defaultLanguage,
@@ -97,80 +97,8 @@ function mergeStory(base, translated = {}, resultTranslations = {}) {
   };
 }
 
-function localizeGeneratedMurakamiStory(story, language) {
-  if (!story?.id?.startsWith("murakami-identity-chapter-") || language === defaultLanguage) {
-    return story;
-  }
-
-  const isKazakh = language === "kk";
-  const chapterTitle = isKazakh
-    ? `${story.chapterNumber}-тарау — Жад пен болмыс`
-    : `Глава ${story.chapterNumber} — Память и идентичность`;
-  const optionLabels = isKazakh
-    ? [
-        "A. Кейіпкердің ішкі таңдауына назар аудару.",
-        "B. Сахнаны жад пен жалғыздық арқылы түсіндіру.",
-        "C. Белгілерді тағдыр мен өзін іздеу ретінде оқу.",
-      ]
-    : [
-        "A. Сосредоточиться на внутреннем выборе героя.",
-        "B. Прочитать сцену через память и одиночество.",
-        "C. Понять символы как поиск судьбы и себя.",
-      ];
-
-  return {
-    ...story,
-    chapterTitle,
-    shortTitle: chapterTitle,
-    tagline: isKazakh
-      ? "Жад, белгі және өзін іздеу"
-      : "Память, символы и поиск себя",
-    scenes: story.scenes.map((scene) => ({
-      ...scene,
-      title: isKazakh
-        ? `${scene.sceneNumber}-сахна — Ішкі әлемнің белгісі`
-        : `Сцена ${scene.sceneNumber} — Символ внутреннего мира`,
-      context: isKazakh
-        ? [
-            "Бұл сахнада Мураками кейіпкердің сыртқы әрекетін оның ішкі күйімен байланыстырады.",
-            "Жад, жалғыздық және белгісіздік оқырманды болмыс туралы ойлануға жетелейді.",
-          ]
-        : [
-            "В этой сцене Мураками связывает внешнее действие героя с его внутренним состоянием.",
-            "Память, одиночество и неопределённость подталкивают читателя к размышлению об идентичности.",
-          ],
-      prompt: isKazakh
-        ? "Бұл сәт кейіпкердің өзін түсінуіне қалай әсер етеді?"
-        : "Как этот момент влияет на понимание героем самого себя?",
-      choices: scene.choices.map((choice, index) => ({
-        ...choice,
-        label: optionLabels[index] ?? optionLabels[0],
-        result: {
-          ...choice.result,
-          status: choice.result?.isCorrect
-            ? isKazakh
-              ? "дұрыс"
-              : "верно"
-            : isKazakh
-              ? "ішінара дұрыс"
-              : "частично верно",
-          explanation: isKazakh
-            ? "Бұл жауап сахнаны кейіпкердің ішкі өзгерісімен және өзін іздеуімен байланыстырады."
-            : "Этот ответ связывает сцену с внутренним изменением героя и поиском себя.",
-          canonNote: isKazakh
-            ? "Мураками прозасында мұндай сәттер нақты оқиға мен символдық мағынаны қатар ұстайды."
-            : "В прозе Мураками такие моменты удерживают рядом конкретное событие и символический смысл.",
-        },
-      })),
-    })),
-  };
-}
-
 function localizeStoryForLanguage(story, language) {
   if (!story) return story;
-  if (story.id?.startsWith("murakami-identity-chapter-")) {
-    return localizeGeneratedMurakamiStory(story, language);
-  }
   return mergeStory(
     story,
     storyTranslations[story.id]?.[language] ?? {},

@@ -90,6 +90,19 @@ export const workMetadataById = {
     conflict:
       "How can language itself become a form of freedom?",
   },
+  "baitursynuly-forty-fables": {
+    type: "Fables",
+    period: "Alash and early XX century",
+    mood: "Didactic",
+    experience: "Moral reading",
+    readingTime: 12,
+    whyNow:
+      "It shows how short forms can teach literacy, civic awareness, and moral judgment.",
+    spotlightIntro:
+      "Baitursynuly turns fable into a sharp educational tool for public thought.",
+    conflict:
+      "How can a simple story awaken a society?",
+  },
   "shakarim-three-truths": {
     type: "Philosophical prose",
     period: "Kazakh Enlightenment",
@@ -102,6 +115,71 @@ export const workMetadataById = {
       "Shakarim searches for a moral language that joins reason and inner purity.",
     conflict:
       "What kind of truth can guide a human life?",
+  },
+  "seifullin-kokshetau": {
+    type: "Poem",
+    period: "Soviet Kazakh literature",
+    mood: "Landscape-memory",
+    experience: "Place reading",
+    readingTime: 16,
+    whyNow:
+      "It helps readers see landscape as a carrier of legend, beauty, and cultural belonging.",
+    spotlightIntro:
+      "Kokshetau turns nature into a literary archive of sound, image, and memory.",
+    conflict:
+      "How does a place become part of national imagination?",
+  },
+  "zhumabayev-sholpan": {
+    type: "Poetry collection",
+    period: "Alash and early XX century",
+    mood: "Lyric",
+    experience: "Poetry reading",
+    readingTime: 14,
+    whyNow:
+      "It opens a personal and musical voice of Kazakh modern lyric poetry.",
+    spotlightIntro:
+      "Sholpan brings beauty, longing, homeland, and language into one poetic atmosphere.",
+    conflict:
+      "How can lyric feeling become cultural memory?",
+  },
+  "shakarim-qalqaman-mamyr": {
+    type: "Narrative poem",
+    period: "Kazakh spiritual philosophy",
+    mood: "Tragic",
+    experience: "Ethical reading",
+    readingTime: 16,
+    whyNow:
+      "It shows how legend can become a question about justice, love, and social law.",
+    spotlightIntro:
+      "Shakarim transforms a tragic plot into moral reflection.",
+    conflict:
+      "What happens when custom and compassion collide?",
+  },
+  "makatayev-raiymbek": {
+    type: "Poem",
+    period: "Modern Kazakh poetry",
+    mood: "Heroic-lyric",
+    experience: "Memory reading",
+    readingTime: 17,
+    whyNow:
+      "It shows how modern poetry can call historical memory back into emotional life.",
+    spotlightIntro:
+      "Makatayev turns a heroic name into a living address to the present.",
+    conflict:
+      "Why do people need historical names in modern poetry?",
+  },
+  "makatayev-selected-poetry": {
+    type: "Lyric poetry",
+    period: "Modern Kazakh poetry",
+    mood: "Intimate",
+    experience: "Lyric reflection",
+    readingTime: 14,
+    whyNow:
+      "It connects homeland, sincerity, love, and everyday feeling in language that students can enter quickly.",
+    spotlightIntro:
+      "Makatayev's poems make national feeling sound personal and close.",
+    conflict:
+      "How can a quiet lyric image carry deep cultural meaning?",
   },
 };
 
@@ -127,7 +205,7 @@ export const literaryJourneys = [
     title: "Voice of Alash",
     description:
       "Read writers who made language, education, and poetry part of cultural responsibility.",
-    works: ["baitursynuly-masa", "zhumabayev-batyr-bayan"],
+    works: ["baitursynuly-masa", "baitursynuly-forty-fables", "zhumabayev-batyr-bayan", "zhumabayev-sholpan"],
     minutes: 35,
     level: "Contextual",
     focusTheme: "Freedom",
@@ -143,7 +221,7 @@ export const literaryJourneys = [
     title: "Poetry of the Steppe",
     description:
       "Follow image, rhythm, music, and landscape through Kazakh poetic memory.",
-    works: ["zhansugurov-kulager", "zhumabayev-batyr-bayan"],
+    works: ["zhansugurov-kulager", "seifullin-kokshetau", "zhumabayev-sholpan", "makatayev-selected-poetry"],
     minutes: 30,
     level: "Poetic",
     focusTheme: "Memory",
@@ -161,37 +239,37 @@ export const themeCollections = [
     name: "Identity",
     description:
       "Texts that ask how a person and a culture recognize themselves through memory and language.",
-    works: ["abai-words", "auezov-abai-path", "shakarim-three-truths"],
+    works: ["abai-words", "auezov-abai-path", "shakarim-three-truths", "makatayev-selected-poetry"],
   },
   {
     name: "Morality",
     description:
       "Works focused on conscience, accountability, justice, and the difficult texture of ethical choices.",
-    works: ["abai-words", "shakarim-three-truths", "auezov-enlik-kebek"],
+    works: ["abai-words", "shakarim-three-truths", "shakarim-qalqaman-mamyr", "auezov-enlik-kebek"],
   },
   {
     name: "Knowledge",
     description:
       "A reading route through learning, intellectual growth, literacy, and the search for understanding.",
-    works: ["abai-words", "baitursynuly-masa", "auezov-abai-path"],
+    works: ["abai-words", "baitursynuly-masa", "baitursynuly-forty-fables", "auezov-abai-path"],
   },
   {
     name: "Society",
     description:
       "Literature that places the individual within custom, public duty, history, and social change.",
-    works: ["auezov-enlik-kebek", "seifullin-thorny-path", "baitursynuly-masa"],
+    works: ["auezov-enlik-kebek", "seifullin-thorny-path", "baitursynuly-masa", "baitursynuly-forty-fables"],
   },
   {
     name: "Memory",
     description:
       "Texts where recollection, loss, repression, and cultural continuity shape interpretation.",
-    works: ["zhansugurov-kulager", "seifullin-thorny-path", "auezov-abai-path"],
+    works: ["zhansugurov-kulager", "seifullin-thorny-path", "auezov-abai-path", "makatayev-raiymbek"],
   },
   {
     name: "Freedom",
     description:
       "Works that test autonomy, national thought, language, and the cost of public agency.",
-    works: ["baitursynuly-masa", "zhumabayev-batyr-bayan", "seifullin-thorny-path"],
+    works: ["baitursynuly-masa", "zhumabayev-batyr-bayan", "zhumabayev-sholpan", "seifullin-thorny-path"],
   },
 ];
 

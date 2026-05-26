@@ -3471,7 +3471,7 @@ body:has(.miras-home) .heritage-sidebar {
 
 .miras-home {
   min-height: 100vh;
-  padding-top: 104px;
+  padding-top: 74px;
   overflow-x: hidden;
   background:
     radial-gradient(circle at 10% 0%, rgba(184, 143, 80, 0.12), transparent 22rem),
@@ -3729,108 +3729,6 @@ body:has(.miras-home) .heritage-sidebar {
   background: #005b56;
   color: #fff8ec;
   border-color: #005b56;
-}
-
-.miras-scene {
-  display: none;
-}
-
-.miras-scene__mountains {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(160deg, transparent 0 44%, rgba(255, 255, 255, 0.55) 45% 49%, transparent 50%),
-    linear-gradient(30deg, transparent 0 42%, rgba(60, 91, 88, 0.2) 43% 49%, transparent 50%),
-    linear-gradient(180deg, rgba(221, 205, 181, 0.38), rgba(155, 129, 92, 0.2));
-  clip-path: polygon(0 44%, 10% 36%, 20% 42%, 30% 30%, 42% 46%, 54% 24%, 70% 42%, 82% 28%, 100% 40%, 100% 100%, 0 100%);
-}
-
-.miras-scene__desk {
-  position: absolute;
-  left: 8%;
-  right: 0;
-  bottom: 0;
-  height: 128px;
-  background: linear-gradient(90deg, rgba(143, 108, 51, 0.22), rgba(79, 53, 28, 0.34));
-}
-
-.miras-scene__book {
-  position: absolute;
-  right: 132px;
-  bottom: 36px;
-  width: min(48vw, 560px);
-  height: 230px;
-  transform: perspective(900px) rotateX(9deg) rotateZ(-1deg);
-}
-
-.miras-scene__book span {
-  position: absolute;
-  top: 0;
-  width: 50%;
-  height: 100%;
-  border: 1px solid rgba(112, 84, 45, 0.34);
-  background:
-    repeating-linear-gradient(0deg, rgba(80, 61, 42, 0.18) 0 1px, transparent 1px 18px),
-    linear-gradient(145deg, #fff8ec, #d0b894);
-  box-shadow: 0 26px 70px rgba(63, 44, 23, 0.28);
-}
-
-.miras-scene__book span:first-child {
-  left: 0;
-  border-radius: 16px 4px 30px 16px;
-  transform: skewY(-5deg);
-}
-
-.miras-scene__book span:last-child {
-  right: 0;
-  border-radius: 4px 18px 16px 30px;
-  transform: skewY(5deg);
-}
-
-.miras-scene__ink {
-  position: absolute;
-  right: 56px;
-  bottom: 92px;
-  width: 76px;
-  height: 62px;
-  border-radius: 22px 22px 28px 28px;
-  background: linear-gradient(145deg, #8a6333, #182e2c);
-  box-shadow: 0 20px 50px rgba(31, 26, 18, 0.3);
-}
-
-.miras-scene__quill {
-  position: absolute;
-  right: 94px;
-  bottom: 132px;
-  width: 8px;
-  height: 270px;
-  border-radius: 999px;
-  background: #5d4224;
-  transform: rotate(24deg);
-  transform-origin: bottom;
-}
-
-.miras-scene__quill::before {
-  content: "";
-  position: absolute;
-  top: -46px;
-  left: -34px;
-  width: 92px;
-  height: 190px;
-  border-radius: 80% 20% 80% 20%;
-  background: linear-gradient(110deg, #f6ead6, #9c7142);
-  clip-path: polygon(48% 0, 100% 55%, 55% 100%, 0 48%);
-}
-
-.miras-scene__books {
-  position: absolute;
-  right: 0;
-  bottom: 116px;
-  width: 90px;
-  height: 94px;
-  background:
-    linear-gradient(#50361f 0 24%, #b9873d 24% 34%, #382719 34% 58%, #b9873d 58% 68%, #1d2c2b 68%);
-  border-radius: 6px;
 }
 
 .miras-cards,
@@ -4245,11 +4143,6 @@ body:has(.miras-home) .heritage-sidebar {
     display: none;
   }
 
-  .miras-scene {
-    opacity: 0.44;
-    left: 25%;
-  }
-
   .miras-cards,
   .miras-stats,
   .miras-platform__features {
@@ -4269,7 +4162,7 @@ body:has(.miras-home) .heritage-sidebar {
 
 @media (max-width: 560px) {
   .miras-home {
-    padding-top: 78px;
+    padding-top: 64px;
   }
 
   .miras-nav,
@@ -4315,11 +4208,6 @@ body:has(.miras-home) .heritage-sidebar {
   .miras-hero__actions,
   .miras-button {
     width: 100%;
-  }
-
-  .miras-scene {
-    inset: 300px -90px 0 4%;
-    opacity: 0.58;
   }
 
   .miras-cards,

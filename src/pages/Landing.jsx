@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useI18n } from "../i18n/I18nContext";
-import homeHero from "../assets/mura/home-hero-reference.png";
+import homeHero from "../assets/mura/home-hero-v2.png";
 import collectionPoetry from "../assets/mura/collection-poetry.png";
 import collectionProse from "../assets/mura/collection-prose.png";
 import collectionFolklore from "../assets/mura/collection-folklore.png";
@@ -83,17 +83,6 @@ function Landing() {
           </div>
         </div>
 
-        <div className="miras-scene" aria-hidden="true">
-          <div className="miras-scene__mountains" />
-          <div className="miras-scene__desk" />
-          <div className="miras-scene__book">
-            <span />
-            <span />
-          </div>
-          <div className="miras-scene__ink" />
-          <div className="miras-scene__quill" />
-          <div className="miras-scene__books" />
-        </div>
       </section>
 
       <section className="miras-cards" aria-label={t("siteFeatures")}>

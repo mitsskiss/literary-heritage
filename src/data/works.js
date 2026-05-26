@@ -1,19 +1,31 @@
 import abaiCover from "../assets/authors/abai.png";
-import auezovCover from "../assets/authors/dostoevsky.png";
-import seifullinCover from "../assets/authors/camus.png";
-import zhumabayevCover from "../assets/authors/murakami.png";
-import zhansugurovCover from "../assets/authors/woolf.png";
+import archiveAuthors from "../assets/mura/portal-authors.png";
+import archivePoetry from "../assets/mura/collection-poetry.png";
+import archiveProse from "../assets/mura/collection-prose.png";
+import archiveFolklore from "../assets/mura/collection-folklore.png";
+import archiveThoughts from "../assets/mura/collection-thoughts.png";
+import archiveRoutes from "../assets/mura/collection-routes.png";
 
 export const works = [
   {
     id: "abai-words",
     title: "Book of Words",
+    originalTitle: "Қара сөздер",
     author: "Abai Kunanbayev",
     image: abaiCover,
     year: 1890,
+    genre: "Philosophical prose",
+    period: "Kazakh Enlightenment",
+    readingTime: 18,
+    language: "Kazakh",
     themes: ["Identity", "Morality", "Knowledge", "Society"],
     description:
       "Philosophical prose about conscience, knowledge, character, and the renewal of Kazakh society.",
+    context:
+      "A cycle of prose reflections where Abai discusses education, morality, labor, language, faith, and social responsibility.",
+    culturalValue:
+      "One of the core texts of Kazakh moral philosophy and a gateway to Abai's intellectual world.",
+    routeId: "abai-path",
     fragments: [
       {
         id: "abai-f1",
@@ -23,6 +35,7 @@ export const works = [
         annotations: [
           { word: "curiosity", explanation: "The inner impulse that opens a person to knowledge and self-discipline." },
           { word: "understand", explanation: "To connect learning with conscience, action, and community." },
+          { word: "knowledge", explanation: "For Abai, knowledge must improve the soul and behavior, not only memory." },
         ],
         reflection: {
           question: "Why does Abai connect knowledge with moral growth?",
@@ -38,12 +51,22 @@ export const works = [
   {
     id: "auezov-abai-path",
     title: "The Path of Abai",
+    originalTitle: "Абай жолы",
     author: "Mukhtar Auezov",
-    image: auezovCover,
+    image: archiveAuthors,
     year: 1942,
+    genre: "Epic novel",
+    period: "Soviet Kazakh literature",
+    readingTime: 35,
+    language: "Kazakh",
     themes: ["Identity", "Society", "Memory", "Knowledge"],
     description:
       "Epic novel cycle about Abai, the steppe, cultural change, and the formation of a national intellectual voice.",
+    context:
+      "Auezov's multi-volume novel turns Abai's biography into a broad historical picture of Kazakh society.",
+    culturalValue:
+      "A landmark of Kazakh prose and one of the most important literary monuments to Abai's world.",
+    routeId: "abai-path",
     fragments: [
       {
         id: "auezov-f1",
@@ -52,6 +75,7 @@ export const works = [
           "Auezov turns biography into a cultural epic where personal growth becomes national memory.",
         annotations: [
           { word: "justice", explanation: "A moral principle that guides Abai's conflict with ignorance and abuse of power." },
+          { word: "road", explanation: "A symbol of personal growth and historical movement." },
         ],
         reflection: {
           question: "What makes a personal path become part of national memory?",
@@ -64,12 +88,22 @@ export const works = [
   {
     id: "auezov-enlik-kebek",
     title: "Enlik-Kebek",
+    originalTitle: "Еңлік-Кебек",
     author: "Mukhtar Auezov",
-    image: auezovCover,
+    image: archiveFolklore,
     year: 1917,
+    genre: "Drama",
+    period: "Early Kazakh drama",
+    readingTime: 22,
+    language: "Kazakh",
     themes: ["Love", "Fate", "Society", "Morality"],
     description:
       "Drama of love, clan conflict, and tragic choice in the world of traditional Kazakh society.",
+    context:
+      "Auezov adapts a well-known tragic story into a dramatic form that questions custom, justice, and human feeling.",
+    culturalValue:
+      "An important early Kazakh dramatic work that connects oral legend with modern stage literature.",
+    routeId: "oral-tradition",
     fragments: [
       {
         id: "enlik-f1",
@@ -87,12 +121,22 @@ export const works = [
   {
     id: "seifullin-thorny-path",
     title: "Thorny Path",
+    originalTitle: "Тар жол, тайғақ кешу",
     author: "Saken Seifullin",
-    image: seifullinCover,
+    image: archiveProse,
     year: 1927,
+    genre: "Memoir-prose",
+    period: "Alash and Soviet transition",
+    readingTime: 28,
+    language: "Kazakh",
     themes: ["Freedom", "Society", "Memory", "Fate"],
     description:
       "Memoir-prose about upheaval, political struggle, and the price of historical transformation.",
+    context:
+      "The work records a generation's experience of revolution, conflict, public duty, and survival.",
+    culturalValue:
+      "A key text for understanding twentieth-century historical pressure in Kazakh literary memory.",
+    routeId: "memory-repression",
     fragments: [
       {
         id: "seifullin-f1",
@@ -108,14 +152,57 @@ export const works = [
     ],
   },
   {
+    id: "seifullin-kokshetau",
+    title: "Kokshetau",
+    originalTitle: "Көкшетау",
+    author: "Saken Seifullin",
+    image: archiveRoutes,
+    year: 1929,
+    genre: "Poem",
+    period: "Soviet Kazakh poetry",
+    readingTime: 16,
+    language: "Kazakh",
+    themes: ["Memory", "Nature", "Identity", "Society"],
+    description:
+      "Poetic work where landscape, legend, and cultural memory meet around the image of Kokshetau.",
+    context:
+      "The poem turns a geographical place into a cultural image filled with history and feeling.",
+    culturalValue:
+      "Shows how Kazakh poetry can preserve landscape as memory and identity.",
+    routeId: "steppe-poetry",
+    fragments: [
+      {
+        id: "kokshetau-f1",
+        text: "The mountain keeps the voice of old songs, and the lake reflects memory like a bright page.",
+        authorNote: "Landscape becomes a living archive of national feeling.",
+        annotations: [{ word: "landscape", explanation: "Nature shown as a carrier of cultural memory." }],
+        reflection: {
+          question: "Why can place become a literary memory?",
+          options: ["It gathers stories and emotion", "It has no meaning", "It only marks geography"],
+          resonanceQuote: { text: "A place becomes homeland when memory speaks through it.", author: "Saken Seifullin" },
+        },
+      },
+    ],
+  },
+  {
     id: "zhumabayev-batyr-bayan",
     title: "Batyr Bayan",
+    originalTitle: "Батыр Баян",
     author: "Magzhan Zhumabayev",
-    image: zhumabayevCover,
+    image: archivePoetry,
     year: 1923,
+    genre: "Historical poem",
+    period: "Alash poetry",
+    readingTime: 20,
+    language: "Kazakh",
     themes: ["Memory", "Freedom", "Fate", "Morality"],
     description:
       "Poetic historical work about heroism, sacrifice, love, and the emotional weight of national memory.",
+    context:
+      "Zhumabayev uses history and lyric feeling to explore honor, conflict, love, and sacrifice.",
+    culturalValue:
+      "A central example of romantic and historical imagination in Kazakh poetry.",
+    routeId: "alash-voice",
     fragments: [
       {
         id: "bayan-f1",
@@ -131,14 +218,57 @@ export const works = [
     ],
   },
   {
+    id: "zhumabayev-sholpan",
+    title: "Sholpan",
+    originalTitle: "Шолпан",
+    author: "Magzhan Zhumabayev",
+    image: archivePoetry,
+    year: 1912,
+    genre: "Poetry collection",
+    period: "Alash poetry",
+    readingTime: 14,
+    language: "Kazakh",
+    themes: ["Love", "Freedom", "Language", "Identity"],
+    description:
+      "Early lyric poetry where beauty, longing, homeland, and language form an intimate poetic world.",
+    context:
+      "The collection reveals Zhumabayev's musical poetic language and emotional intensity.",
+    culturalValue:
+      "Important for seeing how modern Kazakh lyric poetry gained symbolic depth and personal voice.",
+    routeId: "steppe-poetry",
+    fragments: [
+      {
+        id: "sholpan-f1",
+        text: "A bright star rises over the steppe, and the heart hears homeland as music.",
+        authorNote: "The image of light becomes a symbol of longing and national feeling.",
+        annotations: [{ word: "star", explanation: "A symbol of hope, distance, beauty, and guidance." }],
+        reflection: {
+          question: "How does lyric poetry turn feeling into cultural memory?",
+          options: ["Through image and rhythm", "By avoiding emotion", "Only through plot"],
+          resonanceQuote: { text: "A song can hold what history cannot say directly.", author: "Magzhan Zhumabayev" },
+        },
+      },
+    ],
+  },
+  {
     id: "zhansugurov-kulager",
     title: "Kulager",
+    originalTitle: "Құлагер",
     author: "Ilyas Zhansugurov",
-    image: zhansugurovCover,
+    image: archiveRoutes,
     year: 1936,
+    genre: "Poem",
+    period: "Soviet Kazakh poetry",
+    readingTime: 22,
+    language: "Kazakh",
     themes: ["Memory", "Society", "Fate", "Love"],
     description:
       "Poem about art, envy, tragedy, and the symbolic death of beauty in the Kazakh steppe.",
+    context:
+      "Kulager transforms the story of a horse into a meditation on talent, violence, beauty, and cultural loss.",
+    culturalValue:
+      "A classic of Kazakh poetic symbolism and one of the strongest images of art wounded by envy.",
+    routeId: "steppe-poetry",
     fragments: [
       {
         id: "kulager-f1",
@@ -156,12 +286,22 @@ export const works = [
   {
     id: "baitursynuly-masa",
     title: "Masa",
+    originalTitle: "Маса",
     author: "Akhmet Baitursynuly",
-    image: auezovCover,
+    image: archiveThoughts,
     year: 1911,
+    genre: "Poetry and civic thought",
+    period: "Alash enlightenment",
+    readingTime: 15,
+    language: "Kazakh",
     themes: ["Knowledge", "Freedom", "Society", "Morality"],
     description:
       "Poetry and civic thought that awakens language, education, and responsibility.",
+    context:
+      "Baitursynuly uses poetic voice as an alarm that calls society toward literacy, dignity, and action.",
+    culturalValue:
+      "A key text of Alash-era cultural awakening and Kazakh language consciousness.",
+    routeId: "alash-voice",
     fragments: [
       {
         id: "masa-f1",
@@ -177,14 +317,57 @@ export const works = [
     ],
   },
   {
+    id: "baitursynuly-forty-fables",
+    title: "Forty Fables",
+    originalTitle: "Қырық мысал",
+    author: "Akhmet Baitursynuly",
+    image: archiveThoughts,
+    year: 1909,
+    genre: "Fables and adaptation",
+    period: "Alash enlightenment",
+    readingTime: 12,
+    language: "Kazakh",
+    themes: ["Morality", "Knowledge", "Society", "Language"],
+    description:
+      "A collection of adapted fables that uses simple stories to teach social awareness and moral judgment.",
+    context:
+      "Baitursynuly adapts fable form for Kazakh readers, turning short narrative into civic education.",
+    culturalValue:
+      "Important for literacy, moral instruction, and the modernization of Kazakh educational literature.",
+    routeId: "alash-voice",
+    fragments: [
+      {
+        id: "fables-f1",
+        text: "A small story can carry a large warning when society learns how to listen.",
+        authorNote: "Fable form makes moral criticism clear and memorable.",
+        annotations: [{ word: "fable", explanation: "A short story that teaches a moral idea through symbol or animal characters." }],
+        reflection: {
+          question: "Why are fables useful for public education?",
+          options: ["They make lessons memorable", "They remove all meaning", "They only entertain"],
+          resonanceQuote: { text: "Wisdom can enter through a simple story.", author: "Akhmet Baitursynuly" },
+        },
+      },
+    ],
+  },
+  {
     id: "shakarim-three-truths",
     title: "Three Truths",
+    originalTitle: "Үш анық",
     author: "Shakarim Kudaiberdiuly",
-    image: abaiCover,
+    image: archiveThoughts,
     year: 1912,
+    genre: "Philosophical prose",
+    period: "Kazakh spiritual philosophy",
+    readingTime: 18,
+    language: "Kazakh",
     themes: ["Morality", "Knowledge", "Freedom", "Identity"],
     description:
       "Spiritual and philosophical reflections on conscience, faith, and the ethical life.",
+    context:
+      "Shakarim searches for a moral foundation that joins reason, conscience, faith, and responsibility.",
+    culturalValue:
+      "A major text of Kazakh ethical and spiritual philosophy.",
+    routeId: "oral-tradition",
     fragments: [
       {
         id: "shakarim-f1",
@@ -200,14 +383,57 @@ export const works = [
     ],
   },
   {
+    id: "shakarim-qalqaman-mamyr",
+    title: "Qalqaman-Mamyr",
+    originalTitle: "Қалқаман-Мамыр",
+    author: "Shakarim Kudaiberdiuly",
+    image: archiveFolklore,
+    year: 1888,
+    genre: "Narrative poem",
+    period: "Kazakh spiritual philosophy",
+    readingTime: 16,
+    language: "Kazakh",
+    themes: ["Love", "Fate", "Morality", "Society"],
+    description:
+      "Narrative poem about love, social law, tragedy, and the moral pressure of tradition.",
+    context:
+      "The work revisits a historical-legendary plot to ask how justice, custom, and feeling collide.",
+    culturalValue:
+      "Connects oral narrative memory with philosophical reflection on human choice.",
+    routeId: "oral-tradition",
+    fragments: [
+      {
+        id: "qalqaman-f1",
+        text: "When love and custom stand against each other, the human heart becomes a field of judgment.",
+        authorNote: "Shakarim turns legend into ethical inquiry.",
+        annotations: [{ word: "judgment", explanation: "A social and moral decision that affects human fate." }],
+        reflection: {
+          question: "What does tragedy reveal about social law?",
+          options: ["Its human cost", "Only its strength", "Nothing"],
+          resonanceQuote: { text: "Justice without compassion becomes heavy.", author: "Shakarim Kudaiberdiuly" },
+        },
+      },
+    ],
+  },
+  {
     id: "makatayev-selected-poetry",
     title: "Selected Poetry",
+    originalTitle: "Таңдамалы өлеңдер",
     author: "Mukagali Makatayev",
-    image: zhumabayevCover,
+    image: archivePoetry,
     year: 1970,
+    genre: "Lyric poetry",
+    period: "Modern Kazakh poetry",
+    readingTime: 14,
+    language: "Kazakh",
     themes: ["Love", "Memory", "Identity", "Society"],
     description:
       "Modern lyric poetry about homeland, sincerity, human tenderness, and the living voice of memory.",
+    context:
+      "Makatayev's lyric voice makes national feeling intimate, direct, and emotionally accessible.",
+    culturalValue:
+      "A living part of modern Kazakh reading culture and personal poetic memory.",
+    routeId: "steppe-poetry",
     fragments: [
       {
         id: "makatayev-f1",
@@ -218,6 +444,39 @@ export const works = [
           question: "Why can a simple image carry deep patriotic feeling?",
           options: ["It connects place and emotion", "It avoids meaning", "It removes memory"],
           resonanceQuote: { text: "Poetry is a heartbeat made visible.", author: "Mukagali Makatayev" },
+        },
+      },
+    ],
+  },
+  {
+    id: "makatayev-raiymbek",
+    title: "Raiymbek! Raiymbek!",
+    originalTitle: "Райымбек! Райымбек!",
+    author: "Mukagali Makatayev",
+    image: archiveRoutes,
+    year: 1972,
+    genre: "Poem",
+    period: "Modern Kazakh poetry",
+    readingTime: 17,
+    language: "Kazakh",
+    themes: ["Memory", "Identity", "Freedom", "Fate"],
+    description:
+      "Poetic work that invokes historical memory, homeland, courage, and the emotional voice of the people.",
+    context:
+      "Makatayev speaks to history through a direct lyric call, turning a heroic name into cultural memory.",
+    culturalValue:
+      "Shows how modern poetry can reactivate historical memory with intimate emotional force.",
+    routeId: "memory-repression",
+    fragments: [
+      {
+        id: "raiymbek-f1",
+        text: "A remembered name crosses the mountain wind and returns as a call to the living.",
+        authorNote: "The poem connects heroic memory with modern emotional responsibility.",
+        annotations: [{ word: "call", explanation: "A poetic address that brings the past into the present." }],
+        reflection: {
+          question: "Why does poetry call historical figures back into memory?",
+          options: ["To renew responsibility", "To erase the present", "Only to list names"],
+          resonanceQuote: { text: "Memory becomes alive when the heart answers.", author: "Mukagali Makatayev" },
         },
       },
     ],

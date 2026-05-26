@@ -1,8 +1,8 @@
 import abaiCover from "../assets/authors/abai.png";
-import auezovCover from "../assets/authors/dostoevsky.png";
-import seifullinCover from "../assets/authors/camus.png";
-import magzhanCover from "../assets/authors/murakami.png";
-import ilyasCover from "../assets/authors/woolf.png";
+import auezovCover from "../assets/mura/portal-authors.png";
+import seifullinCover from "../assets/mura/collection-prose.png";
+import magzhanCover from "../assets/mura/collection-poetry.png";
+import ilyasCover from "../assets/mura/collection-routes.png";
 
 export const timelineBounds = {
   min: 1400,
