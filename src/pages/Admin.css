@@ -426,3 +426,61 @@
     min-width: fit-content;
   }
 }
+
+/* Final MURA archive treatment */
+.admin-page {
+  padding-top: calc(var(--header-safe-offset) + 34px);
+  background:
+    radial-gradient(circle at 16% 0%, color-mix(in srgb, var(--heritage-gold) 13%, transparent), transparent 28rem),
+    linear-gradient(180deg, var(--heritage-bg) 0%, var(--heritage-bg-soft) 52%, var(--heritage-bg) 100%);
+  color: var(--heritage-ink);
+}
+
+.admin-hero,
+.admin-stats,
+.admin-card,
+.admin-tabs {
+  border-color: var(--heritage-line);
+  border-radius: 8px;
+  background: var(--heritage-surface);
+  box-shadow: var(--heritage-shadow);
+}
+
+.admin-hero h1,
+.admin-card h2,
+.admin-stats strong {
+  color: var(--heritage-ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 500;
+}
+
+.admin-hero__kicker,
+.admin-stats strong {
+  color: var(--heritage-gold-strong);
+}
+
+.admin-hero p,
+.admin-field span,
+.admin-list__item span,
+.admin-empty,
+.admin-stats span {
+  color: var(--heritage-text);
+}
+
+.admin-field input,
+.admin-field select,
+.admin-field textarea,
+.admin-card > textarea,
+.admin-list__item,
+.admin-tabs button {
+  border-color: var(--heritage-line);
+  background: var(--heritage-surface-strong);
+  color: var(--heritage-ink);
+}
+
+.admin-submit,
+.admin-tabs button.is-active,
+.admin-hero__link {
+  background: linear-gradient(180deg, var(--heritage-gold), var(--heritage-gold-strong));
+  color: #fff8ec;
+}

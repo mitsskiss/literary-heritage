@@ -677,3 +677,77 @@
     flex-direction: column;
   }
 }
+
+/* Final MURA archive treatment */
+.profile-page {
+  padding-top: calc(var(--header-safe-offset) + 24px);
+  background:
+    radial-gradient(circle at 14% 0%, color-mix(in srgb, var(--heritage-gold) 13%, transparent), transparent 28rem),
+    linear-gradient(180deg, var(--heritage-bg) 0%, var(--heritage-bg-soft) 52%, var(--heritage-bg) 100%);
+  color: var(--heritage-ink);
+}
+
+.profile-hero-card,
+.profile-panel,
+.profile-stat-card,
+.profile-favorite-card,
+.profile-message,
+.profile-summary-card {
+  border-color: var(--heritage-line);
+  border-radius: 8px;
+  background: var(--heritage-surface);
+  color: var(--heritage-ink);
+  box-shadow: var(--heritage-shadow);
+}
+
+.profile-topbar__title,
+.profile-identity h1,
+.profile-section-heading h2,
+.profile-summary-card h2 {
+  color: var(--heritage-ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 500;
+}
+
+.profile-topbar__mode,
+.profile-about p,
+.profile-progress-meta,
+.profile-field span,
+.profile-toggle-row small,
+.profile-stat-card small,
+.profile-achievement small,
+.profile-favorite-card span,
+.profile-empty-note,
+.profile-reading-row span,
+.profile-sync-note {
+  color: var(--heritage-text);
+}
+
+.profile-avatar,
+.profile-level-pill,
+.profile-action {
+  background: linear-gradient(180deg, var(--heritage-gold), var(--heritage-gold-strong));
+  color: #fff8ec;
+}
+
+.profile-action.is-secondary,
+.profile-file-button,
+.profile-link-button {
+  border-color: var(--heritage-line);
+  background: var(--heritage-surface-strong);
+  color: var(--heritage-ink);
+}
+
+.profile-progress-track span {
+  background: linear-gradient(90deg, var(--heritage-gold), var(--heritage-gold-strong));
+}
+
+.profile-field input,
+.profile-field textarea,
+.profile-field select,
+.profile-toggle-row,
+.profile-achievement,
+.profile-favorite-card {
+  border-color: var(--heritage-line);
+  background: var(--heritage-surface-strong);
+}

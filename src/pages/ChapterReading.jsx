@@ -72,6 +72,15 @@ function ChapterReading() {
   );
 
   useEffect(() => {
+    setLeftComparisonLanguage(language);
+    setRightComparisonLanguage((currentLanguage) =>
+      currentLanguage === language
+        ? languages.find((item) => item.code !== language)?.code ?? "en"
+        : currentLanguage
+    );
+  }, [language, languages]);
+
+  useEffect(() => {
     migrateLegacyProgress();
 
     if (chapter) {

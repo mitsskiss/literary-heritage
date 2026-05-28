@@ -62,6 +62,7 @@ function Explore() {
       const routeAuthors = routeWorks.map((work) => work.author);
       const routePeriods = routeWorks.map((work) => work.period);
       const normalizedSearch = searchValue.trim().toLowerCase();
+      const routeDescription = journey.description ?? journey.subtitle ?? "";
       const matchesTheme =
         activeTheme === "all" || label(journey.focusTheme) === activeTheme || journey.focusTheme === activeTheme;
       const matchesAuthor = authorFilter === "all" || routeAuthors.includes(authorFilter);
@@ -74,7 +75,7 @@ function Explore() {
       const matchesSearch =
         !normalizedSearch ||
         journey.title.toLowerCase().includes(normalizedSearch) ||
-        journey.description.toLowerCase().includes(normalizedSearch) ||
+        routeDescription.toLowerCase().includes(normalizedSearch) ||
         routeWorks.some((work) => work.title.toLowerCase().includes(normalizedSearch));
 
       return matchesTheme && matchesAuthor && matchesPeriod && matchesDuration && matchesSearch;
@@ -183,6 +184,26 @@ function Explore() {
               <button type="button" onClick={resetFilters}>{t("resetFilters")}</button>
             </div>
 
+            <label className="explore-route-search">
+              <span className="heritage-icon heritage-icon--search" aria-hidden="true" />
+              <input
+                value={searchValue}
+                onChange={(event) => setSearchValue(event.target.value)}
+                placeholder={t("searchPlaceholder")}
+                aria-label={t("searchArchive")}
+              />
+            </label>
+
+            <section className="explore-filter-card explore-filter-card--inline explore-reveal" aria-label={t("exploreFilters")}>
+              <h2>{t("routeFilters")}</h2>
+              <FilterSelect label={t("navAuthors")} value={authorFilter} onChange={setAuthorFilter} options={[{ value: "all", label: t("allAuthors") }, ...authorOptions.map((author) => ({ value: author, label: author }))]} />
+              <FilterSelect label={t("period")} value={periodFilter} onChange={setPeriodFilter} options={[{ value: "all", label: t("allPeriods") }, ...periodOptions.map((period) => ({ value: period, label: period }))]} />
+              <FilterSelect label={t("themes")} value={activeTheme} onChange={handleThemeSelect} options={[{ value: "all", label: t("allThemes") }, ...themeOptions.map((theme) => ({ value: theme, label: theme }))]} />
+              <FilterSelect label={t("language")} value={languageFilter} onChange={setLanguageFilter} options={[{ value: "all", label: t("allLanguages") }, { value: "kk", label: "KZ" }, { value: "ru", label: "RU" }, { value: "en", label: "EN" }]} />
+              <FilterSelect label={t("duration")} value={durationFilter} onChange={setDurationFilter} options={[{ value: "all", label: t("anyDuration") }, { value: "short", label: t("shortRoute") }, { value: "medium", label: t("mediumRoute") }, { value: "long", label: t("longRoute") }]} />
+              <button type="button" onClick={resetFilters}>{t("apply")}</button>
+            </section>
+
             <div className="explore-route-grid">
               {filteredJourneys.slice(0, 4).map((journey, index) => {
                 const routeWorks = journey.works
@@ -196,7 +217,7 @@ function Explore() {
                     <div className="explore-route-card__image" style={{ backgroundImage: `url(${cover})` }} />
                     <div className="explore-route-card__body">
                       <h3>{journey.title}</h3>
-                      <p>{journey.description}</p>
+                      <p>{journey.description ?? journey.subtitle}</p>
                       <div className="explore-route-card__steps" aria-label={t("routeProgress")}>
                         {routeWorks.map((work, stepIndex) => (
                           <span
@@ -256,20 +277,6 @@ function Explore() {
             </div>
             <p>{t("completedRoutesText", { completed: completedCount, total: localizedJourneys.length })}</p>
             <Link to="/progress">{t("viewProgress")}</Link>
-          </section>
-
-          <section className="explore-filter-card explore-reveal" aria-label={t("exploreFilters")}>
-            <h2>{t("routeFilters")}</h2>
-            <label>
-              <span>{t("searchArchive")}</span>
-              <input value={searchValue} onChange={(event) => setSearchValue(event.target.value)} placeholder={t("searchPlaceholder")} />
-            </label>
-            <FilterSelect label={t("navAuthors")} value={authorFilter} onChange={setAuthorFilter} options={[{ value: "all", label: t("allAuthors") }, ...authorOptions.map((author) => ({ value: author, label: author }))]} />
-            <FilterSelect label={t("period")} value={periodFilter} onChange={setPeriodFilter} options={[{ value: "all", label: t("allPeriods") }, ...periodOptions.map((period) => ({ value: period, label: period }))]} />
-            <FilterSelect label={t("themes")} value={activeTheme} onChange={handleThemeSelect} options={[{ value: "all", label: t("allThemes") }, ...themeOptions.map((theme) => ({ value: theme, label: theme }))]} />
-            <FilterSelect label={t("language")} value={languageFilter} onChange={setLanguageFilter} options={[{ value: "all", label: t("allLanguages") }, { value: "kk", label: "KZ" }, { value: "ru", label: "RU" }, { value: "en", label: "EN" }]} />
-            <FilterSelect label={t("duration")} value={durationFilter} onChange={setDurationFilter} options={[{ value: "all", label: t("anyDuration") }, { value: "short", label: t("shortRoute") }, { value: "medium", label: t("mediumRoute") }, { value: "long", label: t("longRoute") }]} />
-            <button type="button" onClick={resetFilters}>{t("apply")}</button>
           </section>
 
           <section className="explore-notes-card explore-reveal">

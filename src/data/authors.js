@@ -142,4 +142,106 @@ export const authors = [
     mainWorks: ["Selected Poetry", "Raiymbek! Raiymbek!", "Life-poems"],
     sourceHint: "Adebiportal, modern Kazakh poetry materials",
   },
+  {
+    name: "Zhambyl Zhabayev",
+    image: archivePoetry,
+    period: "Zhyrau and Soviet poetry · XIX-XX century",
+    years: "1846-1945",
+    birthplace: "Zhambyl region",
+    roles: ["Aqyn", "Improviser", "Poet", "Oral tradition bearer"],
+    description:
+      "Legendary aqyn whose improvisational poetry connects oral tradition, public memory, and the voice of the steppe.",
+    biography:
+      "Zhambyl Zhabayev carried the zhyrau and aqyn tradition into the twentieth century. His verse preserves performance, public address, and the living rhythm of oral Kazakh poetry.",
+    keyIdeas: ["Oral tradition", "Memory", "Homeland", "Song", "Public voice"],
+    legacy:
+      "Zhambyl is remembered as a bridge between traditional improvisational poetry and modern cultural memory.",
+    mainWorks: ["Selected aitys and poems", "Leningraders, my children"],
+    sourceHint: "Kazakh literary history, public educational materials",
+  },
+  {
+    name: "Mirzhakyp Dulatuly",
+    image: archiveThoughts,
+    period: "Alash literature · XX century",
+    years: "1885-1935",
+    birthplace: "Torgai region",
+    roles: ["Writer", "Poet", "Journalist", "Alash intellectual"],
+    description:
+      "Alash writer and public thinker whose prose and poetry speak about awakening, education, and national responsibility.",
+    biography:
+      "Mirzhakyp Dulatuly helped shape modern Kazakh civic literature through poetry, journalism, and prose. His work joins personal fate with questions of language, duty, and public awakening.",
+    keyIdeas: ["Awakening", "Freedom", "Education", "Identity", "Responsibility"],
+    legacy:
+      "Dulatuly is central to Alash literary memory and the formation of modern Kazakh civic prose.",
+    mainWorks: ["Wake Up, Kazakh!", "Bakytsyz Zhamal"],
+    sourceHint: "Alash studies, Kazakh literary history",
+  },
+  {
+    name: "Beimbet Mailin",
+    image: archiveProse,
+    period: "Early Soviet Kazakh prose · XX century",
+    years: "1894-1938",
+    birthplace: "Kostanay region",
+    roles: ["Writer", "Playwright", "Journalist"],
+    description:
+      "Master of short prose and drama who showed village life, social change, humor, and human character.",
+    biography:
+      "Beimbet Mailin wrote compact stories, plays, and journalism with close attention to everyday people. His prose makes social transformation visible through ordinary speech and character.",
+    keyIdeas: ["Village life", "Society", "Humor", "Character", "Change"],
+    legacy:
+      "Mailin helped define Kazakh short prose and remains valued for humane realism and precise social observation.",
+    mainWorks: ["Shuganing belgisi", "Raushan-kommunist", "Short stories"],
+    sourceHint: "Kazakh literary history, public educational materials",
+  },
+  {
+    name: "Gabit Musrepov",
+    image: archiveProse,
+    period: "Soviet Kazakh prose and drama · XX century",
+    years: "1902-1985",
+    birthplace: "North Kazakhstan region",
+    roles: ["Novelist", "Playwright", "Essayist", "Translator"],
+    description:
+      "Major prose writer and dramatist known for refined language, psychological depth, and strong images of dignity.",
+    biography:
+      "Gabit Musrepov developed Kazakh prose and drama through historical themes, lyrical language, and attention to inner character. His work often highlights motherhood, dignity, and social conscience.",
+    keyIdeas: ["Dignity", "Motherhood", "History", "Character", "Language"],
+    legacy:
+      "Musrepov is a classic of twentieth-century Kazakh prose and drama.",
+    mainWorks: ["Ulpan", "The Soldier from Kazakhstan", "Mother-themed stories"],
+    sourceHint: "Kazakh literary history, public educational materials",
+  },
+  {
+    name: "Olzhas Suleimenov",
+    image: archiveRoutes,
+    period: "Modern Kazakh literature · XX-XXI century",
+    years: "1936-",
+    birthplace: "Almaty",
+    roles: ["Poet", "Writer", "Public intellectual", "Diplomat"],
+    description:
+      "Modern poet and public intellectual whose work connects language, history, ecology, and Eurasian cultural memory.",
+    biography:
+      "Olzhas Suleimenov writes across poetry, cultural history, and public thought. His voice links Kazakh literature with wider questions of language, identity, ecology, and civilization.",
+    keyIdeas: ["Language", "History", "Ecology", "Identity", "Eurasian memory"],
+    legacy:
+      "Suleimenov is one of the most internationally visible modern Kazakh literary voices.",
+    mainWorks: ["Az i Ya", "Earth, Bow to Man", "Selected poems"],
+    sourceHint: "Modern Kazakh literature, public educational materials",
+  },
+  {
+    name: "Fariza Ongarsynova",
+    image: archivePoetry,
+    period: "Modern Kazakh poetry · XX-XXI century",
+    years: "1939-2014",
+    birthplace: "Atyrau region",
+    roles: ["Poet", "Journalist", "Public figure"],
+    description:
+      "Powerful lyric poet of dignity, womanhood, homeland, memory, and emotional courage.",
+    biography:
+      "Fariza Ongarsynova brought a strong personal and civic voice to modern Kazakh poetry. Her poems speak with intensity about identity, tenderness, responsibility, and women's experience.",
+    keyIdeas: ["Womanhood", "Dignity", "Homeland", "Memory", "Courage"],
+    legacy:
+      "Ongarsynova is a defining modern poetic voice and an important figure for women's perspectives in Kazakh literature.",
+    mainWorks: ["Selected poems", "Nightingale", "Anxiety"],
+    sourceHint: "Modern Kazakh poetry materials",
+  },
 ];

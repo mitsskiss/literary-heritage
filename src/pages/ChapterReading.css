@@ -1229,3 +1229,62 @@
     filter: saturate(1);
   }
 }
+
+/* Final MURA archive treatment */
+.chapter-page {
+  padding-top: calc(var(--header-safe-offset) + 24px);
+  background:
+    radial-gradient(circle at 16% 0%, color-mix(in srgb, var(--heritage-gold) 13%, transparent), transparent 28rem),
+    linear-gradient(180deg, var(--heritage-bg) 0%, var(--heritage-bg-soft) 52%, var(--heritage-bg) 100%);
+  color: var(--heritage-ink);
+}
+
+.chapter-topbar,
+.chapter-challenges,
+.chapter-language-compare,
+.chapter-sceneCard,
+.chapter-result,
+.chapter-completion,
+.chapter-final-question,
+.chapter-recommendation article,
+.chapter-language-column {
+  border-color: var(--heritage-line);
+  border-radius: 8px;
+  background: var(--heritage-surface);
+  box-shadow: var(--heritage-shadow);
+}
+
+.chapter-topbar__title,
+.chapter-sceneCard__title,
+.chapter-completion__title,
+.chapter-final-quiz h3,
+.chapter-recommendation h3,
+.chapter-language-column h3 {
+  color: var(--heritage-ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 500;
+}
+
+.chapter-sceneCard__eyebrow,
+.chapter-completion__eyebrow,
+.chapter-sceneCard__label,
+.chapter-result__label {
+  color: var(--heritage-gold-strong);
+}
+
+.chapter-topbar__subtitle,
+.chapter-sceneCard__text,
+.chapter-sceneCard__question,
+.chapter-result__card p,
+.chapter-language-column__context,
+.chapter-language-column__prompt {
+  color: var(--heritage-text);
+}
+
+.chapter-result__action,
+.chapter-completion__action.is-primary,
+.chapter-language-toggle {
+  border-color: var(--heritage-gold);
+  background: linear-gradient(180deg, var(--heritage-gold), var(--heritage-gold-strong));
+  color: #fff8ec;
+}

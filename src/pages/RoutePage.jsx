@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+﻿import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { readingRoutes } from "../data/routes";
 import { works } from "../data/works";
@@ -10,132 +10,6 @@ import "./RoutePage.css";
 const ROUTE_STEP_STORAGE_PREFIX = "mura_route_step:";
 const ROUTE_NOTES_STORAGE_PREFIX = "mura_route_notes:";
 const ROUTE_XP_REWARD = 45;
-
-const routeLabels = {
-  en: {
-    routes: "Interactive routes",
-    backToRoutes: "Back to routes",
-    home: "Home",
-    routeMissingTitle: "Route not found",
-    routeMissingText: "This literary route is not in the current archive yet.",
-    works: "works",
-    authorsContext: "authors / context",
-    stages: "stages",
-    time: "passing time",
-    level: "level",
-    language: "language",
-    yourProgress: "Your progress",
-    continueReading: "Continue reading",
-    restart: "Start again",
-    favorite: "Add to favorites",
-    saved: "Saved",
-    share: "Share",
-    routeStages: "Route stages",
-    showAllStages: "Show all stages",
-    stage: "Stage",
-    compareLanguages: "Compare languages",
-    previousStage: "Previous stage",
-    nextStage: "Next stage",
-    finishRoute: "Complete route",
-    completedRoute: "Route completed",
-    context: "Context",
-    explanation: "Explanation",
-    quotes: "Quotes",
-    notes: "Notes",
-    source: "Source",
-    listen: "Listen",
-    save: "Save",
-    notePlaceholder: "Write a short thought about this stage...",
-    noteSaved: "Saved route note",
-    quizTitle: "Deeper understanding",
-    quizAction: "Take quiz",
-    recommendation: "Recommended next",
-    medium: "medium",
-    notReady: "Select a stage to continue reading.",
-  },
-  ru: {
-    routes: "Интерактивные маршруты",
-    backToRoutes: "К маршрутам",
-    home: "На главную",
-    routeMissingTitle: "Маршрут не найден",
-    routeMissingText: "Этого литературного маршрута пока нет в текущем архиве.",
-    works: "произведений",
-    authorsContext: "автора / контекста",
-    stages: "этапов",
-    time: "время прохождения",
-    level: "уровень",
-    language: "язык",
-    yourProgress: "Ваш прогресс",
-    continueReading: "Продолжить чтение",
-    restart: "Начать сначала",
-    favorite: "В избранное",
-    saved: "Сохранено",
-    share: "Поделиться",
-    routeStages: "Этапы маршрута",
-    showAllStages: "Показать все этапы",
-    stage: "Этап",
-    compareLanguages: "Сравнить языки",
-    previousStage: "Предыдущий этап",
-    nextStage: "Следующий этап",
-    finishRoute: "Завершить маршрут",
-    completedRoute: "Маршрут завершен",
-    context: "Контекст",
-    explanation: "Пояснение",
-    quotes: "Цитаты",
-    notes: "Заметки",
-    source: "Источник",
-    listen: "Слушать",
-    save: "Сохранить",
-    notePlaceholder: "Напишите короткую мысль об этом этапе...",
-    noteSaved: "Сохраненная заметка маршрута",
-    quizTitle: "Глубже понять маршрут",
-    quizAction: "Пройти quiz",
-    recommendation: "Рекомендуем дальше",
-    medium: "средний",
-    notReady: "Выберите этап, чтобы продолжить чтение.",
-  },
-  kk: {
-    routes: "Интерактивті маршруттар",
-    backToRoutes: "Маршруттарға",
-    home: "Басты бет",
-    routeMissingTitle: "Маршрут табылмады",
-    routeMissingText: "Бұл әдеби маршрут әзірге архивте жоқ.",
-    works: "шығарма",
-    authorsContext: "автор / контекст",
-    stages: "кезең",
-    time: "өту уақыты",
-    level: "деңгей",
-    language: "тіл",
-    yourProgress: "Сіздің прогресс",
-    continueReading: "Оқуды жалғастыру",
-    restart: "Қайта бастау",
-    favorite: "Таңдаулыға",
-    saved: "Сақталды",
-    share: "Бөлісу",
-    routeStages: "Маршрут кезеңдері",
-    showAllStages: "Барлық кезеңдер",
-    stage: "Кезең",
-    compareLanguages: "Тілдерді салыстыру",
-    previousStage: "Алдыңғы кезең",
-    nextStage: "Келесі кезең",
-    finishRoute: "Маршрутты аяқтау",
-    completedRoute: "Маршрут аяқталды",
-    context: "Контекст",
-    explanation: "Түсіндірме",
-    quotes: "Дәйексөздер",
-    notes: "Жазбалар",
-    source: "Дереккөз",
-    listen: "Тыңдау",
-    save: "Сақтау",
-    notePlaceholder: "Осы кезең туралы қысқа ой жазыңыз...",
-    noteSaved: "Сақталған маршрут жазбасы",
-    quizTitle: "Маршрутты тереңірек түсіну",
-    quizAction: "Quiz өту",
-    recommendation: "Келесі ұсыныс",
-    medium: "орташа",
-    notReady: "Оқуды жалғастыру үшін кезең таңдаңыз.",
-  },
-};
 
 function getStoredNumber(key, fallback = 0) {
   if (typeof window === "undefined") return fallback;
@@ -151,9 +25,57 @@ function getStoredText(key) {
 
 function RoutePage() {
   const { routeId } = useParams();
-  const { language, t, localizeWorks } = useI18n();
-  const route = readingRoutes.find((item) => item.id === routeId);
-  const labels = routeLabels[language] ?? routeLabels.en;
+  const { t, localizeJourneys, localizeWorks } = useI18n();
+  const localizedRoutes = useMemo(() => localizeJourneys(readingRoutes), [localizeJourneys]);
+  const route = useMemo(
+    () => localizedRoutes.find((item) => item.id === routeId),
+    [localizedRoutes, routeId]
+  );
+  const labels = useMemo(
+    () => ({
+      routes: t("navExplore"),
+      backToRoutes: t("backToExplore"),
+      home: t("navHome"),
+      routeMissingTitle: t("routeMissingTitle"),
+      routeMissingText: t("routeMissingText"),
+      works: t("works"),
+      authorsContext: t("routeAuthorsContext"),
+      stages: t("routeStagesCount"),
+      time: t("routePassingTime"),
+      level: t("level"),
+      language: t("language"),
+      yourProgress: t("yourProgress"),
+      continueReading: t("continueReading"),
+      restart: t("restartRoute"),
+      favorite: t("saveFavorite"),
+      saved: t("savedFavorite"),
+      share: t("shareWork"),
+      routeStages: t("routeStages"),
+      showAllStages: t("showAllStages"),
+      stage: t("stage"),
+      compareLanguages: t("compareLanguages"),
+      previousStage: t("previousStage"),
+      nextStage: t("nextStage"),
+      finishRoute: t("completeRoute"),
+      completedRoute: t("completedRoute"),
+      context: t("context"),
+      explanation: t("explanation"),
+      quotes: t("quotes"),
+      notes: t("notes"),
+      source: t("source"),
+      listen: t("listen"),
+      save: t("save"),
+      notePlaceholder: t("routeNotePlaceholder"),
+      noteSaved: t("routeNoteSaved"),
+      quizTitle: t("routeQuizTitle"),
+      quizAction: t("routeQuizAction"),
+      recommendation: t("recommendedNext"),
+      medium: t("mediumRoute"),
+      notReady: t("routeNotReady"),
+      nextRoute: t("nextRoute"),
+    }),
+    [t]
+  );
   const localizedWorks = localizeWorks(works);
   const favorites = useProgressStore((state) => state.favorites);
   const storyProgress = useProgressStore((state) => state.storyProgress);
@@ -202,7 +124,7 @@ function RoutePage() {
   }
 
   const activeStep = steps[currentStep] ?? steps[0];
-  const nextRoute = readingRoutes.find((item) => item.id === route.recommendedNext) ?? readingRoutes[0];
+  const nextRoute = localizedRoutes.find((item) => item.id === route.recommendedNext) ?? localizedRoutes[0];
   const routeState = storyProgress[route.id];
   const isRouteCompleted = Boolean(routeState?.completed);
   const isRouteFavorite = favorites.some((favorite) => favorite.type === "route" && favorite.id === route.id);
@@ -217,16 +139,15 @@ function RoutePage() {
   const portraitImage = route.portraitImage ?? routeWorks[0]?.image;
   const routeDifficulty = route.difficulty ?? labels.medium;
   const routeLanguages = route.languages ?? "KZ / RU / EN";
-  const stepContent = activeStep.content ?? activeStep.text;
+  const getStepTitle = (step) => t(`routeStep_${step.type}`);
+  const stepContent = t(`routeStepContent_${activeStep.type}`);
   const tabContent = {
     context:
-      activeStep.context ??
-      `${route.title} connects ${route.focusTheme.toLowerCase()} with the cultural memory of Kazakh literature.`,
+      t("routeContextFallback", { route: route.title }),
     explanation:
-      activeStep.explanation ??
-      "Read this stage as a guided bridge between historical context, authorial idea, and the meaning of the selected work.",
+      t("routeExplanationFallback"),
     quotes:
-      activeStep.quote ??
+      t("routeQuoteFallback") ??
       activeWork?.fragments?.[0]?.reflection?.resonanceQuote?.text ??
       activeWork?.fragments?.[0]?.text ??
       route.subtitle,
@@ -352,8 +273,15 @@ function RoutePage() {
           >
             {isRouteFavorite ? labels.saved : labels.favorite}
           </button>
-          <button type="button" aria-label={labels.share} onClick={shareRoute}>
+          <button
+            type="button"
+            className="route-share-button"
+            aria-label={labels.share}
+            title={labels.share}
+            onClick={shareRoute}
+          >
             <span className="route-share-icon" aria-hidden="true" />
+            <span>{labels.share}</span>
           </button>
         </div>
       </section>
@@ -374,7 +302,7 @@ function RoutePage() {
                 >
                   <button type="button" onClick={() => setCurrentStep(index)}>
                     <span>{isCompleted ? "✓" : index + 1}</span>
-                    <strong>{step.title}</strong>
+                    <strong>{getStepTitle(step)}</strong>
                   </button>
                 </li>
               );
@@ -390,7 +318,7 @@ function RoutePage() {
             <p>{labels.stage} {currentStep + 1} {t("of")} {steps.length}</p>
             <button type="button">{labels.compareLanguages}</button>
           </div>
-          <h2>{activeStep.title}</h2>
+          <h2>{getStepTitle(activeStep)}</h2>
           <p>{t(`routeStep_${activeStep.type}`)}</p>
 
           <article className="route-parchment">
@@ -413,7 +341,7 @@ function RoutePage() {
             <div className="route-quiz-card">
               <div>
                 <h3>{labels.quizTitle}</h3>
-                <p>{activeStep.quiz?.question ?? t("routeQuizQuestion")}</p>
+                <p>{t("routeQuizQuestion")}</p>
               </div>
               <button type="button">{labels.quizAction}</button>
             </div>
@@ -501,3 +429,4 @@ function RoutePage() {
 }
 
 export default RoutePage;
+

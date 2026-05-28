@@ -150,13 +150,13 @@
 
 .mura-map-place {
   display: grid;
-  grid-template-columns: 350px minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 24px;
+  grid-template-columns: minmax(240px, 360px) minmax(0, 1fr);
+  align-items: stretch;
+  gap: 22px;
   margin-top: 18px;
   border: 1px solid var(--heritage-line);
   border-radius: 6px;
-  padding: 18px;
+  padding: clamp(16px, 2.2vw, 24px);
   background:
     url("../assets/mura/ornament-corner.svg") right -62px bottom -70px / 150px 150px no-repeat,
     color-mix(in srgb, var(--heritage-surface) 88%, transparent);
@@ -164,9 +164,19 @@
 
 .mura-map-place img {
   width: 100%;
-  height: 170px;
+  min-height: 220px;
+  height: 100%;
+  max-height: 320px;
   border-radius: 4px;
   object-fit: cover;
+  filter: sepia(0.22) saturate(0.86);
+}
+
+.mura-map-place__content {
+  min-width: 0;
+  display: grid;
+  align-content: start;
+  gap: 12px;
 }
 
 .mura-map-place h2,
@@ -177,13 +187,50 @@
 }
 
 .mura-map-place p {
+  margin: 0;
   color: var(--heritage-text);
   line-height: 1.55;
 }
 
 .mura-map-place__region {
   color: var(--heritage-gold-strong) !important;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 12px;
   font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.mura-map-place__facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 2px 0 0;
+}
+
+.mura-map-place__facts div {
+  border: 1px solid color-mix(in srgb, var(--heritage-gold) 24%, var(--heritage-line));
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--heritage-surface) 78%, transparent);
+  padding: 10px 12px;
+}
+
+.mura-map-place__facts dt {
+  margin: 0 0 4px;
+  color: var(--heritage-gold-strong);
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.mura-map-place__facts dd {
+  margin: 0;
+  color: var(--heritage-ink);
+  font-size: 13px;
+  font-weight: 700;
+  overflow-wrap: anywhere;
 }
 
 .mura-map-place__stats {
@@ -193,12 +240,23 @@
   color: var(--heritage-text);
 }
 
-.mura-map-place > a,
+.mura-map-place__actions,
+.mura-map-place__actions a,
 .mura-map-sidebar section > button {
-  min-height: 46px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+}
+
+.mura-map-place__actions {
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-start;
+}
+
+.mura-map-place__actions a,
+.mura-map-sidebar section > button {
+  min-height: 46px;
   border: 1px solid var(--heritage-gold);
   border-radius: 4px;
   background: var(--heritage-gold);
@@ -206,6 +264,17 @@
   padding: 0 18px;
   font-weight: 800;
   text-decoration: none;
+}
+
+.mura-map-place__actions a:last-child {
+  background: transparent;
+  color: var(--heritage-gold-strong);
+}
+
+.mura-map-place__actions a:not(:first-child)::after {
+  content: "↗";
+  margin-left: 8px;
+  font-size: 0.9em;
 }
 
 .mura-map-sidebar {

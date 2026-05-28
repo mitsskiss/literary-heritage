@@ -481,4 +481,208 @@ export const works = [
       },
     ],
   },
+  {
+    id: "zhabayev-selected-aitys",
+    title: "Selected Aitys and Poems",
+    originalTitle: "Таңдамалы айтыстар мен өлеңдер",
+    author: "Zhambyl Zhabayev",
+    image: archivePoetry,
+    year: 1936,
+    genre: "Oral poetry",
+    period: "Zhyrau and Soviet poetry",
+    readingTime: 13,
+    language: "Kazakh",
+    themes: ["Memory", "Identity", "Language", "Society"],
+    description:
+      "Improvisational poems that preserve oral performance, public voice, and the rhythm of the Kazakh steppe.",
+    context:
+      "Zhambyl's poetry keeps the energy of live speech and turns communal memory into a literary event.",
+    culturalValue:
+      "A key bridge between oral poetic culture and twentieth-century Kazakh literary memory.",
+    routeId: "oral-tradition",
+    difficulty: "Easy",
+    fragments: [
+      {
+        id: "zhambyl-f1",
+        text: "The word of the aqyn travels with the people, carrying memory from voice to voice.",
+        authorNote: "Improvisation becomes a living archive of public feeling.",
+        annotations: [{ word: "aqyn", explanation: "A poet-improviser in Kazakh oral tradition." }],
+        reflection: {
+          question: "Why does oral poetry depend on a listening community?",
+          options: ["Because meaning is shared aloud", "Because books are unnecessary", "Because memory is silent"],
+          resonanceQuote: { text: "A song lives while people answer it.", author: "Zhambyl Zhabayev" },
+        },
+      },
+    ],
+  },
+  {
+    id: "dulatuly-wake-up-kazakh",
+    title: "Wake Up, Kazakh!",
+    originalTitle: "Оян, қазақ!",
+    author: "Mirzhakyp Dulatuly",
+    image: archiveThoughts,
+    year: 1909,
+    genre: "Civic poetry",
+    period: "Alash literature",
+    readingTime: 14,
+    language: "Kazakh",
+    themes: ["Freedom", "Knowledge", "Identity", "Society"],
+    description:
+      "A civic poetic call for awakening, education, language, and national responsibility.",
+    context:
+      "The work belongs to the Alash movement and treats literature as a public alarm.",
+    culturalValue:
+      "One of the emblematic texts of Kazakh civic awakening.",
+    routeId: "alash-voice",
+    difficulty: "Medium",
+    fragments: [
+      {
+        id: "dulatuly-f1",
+        text: "Awakening begins when a people hears its own name as a responsibility.",
+        authorNote: "Dulatuly connects national consciousness with education and action.",
+        annotations: [{ word: "awakening", explanation: "A movement from passivity toward civic awareness." }],
+        reflection: {
+          question: "What does literature awaken in a society?",
+          options: ["Memory and responsibility", "Only nostalgia", "Only entertainment"],
+          resonanceQuote: { text: "A sleeping word cannot protect a people.", author: "Mirzhakyp Dulatuly" },
+        },
+      },
+    ],
+  },
+  {
+    id: "mailin-shuganyn-belgisi",
+    title: "Shuga's Sign",
+    originalTitle: "Шұғаның белгісі",
+    author: "Beimbet Mailin",
+    image: archiveProse,
+    year: 1915,
+    genre: "Short prose",
+    period: "Early Kazakh prose",
+    readingTime: 12,
+    language: "Kazakh",
+    themes: ["Love", "Society", "Fate", "Memory"],
+    description:
+      "A concise prose work about love, social barriers, and the tenderness of remembered life.",
+    context:
+      "Mailin's early prose shows human feeling inside village life and social convention.",
+    culturalValue:
+      "Important for the development of Kazakh short prose and psychological realism.",
+    routeId: "classics-modern-prose",
+    difficulty: "Easy",
+    fragments: [
+      {
+        id: "mailin-f1",
+        text: "A small remembered place can hold the whole weight of love and loss.",
+        authorNote: "Mailin turns private memory into a social portrait.",
+        annotations: [{ word: "remembered", explanation: "Memory gives emotional shape to the story." }],
+        reflection: {
+          question: "Why can a short story feel larger than its plot?",
+          options: ["Because detail carries emotion", "Because length decides value", "Because characters vanish"],
+          resonanceQuote: { text: "A human fate may fit inside one quiet sign.", author: "Beimbet Mailin" },
+        },
+      },
+    ],
+  },
+  {
+    id: "musrepov-ulpan",
+    title: "Ulpan",
+    originalTitle: "Ұлпан",
+    author: "Gabit Musrepov",
+    image: archiveProse,
+    year: 1974,
+    genre: "Novel",
+    period: "Soviet Kazakh prose",
+    readingTime: 32,
+    language: "Kazakh",
+    themes: ["Society", "Morality", "Identity", "Memory"],
+    description:
+      "A novel about dignity, leadership, womanhood, and social conscience in the Kazakh steppe.",
+    context:
+      "Musrepov uses refined prose to explore character, authority, and moral intelligence.",
+    culturalValue:
+      "A classic prose image of a strong woman and a changing society.",
+    routeId: "women-kazakh-literature",
+    difficulty: "Medium",
+    fragments: [
+      {
+        id: "musrepov-f1",
+        text: "Dignity becomes visible when a person carries responsibility without losing tenderness.",
+        authorNote: "The novel frames strength as ethical presence, not domination.",
+        annotations: [{ word: "dignity", explanation: "Inner worth expressed through action and restraint." }],
+        reflection: {
+          question: "How can leadership be shown through care?",
+          options: ["By protecting human dignity", "By refusing empathy", "By avoiding choice"],
+          resonanceQuote: { text: "A noble word is strongest when it protects another.", author: "Gabit Musrepov" },
+        },
+      },
+    ],
+  },
+  {
+    id: "suleimenov-az-i-ya",
+    title: "Az i Ya",
+    originalTitle: "Аз и Я",
+    author: "Olzhas Suleimenov",
+    image: archiveRoutes,
+    year: 1975,
+    genre: "Literary-cultural essay",
+    period: "Modern Kazakh literature",
+    readingTime: 24,
+    language: "Russian",
+    themes: ["Language", "Identity", "Knowledge", "Memory"],
+    description:
+      "A bold cultural essay about language, history, interpretation, and Eurasian literary memory.",
+    context:
+      "Suleimenov reads language as an archive where cultures meet, argue, and remember.",
+    culturalValue:
+      "An influential modern work linking Kazakh literary thought with broad cultural history.",
+    routeId: "classics-modern-prose",
+    difficulty: "Hard",
+    fragments: [
+      {
+        id: "suleimenov-f1",
+        text: "Language remembers paths that official history often forgets.",
+        authorNote: "Suleimenov treats words as evidence of cultural contact and memory.",
+        annotations: [{ word: "language", explanation: "A living archive of historical relations." }],
+        reflection: {
+          question: "Why can language become historical evidence?",
+          options: ["It preserves traces of contact", "It has no memory", "It only decorates speech"],
+          resonanceQuote: { text: "A word can carry a road across centuries.", author: "Olzhas Suleimenov" },
+        },
+      },
+    ],
+  },
+  {
+    id: "ongarsynova-selected-poetry",
+    title: "Selected Poems",
+    originalTitle: "Таңдамалы өлеңдер",
+    author: "Fariza Ongarsynova",
+    image: archivePoetry,
+    year: 1984,
+    genre: "Lyric poetry",
+    period: "Modern Kazakh poetry",
+    readingTime: 15,
+    language: "Kazakh",
+    themes: ["Love", "Identity", "Freedom", "Memory"],
+    description:
+      "Strong lyric poetry about womanhood, dignity, homeland, tenderness, and emotional courage.",
+    context:
+      "Ongarsynova's voice brings personal intensity and civic feeling into modern Kazakh poetry.",
+    culturalValue:
+      "A defining modern poetic voice and an important path into women's perspectives in Kazakh literature.",
+    routeId: "women-kazakh-literature",
+    difficulty: "Medium",
+    fragments: [
+      {
+        id: "fariza-f1",
+        text: "A courageous heart speaks softly, but it changes the room where it is heard.",
+        authorNote: "The poem's strength comes from emotional clarity and moral pressure.",
+        annotations: [{ word: "courageous", explanation: "The ability to speak truth with dignity." }],
+        reflection: {
+          question: "How does lyric poetry show courage?",
+          options: ["Through honest feeling", "By hiding the self", "By avoiding memory"],
+          resonanceQuote: { text: "Tenderness can be a form of strength.", author: "Fariza Ongarsynova" },
+        },
+      },
+    ],
+  },
 ];

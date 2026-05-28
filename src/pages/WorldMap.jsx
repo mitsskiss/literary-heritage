@@ -81,17 +81,41 @@ function WorldMap() {
           {selectedPlace ? (
             <article className="mura-map-place">
               <img src={selectedPlace.image} alt="" />
-              <div>
+              <div className="mura-map-place__content">
+                <p className="mura-map-place__region">
+                  {selectedPlace.city} · {selectedPlace.region} · {selectedPlace.type}
+                </p>
                 <h2>{selectedPlace.name}</h2>
-                <p className="mura-map-place__region">{selectedPlace.region}</p>
                 <p>{selectedPlace.description}</p>
+                <dl className="mura-map-place__facts">
+                  {(selectedPlace.facts ?? [
+                    { labelKey: "placeFactAddress", value: selectedPlace.city },
+                    { labelKey: "placeFactStatus", value: selectedPlace.years },
+                    { labelKey: "navAuthors", value: selectedPlace.author },
+                  ]).map((fact) => (
+                    <div key={`${fact.labelKey}-${fact.value}`}>
+                      <dt>{t(fact.labelKey)}</dt>
+                      <dd>{fact.value}</dd>
+                    </div>
+                  ))}
+                </dl>
                 <div className="mura-map-place__stats">
                   <span>{selectedPlace.relatedWorks} {t("works").toLowerCase()}</span>
                   <span>{selectedPlace.relatedAuthors} {t("navAuthors").toLowerCase()}</span>
                   <span>{selectedPlace.relatedRoutes} {t("landingRoutes").toLowerCase()}</span>
                 </div>
+                <div className="mura-map-place__actions">
+                  <Link to={`/route/${selectedPlace.routeId}`}>{t("openLiteraryRoute")}</Link>
+                  <a href={selectedPlace.externalUrl} target="_blank" rel="noreferrer">
+                    {t("openOnMap")}
+                  </a>
+                  {selectedPlace.referenceUrl ? (
+                    <a href={selectedPlace.referenceUrl} target="_blank" rel="noreferrer">
+                      {t("placeReference")}
+                    </a>
+                  ) : null}
+                </div>
               </div>
-              <Link to={`/route/${selectedPlace.routeId}`}>{t("learnMore")}</Link>
             </article>
           ) : null}
         </div>
@@ -109,7 +133,12 @@ function WorldMap() {
             <h2>{t("popularPlaces")}</h2>
             <div className="mura-map-popular">
               {literaryWorldMarkers.slice(0, 5).map((place) => (
-                <button type="button" key={place.id} onClick={() => setSelectedId(place.id)}>
+                <button
+                  type="button"
+                  key={place.id}
+                  onClick={() => setSelectedId(place.id)}
+                  aria-label={`${t("openMarker", { name: place.name })}. ${t("openOnMap")}: ${place.city}`}
+                >
                   <img src={place.image} alt="" />
                   <span>
                     <strong>{place.name}</strong>

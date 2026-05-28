@@ -1,21 +1,38 @@
-import { useEffect, useRef, useState } from "react";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 import { useI18n } from "../i18n/I18nContext";
-import { useProgressStore } from "../store/useProgressStore";
 import { useTheme } from "../theme/ThemeContext";
+import { authors } from "../data/authors";
+import { literaryEpochs } from "../data/epochs";
+import { literaryWorldMarkers } from "../data/literaryWorldMap";
+import { readingRoutes } from "../data/routes";
+import { works } from "../data/works";
 
 function Header() {
-  const { language, languages, setLanguage, t } = useI18n();
+  const {
+    language,
+    languages,
+    label,
+    localizeAuthors,
+    localizeJourneys,
+    localizeWorks,
+    setLanguage,
+    t,
+  } = useI18n();
   const { isDark, toggleTheme } = useTheme();
   const { profile } = useAuth();
   const location = useLocation();
-  const xp = useProgressStore((state) => state.xp);
-  const lives = useProgressStore((state) => state.lives);
-  const streak = useProgressStore((state) => state.streak);
+  const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [highlightedResult, setHighlightedResult] = useState(0);
   const [localAvatar, setLocalAvatar] = useState("");
   const menuRef = useRef(null);
+  const profileRef = useRef(null);
+  const searchRef = useRef(null);
   const avatarDataUrl = profile?.avatar_data_url || localAvatar;
 
   const navItems = [
@@ -30,20 +47,28 @@ function Header() {
 
   useEffect(() => {
     setIsMenuOpen(false);
+    setIsProfileOpen(false);
+    setIsSearchOpen(false);
   }, [location.pathname]);
 
   useEffect(() => {
-    if (!isMenuOpen) return undefined;
+    if (!isMenuOpen && !isProfileOpen && !isSearchOpen) return undefined;
 
     const handlePointerDown = (event) => {
-      if (!menuRef.current?.contains(event.target)) {
+      if (isMenuOpen && !menuRef.current?.contains(event.target)) {
         setIsMenuOpen(false);
+      }
+      if (isProfileOpen && !profileRef.current?.contains(event.target)) {
+        setIsProfileOpen(false);
+      }
+      if (isSearchOpen && !searchRef.current?.contains(event.target)) {
+        setIsSearchOpen(false);
       }
     };
 
     document.addEventListener("pointerdown", handlePointerDown);
     return () => document.removeEventListener("pointerdown", handlePointerDown);
-  }, [isMenuOpen]);
+  }, [isMenuOpen, isProfileOpen, isSearchOpen]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -64,6 +89,134 @@ function Header() {
   }, []);
 
   const isRoutesSection = location.pathname === "/explore" || location.pathname.startsWith("/route/");
+  const localizedWorks = useMemo(() => localizeWorks(works), [localizeWorks]);
+  const localizedAuthors = useMemo(() => localizeAuthors(authors), [localizeAuthors]);
+  const localizedRoutes = useMemo(() => localizeJourneys(readingRoutes), [localizeJourneys]);
+
+  const searchResults = useMemo(() => {
+    const normalizedQuery = searchQuery.trim().toLowerCase();
+    if (!normalizedQuery) return [];
+
+    const makeResult = (type, title, description, href, keywords = []) => ({
+      type,
+      title,
+      description,
+      href,
+      haystack: [type, title, description, ...keywords]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase(),
+    });
+
+    const results = [
+      ...localizedWorks.map((work) =>
+        makeResult(
+          t("searchTypeWork"),
+          work.title,
+          `${work.author} · ${work.description}`,
+          `/reading/${work.id}`,
+          [work.originalTitle, work.period, work.genre, ...(work.themes ?? [])]
+        )
+      ),
+      ...localizedAuthors.map((author) =>
+        makeResult(
+          t("searchTypeAuthor"),
+          author.name,
+          author.description,
+          `/author/${encodeURIComponent(author.canonicalName ?? author.name)}`,
+          [author.period, author.years, ...(author.keyIdeas ?? []), ...(author.mainWorks ?? [])]
+        )
+      ),
+      ...literaryEpochs.map((epoch) =>
+        makeResult(
+          t("searchTypeEpoch"),
+          epoch.title,
+          `${epoch.years} · ${epoch.description}`,
+          "/epochs",
+          [epoch.id, ...(epoch.authors ?? []), ...(epoch.works ?? [])]
+        )
+      ),
+      ...localizedRoutes.map((route) =>
+        makeResult(
+          t("searchTypeRoute"),
+          route.title,
+          route.subtitle ?? route.description,
+          `/route/${route.id}`,
+          [route.focusTheme, route.difficulty, ...(route.works ?? [])]
+        )
+      ),
+      ...literaryWorldMarkers.map((place) =>
+        makeResult(
+          t("searchTypePlace"),
+          place.name,
+          `${place.city} · ${place.description}`,
+          "/map",
+          [place.author, place.region, place.type]
+        )
+      ),
+      ...Array.from(new Set(localizedWorks.flatMap((work) => work.themes ?? []))).map((theme) =>
+        makeResult(
+          t("searchTypeTheme"),
+          theme,
+          t("searchThemeDescription", { theme }),
+          `/explore?theme=${encodeURIComponent(theme)}`,
+          [label(theme)]
+        )
+      ),
+      ...localizedWorks.flatMap((work) =>
+        (work.fragments ?? []).map((fragment) =>
+          makeResult(
+            t("searchTypeQuote"),
+            fragment.reflection?.resonanceQuote?.author ?? work.title,
+            fragment.reflection?.resonanceQuote?.text ?? fragment.text,
+            `/reading/${work.id}`,
+            [work.author, work.title]
+          )
+        )
+      ),
+    ];
+
+    return results
+      .filter((result) => result.haystack.includes(normalizedQuery))
+      .slice(0, 8);
+  }, [label, localizedAuthors, localizedRoutes, localizedWorks, searchQuery, t]);
+
+  useEffect(() => {
+    setHighlightedResult(0);
+  }, [searchQuery]);
+
+  const openSearchResult = (result = searchResults[highlightedResult]) => {
+    if (!result) return;
+    setSearchQuery("");
+    setIsSearchOpen(false);
+    navigate(result.href);
+  };
+
+  const handleSearchKeyDown = (event) => {
+    if (event.key === "Escape") {
+      setIsSearchOpen(false);
+      return;
+    }
+
+    if (event.key === "ArrowDown") {
+      event.preventDefault();
+      setHighlightedResult((current) =>
+        Math.min(current + 1, Math.max(searchResults.length - 1, 0))
+      );
+      return;
+    }
+
+    if (event.key === "ArrowUp") {
+      event.preventDefault();
+      setHighlightedResult((current) => Math.max(current - 1, 0));
+      return;
+    }
+
+    if (event.key === "Enter") {
+      event.preventDefault();
+      openSearchResult();
+    }
+  };
 
   return (
     <>
@@ -93,15 +246,46 @@ function Header() {
           </nav>
 
           <div className="heritage-tools">
-            <button type="button" className="heritage-icon-button" aria-label={t("searchArchive")}>
-              <span className="heritage-icon heritage-icon--search" aria-hidden="true" />
-            </button>
-            <button type="button" className="heritage-icon-button" aria-label={t("notifications")}>
-              <span className="heritage-icon heritage-icon--bell" aria-hidden="true" />
-            </button>
-            <NavLink to="/profile" className="heritage-avatar" aria-label={t("profile")}>
-              {avatarDataUrl ? <img src={avatarDataUrl} alt="" /> : <span aria-hidden="true" />}
-            </NavLink>
+            <div className="heritage-search" ref={searchRef}>
+              <label className="heritage-search__field">
+                <span className="heritage-icon heritage-icon--search" aria-hidden="true" />
+                <input
+                  type="search"
+                  value={searchQuery}
+                  onChange={(event) => {
+                    setSearchQuery(event.target.value);
+                    setIsSearchOpen(true);
+                  }}
+                  onFocus={() => setIsSearchOpen(true)}
+                  onKeyDown={handleSearchKeyDown}
+                  placeholder={t("globalSearchPlaceholder")}
+                  aria-label={t("globalSearch")}
+                />
+              </label>
+              {isSearchOpen && searchQuery.trim() ? (
+                <div className="heritage-search__dropdown" role="listbox">
+                  {searchResults.length > 0 ? (
+                    searchResults.map((result, index) => (
+                      <button
+                        key={`${result.type}-${result.href}-${index}`}
+                        type="button"
+                        className={highlightedResult === index ? "is-active" : ""}
+                        onMouseEnter={() => setHighlightedResult(index)}
+                        onClick={() => openSearchResult(result)}
+                        role="option"
+                        aria-selected={highlightedResult === index}
+                      >
+                        <small>{result.type}</small>
+                        <strong>{result.title}</strong>
+                        <span>{result.description}</span>
+                      </button>
+                    ))
+                  ) : (
+                    <p>{t("noResults")}</p>
+                  )}
+                </div>
+              ) : null}
+            </div>
             <select
               className="heritage-language"
               value={language}
@@ -122,6 +306,24 @@ function Header() {
             >
               {isDark ? "Light" : "Dark"}
             </button>
+            <div className="heritage-profile" ref={profileRef}>
+              <button
+                type="button"
+                className="heritage-avatar"
+                aria-label={t("profileMenu")}
+                aria-expanded={isProfileOpen}
+                onClick={() => setIsProfileOpen((current) => !current)}
+              >
+                {avatarDataUrl ? <img src={avatarDataUrl} alt="" /> : <span aria-hidden="true" />}
+              </button>
+              {isProfileOpen ? (
+                <div className="heritage-profile__menu">
+                  <Link to="/profile">{t("profile")}</Link>
+                  <Link to="/progress">{t("navProgress")}</Link>
+                  <Link to="/admin">{t("adminPanel")}</Link>
+                </div>
+              ) : null}
+            </div>
             <button
               type="button"
               className="heritage-menu-toggle"
@@ -143,8 +345,44 @@ function Header() {
               {t("close")}
             </button>
           </div>
+          <div className="heritage-mobile-menu__search">
+            <label>
+              <span>{t("globalSearch")}</span>
+              <input
+                type="search"
+                value={searchQuery}
+                onChange={(event) => {
+                  setSearchQuery(event.target.value);
+                  setIsSearchOpen(true);
+                }}
+                onKeyDown={handleSearchKeyDown}
+                placeholder={t("globalSearchPlaceholder")}
+              />
+            </label>
+            {searchQuery.trim() ? (
+              <div className="heritage-mobile-menu__results">
+                {searchResults.length > 0 ? (
+                  searchResults.map((result, index) => (
+                    <button
+                      key={`${result.type}-${result.href}-${index}-mobile`}
+                      type="button"
+                      className={highlightedResult === index ? "is-active" : ""}
+                      onMouseEnter={() => setHighlightedResult(index)}
+                      onClick={() => openSearchResult(result)}
+                    >
+                      <small>{result.type}</small>
+                      <strong>{result.title}</strong>
+                      <span>{result.description}</span>
+                    </button>
+                  ))
+                ) : (
+                  <p>{t("noResults")}</p>
+                )}
+              </div>
+            ) : null}
+          </div>
           <nav>
-            {[...navItems, { label: t("profile"), href: "/profile", kind: "profile" }, { label: t("navAdmin"), href: "/admin", kind: "admin" }].map((item) => (
+            {[...navItems, { label: t("profile"), href: "/profile", kind: "profile" }, { label: t("navProgress"), href: "/progress", kind: "progress" }].map((item) => (
               <NavLink key={`${item.href}-${item.kind}-mobile`} to={item.href} end={item.href === "/"}>
                 {item.label}
               </NavLink>
@@ -164,12 +402,6 @@ function Header() {
           </div>
         </div>
       ) : null}
-
-      <div className="heritage-status-strip" aria-label={t("headerProgress")}>
-        <span>{xp} XP</span>
-        <span>{lives} {t("lifeShort")}</span>
-        <span>{streak} {t("daysShort")}</span>
-      </div>
     </>
   );
 }

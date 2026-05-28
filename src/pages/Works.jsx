@@ -4,9 +4,6 @@ import { works } from "../data/works";
 import { workMetadataById } from "../data/exploreData";
 import fallbackCover from "../assets/logo.png";
 import { useI18n } from "../i18n/I18nContext";
-import CountUp from "../components/CountUp";
-import ShinyText from "../components/ShinyText";
-import BlurText from "../components/BlurText";
 import { useProgressStore } from "../store/useProgressStore";
 import { mergeAdminWorks } from "../admin/adminContent";
 import { useAdminContent } from "../hooks/useAdminContent";
@@ -64,55 +61,16 @@ function Works() {
           <p className="works-hero__kicker">{t("worksKicker")}</p>
           <div className="works-hero__content">
             <div>
-              <h1>
-                <ShinyText
-                  text={t("allWorksTitle")}
-                  speed={2.4}
-                  delay={0.6}
-                  color="var(--text)"
-                  shineColor="var(--accent-strong)"
-                  spread={115}
-                  pauseOnHover
-                  className="works-hero__shinyTitle"
-                />
-              </h1>
-              <BlurText
-                text={t("allWorksSubtitle")}
-                delay={70}
-                animateBy="words"
-                direction="bottom"
-                stepDuration={0.46}
-                animationFrom={{ filter: "blur(6px)", opacity: 0, y: 18 }}
-                animationTo={[
-                  { filter: "blur(2px)", opacity: 0.72, y: 4 },
-                  { filter: "blur(0px)", opacity: 1, y: 0 },
-                ]}
-                easing={(value) => 1 - Math.pow(1 - value, 3)}
-                className="works-hero__blurSubtitle"
-              />
+              <h1>{t("allWorksTitle")}</h1>
+              <p>{t("allWorksSubtitle")}</p>
             </div>
             <div className="works-hero__stats" aria-label={t("catalogStats")}>
               <span>
-                <strong>
-                  <CountUp
-                    from={0}
-                    to={visibleWorks.length}
-                    duration={1.65}
-                    className="count-up-text"
-                  />
-                </strong>
+                <strong>{visibleWorks.length}</strong>
                 {t("works")}
               </span>
               <span>
-                <strong>
-                  <CountUp
-                    from={0}
-                    to={visibleThemes.length}
-                    duration={1.8}
-                    delay={0.16}
-                    className="count-up-text"
-                  />
-                </strong>
+                <strong>{visibleThemes.length}</strong>
                 {t("themes")}
               </span>
             </div>

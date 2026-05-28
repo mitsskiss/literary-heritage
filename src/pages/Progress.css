@@ -315,3 +315,77 @@
     font-size: clamp(32px, 10vw, 48px);
   }
 }
+
+/* Final MURA archive treatment */
+.progress-page {
+  padding-top: calc(var(--header-safe-offset) + 34px);
+  overflow-x: clip;
+  background:
+    radial-gradient(circle at 16% 0%, color-mix(in srgb, var(--heritage-gold) 13%, transparent), transparent 28rem),
+    linear-gradient(180deg, var(--heritage-bg) 0%, var(--heritage-bg-soft) 52%, var(--heritage-bg) 100%);
+  color: var(--heritage-ink);
+}
+
+.progress-page::before {
+  content: none !important;
+}
+
+.progress-hero,
+.progress-overview__card,
+.progress-story-card,
+.progress-reflection-card,
+.progress-empty {
+  border-color: var(--heritage-line);
+  border-radius: 8px;
+  background: var(--heritage-surface);
+  box-shadow: var(--heritage-shadow);
+}
+
+.progress-hero__eyebrow,
+.progress-overview__label,
+.progress-story-card__eyebrow,
+.progress-reflection-card__eyebrow {
+  color: var(--heritage-gold-strong);
+}
+
+.progress-hero__title,
+.progress-section__head h2,
+.progress-story-card h3,
+.progress-reflection-card h3,
+.progress-empty h3,
+.progress-overview__row h2 {
+  color: var(--heritage-ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.progress-hero__subtitle,
+.progress-story-card p,
+.progress-reflection-card p,
+.progress-empty p,
+.progress-section__head span,
+.progress-overview__row span {
+  color: var(--heritage-text);
+}
+
+.progress-stat,
+.progress-overview__badges span,
+.progress-story-card__meta span {
+  border-color: var(--heritage-line);
+  background: var(--heritage-surface-strong);
+  color: var(--heritage-ink);
+}
+
+.progress-stat strong {
+  color: var(--heritage-gold);
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 500;
+}
+
+.progress-story-card a,
+.progress-empty a {
+  border-color: var(--heritage-gold);
+  background: linear-gradient(180deg, var(--heritage-gold), var(--heritage-gold-strong));
+  color: #fff8ec;
+}

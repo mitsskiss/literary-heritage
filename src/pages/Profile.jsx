@@ -285,6 +285,9 @@ function Profile() {
             <button type="button" className="profile-action" onClick={openEditor}>
               {t("editProfile")}
             </button>
+            <Link className="profile-action is-secondary" to="/admin">
+              {t("adminPanel")}
+            </Link>
             {user ? (
               <>
                 <button

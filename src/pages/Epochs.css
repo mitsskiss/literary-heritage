@@ -130,3 +130,26 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Final MURA archive treatment */
+.epochs-page {
+  padding-top: calc(var(--header-safe-offset) + 34px);
+}
+
+.epochs-hero,
+.epoch-card {
+  border-radius: 8px;
+  box-shadow: var(--heritage-shadow);
+}
+
+.epochs-hero h1,
+.epoch-card h2 {
+  color: var(--heritage-ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 500;
+}
+
+.epochs-hero p,
+.epoch-card span {
+  color: var(--heritage-text);
+}

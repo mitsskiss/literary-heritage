@@ -284,3 +284,49 @@
     border-radius: 18px;
   }
 }
+
+/* Final MURA archive treatment */
+.auth-page {
+  padding-top: calc(var(--header-safe-offset) + 34px);
+  background:
+    radial-gradient(circle at 14% 0%, color-mix(in srgb, var(--heritage-gold) 13%, transparent), transparent 28rem),
+    linear-gradient(180deg, var(--heritage-bg) 0%, var(--heritage-bg-soft) 52%, var(--heritage-bg) 100%);
+  color: var(--heritage-ink);
+}
+
+.auth-page__title,
+.auth-card__header h2 {
+  color: var(--heritage-ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.auth-page__eyebrow,
+.auth-card__header p {
+  color: var(--heritage-gold-strong);
+}
+
+.auth-page__text,
+.auth-feature-list span,
+.auth-card__field,
+.auth-card__secondary-actions button,
+.auth-card__resend {
+  color: var(--heritage-text);
+}
+
+.auth-card,
+.auth-feature-list span,
+.auth-card__tabs,
+.auth-card__field input {
+  border-color: var(--heritage-line);
+  border-radius: 8px;
+  background: var(--heritage-surface);
+  box-shadow: var(--heritage-shadow);
+}
+
+.auth-card__tab.is-active,
+.auth-card__submit {
+  background: linear-gradient(180deg, var(--heritage-gold), var(--heritage-gold-strong));
+  color: #fff8ec;
+}

@@ -525,3 +525,57 @@
     font-size: clamp(38px, 14vw, 62px);
   }
 }
+
+/* Final MURA archive treatment */
+.reading-book-page {
+  padding-top: calc(var(--header-safe-offset) + 34px);
+  background:
+    radial-gradient(circle at 16% 0%, color-mix(in srgb, var(--heritage-gold) 13%, transparent), transparent 28rem),
+    linear-gradient(180deg, var(--heritage-bg) 0%, var(--heritage-bg-soft) 52%, var(--heritage-bg) 100%);
+  color: var(--heritage-ink);
+}
+
+.reading-book-hero,
+.reading-book-summary__card,
+.reading-chapter-card,
+.reading-fragment-card,
+.reading-book-fallback {
+  border-color: var(--heritage-line);
+  border-radius: 8px;
+  background: var(--heritage-surface);
+  box-shadow: var(--heritage-shadow);
+}
+
+.reading-book-hero__title,
+.reading-book-chapters__title,
+.reading-chapter-card__title,
+.reading-fragment-card blockquote,
+.reading-book-fallback__title {
+  color: var(--heritage-ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 500;
+}
+
+.reading-book-hero__topline span,
+.reading-book-summary__label,
+.reading-chapter-card__eyebrow,
+.reading-fragment-card__top p {
+  color: var(--heritage-gold-strong);
+}
+
+.reading-book-hero__description,
+.reading-book-hero__overview,
+.reading-book-chapters__meta,
+.reading-chapter-card__text,
+.reading-fragment-card__note,
+.reading-book-fallback__text {
+  color: var(--heritage-text);
+}
+
+.reading-book-hero__action.is-primary,
+.reading-chapter-card__action,
+.reading-book-fallback__action {
+  border-color: var(--heritage-gold);
+  background: linear-gradient(180deg, var(--heritage-gold), var(--heritage-gold-strong));
+  color: #fff8ec;
+}

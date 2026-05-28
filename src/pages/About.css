@@ -286,3 +286,47 @@
     flex-direction: column;
   }
 }
+
+/* Final MURA archive treatment */
+.about-page {
+  padding-top: calc(var(--header-safe-offset) + 34px);
+  background:
+    radial-gradient(circle at 16% 0%, color-mix(in srgb, var(--heritage-gold) 13%, transparent), transparent 28rem),
+    linear-gradient(180deg, var(--heritage-bg) 0%, var(--heritage-bg-soft) 52%, var(--heritage-bg) 100%);
+  color: var(--heritage-ink);
+}
+
+.about-hero,
+.about-card,
+.about-contact {
+  border-color: var(--heritage-line);
+  border-radius: 8px;
+  background: var(--heritage-surface);
+  box-shadow: var(--heritage-shadow);
+}
+
+.about-hero h1,
+.about-card h2,
+.about-contact h2 {
+  color: var(--heritage-ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 500;
+}
+
+.about-kicker {
+  color: var(--heritage-gold-strong);
+}
+
+.about-hero p,
+.about-card p,
+.about-contact p,
+.about-team small,
+.about-sources p {
+  color: var(--heritage-text);
+}
+
+.about-hero__actions a,
+.about-contact a {
+  background: linear-gradient(180deg, var(--heritage-gold), var(--heritage-gold-strong));
+  color: #fff8ec;
+}
