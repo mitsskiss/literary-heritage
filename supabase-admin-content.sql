@@ -69,6 +69,12 @@ for all
 using (public.is_admin(auth.uid()))
 with check (public.is_admin(auth.uid()));
 
+grant select on public.admin_content to anon, authenticated;
+grant insert, update, delete on public.admin_content to authenticated;
+grant select, insert, update, delete on public.admin_users to authenticated;
+
+notify pgrst, 'reload schema';
+
 -- After creating your account, copy its auth.users id and run one of these:
 -- insert into public.admin_users (user_id) values ('YOUR_USER_ID_HERE');
 -- or, if your profiles table has a role column:

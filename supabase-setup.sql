@@ -5,6 +5,7 @@ create table if not exists public.profiles (
   bio text,
   reading_goal text,
   avatar_data_url text,
+  role text not null default 'reader',
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
@@ -12,7 +13,8 @@ create table if not exists public.profiles (
 alter table public.profiles
   add column if not exists bio text,
   add column if not exists reading_goal text,
-  add column if not exists avatar_data_url text;
+  add column if not exists avatar_data_url text,
+  add column if not exists role text not null default 'reader';
 
 create table if not exists public.user_progress (
   user_id uuid primary key references auth.users(id) on delete cascade,
@@ -39,6 +41,12 @@ create table if not exists public.work_comments (
 alter table public.work_comments
   alter column user_id drop not null;
 
+create index if not exists work_comments_work_created_idx
+on public.work_comments (work_id, created_at desc);
+
+create index if not exists work_likes_work_idx
+on public.work_likes (work_id);
+
 alter table public.profiles enable row level security;
 alter table public.user_progress enable row level security;
 alter table public.work_likes enable row level security;
@@ -55,6 +63,12 @@ create policy "Users can update own profile"
 on public.profiles for update
 to authenticated
 using (auth.uid() = id)
+with check (auth.uid() = id);
+
+drop policy if exists "Users can insert own profile" on public.profiles;
+create policy "Users can insert own profile"
+on public.profiles for insert
+to authenticated
 with check (auth.uid() = id);
 
 drop policy if exists "Users can read own progress" on public.user_progress;
@@ -112,8 +126,11 @@ to authenticated
 using (auth.uid() = user_id);
 
 grant select on public.work_likes to anon, authenticated;
+grant insert, delete on public.work_likes to authenticated;
 grant select, insert on public.work_comments to anon, authenticated;
 grant delete on public.work_comments to authenticated;
+grant select, insert, update on public.profiles to authenticated;
+grant select, insert, update on public.user_progress to authenticated;
 
 create or replace function public.handle_new_user()
 returns trigger
@@ -142,3 +159,5 @@ drop trigger if exists on_auth_user_created on auth.users;
 create trigger on_auth_user_created
 after insert on auth.users
 for each row execute function public.handle_new_user();
+
+notify pgrst, 'reload schema';

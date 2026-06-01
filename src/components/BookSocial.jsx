@@ -110,7 +110,7 @@ function BookSocial({ work }) {
   const handleShare = async () => {
     const shareData = {
       title: work.title,
-      text: `${work.title} — ${work.author}`,
+      text: `${work.title} - ${work.author}`,
       url: workUrl,
     };
 
@@ -132,6 +132,11 @@ function BookSocial({ work }) {
     const body = draftComment.trim();
     if (!body) return;
 
+
+    if (!isSupabaseConfigured || !supabase) {
+      setMessage(t("socialNeedsSupabase"));
+      return;
+    }
     setIsSubmitting(true);
     setMessage("");
 
@@ -187,7 +192,7 @@ function BookSocial({ work }) {
             onClick={handleLike}
             disabled={!isSupabaseConfigured}
           >
-            {hasLiked ? t("liked") : t("likeWork")} В· {likesCount}
+            {hasLiked ? t("liked") : t("likeWork")} {"\u00B7"} {likesCount}
           </button>
           <button type="button" onClick={handleShare}>
             {t("shareWork")}
@@ -216,7 +221,7 @@ function BookSocial({ work }) {
           <small>
             {draftComment.length}/{MAX_COMMENT_LENGTH}
           </small>
-          <button type="submit" disabled={isSubmitting || !draftComment.trim()}>
+          <button type="submit" disabled={!isSupabaseConfigured || isSubmitting || !draftComment.trim()}>
             {isSubmitting ? t("pleaseWait") : t("publishComment")}
           </button>
         </div>
