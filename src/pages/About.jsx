@@ -1,34 +1,29 @@
 import { Link } from "react-router-dom";
-import { useI18n } from "../i18n/I18nContext";
+import { useI18n } from "../i18n/useI18n";
 import "./About.css";
 
-const contributorKeys = [
-  "aboutRoleDesigner",
-  "aboutRoleDeveloper",
-  "aboutRoleContent",
-  "aboutRoleSupervisor",
+const conceptKeys = [
+  "aboutConceptDigitalHumanities",
+  "aboutConceptYouth",
+  "aboutConceptUdl",
+  "aboutConceptTranslingual",
+  "aboutConceptStorytelling",
+  "aboutConceptGamification",
 ];
 
-const sourceKeys = [
-  "aboutSourcePrimaryTexts",
-  "aboutSourceAuthorStudies",
-  "aboutSourceLiteraryTheory",
-  "aboutSourceOfficialArchives",
+const architectureKeys = [
+  "aboutArchitectureContent",
+  "aboutArchitectureInteraction",
+  "aboutArchitectureGamification",
+  "aboutArchitectureUserData",
+  "aboutArchitectureAdmin",
 ];
 
-const requirementKeys = [
-  "aboutRequirementResponsive",
-  "aboutRequirementLocalization",
-  "aboutRequirementAuth",
-  "aboutRequirementAdmin",
-  "aboutRequirementSecurity",
-  "aboutRequirementInteractive",
-];
-
-const productMetrics = [
-  { value: "3", labelKey: "aboutMetricLanguages" },
-  { value: "CMS", labelKey: "aboutMetricCms" },
-  { value: "AA", labelKey: "aboutMetricAccess" },
+const methodKeys = [
+  "aboutMethodRepresentation",
+  "aboutMethodEngagement",
+  "aboutMethodAction",
+  "aboutMethodBridge",
 ];
 
 function About() {
@@ -41,13 +36,10 @@ function About() {
           <p className="about-kicker">{t("aboutKicker")}</p>
           <h1>{t("aboutTitle")}</h1>
           <p>{t("aboutIntro")}</p>
-          <div className="about-hero__metrics" aria-label="Project highlights">
-            {productMetrics.map((metric) => (
-              <article key={metric.labelKey}>
-                <strong>{metric.value}</strong>
-                <span>{t(metric.labelKey)}</span>
-              </article>
-            ))}
+          <div className="about-hero__statement" aria-label={t("aboutMethodologySummary")}>
+            <span>{t("aboutStatementArchive")}</span>
+            <span>{t("aboutStatementAccess")}</span>
+            <span>{t("aboutStatementArchitecture")}</span>
           </div>
           <div className="about-hero__actions">
             <Link to="/works">{t("navWorks")}</Link>
@@ -67,18 +59,24 @@ function About() {
             <h2>{t("aboutUniversityTitle")}</h2>
             <p>{t("aboutUniversityText")}</p>
           </article>
+
+          <article className="about-card">
+            <p className="about-kicker">{t("aboutDifferenceKicker")}</p>
+            <h2>{t("aboutDifferenceTitle")}</h2>
+            <p>{t("aboutDifferenceText")}</p>
+          </article>
         </section>
 
         <section className="about-card">
           <div className="about-section-heading">
-            <p className="about-kicker">{t("aboutTeamKicker")}</p>
-            <h2>{t("aboutTeamTitle")}</h2>
+            <p className="about-kicker">{t("aboutConceptKicker")}</p>
+            <h2>{t("aboutConceptTitle")}</h2>
           </div>
-          <div className="about-team">
-            {contributorKeys.map((key) => (
+          <div className="about-team about-concept-grid">
+            {conceptKeys.map((key) => (
               <article key={key}>
-                <span>{t(key)}</span>
-                <strong>{t(`${key}Name`)}</strong>
+                <span>{t(`${key}Kicker`)}</span>
+                <strong>{t(key)}</strong>
                 <small>{t(`${key}Text`)}</small>
               </article>
             ))}
@@ -87,11 +85,11 @@ function About() {
 
         <section className="about-card">
           <div className="about-section-heading">
-            <p className="about-kicker">{t("aboutSourcesKicker")}</p>
-            <h2>{t("aboutSourcesTitle")}</h2>
+            <p className="about-kicker">{t("aboutArchitectureKicker")}</p>
+            <h2>{t("aboutArchitectureTitle")}</h2>
           </div>
           <div className="about-sources">
-            {sourceKeys.map((key) => (
+            {architectureKeys.map((key) => (
               <article key={key}>
                 <strong>{t(key)}</strong>
                 <p>{t(`${key}Text`)}</p>
@@ -106,7 +104,7 @@ function About() {
             <h2>{t("aboutComplianceTitle")}</h2>
           </div>
           <div className="about-checklist" aria-label="Requirement checklist">
-            {requirementKeys.map((key) => (
+            {methodKeys.map((key) => (
               <span key={key}>{t(key)}</span>
             ))}
           </div>

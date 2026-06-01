@@ -1,16 +1,92 @@
-# React + Vite
+# MURA - Kazakh Literary Heritage
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+MURA is a React/Vite digital humanities platform for exploring Kazakh literary heritage through authors, works, places, guided reading routes, multilingual interpretation, and reader progress.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Interactive home, works, authors, epochs, map, and route pages
+- Chapter-based reading experiences with choices, feedback, quizzes, and progress
+- English, Russian, and Kazakh interface translations
+- Local progress, favorites, profile settings, and reading state
+- Optional Supabase authentication, progress sync, comments, likes, and admin content
+- GitHub Pages deployment support with `base: "/literary-heritage/"`
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React 19
+- React Router 7
+- Vite / rolldown-vite
+- Zustand for local progress state
+- Supabase for optional auth, sync, comments, likes, and admin data
+- GSAP, Motion, and OGL for UI motion/visual effects
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Install dependencies:
+
+```bash
+npm install
+```
+
+Start the dev server:
+
+```bash
+npm run dev
+```
+
+The local app is served under:
+
+```text
+http://127.0.0.1:5173/literary-heritage/
+```
+
+## Environment
+
+Copy `.env.example` to `.env` and add Supabase values if you want cloud auth and shared content:
+
+```env
+VITE_SUPABASE_URL=https://your-project-id.supabase.co
+VITE_SUPABASE_ANON_KEY=your-public-anon-key
+```
+
+The app still works without Supabase, but auth, remote progress sync, comments, likes, and shared admin content fall back or show setup guidance.
+
+## Supabase Setup
+
+Run these SQL files in the Supabase SQL Editor:
+
+1. `supabase-setup.sql` for profiles, progress, likes, comments, and row-level security.
+2. `supabase-admin-content.sql` for shared admin content and admin-user access.
+
+After creating your account, make it an admin using the instructions at the bottom of `supabase-admin-content.sql`.
+
+## Quality Checks
+
+Run lint:
+
+```bash
+npm run lint
+```
+
+Build production assets:
+
+```bash
+npm run build
+```
+
+Preview the production build:
+
+```bash
+npm run preview
+```
+
+## Deployment
+
+Build and publish `dist` to GitHub Pages:
+
+```bash
+npm run build
+npm run deploy
+```
+
+The Vite config already sets the correct base path for the `literary-heritage` repository.

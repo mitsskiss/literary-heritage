@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { literaryEpochs } from "../data/epochs";
 import { works } from "../data/works";
-import { useI18n } from "../i18n/I18nContext";
+import { useI18n } from "../i18n/useI18n";
 import "./Epochs.css";
 
 function Epochs() {

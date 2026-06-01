@@ -1,8 +1,8 @@
-import abaiCover from "../assets/authors/abai.png";
-import auezovCover from "../assets/mura/portal-authors.png";
-import seifullinCover from "../assets/mura/collection-prose.png";
-import magzhanCover from "../assets/mura/collection-poetry.png";
-import ilyasCover from "../assets/mura/collection-routes.png";
+import abaiCover from "../assets/authors/abai.jpg";
+import auezovCover from "../assets/mura/portal-authors.jpg";
+import seifullinCover from "../assets/mura/collection-prose.jpg";
+import magzhanCover from "../assets/mura/collection-poetry.jpg";
+import ilyasCover from "../assets/mura/collection-routes.jpg";
 
 export const timelineBounds = {
   min: 1400,

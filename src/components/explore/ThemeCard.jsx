@@ -1,4 +1,4 @@
-import { useI18n } from "../../i18n/I18nContext";
+import { useI18n } from "../../i18n/useI18n";
 
 function ThemeCard({ theme, relatedWorks, onExplore }) {
   const { t } = useI18n();

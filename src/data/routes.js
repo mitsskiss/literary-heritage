@@ -89,9 +89,9 @@ export const readingRoutes = [
       {
         type: "finish",
         title: "Completion",
-        text: "Earn XP, unlock a route badge, and continue to Alash voices.",
+        text: "Receive soft progress feedback and continue to Alash voices.",
         content: "You completed the Path of Abai. The next recommended route follows language, freedom, and civic responsibility in Alash literature.",
-        context: "Completion turns reading into progress: XP, memory, and a next route.",
+        context: "Completion turns reading into reflection, memory, and a next route.",
         explanation: "This final stage summarizes the route and points the reader forward.",
         quote: "A living word continues in the reader.",
         source: "Route completion",
@@ -117,7 +117,7 @@ export const readingRoutes = [
       { type: "analysis", title: "Analysis", text: "Freedom appears through language, duty, and the courage to remember." },
       { type: "quotes", title: "Quotes", text: "Read key lines as calls to cultural responsibility." },
       { type: "task", title: "Interactive task", text: "Choose the best interpretation and save a reflection." },
-      { type: "finish", title: "Completion", text: "Receive XP and a recommendation for the next route." },
+      { type: "finish", title: "Completion", text: "Receive soft progress feedback and a recommendation for the next route." },
     ],
   },
   {
@@ -161,7 +161,7 @@ export const readingRoutes = [
       { type: "analysis", title: "Analysis", text: "Memory becomes a moral act rather than nostalgia." },
       { type: "quotes", title: "Quotes", text: "Read quoted fragments with cultural and historical explanations." },
       { type: "task", title: "Interactive task", text: "Answer a comprehension question about memory and responsibility." },
-      { type: "finish", title: "Completion", text: "Earn XP and unlock the Heritage Keeper recommendation." },
+      { type: "finish", title: "Completion", text: "Receive soft progress feedback and open the Heritage Keeper recommendation." },
     ],
   },
   {

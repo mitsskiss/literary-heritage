@@ -1288,3 +1288,25 @@
   background: linear-gradient(180deg, var(--heritage-gold), var(--heritage-gold-strong));
   color: #fff8ec;
 }
+
+/* Final chapter control cleanup */
+.chapter-choice,
+.chapter-challenge,
+.chapter-progress-pill,
+.chapter-sceneCard__meta span,
+.chapter-language-column select,
+.chapter-language-toggle,
+.chapter-result__action,
+.chapter-completion__action,
+.chapter-final-quiz button {
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.chapter-topbar__progress strong,
+.chapter-result__score strong,
+.chapter-completion__score strong {
+  font-family: Inter, system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
+  font-weight: 720;
+}

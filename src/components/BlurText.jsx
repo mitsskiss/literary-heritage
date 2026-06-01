@@ -1,4 +1,4 @@
-import { motion } from "motion/react";
+import { motion as Motion } from "motion/react";
 import { useEffect, useRef, useState, useMemo } from "react";
 
 const buildKeyframes = (from, steps) => {
@@ -88,7 +88,7 @@ const BlurText = ({
         };
 
         return (
-          <motion.span
+          <Motion.span
             className="blur-text__segment"
             key={`${segment}-${index}`}
             initial={fromSnapshot}
@@ -98,7 +98,7 @@ const BlurText = ({
           >
             {segment === " " ? "\u00A0" : segment}
             {animateBy === "words" && index < elements.length - 1 && "\u00A0"}
-          </motion.span>
+          </Motion.span>
         );
       })}
     </p>

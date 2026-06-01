@@ -2,15 +2,15 @@ import { Link } from "react-router-dom";
 import { useMemo, useState } from "react";
 import { works } from "../data/works";
 import { workMetadataById } from "../data/exploreData";
-import fallbackCover from "../assets/logo.png";
-import { useI18n } from "../i18n/I18nContext";
+import fallbackCover from "../assets/logo.jpg";
+import { useI18n } from "../i18n/useI18n";
 import { useProgressStore } from "../store/useProgressStore";
 import { mergeAdminWorks } from "../admin/adminContent";
 import { useAdminContent } from "../hooks/useAdminContent";
 import "./Works.css";
 
 function Works() {
-  const { t, language, localizeWorks, localizeMetadata } = useI18n();
+  const { t, label, language, localizeWorks, localizeMetadata } = useI18n();
   const [query, setQuery] = useState("");
   const [activeTheme, setActiveTheme] = useState("all");
   const { content: adminContent } = useAdminContent();
@@ -33,24 +33,26 @@ function Works() {
   );
 
   const themes = useMemo(
-    () => [...new Set(catalogWorks.flatMap((work) => work.themes))],
+    () => [...new Set(catalogWorks.flatMap((work) => work.canonicalThemes ?? work.themes))],
     [catalogWorks]
   );
 
   const normalizedQuery = query.trim().toLowerCase();
   const visibleWorks = catalogWorks.filter((work) => {
-    const matchesTheme = activeTheme === "all" || work.themes.includes(activeTheme);
+    const canonicalThemes = work.canonicalThemes ?? work.themes;
+    const matchesTheme = activeTheme === "all" || canonicalThemes.includes(activeTheme);
     const matchesQuery =
       normalizedQuery.length === 0 ||
       [work.title, work.author, work.period, work.type, work.description]
         .filter(Boolean)
         .some((value) => value.toLowerCase().includes(normalizedQuery)) ||
-      work.themes.some((theme) => theme.toLowerCase().includes(normalizedQuery));
+      work.themes.some((theme) => theme.toLowerCase().includes(normalizedQuery)) ||
+      canonicalThemes.some((theme) => label(theme).toLowerCase().includes(normalizedQuery));
 
     return matchesTheme && matchesQuery;
   });
 
-  const visibleThemes = [...new Set(visibleWorks.flatMap((work) => work.themes))];
+  const visibleThemes = [...new Set(visibleWorks.flatMap((work) => work.canonicalThemes ?? work.themes))];
   const isFavorite = (workId) =>
     favorites.some((favorite) => favorite.type === "work" && favorite.id === workId);
 
@@ -103,7 +105,7 @@ function Works() {
                 className={activeTheme === theme ? "is-active" : ""}
                 onClick={() => setActiveTheme(theme)}
               >
-                {theme}
+                {label(theme)}
               </button>
             ))}
           </div>
@@ -151,7 +153,7 @@ function Works() {
                     })
                   }
                 >
-                  {isFavorite(work.id) ? "♥" : "♡"}
+                  {isFavorite(work.id) ? "\u2665" : "\u2661"}
                 </button>
 
                 <div className="works-card__body">
@@ -170,13 +172,13 @@ function Works() {
                   <p>{work.description}</p>
 
                   <div className="works-card__themes">
-                    {work.themes.slice(0, 4).map((theme) => (
+                    {(work.canonicalThemes ?? work.themes).slice(0, 4).map((theme) => (
                       <button
                         type="button"
                         key={theme}
                         onClick={() => setActiveTheme(theme)}
                       >
-                        {theme}
+                        {label(theme)}
                       </button>
                     ))}
                   </div>
@@ -185,7 +187,7 @@ function Works() {
                     <Link to={`/reading/${work.id}`} className="works-card__primary">
                       {t("startReading")}
                     </Link>
-                    <Link to={`/explore?theme=${encodeURIComponent(work.themes[0])}`}>
+                    <Link to={`/explore?theme=${encodeURIComponent((work.canonicalThemes ?? work.themes)[0])}`}>
                       {t("exploreTheme")}
                     </Link>
                   </div>

@@ -1,13 +1,13 @@
 import { useMemo, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import kazakhstanMap from "../assets/mura/map-kazakhstan-v2.png";
+import kazakhstanMap from "../assets/mura/map-kazakhstan-v2.jpg";
 import { literaryWorldMarkers, mapCategoryMeta } from "../data/literaryWorldMap";
-import { useI18n } from "../i18n/I18nContext";
+import { useI18n } from "../i18n/useI18n";
 import { useProgressStore } from "../store/useProgressStore";
 import "./WorldMap.css";
 
 function WorldMap() {
-  const { t } = useI18n();
+  const { t, localizeMapCategory, localizeMapMarker } = useI18n();
   const markMapVisited = useProgressStore((state) => state.markMapVisited);
   const [regionFilter, setRegionFilter] = useState("all");
   const [authorFilter, setAuthorFilter] = useState("all");
@@ -18,23 +18,35 @@ function WorldMap() {
     markMapVisited();
   }, [markMapVisited]);
 
-  const regions = [...new Set(literaryWorldMarkers.map((place) => place.region))];
-  const authors = [...new Set(literaryWorldMarkers.map((place) => place.author))];
-  const types = [...new Set(literaryWorldMarkers.map((place) => place.type))];
+  const localizedPlaces = useMemo(
+    () => literaryWorldMarkers.map(localizeMapMarker),
+    [localizeMapMarker]
+  );
+  const regions = [...new Set(localizedPlaces.map((place) => place.region))];
+  const authors = [...new Set(localizedPlaces.map((place) => place.author))];
+  const types = [...new Set(localizedPlaces.map((place) => place.type))];
 
   const visiblePlaces = useMemo(
     () =>
-      literaryWorldMarkers.filter(
+      localizedPlaces.filter(
         (place) =>
           (regionFilter === "all" || place.region === regionFilter) &&
           (authorFilter === "all" || place.author === authorFilter) &&
           (typeFilter === "all" || place.type === typeFilter)
       ),
-    [authorFilter, regionFilter, typeFilter]
+    [authorFilter, localizedPlaces, regionFilter, typeFilter]
   );
 
   const selectedPlace =
-    visiblePlaces.find((place) => place.id === selectedId) ?? visiblePlaces[0] ?? literaryWorldMarkers[0];
+    visiblePlaces.find((place) => place.id === selectedId) ?? visiblePlaces[0] ?? localizedPlaces[0];
+  const relatedWorksCount = localizedPlaces.reduce(
+    (sum, place) => sum + (Number(place.relatedWorks) || 0),
+    0
+  );
+  const relatedAuthorsCount = localizedPlaces.reduce(
+    (sum, place) => sum + (Number(place.relatedAuthors) || 0),
+    0
+  );
 
   const resetFilters = () => {
     setRegionFilter("all");
@@ -55,12 +67,11 @@ function WorldMap() {
         <div className="mura-map-board">
           <div className="mura-map-canvas" style={{ backgroundImage: `url(${kazakhstanMap})` }}>
             <div className="mura-map-controls">
-              <button type="button">+</button>
-              <button type="button">-</button>
-              <button type="button">{t("center")}</button>
+              <span>{t("mapArchiveLayer")}</span>
+              <strong>{visiblePlaces.length} {t("literaryPlaces")}</strong>
             </div>
-            {visiblePlaces.map((place) => {
-              const meta = mapCategoryMeta[place.category] ?? mapCategoryMeta.museum;
+            {visiblePlaces.map((place, index) => {
+              const meta = localizeMapCategory(place.category, mapCategoryMeta[place.category] ?? mapCategoryMeta.museum);
               return (
                 <button
                   type="button"
@@ -70,9 +81,9 @@ function WorldMap() {
                   onClick={() => setSelectedId(place.id)}
                   aria-label={t("openMarker", { name: place.name })}
                 >
-                  <span aria-hidden="true" />
+                  <span aria-hidden="true">{index + 1}</span>
                   <strong>{place.city}</strong>
-                  <small>{place.name}</small>
+                  <small>{meta.label}</small>
                 </button>
               );
             })}
@@ -82,8 +93,11 @@ function WorldMap() {
             <article className="mura-map-place">
               <img src={selectedPlace.image} alt="" />
               <div className="mura-map-place__content">
-                <p className="mura-map-place__region">
-                  {selectedPlace.city} · {selectedPlace.region} · {selectedPlace.type}
+                <p
+                  className="mura-map-place__region"
+                  data-label={[selectedPlace.city, selectedPlace.region, selectedPlace.type].filter(Boolean).join(" - ")}
+                >
+                  {selectedPlace.city} В· {selectedPlace.region} В· {selectedPlace.type}
                 </p>
                 <h2>{selectedPlace.name}</h2>
                 <p>{selectedPlace.description}</p>
@@ -132,7 +146,7 @@ function WorldMap() {
           <section>
             <h2>{t("popularPlaces")}</h2>
             <div className="mura-map-popular">
-              {literaryWorldMarkers.slice(0, 5).map((place) => (
+              {localizedPlaces.slice(0, 5).map((place) => (
                 <button
                   type="button"
                   key={place.id}
@@ -152,11 +166,11 @@ function WorldMap() {
       </section>
 
       <section className="mura-map-stats">
-        <article><strong>{literaryWorldMarkers.length * 6}+</strong><span>{t("literaryPlaces")}</span></article>
-        <article><strong>{regions.length}+</strong><span>{t("regions")}</span></article>
-        <article><strong>100+</strong><span>{t("relatedWorks")}</span></article>
-        <article><strong>30+</strong><span>{t("navAuthors")}</span></article>
-        <article><strong>5</strong><span>{t("landingRoutes")}</span></article>
+        <article><strong>{localizedPlaces.length}</strong><span>{t("literaryPlaces")}</span></article>
+        <article><strong>{regions.length}</strong><span>{t("regions")}</span></article>
+        <article><strong>{relatedWorksCount}</strong><span>{t("relatedWorks")}</span></article>
+        <article><strong>{relatedAuthorsCount}</strong><span>{t("navAuthors")}</span></article>
+        <article><strong>{new Set(localizedPlaces.map((place) => place.routeId).filter(Boolean)).size}</strong><span>{t("landingRoutes")}</span></article>
       </section>
     </main>
   );

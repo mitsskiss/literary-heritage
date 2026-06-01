@@ -1,4 +1,4 @@
-import fallbackCover from "../assets/logo.png";
+import fallbackCover from "../assets/logo.jpg";
 
 export const adminContentStorageKey = "literary_admin_content_v1";
 export const adminContentEventName = "literary-admin-content-change";
@@ -49,11 +49,13 @@ function splitList(value) {
     .filter(Boolean);
 }
 
-function normalizeId(value, fallback = "item") {
+export function normalizeId(value, fallback = "item") {
   const slug = String(value ?? "")
+    .normalize("NFKC")
     .trim()
     .toLowerCase()
-    .replace(/[^a-z0-9а-яёәіңғүұқөһ]+/gi, "-")
+    .replace(/[^\p{L}\p{N}]+/gu, "-")
+    .replace(/-+/g, "-")
     .replace(/^-+|-+$/g, "");
 
   return slug || `${fallback}-${Date.now()}`;

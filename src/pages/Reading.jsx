@@ -12,7 +12,7 @@ import { useAdminContent } from "../hooks/useAdminContent";
 import { useProgressStore } from "../store/useProgressStore";
 import BookSocial from "../components/BookSocial";
 import "./Reading.css";
-import { useI18n } from "../i18n/I18nContext";
+import { useI18n } from "../i18n/useI18n";
 
 function Reading() {
   const { t, language, localizeMetadata, localizeStoryBook, localizeWork } = useI18n();
@@ -299,7 +299,7 @@ function Reading() {
             <div className="reading-book-summary__meta">
               <span>{t("levelValue", { level })}</span>
               <span>{t("dayStreak", { count: streak })}</span>
-              <span>{t("tone", { mood: metadata?.mood ?? "Reflective" })}</span>
+              <span>{t("tone", { mood: metadata?.mood ?? t("reflectiveMood") })}</span>
             </div>
           </article>
         </section>
@@ -334,7 +334,7 @@ function Reading() {
                 <div className="reading-chapter-card__meta">
                   <span>{chapter.scenes.length} {t("scenes").toLowerCase()}</span>
                   <span>{chapter.estimatedMinutes} {t("min")}</span>
-                  <span>{chapter.completionXp} XP</span>
+                  <span>{t("readingPointsValue", { count: chapter.completionXp })}</span>
                 </div>
 
                 <Link

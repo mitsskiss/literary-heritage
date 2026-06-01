@@ -1,10 +1,10 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   literaryTimelineEntries,
   timelineBounds,
 } from "../../data/literaryTimeline";
-import { useI18n } from "../../i18n/I18nContext";
+import { useI18n } from "../../i18n/useI18n";
 
 function clamp(value, min, max) {
   return Math.min(Math.max(value, min), max);
@@ -110,7 +110,7 @@ function LiteraryTimeline() {
     };
   }, [timelineYear]);
 
-  const animateScroller = (targetLeft) => {
+  const animateScroller = useCallback((targetLeft) => {
     const scroller = scrollerRef.current;
     if (!scroller) return;
 
@@ -140,9 +140,9 @@ function LiteraryTimeline() {
     };
 
     animationFrameRef.current = requestAnimationFrame(tick);
-  };
+  }, []);
 
-  const centerEntry = (entryId) => {
+  const centerEntry = useCallback((entryId) => {
     const scroller = scrollerRef.current;
     if (!scroller || !entryId) return;
 
@@ -153,7 +153,7 @@ function LiteraryTimeline() {
       element.offsetLeft - scroller.clientWidth / 2 + element.clientWidth / 2;
 
     animateScroller(targetLeft);
-  };
+  }, [animateScroller]);
 
   useEffect(() => {
     if (!selectedEntry?.id) return;
@@ -165,7 +165,7 @@ function LiteraryTimeline() {
     return () => {
       window.clearTimeout(timeoutId);
     };
-  }, [selectedEntry?.id]);
+  }, [centerEntry, selectedEntry?.id]);
 
   const handleYearChange = (event) => {
     setTimelineYear(Number(event.target.value));
@@ -231,7 +231,7 @@ function LiteraryTimeline() {
           onClick={() => moveSelection(-1)}
           aria-label={t("timelineLeft")}
         >
-          ←
+          {"\u2190"}
         </button>
 
         <div className="explore-timeline__yearControl">
@@ -257,7 +257,7 @@ function LiteraryTimeline() {
           onClick={() => moveSelection(1)}
           aria-label={t("timelineRight")}
         >
-          →
+          {"\u2192"}
         </button>
       </div>
 

@@ -1,15 +1,18 @@
 import { Link } from "react-router-dom";
-import { useI18n } from "../i18n/I18nContext";
-import homeHero from "../assets/mura/home-hero-v2.png";
-import collectionPoetry from "../assets/mura/collection-poetry.png";
-import collectionProse from "../assets/mura/collection-prose.png";
-import collectionFolklore from "../assets/mura/collection-folklore.png";
-import collectionThoughts from "../assets/mura/collection-thoughts.png";
-import collectionRoutes from "../assets/mura/collection-routes.png";
-import portalAuthors from "../assets/mura/portal-authors.png";
-import portalWorks from "../assets/mura/portal-works.png";
-import portalEpochs from "../assets/mura/portal-epochs.png";
-import portalQuotes from "../assets/mura/portal-quotes.png";
+import { useI18n } from "../i18n/useI18n";
+import { authors } from "../data/authors";
+import { readingRoutes } from "../data/routes";
+import { works } from "../data/works";
+import homeHero from "../assets/mura/home-hero-v2.jpg";
+import collectionPoetry from "../assets/mura/collection-poetry.jpg";
+import collectionProse from "../assets/mura/collection-prose.jpg";
+import collectionFolklore from "../assets/mura/collection-folklore.jpg";
+import collectionThoughts from "../assets/mura/collection-thoughts.jpg";
+import collectionRoutes from "../assets/mura/collection-routes.jpg";
+import portalAuthors from "../assets/mura/portal-authors.jpg";
+import portalWorks from "../assets/mura/portal-works.jpg";
+import portalEpochs from "../assets/mura/portal-epochs.jpg";
+import portalQuotes from "../assets/mura/portal-quotes.jpg";
 
 function Landing() {
   const { t } = useI18n();
@@ -42,10 +45,10 @@ function Landing() {
   ];
 
   const stats = [
-    { value: "100+", label: t("navAuthors") },
-    { value: "500+", label: t("navWorks") },
-    { value: "3", label: t("language") },
-    { value: t("landingRoutes"), label: t("startGuidedRoute") },
+    { value: authors.length, label: t("navAuthors") },
+    { value: works.length, label: t("navWorks") },
+    { value: "KZ/RU/EN", label: t("landingCulturalAccess") },
+    { value: readingRoutes.length, label: t("landingRoutes") },
   ];
 
   const collections = [
@@ -60,7 +63,7 @@ function Landing() {
     { title: t("compareLanguages"), text: t("landingMultilingualText") },
     { title: t("landingCompareTexts"), text: t("landingCompareText") },
     { title: t("interactiveReading"), text: t("landingInteractiveText") },
-    { title: t("headerProgress"), text: t("landingProgressText") },
+    { title: t("dashboard"), text: t("landingProgressText") },
   ];
 
   return (
@@ -160,9 +163,9 @@ function Landing() {
         <div className="miras-footer__subscribe">
           <span>{t("landingSubscribe")}</span>
           <div>
-            <input aria-label="Email" placeholder="Ваш e-mail" />
+            <input aria-label="Email" placeholder="Email" />
             <button type="button" aria-label={t("landingSubscribe")}>
-              →
+              {"\u2192"}
             </button>
           </div>
         </div>

@@ -429,3 +429,18 @@
     border-bottom: 0;
   }
 }
+
+/* Final author page control cleanup */
+.author-profile-themes span,
+.author-work-card__tags span {
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.author-profile-statband strong,
+.authors-hero__seal strong {
+  font-family: Inter, system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
+  font-weight: 720;
+  letter-spacing: -0.01em;
+}

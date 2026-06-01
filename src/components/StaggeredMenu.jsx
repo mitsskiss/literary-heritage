@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { gsap } from "gsap";
-import { useI18n } from "../i18n/I18nContext";
+import { useI18n } from "../i18n/useI18n";
 import "./StaggeredMenu.css";
 
 function StaggeredMenu({
@@ -71,7 +71,7 @@ function StaggeredMenu({
     });
 
     return () => ctx.revert();
-  }, [menuButtonColor, position]);
+  }, [menuButtonColor]);
 
   const buildOpenTimeline = useCallback(() => {
     const panel = panelRef.current;
@@ -117,7 +117,7 @@ function StaggeredMenu({
 
     openTlRef.current = tl;
     return tl;
-  }, [position]);
+  }, []);
 
   const playOpen = useCallback(() => {
     if (busyRef.current) return;

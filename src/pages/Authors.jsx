@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { authors } from "../data/authors";
 import { works } from "../data/works";
-import { useI18n } from "../i18n/I18nContext";
+import { useI18n } from "../i18n/useI18n";
 import { mergeAdminAuthors, mergeAdminWorks } from "../admin/adminContent";
 import { useAdminContent } from "../hooks/useAdminContent";
 import "./Author.css";
@@ -58,7 +58,7 @@ function Authors() {
                   </p>
 
                   <span className="author-link">
-                    {t("openAuthor")} <span aria-hidden="true">→</span>
+                    {t("openAuthor")} <span aria-hidden="true">{"\u2192"}</span>
                   </span>
                 </div>
               </Link>
@@ -71,4 +71,3 @@ function Authors() {
 }
 
 export default Authors;
-

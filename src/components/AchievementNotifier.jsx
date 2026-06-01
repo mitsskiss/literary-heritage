@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { useI18n } from "../i18n/I18nContext";
+import { useI18n } from "../i18n/useI18n";
 import { getAchievementDefinitions } from "../lib/achievementRules";
 import { useProgressStore } from "../store/useProgressStore";
 import "./AchievementNotifier.css";
@@ -105,7 +105,7 @@ function AchievementNotifier() {
         onClick={() => setActiveAchievement(null)}
         aria-label={t("close")}
       >
-        ×
+        Г—
       </button>
       <div className="achievement-toast__icon" aria-hidden="true">
         {activeAchievement.icon}

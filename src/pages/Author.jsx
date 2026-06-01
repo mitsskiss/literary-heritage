@@ -1,7 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { works } from "../data/works";
 import { authors } from "../data/authors";
-import { useI18n } from "../i18n/I18nContext";
+import { useI18n } from "../i18n/useI18n";
 import { useProgressStore } from "../store/useProgressStore";
 import { mergeAdminAuthors, mergeAdminWorks } from "../admin/adminContent";
 import { useAdminContent } from "../hooks/useAdminContent";
@@ -66,7 +66,7 @@ function Author() {
     <main className="author-page heritage-archive-page">
       <div className="author-page__container">
         <Link to="/authors" className="author-page__back">
-          ← {t("backToAuthors")}
+          {"\u2190"} {t("backToAuthors")}
         </Link>
 
         <section className="author-profile-hero heritage-panel">
@@ -188,7 +188,7 @@ function Author() {
                     <span key={theme}>{theme}</span>
                   ))}
                 </div>
-                <strong>{t("openWork")} →</strong>
+                <strong>{t("openWork")} {"\u2192"}</strong>
               </div>
             </Link>
           ))}

@@ -1,10 +1,10 @@
-﻿import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { readingRoutes } from "../data/routes";
 import { works } from "../data/works";
-import { useI18n } from "../i18n/I18nContext";
+import { useI18n } from "../i18n/useI18n";
 import { useProgressStore } from "../store/useProgressStore";
-import routesHero from "../assets/mura/routes-hero.png";
+import routesHero from "../assets/mura/routes-hero.jpg";
 import "./RoutePage.css";
 
 const ROUTE_STEP_STORAGE_PREFIX = "mura_route_step:";
@@ -137,7 +137,7 @@ function RoutePage() {
   const uniqueAuthors = new Set(routeWorks.map((work) => work.author)).size || route.authorsCount || 1;
   const heroImage = route.heroImage ?? routesHero;
   const portraitImage = route.portraitImage ?? routeWorks[0]?.image;
-  const routeDifficulty = route.difficulty ?? labels.medium;
+  const routeDifficulty = route.difficulty === "Medium" ? labels.medium : route.difficulty ?? labels.medium;
   const routeLanguages = route.languages ?? "KZ / RU / EN";
   const getStepTitle = (step) => t(`routeStep_${step.type}`);
   const stepContent = t(`routeStepContent_${activeStep.type}`);
@@ -301,7 +301,7 @@ function RoutePage() {
                   className={`${isCompleted ? "is-completed" : ""} ${isCurrent ? "is-current" : ""}`}
                 >
                   <button type="button" onClick={() => setCurrentStep(index)}>
-                    <span>{isCompleted ? "✓" : index + 1}</span>
+                    <span>{isCompleted ? "?" : index + 1}</span>
                     <strong>{getStepTitle(step)}</strong>
                   </button>
                 </li>
@@ -354,14 +354,16 @@ function RoutePage() {
                 <p>{route.subtitle}</p>
               </div>
               <button type="button" onClick={finishRoute}>
-                {isRouteCompleted ? labels.completedRoute : `+${ROUTE_XP_REWARD} XP`}
+                {isRouteCompleted
+                  ? labels.completedRoute
+                  : t("readingPointsDelta", { count: ROUTE_XP_REWARD })}
               </button>
             </div>
           ) : null}
 
           <div className="route-stage-nav">
             <button type="button" onClick={goToPreviousStep} disabled={currentStep === 0}>
-              ← {labels.previousStage}
+              {"<"} {labels.previousStage}
             </button>
             <span>{currentStep + 1} / {steps.length}</span>
             {currentStep === steps.length - 1 ? (
@@ -370,7 +372,7 @@ function RoutePage() {
               </button>
             ) : (
               <button type="button" onClick={goToNextStep}>
-                {labels.nextStage} →
+                {labels.nextStage} {">"}
               </button>
             )}
           </div>
@@ -410,7 +412,7 @@ function RoutePage() {
                 <small>— {activeWork?.author ?? route.title}</small>
               ) : (
                 <Link to={activeWork ? `/reading/${activeWork.id}` : "/works"}>
-                  {activeWork ? activeWork.title : labels.notReady} →
+                  {activeWork ? activeWork.title : labels.notReady} {"›"}
                 </Link>
               )}
             </article>

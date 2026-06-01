@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
 import { useAuth } from "../auth/AuthContext";
 import { useProgressSync } from "../hooks/useProgressSync";
-import { useI18n } from "../i18n/I18nContext";
+import { useI18n } from "../i18n/useI18n";
 import { useTheme } from "../theme/ThemeContext";
 import {
   getAchievementDefinitions,
@@ -55,7 +55,7 @@ function Profile() {
   const [draftInfo, setDraftInfo] = useState(emptyPersonalInfo);
   const [isEditing, setIsEditing] = useState(false);
   const [profileMessage, setProfileMessage] = useState("");
-  const [userSettings, setUserSettings] = useState(emptyUserSettings);
+  const [, setUserSettings] = useState(emptyUserSettings);
   const [draftSettings, setDraftSettings] = useState(emptyUserSettings);
 
   useEffect(() => {
@@ -108,6 +108,8 @@ function Profile() {
 
   const readerName =
     personalInfo.displayName || profile?.display_name || user?.email || t("reader");
+  const canOpenAdmin = profile?.role === "admin";
+  const adminSyncMode = user && isConfigured ? "Supabase" : t("adminLocalStorage");
   const { rows, completedChapters, startedWorks, completedWorks } =
     getReadingStats(storyProgress, localizeWork);
   const currentLevelXp = (level - 1) * XP_PER_LEVEL;
@@ -228,7 +230,7 @@ function Profile() {
       <div className="profile-shell">
         <header className="profile-topbar">
           <Link className="profile-topbar__back" to="/">
-            ‹
+            {t("back")}
           </Link>
           <div>
             <p className="profile-topbar__title">{t("myProfile")}</p>
@@ -254,7 +256,7 @@ function Profile() {
                 <span className="profile-level-pill">
                   {formatTemplate(t("levelValue"), { level })}
                 </span>
-                  <span>{xp} XP</span>
+                  <span>{t("readingPointsValue", { count: xp })}</span>
                 </div>
               {aboutLines.length > 0 ? (
                 <div className="profile-about">
@@ -285,9 +287,6 @@ function Profile() {
             <button type="button" className="profile-action" onClick={openEditor}>
               {t("editProfile")}
             </button>
-            <Link className="profile-action is-secondary" to="/admin">
-              {t("adminPanel")}
-            </Link>
             {user ? (
               <>
                 <button
@@ -318,6 +317,54 @@ function Profile() {
           <p className="profile-message" role="status">
             {profileMessage}
           </p>
+        ) : null}
+
+        <section className={`profile-support-panel ${user ? "is-synced" : "is-local"}`}>
+          <div>
+            <p>{user ? t("profileSyncReady") : t("profileLocalTitle")}</p>
+            <h2>{user ? t("profileJourneySaved") : t("profileLocalJourney")}</h2>
+            <span>
+              {user
+                ? t("profileSyncReadyText")
+                : isConfigured
+                  ? t("profileLocalText")
+                  : t("profileSupabaseMissingText")}
+            </span>
+          </div>
+          <div className="profile-support-panel__actions">
+            {user ? (
+              <button
+                type="button"
+                className="profile-action is-secondary"
+                onClick={syncNow}
+                disabled={isSyncing}
+              >
+                {isSyncing ? t("pleaseWait") : t("syncNow")}
+              </button>
+            ) : (
+              <Link className="profile-action is-secondary" to="/auth">
+                {isConfigured ? t("signIn") : t("viewLocalProgress")}
+              </Link>
+            )}
+          </div>
+        </section>
+
+        {canOpenAdmin ? (
+          <section className="profile-admin-studio" aria-label={t("adminStudioBlockKicker")}>
+            <div className="profile-admin-studio__mark" aria-hidden="true" />
+            <div className="profile-admin-studio__content">
+              <p>{t("adminStudioBlockKicker")}</p>
+              <h2>{t("adminStudioBlockTitle")}</h2>
+              <span>{t("adminStudioBlockText")}</span>
+              <div className="profile-admin-studio__meta">
+                <small>{t("adminStudioBlockStatus")}</small>
+                <small>{t("adminStudioBlockSync", { mode: adminSyncMode })}</small>
+              </div>
+            </div>
+            <Link className="profile-action" to="/admin">
+              {t("adminStudioBlockAction")}
+            </Link>
+          </section>
         ) : null}
 
         {isEditing ? (
@@ -500,7 +547,10 @@ function Profile() {
 
         <section className="profile-panel">
           <div className="profile-section-heading">
-            <h2>{t("achievements")}</h2>
+            <div>
+              <p>{t("softGamificationLayer")}</p>
+              <h2>{t("achievements")}</h2>
+            </div>
             <span>{unlockedCount}/{achievements.length}</span>
           </div>
 
@@ -512,6 +562,7 @@ function Profile() {
                 }`}
                 key={achievement.id}
               >
+                <span className="profile-achievement__mark" aria-hidden="true" />
                 <strong>{t(`achievement_${achievement.id}`)}</strong>
                 <small>{t(`achievement_${achievement.id}_desc`)}</small>
               </article>
@@ -540,7 +591,15 @@ function Profile() {
               ))}
             </div>
           ) : (
-            <p className="profile-empty-note">{t("noFavoritesYet")}</p>
+            <div className="profile-empty-state" role="status">
+              <span className="profile-empty-state__mark" aria-hidden="true" />
+              <h3>{t("favoritesEmptyTitle")}</h3>
+              <p>{t("noFavoritesYet")}</p>
+              <div className="profile-empty-state__actions">
+                <Link to="/works">{t("navWorks")}</Link>
+                <Link to="/explore">{t("navExplore")}</Link>
+              </div>
+            </div>
           )}
         </section>
 
@@ -572,7 +631,6 @@ function Profile() {
 
         <section className="profile-summary-card">
           <h2>
-            <span aria-hidden="true">↯</span>
             {t("yourStatistics")}
           </h2>
           <div className="profile-summary-card__grid">

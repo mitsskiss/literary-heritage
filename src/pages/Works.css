@@ -463,3 +463,36 @@
   background: linear-gradient(180deg, var(--heritage-gold), var(--heritage-gold-strong));
   color: #fff8ec;
 }
+
+/* Final non-capsule catalog controls */
+.works-hero__stats strong {
+  font-family: Inter, system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
+  font-weight: 720;
+  letter-spacing: -0.01em;
+}
+
+.works-toolbar__themes {
+  gap: 0;
+}
+
+.works-toolbar__themes button,
+.works-card__themes button,
+.works-card__meta span {
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.works-toolbar__themes button {
+  border: 0;
+  border-bottom: 1px solid var(--heritage-line);
+  background: transparent;
+  padding-inline: 0;
+  margin-right: clamp(14px, 2vw, 24px);
+}
+
+.works-toolbar__themes button.is-active,
+.works-toolbar__themes button:hover {
+  border-bottom-color: var(--heritage-gold);
+  background: transparent;
+}

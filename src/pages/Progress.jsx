@@ -9,7 +9,7 @@ import {
 } from "../data/stories";
 import { useProgressStore } from "../store/useProgressStore";
 import "./Progress.css";
-import { useI18n } from "../i18n/I18nContext";
+import { useI18n } from "../i18n/useI18n";
 
 function Progress() {
   const { t, localizeAchievement, localizeStory, localizeWorks } = useI18n();
@@ -66,6 +66,29 @@ function Progress() {
     storyEnabledWorks.length > 0
       ? Math.round((completedWorks.length / storyEnabledWorks.length) * 100)
       : 0;
+  const unlockedAchievements = achievements.length;
+  const supportMetrics = [
+    {
+      label: t("readingPointsShort"),
+      value: xp,
+      text: t("progressPointsHelp"),
+    },
+    {
+      label: t("level"),
+      value: level,
+      text: t("progressLevelHelp"),
+    },
+    {
+      label: t("streak"),
+      value: t("days", { count: streak }),
+      text: t("progressStreakHelp"),
+    },
+    {
+      label: t("lives"),
+      value: `${lives}/5`,
+      text: t("progressLivesHelp"),
+    },
+  ];
 
   return (
     <main className="progress-page">
@@ -80,22 +103,13 @@ function Progress() {
           </div>
 
           <div className="progress-hero__stats">
-            <article className="progress-stat">
-              <span>XP</span>
-              <strong>{xp}</strong>
-            </article>
-            <article className="progress-stat">
-              <span>{t("level")}</span>
-              <strong>{level}</strong>
-            </article>
-            <article className="progress-stat">
-              <span>{t("streak")}</span>
-              <strong>{t("days", { count: streak })}</strong>
-            </article>
-            <article className="progress-stat">
-              <span>{t("lives")}</span>
-              <strong>{lives}</strong>
-            </article>
+            {supportMetrics.map((metric) => (
+              <article className="progress-stat" key={metric.label}>
+                <span>{metric.label}</span>
+                <strong>{metric.value}</strong>
+                <small>{metric.text}</small>
+              </article>
+            ))}
           </div>
         </section>
 
@@ -118,6 +132,10 @@ function Progress() {
 
           <div className="progress-overview__card">
             <p className="progress-overview__label">{t("achievements")}</p>
+            <div className="progress-overview__row">
+              <h2>{unlockedAchievements}</h2>
+              <span>{t("interpretiveMilestonesText")}</span>
+            </div>
             <div className="progress-overview__badges">
               {achievements.length > 0 ? (
                 achievements.map((achievement) => (
@@ -132,7 +150,10 @@ function Progress() {
 
         <section className="progress-section">
           <div className="progress-section__head">
-            <h2>{t("activeRuns")}</h2>
+            <div>
+              <p>{t("readingJourney")}</p>
+              <h2>{t("activeRuns")}</h2>
+            </div>
             <span>{t("inProgressCount", { count: activeStories.length })}</span>
           </div>
 
@@ -168,7 +189,10 @@ function Progress() {
 
         <section className="progress-section">
           <div className="progress-section__head">
-            <h2>{t("completedRuns")}</h2>
+            <div>
+              <p>{t("readingArchive")}</p>
+              <h2>{t("completedRuns")}</h2>
+            </div>
             <span>{t("finishedCount", { count: completedWorks.length })}</span>
           </div>
 
@@ -205,7 +229,10 @@ function Progress() {
 
         <section className="progress-section">
           <div className="progress-section__head">
-            <h2>{t("recentChoices")}</h2>
+            <div>
+              <p>{t("reflectionLog")}</p>
+              <h2>{t("recentChoices")}</h2>
+            </div>
             <span>{t("savedCount", { count: Object.keys(reflections).length })}</span>
           </div>
 

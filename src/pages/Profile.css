@@ -751,3 +751,362 @@
   border-color: var(--heritage-line);
   background: var(--heritage-surface-strong);
 }
+
+/* Premium reading journey dashboard polish */
+.profile-topbar__back {
+  width: auto;
+  min-width: 78px;
+  height: 38px;
+  padding: 0 14px;
+  border: 1px solid var(--heritage-line);
+  border-radius: 999px;
+  background: var(--heritage-surface);
+  color: var(--heritage-ink);
+  font-size: 13px;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.profile-support-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 18px;
+  align-items: center;
+  margin-top: 16px;
+  padding: 20px 22px;
+  border: 1px dashed color-mix(in srgb, var(--heritage-gold) 42%, var(--heritage-line));
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--heritage-gold) 9%, transparent), transparent 52%),
+    var(--heritage-surface);
+  box-shadow: var(--heritage-shadow);
+}
+
+.profile-support-panel p,
+.profile-section-heading p {
+  margin: 0 0 6px;
+  color: var(--heritage-gold-strong);
+  font-size: 12px;
+  font-weight: 850;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.profile-support-panel h2 {
+  margin: 0;
+  color: var(--heritage-ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(24px, 3vw, 34px);
+  font-weight: 500;
+}
+
+.profile-support-panel span {
+  display: block;
+  max-width: 72ch;
+  margin-top: 8px;
+  color: var(--heritage-text);
+  line-height: 1.6;
+}
+
+.profile-support-panel__actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.profile-admin-studio {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 18px;
+  align-items: center;
+  margin-top: 16px;
+  padding: clamp(20px, 3vw, 28px);
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--heritage-gold) 42%, var(--heritage-line));
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--heritage-ink) 92%, transparent), color-mix(in srgb, var(--heritage-ink) 78%, var(--heritage-gold) 12%)),
+    var(--heritage-ink);
+  color: #fff8ec;
+  box-shadow: 0 18px 42px rgba(23, 45, 43, 0.22);
+  animation: profile-panel-rise 0.5s ease both;
+}
+
+.profile-admin-studio::after {
+  content: "";
+  position: absolute;
+  right: -42px;
+  top: -42px;
+  width: 180px;
+  height: 180px;
+  border: 1px solid color-mix(in srgb, var(--heritage-gold) 42%, transparent);
+  border-radius: 999px;
+  opacity: 0.28;
+}
+
+.profile-admin-studio__mark {
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--heritage-gold) 58%, transparent);
+  border-radius: 8px;
+  background:
+    linear-gradient(90deg, transparent 46%, var(--heritage-gold) 47% 53%, transparent 54%),
+    linear-gradient(0deg, transparent 46%, var(--heritage-gold) 47% 53%, transparent 54%),
+    rgba(255, 248, 236, 0.08);
+  box-shadow: inset 0 0 0 8px rgba(255, 248, 236, 0.04);
+}
+
+.profile-admin-studio__content {
+  min-width: 0;
+}
+
+.profile-admin-studio__content p {
+  margin: 0 0 6px;
+  color: var(--heritage-gold);
+  font-size: 12px;
+  font-weight: 850;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.profile-admin-studio__content h2 {
+  margin: 0;
+  color: #fff8ec;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(24px, 3vw, 34px);
+  font-weight: 500;
+}
+
+.profile-admin-studio__content span {
+  display: block;
+  max-width: 70ch;
+  margin-top: 8px;
+  color: rgba(255, 248, 236, 0.78);
+  line-height: 1.65;
+}
+
+.profile-admin-studio__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.profile-admin-studio__meta small {
+  min-height: 30px;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgba(255, 248, 236, 0.18);
+  border-radius: 999px;
+  padding: 0 12px;
+  color: rgba(255, 248, 236, 0.84);
+  background: rgba(255, 248, 236, 0.08);
+  font-weight: 800;
+}
+
+.profile-admin-studio .profile-action {
+  position: relative;
+  z-index: 1;
+  border-color: color-mix(in srgb, var(--heritage-gold) 72%, transparent);
+  background: linear-gradient(180deg, var(--heritage-gold), var(--heritage-gold-strong));
+  color: #fff8ec;
+}
+
+@keyframes profile-panel-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.profile-stat-card {
+  position: relative;
+  overflow: hidden;
+  align-content: end;
+  justify-items: start;
+  padding: 18px;
+  text-align: left;
+  transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+}
+
+.profile-stat-card::before {
+  content: "";
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  width: 34px;
+  height: 34px;
+  border: 1px solid color-mix(in srgb, var(--heritage-gold) 48%, transparent);
+  border-radius: 999px;
+  opacity: 0.55;
+}
+
+.profile-stat-card:hover,
+.profile-favorite-card:hover,
+.profile-favorite-card:focus-visible,
+.profile-achievement:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--heritage-gold) 48%, var(--heritage-line));
+  box-shadow: 0 18px 38px rgba(78, 55, 28, 0.14);
+}
+
+.profile-achievement {
+  position: relative;
+  justify-items: start;
+  text-align: left;
+  align-content: start;
+  min-height: 152px;
+  transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+}
+
+.profile-achievement__mark,
+.profile-empty-state__mark {
+  width: 38px;
+  height: 38px;
+  display: inline-grid;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--heritage-gold) 54%, transparent);
+  border-radius: 8px;
+  background:
+    linear-gradient(90deg, transparent 46%, color-mix(in srgb, var(--heritage-gold) 42%, transparent) 47% 53%, transparent 54%),
+    linear-gradient(0deg, transparent 46%, color-mix(in srgb, var(--heritage-gold) 42%, transparent) 47% 53%, transparent 54%),
+    color-mix(in srgb, var(--heritage-surface) 70%, transparent);
+}
+
+.profile-achievement.is-locked .profile-achievement__mark {
+  opacity: 0.38;
+}
+
+.profile-achievement.is-unlocked {
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--heritage-gold) 16%, transparent), transparent 58%),
+    var(--heritage-surface-strong);
+}
+
+.profile-favorite-card {
+  position: relative;
+  min-height: 148px;
+  overflow: hidden;
+  transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+}
+
+.profile-favorite-card::after {
+  content: "";
+  position: absolute;
+  inset: auto 14px 14px auto;
+  width: 48px;
+  height: 1px;
+  background: var(--heritage-gold);
+  opacity: 0.55;
+}
+
+.profile-favorite-card strong,
+.profile-favorite-card span {
+  overflow-wrap: anywhere;
+}
+
+.profile-empty-state {
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  min-height: 260px;
+  padding: clamp(24px, 5vw, 46px);
+  border: 1px dashed color-mix(in srgb, var(--heritage-gold) 42%, var(--heritage-line));
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--heritage-gold) 12%, transparent), transparent 52%),
+    var(--heritage-surface-strong);
+  text-align: center;
+}
+
+.profile-empty-state h3 {
+  margin: 0;
+  color: var(--heritage-ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(24px, 4vw, 34px);
+  font-weight: 500;
+}
+
+.profile-empty-state p {
+  max-width: 58ch;
+  margin: 0;
+  color: var(--heritage-text);
+  line-height: 1.7;
+}
+
+.profile-empty-state__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.profile-empty-state__actions a {
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--heritage-gold);
+  border-radius: 4px;
+  padding: 0 16px;
+  color: #fff8ec;
+  background: linear-gradient(180deg, var(--heritage-gold), var(--heritage-gold-strong));
+  font-weight: 850;
+  text-decoration: none;
+}
+
+.profile-empty-state__actions a + a {
+  color: var(--heritage-gold-strong);
+  background: transparent;
+}
+
+@media (max-width: 780px) {
+  .profile-support-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-support-panel__actions,
+  .profile-support-panel__actions .profile-action {
+    width: 100%;
+  }
+
+  .profile-admin-studio {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-admin-studio .profile-action {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .profile-admin-studio {
+    animation: none;
+  }
+}
+
+/* Modern reader dashboard numbers and flat badges */
+.profile-stat-card strong,
+.profile-summary-card strong {
+  font-family: Inter, system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
+  font-weight: 720;
+  letter-spacing: -0.01em;
+}
+
+.profile-level-pill,
+.profile-achievement,
+.profile-empty-state,
+.profile-empty-state__actions a {
+  border-radius: 0;
+}

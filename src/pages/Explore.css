@@ -704,3 +704,19 @@
     padding: 16px 0 0;
   }
 }
+
+/* Final route explorer cleanup */
+.explore-stat-band strong,
+.explore-progress-ring strong,
+.explore-notes-card strong {
+  font-family: Inter, system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
+  font-weight: 720;
+  letter-spacing: -0.01em;
+}
+
+.explore-filter-card--inline select,
+.explore-filter-card--inline > button {
+  border-radius: 0;
+  box-shadow: none;
+}

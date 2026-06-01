@@ -933,3 +933,43 @@
     padding: 28px 18px;
   }
 }
+
+/* Final route stat cleanup */
+.route-stat-band {
+  gap: 0;
+}
+
+.route-stat-band article {
+  justify-content: stretch;
+  grid-template-columns: 34px minmax(0, 1fr);
+  align-content: stretch;
+  align-items: center;
+  padding: clamp(16px, 2vw, 22px);
+}
+
+.route-stat-band strong {
+  font-family: Inter, system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
+  font-weight: 720;
+  letter-spacing: -0.01em;
+}
+
+.route-stat-icon,
+.route-stat-icon--book,
+.route-stat-icon--authors,
+.route-stat-icon--flag,
+.route-stat-icon--time,
+.route-stat-icon--level,
+.route-stat-icon--globe {
+  width: 28px;
+  height: 28px;
+  border-radius: 0;
+  transform: none;
+}
+
+@media (max-width: 720px) {
+  .route-stat-band article {
+    min-height: 94px;
+    grid-template-columns: 30px minmax(0, 1fr);
+  }
+}

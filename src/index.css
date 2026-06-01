@@ -102,6 +102,558 @@ main {
   }
 }
 
+/* Final no-capsule correction for home and header */
+.site-header.heritage-topbar {
+  position: sticky !important;
+  top: 0 !important;
+  width: 100% !important;
+  margin: 0 !important;
+  border: 0 !important;
+  border-bottom: 1px solid color-mix(in srgb, var(--lh-line) 84%, transparent) !important;
+  border-radius: 0 !important;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--lh-paper) 94%, transparent), color-mix(in srgb, var(--lh-paper) 78%, transparent)) !important;
+  box-shadow: none !important;
+  backdrop-filter: blur(18px) saturate(1.08);
+}
+
+.heritage-topbar__inner {
+  width: min(100% - 48px, 1360px) !important;
+  min-height: 78px !important;
+  margin-inline: auto !important;
+  padding-inline: 0 !important;
+  grid-template-columns: minmax(190px, 250px) minmax(0, 1fr) minmax(300px, auto) !important;
+  gap: clamp(18px, 2.4vw, 42px) !important;
+}
+
+.heritage-topnav {
+  gap: clamp(18px, 2.1vw, 34px) !important;
+}
+
+.heritage-topnav a {
+  position: relative;
+  min-height: auto !important;
+  padding: 8px 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: color-mix(in srgb, var(--lh-ink) 72%, transparent) !important;
+}
+
+.heritage-topnav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 1px;
+  height: 1px;
+  background: var(--lh-gold-deep);
+  transform: scaleX(0);
+  transition: transform 180ms ease;
+}
+
+.heritage-topnav a.is-active,
+.heritage-topnav a:hover {
+  background: transparent !important;
+  color: var(--lh-ink) !important;
+}
+
+.heritage-topnav a.is-active::after,
+.heritage-topnav a:hover::after {
+  transform: scaleX(1);
+}
+
+.heritage-search__field,
+.heritage-language,
+.heritage-theme,
+.heritage-avatar,
+.heritage-menu-toggle {
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.heritage-search__field {
+  border-bottom: 1px solid color-mix(in srgb, var(--lh-line-strong) 74%, transparent) !important;
+  padding-inline: 0 !important;
+}
+
+.miras-home {
+  padding-top: 0 !important;
+}
+
+.miras-hero {
+  border: 0 !important;
+  border-bottom: 1px solid var(--lh-line) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.miras-button,
+.miras-collections__intro a {
+  width: auto !important;
+  min-width: 0 !important;
+  min-height: auto !important;
+  padding: 12px 0 !important;
+  border: 0 !important;
+  border-bottom: 1px solid currentColor !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.miras-button--primary {
+  color: #005b56 !important;
+}
+
+.miras-cards,
+.miras-stats,
+.miras-collections,
+.miras-platform,
+.miras-footer {
+  width: min(100% - 72px, 1320px) !important;
+}
+
+.miras-card,
+.miras-platform__features,
+.miras-platform__features article {
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.miras-card {
+  border: 0 !important;
+  border-left: 1px solid var(--lh-line) !important;
+  padding: 0 clamp(16px, 2vw, 28px) !important;
+}
+
+.miras-card:first-child {
+  border-left: 0 !important;
+  padding-left: 0 !important;
+}
+
+.miras-card__image,
+.miras-card__bottom,
+.miras-collection img,
+.miras-stats,
+.miras-stats article,
+.miras-footer__subscribe div {
+  border-radius: 0 !important;
+}
+
+.miras-card__bottom {
+  border: 0 !important;
+  border-top: 1px solid var(--lh-line) !important;
+  background: transparent !important;
+}
+
+.miras-platform__features {
+  border: 0 !important;
+}
+
+.miras-platform__features article {
+  border: 0 !important;
+  border-left: 1px solid var(--lh-line) !important;
+}
+
+.miras-platform__features article:first-child {
+  border-left: 0 !important;
+}
+
+@media (max-width: 1180px) {
+  .heritage-topbar__inner {
+    grid-template-columns: minmax(0, 1fr) auto !important;
+  }
+
+  .heritage-mobile-menu {
+    inset: 0 !important;
+    width: 100% !important;
+    max-height: 100dvh !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .heritage-mobile-menu button,
+  .heritage-mobile-menu select,
+  .heritage-mobile-menu nav a {
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+}
+
+@media (max-width: 720px) {
+  .heritage-topbar__inner,
+  .miras-hero__content,
+  .miras-cards,
+  .miras-stats,
+  .miras-collections,
+  .miras-platform,
+  .miras-footer {
+    width: min(100% - 28px, 1320px) !important;
+  }
+
+  .miras-card {
+    border-left: 0 !important;
+    border-top: 1px solid var(--lh-line) !important;
+    padding: 24px 0 !important;
+  }
+
+  .miras-card:first-child {
+    border-top: 0 !important;
+  }
+
+  .miras-platform__features article {
+    border-left: 0 !important;
+    border-top: 1px solid var(--lh-line) !important;
+    padding-inline: 0 !important;
+  }
+}
+
+/* Final UI integrity pass: language dropdown, non-capsule controls, modern numbers */
+.heritage-language {
+  position: relative !important;
+  width: auto !important;
+  min-width: 52px !important;
+  height: auto !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: visible !important;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+}
+
+.heritage-language__button {
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  border-radius: 0;
+  background: transparent;
+  color: var(--lh-ink);
+  padding: 0 4px;
+  font: 800 13px/1 Inter, system-ui, sans-serif;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+}
+
+.heritage-mobile-menu .heritage-language__button {
+  border: 0 !important;
+  border-bottom: 1px solid var(--lh-line) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.heritage-language__button:hover,
+.heritage-language__button:focus-visible {
+  border-bottom-color: var(--lh-gold);
+  color: var(--lh-ink-strong);
+  outline: 0;
+}
+
+.heritage-language__button i {
+  width: 7px;
+  height: 7px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: translateY(-2px) rotate(45deg);
+}
+
+.heritage-language__menu {
+  position: absolute;
+  z-index: 70;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 156px;
+  display: grid;
+  border: 1px solid var(--lh-line);
+  border-radius: 0;
+  background: color-mix(in srgb, var(--lh-card-solid) 96%, transparent);
+  box-shadow: 0 18px 44px rgba(74, 49, 20, 0.16);
+  padding: 6px;
+}
+
+.heritage-language__menu button {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 8px;
+  align-items: center;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--lh-ink);
+  padding: 9px 8px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.heritage-language__menu button:hover,
+.heritage-language__menu button:focus-visible,
+.heritage-language__menu button.is-active {
+  background: color-mix(in srgb, var(--lh-gold) 12%, transparent);
+  outline: 0;
+}
+
+.heritage-language__menu strong {
+  color: var(--lh-gold);
+  font: 850 12px/1 Inter, system-ui, sans-serif;
+}
+
+.heritage-language__menu span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font: 650 13px/1.25 Inter, system-ui, sans-serif;
+}
+
+.heritage-avatar {
+  color: var(--lh-ink) !important;
+}
+
+.heritage-avatar__glyph {
+  position: relative;
+  width: 22px !important;
+  height: 22px !important;
+  display: block !important;
+  border: 1.8px solid currentColor !important;
+  border-radius: 0 !important;
+}
+
+.heritage-avatar__glyph::before,
+.heritage-avatar__glyph::after {
+  content: "";
+  position: absolute;
+  border: 1.8px solid currentColor;
+}
+
+.heritage-avatar__glyph::before {
+  width: 6px;
+  height: 6px;
+  top: 4px;
+  left: 6px;
+  border-radius: 50%;
+}
+
+.heritage-avatar__glyph::after {
+  left: 4px;
+  right: 4px;
+  bottom: 4px;
+  height: 5px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  border-bottom: 0;
+}
+
+.works-toolbar__themes button,
+.works-card__themes button,
+.works-card__meta span,
+.explore-filter-card--inline > button,
+.explore-filter-card--inline select,
+.author-profile-themes span,
+.author-work-card__tags span,
+.reading-fragment-card__annotations span,
+.route-tabs button,
+.profile-level-pill,
+.profile-achievement,
+.mura-map-place__stats span {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.works-toolbar__themes,
+.route-tabs {
+  gap: 0 !important;
+}
+
+.works-toolbar__themes button,
+.route-tabs button {
+  border: 0 !important;
+  border-bottom: 1px solid var(--lh-line) !important;
+  background: transparent !important;
+  padding-inline: 0 !important;
+  margin-right: clamp(14px, 2vw, 24px);
+}
+
+.works-toolbar__themes button.is-active,
+.works-toolbar__themes button:hover,
+.route-tabs button.is-active,
+.route-tabs button:hover {
+  border-bottom-color: var(--lh-gold) !important;
+  color: var(--lh-ink-strong) !important;
+  background: transparent !important;
+}
+
+.reading-fragment-card__annotations {
+  display: grid !important;
+  gap: 10px !important;
+}
+
+.reading-fragment-card__annotations span {
+  display: block !important;
+  border: 0 !important;
+  border-left: 3px solid color-mix(in srgb, var(--lh-gold) 70%, var(--lh-line)) !important;
+  background: color-mix(in srgb, var(--lh-card-solid) 72%, transparent) !important;
+  padding: 10px 0 10px 14px !important;
+}
+
+.miras-stats strong,
+.route-stat-band strong,
+.mura-map-stats strong,
+.progress-stat strong,
+.profile-stat-card strong,
+.works-hero__stats strong,
+.authors-hero__seal strong,
+.admin-stats strong {
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+  font-variant-numeric: tabular-nums !important;
+  font-feature-settings: "tnum" 1, "lnum" 1 !important;
+  font-weight: 720 !important;
+  letter-spacing: -0.01em !important;
+}
+
+.route-stat-band {
+  align-items: stretch !important;
+  gap: 0 !important;
+}
+
+.route-stat-band article {
+  min-width: 0 !important;
+  min-height: 118px !important;
+  display: grid !important;
+  grid-template-columns: 34px minmax(0, 1fr) !important;
+  grid-template-rows: 1fr auto !important;
+  align-items: center !important;
+  column-gap: 14px !important;
+  padding: clamp(16px, 2vw, 24px) !important;
+}
+
+.route-stat-band article small {
+  grid-column: 2 !important;
+  align-self: start !important;
+  overflow-wrap: anywhere !important;
+}
+
+.route-stat-icon {
+  width: 28px !important;
+  height: 28px !important;
+  align-self: center !important;
+  border-radius: 0 !important;
+  transform: none !important;
+}
+
+@media (max-width: 720px) {
+  .heritage-mobile-menu__settings {
+    align-items: stretch !important;
+  }
+
+  .heritage-mobile-menu__settings .heritage-language,
+  .heritage-mobile-menu__settings .heritage-language__button {
+    width: 100% !important;
+    justify-content: space-between !important;
+  }
+
+  .heritage-mobile-menu__settings .heritage-language__menu {
+    left: 0;
+    right: auto;
+    width: 100%;
+  }
+
+  .route-stat-band article {
+    grid-template-columns: 30px minmax(0, 1fr) !important;
+    min-height: 94px !important;
+  }
+}
+
+/* Absolute final landing card spacing safety */
+body .miras-home .miras-cards {
+  column-gap: 0 !important;
+  row-gap: clamp(34px, 5vw, 58px) !important;
+  align-items: start !important;
+}
+
+body .miras-home .miras-card {
+  min-height: 0 !important;
+  align-self: stretch !important;
+}
+
+body .miras-home .miras-card__bottom {
+  min-height: 74px !important;
+  align-items: start !important;
+}
+
+@media (min-width: 721px) and (max-width: 980px) {
+  body .miras-home .miras-card:nth-child(odd) {
+    border-left: 0 !important;
+    padding-left: 0 !important;
+  }
+
+  body .miras-home .miras-card:nth-child(even) {
+    padding-right: 0 !important;
+  }
+}
+
+/* Final landing card spacing safety */
+.miras-cards {
+  column-gap: 0 !important;
+  row-gap: clamp(34px, 5vw, 58px) !important;
+  align-items: start !important;
+}
+
+.miras-card {
+  min-height: 0 !important;
+  align-self: stretch !important;
+}
+
+.miras-card__bottom {
+  min-height: 74px !important;
+  align-items: start !important;
+}
+
+@media (min-width: 721px) and (max-width: 980px) {
+  .miras-card:nth-child(odd) {
+    border-left: 0 !important;
+    padding-left: 0 !important;
+  }
+
+  .miras-card:nth-child(even) {
+    padding-right: 0 !important;
+  }
+}
+
+/* Landing card spacing safety */
+.miras-cards {
+  column-gap: 0 !important;
+  row-gap: clamp(34px, 5vw, 58px) !important;
+  align-items: start !important;
+}
+
+.miras-card {
+  min-height: 0 !important;
+  align-self: stretch !important;
+}
+
+.miras-card__bottom {
+  min-height: 74px !important;
+  align-items: start !important;
+}
+
+@media (min-width: 721px) and (max-width: 980px) {
+  .miras-card:nth-child(odd) {
+    border-left: 0 !important;
+    padding-left: 0 !important;
+  }
+
+  .miras-card:nth-child(even) {
+    padding-right: 0 !important;
+  }
+}
+
 @media (max-width: 560px) {
   :root {
     --header-safe-offset: 72px;
@@ -563,6 +1115,608 @@ h1 {
 
   .site-header__quickStats {
     display: none;
+  }
+}
+
+/* ========================================= */
+/* EDITORIAL HOME + BORDERLESS HEADER PASS   */
+/* ========================================= */
+
+.site-header.heritage-topbar {
+  position: sticky !important;
+  top: 0 !important;
+  width: 100% !important;
+  margin: 0 !important;
+  border: 0 !important;
+  border-bottom: 1px solid color-mix(in srgb, var(--lh-line) 84%, transparent) !important;
+  border-radius: 0 !important;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--lh-paper) 94%, transparent), color-mix(in srgb, var(--lh-paper) 78%, transparent)) !important;
+  box-shadow: none !important;
+  backdrop-filter: blur(18px) saturate(1.08);
+}
+
+:root[data-theme="dark"] .site-header.heritage-topbar {
+  background:
+    linear-gradient(180deg, rgba(7, 21, 18, 0.94), rgba(7, 21, 18, 0.78)) !important;
+  border-bottom-color: rgba(255, 248, 236, 0.12) !important;
+}
+
+.heritage-topbar__inner {
+  width: min(100% - 48px, 1360px) !important;
+  min-height: 78px !important;
+  margin-inline: auto !important;
+  padding-inline: 0 !important;
+  grid-template-columns: minmax(190px, 250px) minmax(0, 1fr) minmax(300px, auto) !important;
+  gap: clamp(18px, 2.4vw, 42px) !important;
+}
+
+.heritage-brand {
+  gap: 13px !important;
+  text-decoration: none;
+}
+
+.heritage-brand__mark {
+  width: 42px !important;
+  height: 42px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background-size: contain !important;
+}
+
+.heritage-brand__copy {
+  max-width: 172px !important;
+}
+
+.heritage-brand__copy strong {
+  font-size: clamp(22px, 2vw, 30px) !important;
+  line-height: 0.9 !important;
+  letter-spacing: 0.13em !important;
+}
+
+.heritage-brand__copy small {
+  max-width: 160px !important;
+  margin-top: 4px;
+  font-size: 9px !important;
+  line-height: 1.2 !important;
+  letter-spacing: 0.18em !important;
+}
+
+.heritage-topnav {
+  gap: clamp(18px, 2.1vw, 34px) !important;
+  justify-content: center !important;
+}
+
+.heritage-topnav a {
+  position: relative;
+  min-height: auto !important;
+  padding: 8px 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: color-mix(in srgb, var(--lh-ink) 72%, transparent) !important;
+  font-size: 14px !important;
+  font-weight: 760 !important;
+  letter-spacing: 0.01em !important;
+  text-decoration: none;
+  transition: color 180ms ease;
+}
+
+.heritage-topnav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 1px;
+  height: 1px;
+  background: var(--lh-gold-deep);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 180ms ease;
+}
+
+.heritage-topnav a.is-active,
+.heritage-topnav a:hover {
+  color: var(--lh-ink) !important;
+  background: transparent !important;
+}
+
+.heritage-topnav a.is-active::after,
+.heritage-topnav a:hover::after {
+  transform: scaleX(1);
+}
+
+.heritage-tools {
+  gap: 14px !important;
+}
+
+.heritage-search {
+  width: clamp(190px, 18vw, 270px) !important;
+}
+
+.heritage-search__field,
+.heritage-language,
+.heritage-theme,
+.heritage-avatar,
+.heritage-menu-toggle {
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.heritage-search__field {
+  min-height: 42px !important;
+  border-bottom: 1px solid color-mix(in srgb, var(--lh-line-strong) 74%, transparent) !important;
+  padding-inline: 0 !important;
+}
+
+.heritage-search__field input {
+  font-size: 13px !important;
+}
+
+.heritage-language {
+  width: auto !important;
+  min-width: 42px !important;
+  height: 42px !important;
+  padding-inline: 0 !important;
+  color: var(--lh-ink) !important;
+  font-weight: 900 !important;
+  text-align: center;
+}
+
+.heritage-theme,
+.heritage-avatar,
+.heritage-menu-toggle {
+  width: 42px !important;
+  min-width: 42px !important;
+  height: 42px !important;
+  color: var(--lh-ink) !important;
+}
+
+.heritage-theme__glyph {
+  width: 19px !important;
+  height: 19px !important;
+}
+
+.heritage-avatar span {
+  width: 22px !important;
+  height: 16px !important;
+}
+
+.heritage-profile__menu,
+.heritage-search__dropdown,
+.heritage-mobile-menu__results {
+  border-radius: 0 !important;
+  box-shadow: 0 18px 40px rgba(74, 49, 20, 0.12) !important;
+}
+
+.heritage-profile__menu a,
+.heritage-search__dropdown button,
+.heritage-mobile-menu__results button {
+  border-radius: 0 !important;
+}
+
+.miras-home {
+  padding-top: 0 !important;
+  background:
+    radial-gradient(circle at 18% 0%, color-mix(in srgb, var(--lh-gold) 10%, transparent), transparent 30rem),
+    linear-gradient(180deg, var(--lh-paper) 0%, var(--lh-paper-deep) 50%, var(--lh-paper) 100%) !important;
+}
+
+.miras-hero {
+  min-height: clamp(560px, calc(100dvh - 78px), 760px) !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--lh-line) !important;
+  border-radius: 0 !important;
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--lh-paper) 98%, transparent) 0%, color-mix(in srgb, var(--lh-paper) 84%, transparent) 34%, color-mix(in srgb, var(--lh-paper) 34%, transparent) 64%, transparent 100%),
+    var(--mura-home-hero) center / cover no-repeat,
+    var(--lh-paper) !important;
+  box-shadow: none !important;
+}
+
+.miras-hero::before,
+.miras-hero::after,
+.miras-ornament {
+  opacity: 0.18 !important;
+}
+
+.miras-hero__content {
+  width: min(100% - 72px, 1320px) !important;
+  padding: clamp(78px, 10vw, 142px) 0 clamp(72px, 9vw, 120px) !important;
+}
+
+.miras-hero__content::after,
+.miras-platform__intro::after,
+.miras-collections__intro::after {
+  display: none !important;
+}
+
+.miras-kicker {
+  max-width: 62ch;
+  margin-bottom: 20px !important;
+  font-size: 12px !important;
+  letter-spacing: 0.17em !important;
+}
+
+.miras-hero h1 {
+  max-width: 760px !important;
+  font-size: clamp(52px, 7.6vw, 104px) !important;
+  line-height: 0.93 !important;
+  letter-spacing: 0.005em !important;
+}
+
+.miras-hero__content > p:not(.miras-kicker) {
+  max-width: 560px !important;
+  margin-top: 26px !important;
+  font-size: clamp(16px, 1.2vw, 18px) !important;
+}
+
+.miras-hero__actions {
+  gap: 26px !important;
+  margin-top: 34px !important;
+}
+
+.miras-button {
+  min-width: 0 !important;
+  min-height: auto !important;
+  padding: 12px 0 !important;
+  border: 0 !important;
+  border-bottom: 1px solid currentColor !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: var(--lh-ink) !important;
+  box-shadow: none !important;
+}
+
+.miras-button--primary {
+  color: #005b56 !important;
+}
+
+.miras-button:hover {
+  transform: translateY(-1px);
+  box-shadow: none !important;
+}
+
+.miras-cards,
+.miras-stats,
+.miras-collections,
+.miras-platform,
+.miras-footer {
+  width: min(100% - 72px, 1320px) !important;
+}
+
+.miras-cards {
+  gap: 0 !important;
+  padding: clamp(34px, 5vw, 62px) 0 22px !important;
+  border-bottom: 1px solid var(--lh-line);
+}
+
+.miras-card {
+  grid-template-rows: auto clamp(150px, 14vw, 210px) auto !important;
+  gap: 16px !important;
+  border: 0 !important;
+  border-left: 1px solid var(--lh-line) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 clamp(16px, 2vw, 28px) !important;
+}
+
+.miras-card:first-child {
+  border-left: 0 !important;
+  padding-left: 0 !important;
+}
+
+.miras-card:last-child {
+  padding-right: 0 !important;
+}
+
+.miras-card__top {
+  min-height: auto !important;
+  align-items: start !important;
+  font-size: 14px !important;
+  letter-spacing: 0.08em;
+}
+
+.miras-card__symbol {
+  width: 20px !important;
+  height: 20px !important;
+  opacity: 0.78;
+}
+
+.miras-card__image {
+  border-radius: 0 !important;
+  filter: sepia(0.16) saturate(0.88) contrast(0.96) !important;
+}
+
+.miras-card__bottom {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto;
+  border: 0 !important;
+  border-top: 1px solid var(--lh-line) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  padding: 14px 0 0 !important;
+}
+
+.miras-card__bottom span {
+  font-size: 18px !important;
+}
+
+.miras-stats {
+  margin-top: clamp(28px, 4vw, 48px) !important;
+  border: 0 !important;
+  border-top: 1px solid color-mix(in srgb, #fff8ec 28%, transparent) !important;
+  border-bottom: 1px solid color-mix(in srgb, #fff8ec 28%, transparent) !important;
+  border-radius: 0 !important;
+  background: linear-gradient(90deg, #004d49, #073f3b) !important;
+  box-shadow: none !important;
+}
+
+.miras-stats article {
+  min-height: 118px !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.miras-collections,
+.miras-platform {
+  padding: clamp(38px, 5vw, 70px) 0 !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--lh-line) !important;
+}
+
+.miras-collections__intro,
+.miras-platform__intro {
+  border-right: 1px solid var(--lh-line) !important;
+}
+
+.miras-collections__intro a {
+  min-height: auto !important;
+  padding: 10px 0 !important;
+  border: 0 !important;
+  border-bottom: 1px solid currentColor !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+}
+
+.miras-collection {
+  gap: 12px !important;
+}
+
+.miras-collection img {
+  border-radius: 0 !important;
+}
+
+.miras-platform__features {
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.miras-platform__features article {
+  min-height: 164px !important;
+  border: 0 !important;
+  border-left: 1px solid var(--lh-line) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 6px clamp(18px, 2vw, 30px) !important;
+}
+
+.miras-platform__features article:first-child {
+  border-left: 0 !important;
+}
+
+.miras-feature-icon {
+  width: 34px !important;
+  height: 34px !important;
+}
+
+.miras-footer {
+  border-top: 0 !important;
+  padding-top: 34px !important;
+}
+
+.miras-footer__subscribe div {
+  border-radius: 0 !important;
+}
+
+:root[data-theme="dark"] .miras-hero {
+  background:
+    linear-gradient(90deg, rgba(7, 21, 18, 0.98) 0%, rgba(7, 21, 18, 0.78) 38%, rgba(7, 21, 18, 0.2) 68%, transparent 100%),
+    var(--mura-home-hero) center / cover no-repeat,
+    var(--lh-paper) !important;
+}
+
+:root[data-theme="dark"] .miras-card,
+:root[data-theme="dark"] .miras-platform__features,
+:root[data-theme="dark"] .miras-platform__features article {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+@media (max-width: 1180px) {
+  .heritage-topbar__inner {
+    grid-template-columns: minmax(0, 1fr) auto !important;
+  }
+
+  .heritage-topnav,
+  .heritage-search {
+    display: none !important;
+  }
+
+  .heritage-menu-toggle {
+    display: grid !important;
+  }
+
+  .heritage-mobile-menu {
+    inset: 0 !important;
+    width: 100% !important;
+    max-height: 100dvh !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background:
+      linear-gradient(180deg, color-mix(in srgb, var(--lh-paper) 98%, transparent), var(--lh-paper-deep)) !important;
+    box-shadow: none !important;
+  }
+
+  :root[data-theme="dark"] .heritage-mobile-menu {
+    background:
+      linear-gradient(180deg, rgba(7, 21, 18, 0.98), rgba(13, 33, 29, 0.98)) !important;
+  }
+
+  .heritage-mobile-menu__head,
+  .heritage-mobile-menu__settings {
+    border-radius: 0 !important;
+  }
+
+  .heritage-mobile-menu button,
+  .heritage-mobile-menu select {
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .heritage-mobile-menu nav a {
+    border-radius: 0 !important;
+    background: transparent !important;
+    border-bottom: 1px solid var(--lh-line) !important;
+  }
+
+  .miras-collections__intro,
+  .miras-platform__intro {
+    border-right: 0 !important;
+    border-bottom: 1px solid var(--lh-line) !important;
+    padding-bottom: 22px !important;
+  }
+
+  .miras-platform__features article:nth-child(odd),
+  .miras-platform__features article:nth-child(even) {
+    border-left: 0 !important;
+    border-top: 1px solid var(--lh-line) !important;
+  }
+
+  .miras-platform__features article:first-child {
+    border-top: 0 !important;
+  }
+}
+
+@media (max-width: 720px) {
+  .heritage-topbar__inner {
+    width: min(100% - 24px, 1360px) !important;
+    min-height: 66px !important;
+  }
+
+  .heritage-brand__mark {
+    width: 34px !important;
+    height: 34px !important;
+  }
+
+  .heritage-brand__copy strong {
+    font-size: 20px !important;
+  }
+
+  .heritage-brand__copy small {
+    font-size: 8px !important;
+    letter-spacing: 0.12em !important;
+  }
+
+  .heritage-language {
+    display: inline-flex !important;
+    width: 40px !important;
+    min-width: 40px !important;
+    padding-inline: 0 !important;
+  }
+
+  .heritage-theme,
+  .heritage-avatar,
+  .heritage-menu-toggle {
+    width: 38px !important;
+    min-width: 38px !important;
+    height: 38px !important;
+  }
+
+  .miras-hero__content,
+  .miras-cards,
+  .miras-stats,
+  .miras-collections,
+  .miras-platform,
+  .miras-footer {
+    width: min(100% - 28px, 1320px) !important;
+  }
+
+  .miras-hero {
+    min-height: auto !important;
+    background:
+      linear-gradient(180deg, color-mix(in srgb, var(--lh-paper) 96%, transparent) 0%, color-mix(in srgb, var(--lh-paper) 82%, transparent) 54%, color-mix(in srgb, var(--lh-paper) 38%, transparent) 100%),
+      var(--mura-home-hero) center bottom / cover no-repeat,
+      var(--lh-paper) !important;
+  }
+
+  .miras-hero__content {
+    padding: 58px 0 64px !important;
+  }
+
+  .miras-hero h1 {
+    font-size: clamp(40px, 13vw, 62px) !important;
+    line-height: 0.96 !important;
+  }
+
+  .miras-hero__actions {
+    display: flex !important;
+    align-items: flex-start;
+  }
+
+  .miras-button {
+    width: auto !important;
+  }
+
+  .miras-cards {
+    grid-template-columns: 1fr !important;
+  }
+
+  .miras-card {
+    border-left: 0 !important;
+    border-top: 1px solid var(--lh-line) !important;
+    padding: 24px 0 !important;
+  }
+
+  .miras-card:first-child {
+    border-top: 0 !important;
+  }
+
+  .miras-stats {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  .miras-platform__features {
+    grid-template-columns: 1fr !important;
+  }
+
+  .miras-platform__features article {
+    border-left: 0 !important;
+    border-top: 1px solid var(--lh-line) !important;
+    padding: 22px 0 !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .heritage-brand__copy small {
+    display: none !important;
+  }
+
+  .heritage-tools {
+    gap: 8px !important;
+  }
+
+  .heritage-theme,
+  .heritage-avatar {
+    display: none !important;
   }
 }
 
@@ -1563,7 +2717,7 @@ h1 {
 
 .hero-btn-primary {
   position: relative;
-  transition: 
+  transition:
     transform 0.25s ease,
     box-shadow 0.25s ease,
     background 0.25s ease;
@@ -4637,5 +5791,2162 @@ body:has(.miras-home) .heritage-sidebar {
 @media (max-width: 560px) {
   .heritage-panel {
     padding: 18px;
+  }
+}
+
+/* Final diploma archive system: shared visual polish across the platform */
+:root {
+  --lh-paper: #f4ead8;
+  --lh-paper-deep: #eadbc4;
+  --lh-card: rgba(255, 248, 236, 0.92);
+  --lh-card-solid: #fff8ec;
+  --lh-ink: #073f3b;
+  --lh-text: rgba(7, 63, 59, 0.76);
+  --lh-muted: rgba(7, 63, 59, 0.58);
+  --lh-gold: #b9873d;
+  --lh-gold-deep: #8f6424;
+  --lh-line: rgba(112, 84, 45, 0.2);
+  --lh-line-strong: rgba(112, 84, 45, 0.34);
+  --lh-shadow-soft: 0 18px 46px rgba(74, 49, 20, 0.12);
+  --lh-shadow-card: 0 12px 28px rgba(74, 49, 20, 0.1);
+  --lh-radius: 8px;
+  --lh-serif: Georgia, "Times New Roman", serif;
+  --lh-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --page-bg: var(--lh-paper);
+  --surface: var(--lh-card);
+  --surface-strong: var(--lh-card-solid);
+  --text: var(--lh-ink);
+  --text-muted: var(--lh-text);
+  --brand: var(--lh-ink);
+  --accent: #d8be83;
+  --accent-strong: var(--lh-gold);
+  --border: var(--lh-line);
+  --shadow: rgba(74, 49, 20, 0.14);
+  --heritage-bg: var(--lh-paper);
+  --heritage-bg-soft: var(--lh-paper-deep);
+  --heritage-surface: var(--lh-card-solid);
+  --heritage-surface-strong: #efe0c9;
+  --heritage-ink: var(--lh-ink);
+  --heritage-text: var(--lh-text);
+  --heritage-muted: var(--lh-muted);
+  --heritage-gold: var(--lh-gold);
+  --heritage-gold-strong: var(--lh-gold-deep);
+  --heritage-line: var(--lh-line);
+  --heritage-shadow: var(--lh-shadow-card);
+}
+
+:root[data-theme="dark"] {
+  --lh-paper: #071512;
+  --lh-paper-deep: #0d211d;
+  --lh-card: rgba(15, 37, 32, 0.9);
+  --lh-card-solid: #102822;
+  --lh-ink: #fff4df;
+  --lh-text: rgba(255, 244, 223, 0.78);
+  --lh-muted: rgba(255, 244, 223, 0.58);
+  --lh-gold: #d4ad68;
+  --lh-gold-deep: #f0cf8a;
+  --lh-line: rgba(240, 207, 138, 0.22);
+  --lh-line-strong: rgba(240, 207, 138, 0.36);
+  --lh-shadow-soft: 0 22px 58px rgba(0, 0, 0, 0.38);
+  --lh-shadow-card: 0 16px 40px rgba(0, 0, 0, 0.34);
+  --page-bg: var(--lh-paper);
+  --surface: var(--lh-card);
+  --surface-strong: var(--lh-card-solid);
+  --text: var(--lh-ink);
+  --text-muted: var(--lh-text);
+  --brand: var(--lh-ink);
+  --brand-contrast: #071512;
+  --accent: #80612d;
+  --accent-strong: var(--lh-gold);
+  --border: var(--lh-line);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background:
+    radial-gradient(circle at 14% -8%, color-mix(in srgb, var(--lh-gold) 14%, transparent), transparent 26rem),
+    radial-gradient(circle at 92% 8%, color-mix(in srgb, var(--lh-ink) 8%, transparent), transparent 24rem),
+    linear-gradient(180deg, var(--lh-paper) 0%, var(--lh-paper-deep) 54%, var(--lh-paper) 100%);
+  color: var(--lh-ink);
+  font-family: var(--lh-sans);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.2;
+  background-image:
+    radial-gradient(rgba(92, 64, 32, 0.08) 0.8px, transparent 0.8px),
+    radial-gradient(rgba(92, 64, 32, 0.045) 0.8px, transparent 0.8px);
+  background-position: 0 0, 12px 12px;
+  background-size: 18px 18px, 18px 18px;
+}
+
+:root[data-theme="dark"] body::before {
+  opacity: 0.1;
+}
+
+.site-header.heritage-topbar {
+  position: relative;
+  top: auto;
+  left: auto;
+  right: auto;
+  width: min(100% - 32px, 1360px);
+  margin: 10px auto 0;
+  border: 1px solid var(--lh-line);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--lh-card-solid) 84%, transparent);
+  box-shadow: 0 12px 34px rgba(74, 49, 20, 0.12);
+  backdrop-filter: blur(18px) saturate(1.08);
+}
+
+:root[data-theme="dark"] .site-header.heritage-topbar {
+  background: rgba(7, 21, 18, 0.86);
+  border-color: var(--lh-line);
+}
+
+.heritage-topbar__inner {
+  width: 100%;
+  min-height: 62px;
+  grid-template-columns: minmax(200px, 230px) minmax(0, 1fr) minmax(390px, auto);
+  gap: clamp(8px, 1vw, 14px);
+  padding-inline: clamp(14px, 2.4vw, 30px);
+}
+
+.heritage-brand__copy strong,
+.miras-brand strong,
+.miras-footer__brand strong {
+  color: var(--lh-ink);
+  font-family: var(--lh-serif);
+  letter-spacing: 0.12em;
+  font-weight: 500;
+}
+
+.heritage-brand__copy small,
+.miras-brand small {
+  color: var(--lh-muted);
+  letter-spacing: 0.18em;
+}
+
+.heritage-brand__copy {
+  max-width: 132px;
+  overflow: hidden;
+}
+
+.heritage-brand__copy small {
+  max-width: 124px;
+  display: block;
+  line-height: 1.25;
+  white-space: normal;
+  letter-spacing: 0.12em;
+}
+
+.heritage-brand__mark {
+  border-radius: 6px;
+  background: url("./assets/mura/mura-emblem.svg") center / contain no-repeat;
+  box-shadow: none;
+}
+
+.heritage-topnav a,
+.heritage-profile__menu a,
+.heritage-mobile-menu nav a {
+  color: var(--lh-text);
+  transition: color 180ms ease, background 180ms ease, transform 180ms ease;
+}
+
+.heritage-topnav a {
+  align-self: center;
+  min-height: 34px;
+  border-bottom: 0;
+  border-radius: 999px;
+  padding: 0 12px;
+}
+
+.heritage-topnav {
+  gap: clamp(4px, 0.8vw, 12px);
+  justify-content: center;
+}
+
+.heritage-search {
+  width: clamp(180px, 17vw, 236px);
+}
+
+.heritage-tools {
+  gap: 8px;
+}
+
+.heritage-search__field {
+  padding-inline: 12px;
+}
+
+.heritage-search__field input {
+  font-size: 12px;
+}
+
+.heritage-topnav a.is-active,
+.heritage-topnav a:hover,
+.heritage-mobile-menu nav a.active,
+.heritage-mobile-menu nav a:hover {
+  color: var(--lh-ink);
+  background: color-mix(in srgb, var(--lh-gold) 12%, transparent);
+}
+
+.heritage-search__field,
+.heritage-language,
+.heritage-theme,
+.heritage-avatar,
+.heritage-mobile-menu,
+.heritage-profile__menu {
+  border-color: var(--lh-line);
+  border-radius: var(--lh-radius);
+  background: color-mix(in srgb, var(--lh-card-solid) 82%, transparent);
+  color: var(--lh-ink);
+  box-shadow: 0 8px 22px rgba(74, 49, 20, 0.08);
+}
+
+.heritage-theme {
+  width: 42px;
+  min-width: 42px;
+  padding: 0;
+  border-radius: 50%;
+  font-size: 18px;
+  color: var(--lh-ink);
+}
+
+.heritage-theme span {
+  display: grid;
+  place-items: center;
+}
+
+.heritage-search__dropdown,
+.heritage-mobile-menu__results {
+  border: 1px solid var(--lh-line);
+  border-radius: var(--lh-radius);
+  background: var(--lh-card-solid);
+  box-shadow: var(--lh-shadow-soft);
+}
+
+.heritage-search__dropdown button:hover,
+.heritage-search__dropdown button.is-active,
+.heritage-mobile-menu__results button:hover,
+.heritage-mobile-menu__results button.is-active {
+  background: color-mix(in srgb, var(--lh-gold) 14%, transparent);
+}
+
+.site-header ~ main:not(.miras-home) {
+  padding-top: 34px;
+}
+
+.miras-home,
+.heritage-archive-page,
+.works-page,
+.progress-page,
+.profile-page,
+.auth-page,
+.admin-page,
+.about-page,
+.epochs-page,
+.chapter-page,
+.reading-book-page,
+.world-map-page {
+  background:
+    radial-gradient(circle at 12% -4%, color-mix(in srgb, var(--lh-gold) 12%, transparent), transparent 26rem),
+    linear-gradient(180deg, var(--lh-paper) 0%, var(--lh-paper-deep) 54%, var(--lh-paper) 100%) !important;
+  color: var(--lh-ink) !important;
+  font-family: var(--lh-sans);
+}
+
+.miras-home {
+  padding-top: 14px !important;
+}
+
+.miras-cards {
+  padding-top: 26px !important;
+}
+
+.miras-collections {
+  grid-template-columns: minmax(220px, 260px) minmax(0, 1fr) !important;
+  align-items: start;
+  gap: clamp(24px, 3vw, 42px) !important;
+  overflow: hidden;
+}
+
+.miras-collections__intro {
+  position: relative;
+  z-index: 1;
+  align-content: start !important;
+  min-width: 0;
+  max-width: 260px;
+  padding-right: 28px !important;
+}
+
+.miras-collections__intro h2,
+.miras-platform__intro h2 {
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: auto;
+}
+
+.miras-collections__intro span {
+  max-width: 22ch !important;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: auto;
+}
+
+.miras-collections__rail {
+  grid-template-columns: repeat(5, minmax(150px, 1fr)) !important;
+  gap: 16px !important;
+  min-width: 0;
+}
+
+.miras-collection {
+  min-width: 0;
+}
+
+.miras-collection img {
+  aspect-ratio: 1.62;
+}
+
+.miras-collection strong {
+  line-height: 1.25;
+  min-height: 2.5em;
+}
+
+@media (max-width: 1180px) {
+  .heritage-topbar__inner {
+    grid-template-columns: minmax(190px, 210px) minmax(0, 1fr) auto;
+  }
+
+  .heritage-brand__copy {
+    max-width: 118px;
+  }
+
+  .heritage-brand__copy small {
+    max-width: 112px;
+    letter-spacing: 0.09em;
+  }
+
+  .heritage-search {
+    width: 172px;
+  }
+}
+
+.miras-hero {
+  min-height: min(720px, calc(100dvh - 36px));
+  border: 1px solid var(--lh-line);
+  border-radius: 0 0 10px 10px;
+  background:
+    linear-gradient(90deg, rgba(244, 234, 216, 0.96) 0%, rgba(244, 234, 216, 0.83) 40%, rgba(244, 234, 216, 0.22) 100%),
+    var(--mura-home-hero) center / cover no-repeat,
+    var(--lh-paper);
+  box-shadow: inset 0 -1px 0 var(--lh-line);
+}
+
+.miras-hero h1,
+.works-hero h1,
+.authors-hero h1,
+.author-profile-hero h1,
+.reading-book-hero h1,
+.chapter-topbar__title,
+.progress-hero__title,
+.profile-hero-card h1,
+.about-hero h1,
+.mura-map-hero h1,
+.admin-hero h1,
+.epoch-card h2,
+.route-hero h1 {
+  color: var(--lh-ink) !important;
+  font-family: var(--lh-serif);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  text-wrap: balance;
+}
+
+.miras-kicker,
+.heritage-kicker,
+.works-hero__kicker,
+.progress-hero__eyebrow,
+.chapter-sceneCard__eyebrow,
+.chapter-completion__eyebrow,
+.about-kicker,
+.admin-hero__kicker {
+  color: var(--lh-gold-deep) !important;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.miras-button,
+.heritage-button,
+.works-card__primary,
+.progress-empty a,
+.progress-story-card a,
+.profile-action,
+.about-hero__actions a,
+.about-contact a,
+.mura-map-place__actions a,
+.admin-hero__link,
+.admin-submit {
+  border: 1px solid var(--lh-line-strong) !important;
+  border-radius: 999px !important;
+  background: color-mix(in srgb, var(--lh-card-solid) 78%, transparent) !important;
+  color: var(--lh-ink) !important;
+  box-shadow: 0 8px 20px rgba(74, 49, 20, 0.08);
+  transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease, border-color 180ms ease;
+}
+
+.miras-button--primary,
+.heritage-button--primary,
+.heritage-button.is-gold,
+.works-card__primary,
+.profile-action:not(.is-secondary),
+.about-hero__actions a:first-child,
+.about-contact a,
+.admin-submit {
+  border-color: #005b56 !important;
+  background: linear-gradient(180deg, #09615b, #004d49) !important;
+  color: #fff8ec !important;
+}
+
+.miras-button:hover,
+.heritage-button:hover,
+.works-card__primary:hover,
+.progress-story-card a:hover,
+.profile-action:hover,
+.about-hero__actions a:hover,
+.mura-map-place__actions a:hover,
+.admin-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--lh-shadow-card);
+}
+
+.miras-card,
+.miras-stats,
+.miras-platform__features,
+.works-hero,
+.works-toolbar,
+.works-card,
+.works-empty,
+.authors-hero,
+.author-card,
+.author-profile-hero,
+.author-profile-side,
+.author-profile-section,
+.author-work-card,
+.reading-book-hero,
+.reading-book-summary__card,
+.reading-chapter-card,
+.chapter-topbar,
+.chapter-sceneCard,
+.chapter-challenge,
+.chapter-language-column,
+.chapter-completion,
+.chapter-result__card,
+.progress-hero,
+.progress-overview__card,
+.progress-story-card,
+.progress-empty,
+.progress-reflection-card,
+.profile-hero-card,
+.profile-panel,
+.profile-stat-card,
+.profile-favorite-card,
+.profile-summary-card,
+.about-hero,
+.about-card,
+.about-contact,
+.mura-map-hero,
+.mura-map-board,
+.mura-map-place,
+.mura-map-sidebar section,
+.mura-map-stats,
+.admin-hero,
+.admin-card,
+.admin-stats article,
+.admin-tabs,
+.epoch-card,
+.route-stage-card,
+.route-detail-panel {
+  border: 1px solid var(--lh-line) !important;
+  border-radius: var(--lh-radius) !important;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--lh-card-solid) 94%, transparent), color-mix(in srgb, var(--lh-paper-deep) 72%, transparent)),
+    var(--lh-card-solid) !important;
+  box-shadow: var(--lh-shadow-card) !important;
+}
+
+.miras-card,
+.works-card,
+.author-card,
+.author-work-card,
+.reading-chapter-card,
+.progress-story-card,
+.profile-favorite-card,
+.chapter-choice,
+.mura-map-marker,
+.mura-map-popular button {
+  transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease, background 200ms ease;
+}
+
+.miras-card:hover,
+.works-card:hover,
+.author-card:hover,
+.author-work-card:hover,
+.reading-chapter-card:hover,
+.progress-story-card:hover,
+.profile-favorite-card:hover,
+.mura-map-popular button:hover {
+  transform: translateY(-4px);
+  border-color: var(--lh-line-strong) !important;
+  box-shadow: var(--lh-shadow-soft) !important;
+}
+
+.works-card__themes button,
+.author-profile-themes span,
+.author-work-card__tags span,
+.progress-overview__badges span,
+.profile-level-pill,
+.profile-achievement,
+.chapter-topbar__metric,
+.chapter-result__xp,
+.mura-map-place__stats span,
+.admin-hero__meta span,
+.about-checklist span,
+.works-card__meta span,
+.reading-book-theme {
+  border: 1px solid var(--lh-line);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--lh-gold) 10%, transparent);
+  color: var(--lh-ink);
+}
+
+input,
+textarea,
+select {
+  border-radius: var(--lh-radius) !important;
+  border-color: var(--lh-line) !important;
+  background: color-mix(in srgb, var(--lh-card-solid) 86%, transparent) !important;
+  color: var(--lh-ink) !important;
+}
+
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--lh-gold) 42%, transparent);
+  outline-offset: 3px;
+}
+
+.miras-stats {
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgba(0, 77, 73, 0.98), rgba(7, 63, 59, 0.98)),
+    var(--lh-ink) !important;
+  color: #fff8ec !important;
+}
+
+.miras-stats strong,
+.mura-map-stats strong,
+.progress-stat strong,
+.profile-stat-card strong,
+.works-hero__stats strong,
+.authors-hero__seal strong {
+  color: var(--lh-gold) !important;
+  font-family: var(--lh-serif);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+}
+
+.miras-card__image,
+.miras-collection img,
+.works-card__image img,
+.author-card__portrait img,
+.author-profile-hero__portrait,
+.author-work-card__image img,
+.reading-book-hero__cover img,
+.mura-map-place img,
+.mura-map-popular img {
+  filter: sepia(0.18) saturate(0.86) contrast(0.96);
+}
+
+.chapter-language-compare__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.chapter-choice:hover:not(:disabled) {
+  transform: translateY(-2px);
+  border-color: var(--lh-gold) !important;
+}
+
+.chapter-choice.is-selected,
+.chapter-final-question__options button.is-correct,
+.works-toolbar__themes button.is-active {
+  border-color: var(--lh-gold) !important;
+  background: color-mix(in srgb, var(--lh-gold) 18%, var(--lh-card-solid)) !important;
+}
+
+.progress-overview__fill,
+.profile-progress-track span,
+.chapter-topbar__progressFill,
+.explore-progress-ring::before {
+  background: linear-gradient(90deg, #005b56, var(--lh-gold)) !important;
+}
+
+.about-concept-grid article {
+  min-height: 178px;
+}
+
+.admin-page {
+  padding-top: calc(var(--header-safe-offset) + 34px);
+}
+
+.admin-tabs button.is-active {
+  background: #005b56 !important;
+  color: #fff8ec !important;
+}
+
+:root[data-theme="dark"] .miras-hero {
+  background:
+    linear-gradient(90deg, rgba(7, 21, 18, 0.98) 0%, rgba(7, 21, 18, 0.82) 42%, rgba(7, 21, 18, 0.36) 100%),
+    var(--mura-home-hero) center / cover no-repeat,
+    var(--lh-paper) !important;
+}
+
+:root[data-theme="dark"] .miras-button--primary,
+:root[data-theme="dark"] .heritage-button--primary,
+:root[data-theme="dark"] .works-card__primary,
+:root[data-theme="dark"] .profile-action:not(.is-secondary),
+:root[data-theme="dark"] .about-hero__actions a:first-child,
+:root[data-theme="dark"] .admin-submit {
+  background: linear-gradient(180deg, #d4ad68, #9b7132) !important;
+  color: #071512 !important;
+  border-color: var(--lh-gold) !important;
+}
+
+:root[data-theme="dark"] .miras-card,
+:root[data-theme="dark"] .miras-platform__features,
+:root[data-theme="dark"] .works-hero,
+:root[data-theme="dark"] .works-toolbar,
+:root[data-theme="dark"] .works-card,
+:root[data-theme="dark"] .authors-hero,
+:root[data-theme="dark"] .author-card,
+:root[data-theme="dark"] .author-profile-hero,
+:root[data-theme="dark"] .author-profile-side,
+:root[data-theme="dark"] .author-profile-section,
+:root[data-theme="dark"] .author-work-card,
+:root[data-theme="dark"] .reading-book-hero,
+:root[data-theme="dark"] .reading-book-summary__card,
+:root[data-theme="dark"] .reading-chapter-card,
+:root[data-theme="dark"] .chapter-topbar,
+:root[data-theme="dark"] .chapter-sceneCard,
+:root[data-theme="dark"] .chapter-challenge,
+:root[data-theme="dark"] .chapter-language-column,
+:root[data-theme="dark"] .chapter-completion,
+:root[data-theme="dark"] .chapter-result__card,
+:root[data-theme="dark"] .progress-hero,
+:root[data-theme="dark"] .progress-overview__card,
+:root[data-theme="dark"] .progress-story-card,
+:root[data-theme="dark"] .progress-empty,
+:root[data-theme="dark"] .progress-reflection-card,
+:root[data-theme="dark"] .profile-hero-card,
+:root[data-theme="dark"] .profile-panel,
+:root[data-theme="dark"] .profile-stat-card,
+:root[data-theme="dark"] .profile-favorite-card,
+:root[data-theme="dark"] .about-hero,
+:root[data-theme="dark"] .about-card,
+:root[data-theme="dark"] .about-contact,
+:root[data-theme="dark"] .mura-map-hero,
+:root[data-theme="dark"] .mura-map-board,
+:root[data-theme="dark"] .mura-map-place,
+:root[data-theme="dark"] .mura-map-sidebar section,
+:root[data-theme="dark"] .mura-map-stats,
+:root[data-theme="dark"] .admin-hero,
+:root[data-theme="dark"] .admin-card,
+:root[data-theme="dark"] .admin-stats article,
+:root[data-theme="dark"] .admin-tabs {
+  background: linear-gradient(135deg, rgba(16, 40, 34, 0.95), rgba(13, 33, 29, 0.88)) !important;
+  color: var(--lh-ink) !important;
+}
+
+@media (max-width: 980px) {
+  .site-header.heritage-topbar {
+    top: auto;
+    width: min(100% - 16px, 1360px);
+    margin-top: 8px;
+  }
+
+  .miras-hero {
+    min-height: 620px;
+  }
+
+  .chapter-language-compare__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .site-header ~ main:not(.miras-home),
+  .admin-page {
+    padding-top: 24px;
+  }
+
+  .miras-home {
+    padding-top: 8px !important;
+  }
+
+  .miras-hero {
+    min-height: 560px;
+    border-radius: 0 0 var(--lh-radius) var(--lh-radius);
+  }
+
+  .miras-hero__content {
+    padding-block: 42px 54px;
+  }
+
+  .miras-hero h1 {
+    font-size: clamp(36px, 12vw, 54px);
+  }
+
+  .works-card,
+  .author-work-card,
+  .mura-map-place,
+  .profile-hero-card,
+  .chapter-topbar {
+    overflow-wrap: anywhere;
+  }
+
+  .miras-button,
+  .heritage-button,
+  .works-card__primary,
+  .profile-action,
+  .about-hero__actions a {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+/* ================================ */
+/* SECOND PASS: DIPLOMA UI POLISH   */
+/* ================================ */
+
+:root {
+  --lh-container: min(100% - 32px, 1260px);
+  --lh-container-wide: min(100% - 32px, 1360px);
+  --lh-readable: 68ch;
+  scroll-behavior: smooth;
+}
+
+* {
+  min-width: 0;
+}
+
+body {
+  font-synthesis-weight: none;
+  text-rendering: optimizeLegibility;
+}
+
+p,
+li,
+blockquote,
+small,
+span,
+strong,
+a,
+button,
+label,
+input,
+textarea,
+select {
+  overflow-wrap: break-word;
+}
+
+.heritage-topbar__inner,
+.miras-section,
+.miras-platform,
+.miras-footer__inner,
+.explore-archive-layout,
+.works-page__container,
+.authors-page__container,
+.author-page__container,
+.reading-book-page__container,
+.chapter-page__container,
+.progress-page__container,
+.profile-shell,
+.about-shell,
+.mura-map-shell,
+.admin-page__container,
+.epochs-shell,
+.route-page__container {
+  max-width: var(--lh-container-wide);
+}
+
+.works-page__container,
+.authors-page__container,
+.author-page__container,
+.reading-book-page__container,
+.chapter-page__container,
+.progress-page__container,
+.profile-shell,
+.about-shell,
+.mura-map-shell,
+.admin-page__container,
+.epochs-shell,
+.route-page__container {
+  width: var(--lh-container) !important;
+}
+
+.heritage-theme {
+  position: relative;
+  isolation: isolate;
+}
+
+.heritage-theme__glyph {
+  width: 18px;
+  height: 18px;
+  display: block;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--lh-gold) 20%, transparent);
+  box-shadow: inset -6px 0 0 color-mix(in srgb, currentColor 80%, transparent);
+}
+
+.heritage-theme[data-theme-state="dark"] .heritage-theme__glyph {
+  background: currentColor;
+  box-shadow:
+    0 -8px 0 -6px currentColor,
+    0 8px 0 -6px currentColor,
+    8px 0 0 -6px currentColor,
+    -8px 0 0 -6px currentColor;
+}
+
+.heritage-language {
+  min-width: 58px;
+  width: 68px;
+  text-align: center;
+  font-weight: 800;
+}
+
+.heritage-profile__menu {
+  overflow: hidden;
+}
+
+.heritage-search__dropdown button,
+.heritage-mobile-menu__results button,
+.heritage-profile__menu a {
+  min-width: 0;
+}
+
+.heritage-search__dropdown strong,
+.heritage-search__dropdown span,
+.heritage-mobile-menu__results strong,
+.heritage-mobile-menu__results span {
+  overflow-wrap: anywhere;
+}
+
+.heritage-topnav a {
+  border-radius: 999px;
+  padding-inline: 10px;
+}
+
+.miras-hero h1,
+.explore-archive-hero h1,
+.works-hero h1,
+.authors-hero h1,
+.author-profile-hero h1,
+.reading-book-hero h1,
+.progress-hero__title,
+.profile-hero-card h1,
+.about-hero h1,
+.mura-map-hero h1,
+.admin-hero h1,
+.route-hero h1 {
+  letter-spacing: 0.01em !important;
+  line-height: 0.98;
+  text-transform: none !important;
+}
+
+.miras-hero p,
+.explore-archive-hero p,
+.works-hero p,
+.authors-hero p,
+.author-profile-hero p,
+.reading-book-hero p,
+.progress-hero__subtitle,
+.about-hero > p,
+.mura-map-hero p,
+.admin-hero p {
+  max-width: var(--lh-readable);
+  line-height: 1.7;
+}
+
+.miras-card,
+.works-card,
+.author-card,
+.author-work-card,
+.reading-chapter-card,
+.progress-story-card,
+.profile-favorite-card,
+.about-card,
+.mura-map-place,
+.route-stage-card {
+  will-change: transform;
+}
+
+.works-grid,
+.authors-grid,
+.author-profile-works,
+.reading-book-chapters,
+.progress-cards,
+.progress-reflections,
+.profile-favorites,
+.profile-achievements,
+.about-team,
+.about-sources,
+.mura-map-popular,
+.route-stages-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)) !important;
+}
+
+.explore-route-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)) !important;
+}
+
+.explore-stat-band {
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)) !important;
+}
+
+.explore-filter-card--inline {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 160px), 1fr)) !important;
+}
+
+.explore-filter-card--inline > button {
+  min-height: 44px;
+}
+
+.explore-continue-panel {
+  grid-template-columns: minmax(120px, 170px) minmax(0, 1fr) !important;
+}
+
+.explore-continue-panel > .heritage-button,
+.explore-continue-panel aside {
+  grid-column: 1 / -1;
+}
+
+.explore-continue-panel aside {
+  border-left: 0;
+  border-top: 1px solid var(--lh-line);
+  padding: 16px 0 0;
+}
+
+.works-card {
+  grid-template-rows: clamp(180px, 22vw, 230px) minmax(0, 1fr) !important;
+}
+
+.works-card__body,
+.author-work-card,
+.reading-chapter-card,
+.progress-story-card,
+.profile-favorite-card {
+  align-content: start;
+}
+
+.works-card__actions,
+.chapter-result__actions,
+.chapter-completion__actions,
+.profile-hero-actions,
+.about-hero__actions,
+.mura-map-place__actions,
+.admin-actions {
+  align-items: center;
+}
+
+.works-card__actions a,
+.chapter-result__action,
+.chapter-completion__action,
+.profile-action,
+.about-hero__actions a,
+.mura-map-place__actions a,
+.admin-submit,
+.admin-secondary,
+.admin-danger {
+  text-align: center;
+  white-space: normal;
+}
+
+.chapter-page {
+  min-height: 100dvh;
+}
+
+.chapter-topbar__title,
+.chapter-sceneCard__title,
+.chapter-completion__title,
+.chapter-result__status {
+  letter-spacing: 0 !important;
+  line-height: 1.05 !important;
+}
+
+.chapter-topbar__status,
+.chapter-topbar__header {
+  align-items: flex-start;
+}
+
+.chapter-topbar__progressBlock {
+  min-width: min(100%, 260px);
+}
+
+.chapter-language-compare,
+.chapter-challenges,
+.chapter-result {
+  border: 1px solid var(--lh-line) !important;
+  border-radius: var(--lh-radius) !important;
+  background: var(--lh-card-solid) !important;
+  box-shadow: var(--lh-shadow-card) !important;
+}
+
+.chapter-language-column__context p,
+.chapter-language-column__prompt,
+.chapter-fragment blockquote,
+.chapter-result__card p,
+.chapter-sceneCard__text p {
+  max-width: 72ch;
+}
+
+.chapter-xp-toast,
+.chapter-choice-toast {
+  max-width: min(360px, calc(100vw - 32px));
+}
+
+.chapter-result__xp,
+.chapter-topbar__metric,
+.progress-overview__badges span,
+.profile-level-pill,
+.profile-achievement {
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.progress-hero__stats,
+.profile-stat-grid,
+.about-hero__metrics,
+.mura-map-stats,
+.admin-stats {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr)) !important;
+}
+
+.progress-stat,
+.profile-stat-card,
+.about-hero__metrics article,
+.mura-map-stats article,
+.admin-stats article {
+  min-width: 0;
+}
+
+.profile-hero-card {
+  grid-template-columns: minmax(82px, auto) minmax(0, 1fr) minmax(160px, auto) !important;
+}
+
+.profile-level-row,
+.profile-progress-meta,
+.profile-section-heading,
+.progress-section__head,
+.works-hero__content,
+.mura-map-place__stats {
+  flex-wrap: wrap;
+}
+
+.profile-summary-card {
+  background:
+    linear-gradient(110deg, rgba(0, 91, 86, 0.96), rgba(9, 97, 91, 0.9)),
+    var(--lh-ink) !important;
+  color: #fff8ec !important;
+}
+
+.profile-summary-card h2,
+.profile-summary-card strong,
+.profile-summary-card span {
+  color: #fff8ec !important;
+}
+
+.about-hero::after {
+  border-radius: var(--lh-radius);
+  opacity: 0.28;
+}
+
+.about-concept-grid article,
+.about-sources article {
+  min-height: auto;
+}
+
+.mura-map-board,
+.mura-map-layout,
+.route-layout,
+.admin-panel,
+.admin-form__grid {
+  grid-template-columns: minmax(0, 1fr) !important;
+}
+
+.mura-map-board,
+.admin-panel {
+  overflow: clip;
+}
+
+.admin-tabs {
+  display: flex !important;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.admin-tabs button {
+  flex: 1 1 150px;
+}
+
+:root[data-theme="dark"] .chapter-language-compare,
+:root[data-theme="dark"] .chapter-challenges,
+:root[data-theme="dark"] .chapter-result,
+:root[data-theme="dark"] .profile-summary-card {
+  background: linear-gradient(135deg, rgba(16, 40, 34, 0.95), rgba(13, 33, 29, 0.88)) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (max-width: 1120px) {
+  .miras-collections {
+    grid-template-columns: 1fr !important;
+  }
+
+  .heritage-topbar__inner {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .heritage-topnav,
+  .heritage-search {
+    display: none;
+  }
+
+  .heritage-menu-toggle {
+    display: grid;
+  }
+
+  .heritage-tools {
+    gap: 8px;
+  }
+
+  .heritage-language {
+    width: 62px;
+  }
+}
+
+@media (min-width: 981px) {
+  .mura-map-layout {
+    grid-template-columns: minmax(0, 1fr) 300px !important;
+  }
+}
+
+@media (max-width: 860px) {
+  .profile-hero-card {
+    grid-template-columns: 1fr !important;
+  }
+
+  .profile-hero-actions {
+    flex-direction: row;
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --lh-container: min(100% - 24px, 1260px);
+    --lh-container-wide: min(100% - 24px, 1360px);
+  }
+
+  .site-header.heritage-topbar {
+    top: auto !important;
+    width: min(100% - 16px, 1360px) !important;
+    margin-top: 8px !important;
+  }
+
+  .heritage-topbar__inner {
+    width: 100% !important;
+    padding-inline: 10px !important;
+    gap: 8px !important;
+  }
+
+  .heritage-brand {
+    gap: 8px;
+  }
+
+  .heritage-brand strong {
+    font-size: 17px !important;
+    letter-spacing: 0.08em !important;
+  }
+
+  .heritage-language {
+    display: inline-flex !important;
+    width: 54px !important;
+    min-width: 54px !important;
+    min-height: 36px;
+    padding-inline: 8px !important;
+  }
+
+  .heritage-avatar,
+  .heritage-menu-toggle {
+    width: 36px !important;
+    min-width: 36px !important;
+    height: 36px !important;
+  }
+
+  .heritage-mobile-menu {
+    inset: 8px !important;
+    width: auto !important;
+    max-height: calc(100dvh - 16px) !important;
+    border-radius: var(--lh-radius) !important;
+  }
+
+  .heritage-mobile-menu nav a {
+    font-size: clamp(22px, 8vw, 34px) !important;
+  }
+
+  .miras-hero,
+  .explore-archive-hero {
+    min-height: auto !important;
+  }
+
+  .miras-hero__content,
+  .explore-archive-hero__content {
+    width: min(100% - 24px, 760px) !important;
+  }
+
+  .explore-stat-band article {
+    grid-template-columns: 44px minmax(0, 1fr);
+    justify-content: stretch;
+    padding-inline: 14px;
+  }
+
+  .explore-continue-panel,
+  .chapter-topbar,
+  .chapter-challenges,
+  .chapter-language-compare,
+  .chapter-sceneCard,
+  .chapter-result,
+  .chapter-completion,
+  .progress-hero,
+  .progress-overview__card,
+  .profile-hero-card,
+  .profile-panel,
+  .about-hero,
+  .about-card,
+  .mura-map-hero,
+  .admin-hero,
+  .admin-card {
+    padding: 18px !important;
+  }
+
+  .chapter-topbar__header,
+  .chapter-topbar__status,
+  .chapter-result__top,
+  .about-contact {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+  }
+
+  .chapter-topbar__backButton {
+    justify-self: start;
+  }
+
+  .chapter-xp-toast,
+  .chapter-choice-toast {
+    left: 16px !important;
+    right: 16px !important;
+    width: auto !important;
+  }
+
+  .profile-hero-actions,
+  .works-card__actions,
+  .chapter-result__actions,
+  .chapter-completion__actions,
+  .about-hero__actions,
+  .admin-actions {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    width: 100%;
+  }
+}
+
+@media (max-width: 380px) {
+  :root {
+    --lh-container: min(100% - 18px, 1260px);
+    --lh-container-wide: min(100% - 18px, 1360px);
+  }
+
+  .heritage-brand__mark {
+    display: none !important;
+  }
+
+  .heritage-language {
+    width: 50px !important;
+    min-width: 50px !important;
+  }
+}
+
+/* ====================================== */
+/* FINAL RESPONSIVE CONTRACT, SITE-WIDE   */
+/* ====================================== */
+
+html,
+body,
+#root {
+  inline-size: 100%;
+  max-inline-size: 100vw;
+  overflow-x: hidden !important;
+}
+
+body {
+  min-inline-size: 320px;
+}
+
+main,
+section,
+article,
+aside,
+nav,
+header,
+footer,
+form,
+div {
+  max-inline-size: 100%;
+}
+
+.miras-home,
+.heritage-archive-page,
+.works-page,
+.authors-page,
+.author-page,
+.reading-book-page,
+.chapter-page,
+.progress-page,
+.profile-page,
+.about-page,
+.world-map-page,
+.admin-page,
+.auth-page,
+.epochs-page,
+.route-page {
+  overflow-x: clip !important;
+}
+
+.miras-cards,
+.miras-stats,
+.miras-collections,
+.miras-platform,
+.miras-footer,
+.explore-archive-layout,
+.works-page__container,
+.authors-page__container,
+.author-page__container,
+.reading-book-page__container,
+.chapter-page__container,
+.progress-page__container,
+.profile-shell,
+.about-shell,
+.mura-map-hero,
+.mura-map-layout,
+.mura-map-stats,
+.admin-page__container,
+.auth-shell,
+.epochs-shell,
+.route-journey-hero,
+.route-stat-band,
+.route-action-bar,
+.route-workspace,
+.route-missing-card {
+  width: min(100% - 32px, 1340px) !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.heritage-topbar.site-header {
+  width: min(100% - 24px, 1360px) !important;
+}
+
+.heritage-topbar__inner {
+  grid-template-columns: minmax(188px, 220px) minmax(0, 1fr) minmax(330px, auto) !important;
+  column-gap: clamp(6px, 0.8vw, 14px) !important;
+}
+
+.heritage-brand {
+  min-width: 0 !important;
+}
+
+.heritage-brand__copy {
+  max-width: 126px !important;
+}
+
+.heritage-brand__copy strong {
+  font-size: clamp(18px, 1.8vw, 22px) !important;
+}
+
+.heritage-brand__copy small {
+  max-width: 118px !important;
+  letter-spacing: 0.1em !important;
+  line-height: 1.15 !important;
+}
+
+.heritage-topnav {
+  gap: clamp(2px, 0.55vw, 10px) !important;
+  min-width: 0 !important;
+}
+
+.heritage-topnav a {
+  min-width: 0 !important;
+  min-height: 32px !important;
+  padding-inline: clamp(8px, 0.85vw, 12px) !important;
+  white-space: nowrap !important;
+}
+
+.heritage-tools {
+  min-width: 0 !important;
+  gap: 8px !important;
+}
+
+.heritage-search {
+  width: clamp(168px, 16vw, 220px) !important;
+}
+
+.heritage-language {
+  width: 58px !important;
+  min-width: 58px !important;
+}
+
+.heritage-theme,
+.heritage-avatar,
+.heritage-menu-toggle {
+  flex: 0 0 auto !important;
+}
+
+.miras-hero__content,
+.explore-archive-hero__content {
+  width: min(100% - 40px, 900px) !important;
+}
+
+.miras-cards,
+.miras-stats,
+.miras-platform__features,
+.route-stat-band,
+.progress-hero__stats,
+.profile-stat-grid,
+.about-hero__metrics,
+.admin-stats,
+.mura-map-stats {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr)) !important;
+}
+
+.miras-collections {
+  grid-template-columns: minmax(210px, 260px) minmax(0, 1fr) !important;
+}
+
+.miras-collections__rail {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr)) !important;
+}
+
+.miras-platform {
+  grid-template-columns: minmax(210px, 260px) minmax(0, 1fr) !important;
+}
+
+.miras-footer {
+  grid-template-columns: minmax(190px, 250px) minmax(0, 1fr) minmax(240px, 310px) !important;
+}
+
+.works-hero__content,
+.author-profile-hero,
+.reading-book-hero,
+.route-journey-hero,
+.auth-shell,
+.about-grid {
+  grid-template-columns: minmax(0, 1fr) minmax(240px, auto) !important;
+}
+
+.works-grid,
+.authors-grid,
+.author-profile-works,
+.reading-book-chapters__list,
+.reading-book-fragments__grid,
+.progress-cards,
+.progress-reflections,
+.profile-favorites,
+.profile-achievements,
+.about-team,
+.about-sources,
+.mura-map-popular,
+.route-stages-grid,
+.chapter-recommendation__grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)) !important;
+}
+
+.explore-archive-layout,
+.mura-map-layout {
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 300px) !important;
+}
+
+.explore-filter-card--inline,
+.chapter-challenges__grid,
+.chapter-language-compare__grid,
+.chapter-result__grid,
+.reading-book-summary,
+.profile-settings-form,
+.admin-form__grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)) !important;
+}
+
+.explore-continue-panel,
+.mura-map-place,
+.route-action-bar,
+.route-workspace {
+  grid-template-columns: minmax(0, 1fr) !important;
+}
+
+.route-workspace {
+  display: grid !important;
+}
+
+.route-timeline-panel,
+.route-context-panel {
+  position: static !important;
+}
+
+.route-timeline {
+  max-height: none !important;
+}
+
+.route-tabs,
+.admin-tabs,
+.works-toolbar__themes,
+.works-card__themes,
+.chapter-topbar__meta,
+.reading-book-hero__actions,
+.profile-hero-actions,
+.about-hero__actions,
+.mura-map-place__actions,
+.route-action-bar__buttons {
+  display: flex !important;
+  flex-wrap: wrap !important;
+}
+
+.route-tabs button,
+.admin-tabs button,
+.works-toolbar__themes button,
+.works-card__themes button {
+  min-width: 0 !important;
+}
+
+.mura-map-canvas {
+  min-height: clamp(320px, 58vw, 620px) !important;
+}
+
+.mura-map-marker {
+  max-width: min(180px, 36vw) !important;
+}
+
+.chapter-xp-toast,
+.chapter-choice-toast,
+.chapter-reward-toast,
+.admin-toast,
+.achievement-toast {
+  max-width: min(420px, calc(100vw - 28px)) !important;
+}
+
+.reading-book-hero__cover,
+.author-profile-hero__portrait,
+.mura-map-place img,
+.route-journey-hero__portrait {
+  max-width: 100% !important;
+}
+
+@media (max-width: 1320px) {
+  .heritage-topbar__inner {
+    grid-template-columns: minmax(176px, 205px) minmax(0, 1fr) auto !important;
+  }
+
+  .heritage-brand__mark {
+    width: 34px !important;
+    height: 34px !important;
+  }
+
+  .heritage-search {
+    display: none !important;
+  }
+
+  .miras-cards,
+  .miras-stats,
+  .miras-collections,
+  .miras-platform,
+  .miras-footer,
+  .route-journey-hero,
+  .route-stat-band,
+  .route-action-bar,
+  .route-workspace {
+    width: min(100% - 28px, 1240px) !important;
+  }
+}
+
+@media (max-width: 1180px) {
+  .heritage-topbar__inner {
+    grid-template-columns: minmax(0, 1fr) auto !important;
+  }
+
+  .heritage-topnav,
+  .heritage-search {
+    display: none !important;
+  }
+
+  .heritage-menu-toggle {
+    display: grid !important;
+  }
+
+  .miras-collections,
+  .miras-platform,
+  .miras-footer,
+  .works-hero__content,
+  .author-profile-hero,
+  .reading-book-hero,
+  .route-journey-hero,
+  .auth-shell,
+  .about-grid,
+  .explore-archive-layout,
+  .mura-map-layout {
+    grid-template-columns: 1fr !important;
+  }
+
+  .miras-collections__intro,
+  .miras-platform__intro {
+    max-width: 72ch !important;
+    border-right: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .miras-collections__intro span {
+    max-width: 68ch !important;
+  }
+
+  .mura-map-sidebar {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)) !important;
+    gap: 16px !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .miras-cards,
+  .miras-platform__features,
+  .route-stat-band,
+  .progress-hero__stats,
+  .profile-stat-grid,
+  .admin-stats,
+  .mura-map-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .miras-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .miras-stats article:nth-child(2n),
+  .miras-platform__features article:nth-child(2n) {
+    border-right: 0 !important;
+  }
+
+  .reading-book-hero__actions,
+  .profile-hero-actions,
+  .route-action-bar__buttons {
+    width: 100% !important;
+  }
+
+  .reading-book-hero__action,
+  .profile-action,
+  .route-action-bar__buttons button,
+  .route-share-button {
+    flex: 1 1 180px !important;
+  }
+
+  .chapter-topbar__header,
+  .chapter-topbar__status,
+  .chapter-result__top,
+  .profile-hero-card,
+  .admin-panel {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 720px) {
+  .miras-cards,
+  .miras-stats,
+  .miras-collections__rail,
+  .miras-platform__features,
+  .works-grid,
+  .authors-grid,
+  .author-profile-works,
+  .reading-book-chapters__list,
+  .reading-book-fragments__grid,
+  .progress-cards,
+  .progress-reflections,
+  .profile-favorites,
+  .profile-achievements,
+  .about-team,
+  .about-sources,
+  .mura-map-popular,
+  .route-stages-grid,
+  .chapter-recommendation__grid,
+  .route-stat-band,
+  .progress-hero__stats,
+  .profile-stat-grid,
+  .admin-stats,
+  .mura-map-stats {
+    grid-template-columns: 1fr !important;
+  }
+
+  .miras-cards,
+  .miras-stats,
+  .miras-collections,
+  .miras-platform,
+  .miras-footer,
+  .explore-archive-layout,
+  .works-page__container,
+  .authors-page__container,
+  .author-page__container,
+  .reading-book-page__container,
+  .chapter-page__container,
+  .progress-page__container,
+  .profile-shell,
+  .about-shell,
+  .mura-map-hero,
+  .mura-map-layout,
+  .mura-map-stats,
+  .admin-page__container,
+  .auth-shell,
+  .epochs-shell,
+  .route-journey-hero,
+  .route-stat-band,
+  .route-action-bar,
+  .route-workspace,
+  .route-missing-card {
+    width: min(100% - 24px, 1340px) !important;
+  }
+
+  .miras-hero__content,
+  .explore-archive-hero__content {
+    width: min(100% - 24px, 900px) !important;
+  }
+
+  .miras-hero h1,
+  .explore-archive-hero h1,
+  .works-hero h1,
+  .authors-hero h1,
+  .author-profile-hero h1,
+  .reading-book-hero h1,
+  .progress-hero__title,
+  .profile-hero-card h1,
+  .about-hero h1,
+  .mura-map-hero h1,
+  .admin-hero h1,
+  .route-journey-hero h1 {
+    font-size: clamp(34px, 12vw, 56px) !important;
+    line-height: 1.04 !important;
+  }
+
+  .miras-button,
+  .heritage-button,
+  .works-card__actions a,
+  .reading-book-hero__action,
+  .reading-chapter-card__action,
+  .chapter-result__action,
+  .chapter-completion__action,
+  .profile-action,
+  .about-hero__actions a,
+  .mura-map-place__actions a,
+  .route-action-bar__buttons button,
+  .route-share-button,
+  .admin-submit,
+  .admin-secondary,
+  .admin-danger {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .mura-map-place__facts,
+  .mura-map-place__stats,
+  .reading-book-hero__metrics,
+  .reading-chapter-card__meta,
+  .progress-story-card__meta,
+  .profile-summary-card__grid,
+  .chapter-completion__stats {
+    grid-template-columns: 1fr !important;
+  }
+
+  .route-breadcrumbs {
+    position: static !important;
+    margin-bottom: 16px !important;
+    flex-wrap: wrap !important;
+  }
+
+  .route-journey-hero__portrait {
+    width: min(100%, 240px) !important;
+    justify-self: start !important;
+  }
+}
+
+@media (max-width: 520px) {
+  .heritage-topbar.site-header {
+    width: min(100% - 12px, 1360px) !important;
+    border-radius: 10px !important;
+  }
+
+  .heritage-topbar__inner {
+    min-height: 58px !important;
+    padding-inline: 8px !important;
+  }
+
+  .heritage-brand__mark {
+    width: 30px !important;
+    height: 30px !important;
+  }
+
+  .heritage-brand__copy {
+    max-width: 112px !important;
+  }
+
+  .heritage-brand__copy strong {
+    font-size: 16px !important;
+  }
+
+  .heritage-brand__copy small {
+    max-width: 104px !important;
+    font-size: 8px !important;
+    letter-spacing: 0.08em !important;
+  }
+
+  .heritage-language {
+    width: 48px !important;
+    min-width: 48px !important;
+    height: 34px !important;
+    min-height: 34px !important;
+    padding-inline: 4px !important;
+  }
+
+  .heritage-avatar,
+  .heritage-theme,
+  .heritage-menu-toggle {
+    width: 34px !important;
+    min-width: 34px !important;
+    height: 34px !important;
+  }
+
+  .miras-hero__actions,
+  .works-card__actions,
+  .reading-book-hero__actions,
+  .chapter-result__actions,
+  .chapter-completion__actions,
+  .profile-hero-actions,
+  .about-hero__actions,
+  .admin-actions {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+  }
+
+  .miras-card,
+  .works-card,
+  .author-card,
+  .author-work-card,
+  .reading-chapter-card,
+  .progress-story-card,
+  .profile-favorite-card,
+  .about-card,
+  .mura-map-place,
+  .route-active-stage,
+  .route-context-panel,
+  .admin-card {
+    border-radius: 8px !important;
+  }
+
+  .chapter-xp-toast,
+  .chapter-choice-toast {
+    left: 10px !important;
+    right: 10px !important;
+    top: 86px !important;
+    width: auto !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .heritage-brand__copy small {
+    display: none !important;
+  }
+
+  .heritage-brand__copy {
+    max-width: 76px !important;
+  }
+
+  .heritage-language {
+    display: none !important;
+  }
+
+  .miras-cards,
+  .miras-stats,
+  .miras-collections,
+  .miras-platform,
+  .miras-footer,
+  .explore-archive-layout,
+  .works-page__container,
+  .authors-page__container,
+  .author-page__container,
+  .reading-book-page__container,
+  .chapter-page__container,
+  .progress-page__container,
+  .profile-shell,
+  .about-shell,
+  .mura-map-hero,
+  .mura-map-layout,
+  .mura-map-stats,
+  .admin-page__container,
+  .auth-shell,
+  .epochs-shell,
+  .route-journey-hero,
+  .route-stat-band,
+  .route-action-bar,
+  .route-workspace,
+  .route-missing-card {
+    width: min(100% - 18px, 1340px) !important;
+  }
+}
+
+/* Last-mile home/header flattening: no capsules, no boxed topbar */
+.site-header.heritage-topbar {
+  position: sticky !important;
+  top: 0 !important;
+  width: 100% !important;
+  margin: 0 !important;
+  border: 0 !important;
+  border-bottom: 1px solid color-mix(in srgb, var(--lh-line) 84%, transparent) !important;
+  border-radius: 0 !important;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--lh-paper) 94%, transparent), color-mix(in srgb, var(--lh-paper) 78%, transparent)) !important;
+  box-shadow: none !important;
+  backdrop-filter: blur(18px) saturate(1.08);
+}
+
+:root[data-theme="dark"] .site-header.heritage-topbar {
+  background:
+    linear-gradient(180deg, rgba(7, 21, 18, 0.94), rgba(7, 21, 18, 0.78)) !important;
+  border-bottom-color: rgba(255, 248, 236, 0.12) !important;
+}
+
+.heritage-topbar__inner {
+  width: min(100% - 48px, 1360px) !important;
+  min-height: 78px !important;
+  margin-inline: auto !important;
+  padding-inline: 0 !important;
+  grid-template-columns: minmax(190px, 250px) minmax(0, 1fr) minmax(300px, auto) !important;
+  gap: clamp(18px, 2.4vw, 42px) !important;
+}
+
+.heritage-topnav {
+  gap: clamp(18px, 2.1vw, 34px) !important;
+}
+
+.heritage-topnav a {
+  position: relative;
+  min-height: auto !important;
+  padding: 8px 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: color-mix(in srgb, var(--lh-ink) 72%, transparent) !important;
+}
+
+.heritage-topnav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 1px;
+  height: 1px;
+  background: var(--lh-gold-deep);
+  transform: scaleX(0);
+  transition: transform 180ms ease;
+}
+
+.heritage-topnav a.is-active,
+.heritage-topnav a:hover {
+  background: transparent !important;
+  color: var(--lh-ink) !important;
+}
+
+.heritage-topnav a.is-active::after,
+.heritage-topnav a:hover::after {
+  transform: scaleX(1);
+}
+
+.heritage-search__field,
+.heritage-language,
+.heritage-theme,
+.heritage-avatar,
+.heritage-menu-toggle {
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.heritage-search__field {
+  border-bottom: 1px solid color-mix(in srgb, var(--lh-line-strong) 74%, transparent) !important;
+  padding-inline: 0 !important;
+}
+
+.miras-home {
+  padding-top: 0 !important;
+}
+
+.miras-hero {
+  border: 0 !important;
+  border-bottom: 1px solid var(--lh-line) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.miras-button,
+.miras-collections__intro a {
+  width: auto !important;
+  min-width: 0 !important;
+  min-height: auto !important;
+  padding: 12px 0 !important;
+  border: 0 !important;
+  border-bottom: 1px solid currentColor !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.miras-button--primary {
+  color: #005b56 !important;
+}
+
+.miras-cards,
+.miras-stats,
+.miras-collections,
+.miras-platform,
+.miras-footer {
+  width: min(100% - 72px, 1320px) !important;
+}
+
+.miras-card,
+.miras-platform__features,
+.miras-platform__features article {
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.miras-card {
+  border: 0 !important;
+  border-left: 1px solid var(--lh-line) !important;
+  padding: 0 clamp(16px, 2vw, 28px) !important;
+}
+
+.miras-card:first-child {
+  border-left: 0 !important;
+  padding-left: 0 !important;
+}
+
+.miras-card__image,
+.miras-card__bottom,
+.miras-collection img,
+.miras-stats,
+.miras-stats article,
+.miras-footer__subscribe div {
+  border-radius: 0 !important;
+}
+
+.miras-card__bottom {
+  border: 0 !important;
+  border-top: 1px solid var(--lh-line) !important;
+  background: transparent !important;
+}
+
+.miras-platform__features {
+  border: 0 !important;
+}
+
+.miras-platform__features article {
+  border: 0 !important;
+  border-left: 1px solid var(--lh-line) !important;
+}
+
+.miras-platform__features article:first-child {
+  border-left: 0 !important;
+}
+
+@media (max-width: 1180px) {
+  .heritage-topbar__inner {
+    grid-template-columns: minmax(0, 1fr) auto !important;
+  }
+
+  .heritage-mobile-menu {
+    inset: 0 !important;
+    width: 100% !important;
+    max-height: 100dvh !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .heritage-mobile-menu button,
+  .heritage-mobile-menu select,
+  .heritage-mobile-menu nav a {
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+}
+
+@media (max-width: 720px) {
+  .heritage-topbar__inner,
+  .miras-hero__content,
+  .miras-cards,
+  .miras-stats,
+  .miras-collections,
+  .miras-platform,
+  .miras-footer {
+    width: min(100% - 28px, 1320px) !important;
+  }
+
+  .miras-card {
+    border-left: 0 !important;
+    border-top: 1px solid var(--lh-line) !important;
+    padding: 24px 0 !important;
+  }
+
+  .miras-card:first-child {
+    border-top: 0 !important;
+  }
+
+  .miras-platform__features article {
+    border-left: 0 !important;
+    border-top: 1px solid var(--lh-line) !important;
+    padding-inline: 0 !important;
   }
 }

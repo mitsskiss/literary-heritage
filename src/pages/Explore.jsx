@@ -4,9 +4,9 @@ import { authors } from "../data/authors";
 import { works } from "../data/works";
 import { workMetadataById } from "../data/exploreData";
 import { readingRoutes } from "../data/routes";
-import { useI18n } from "../i18n/I18nContext";
+import { useI18n } from "../i18n/useI18n";
 import { useProgressStore } from "../store/useProgressStore";
-import exploreHero from "../assets/mura/routes-hero.png";
+import exploreHero from "../assets/mura/routes-hero.jpg";
 import "./Explore.css";
 
 const THEME_ORDER = [
@@ -37,7 +37,6 @@ function Explore() {
   const [languageFilter, setLanguageFilter] = useState("all");
   const [durationFilter, setDurationFilter] = useState("all");
   const [searchValue, setSearchValue] = useState("");
-  const xp = useProgressStore((state) => state.xp);
   const completedStories = useProgressStore((state) => state.completedStories);
   const storyProgress = useProgressStore((state) => state.storyProgress);
   const reflections = useProgressStore((state) => state.reflections);
@@ -50,7 +49,7 @@ function Explore() {
   const localizedAuthors = localizeAuthors(authors);
   const localizedJourneys = localizeJourneys(readingRoutes);
 
-  const themeOptions = THEME_ORDER.map((theme) => label(theme));
+  const themeOptions = THEME_ORDER.map((theme) => ({ value: theme, label: label(theme) }));
   const authorOptions = [...new Set(localizedWorks.map((work) => work.author))];
   const periodOptions = [...new Set(localizedWorks.map((work) => work.period))];
 
@@ -64,7 +63,9 @@ function Explore() {
       const normalizedSearch = searchValue.trim().toLowerCase();
       const routeDescription = journey.description ?? journey.subtitle ?? "";
       const matchesTheme =
-        activeTheme === "all" || label(journey.focusTheme) === activeTheme || journey.focusTheme === activeTheme;
+        activeTheme === "all" ||
+        journey.canonicalFocusTheme === activeTheme ||
+        journey.focusTheme === activeTheme;
       const matchesAuthor = authorFilter === "all" || routeAuthors.includes(authorFilter);
       const matchesPeriod = periodFilter === "all" || routePeriods.includes(periodFilter);
       const matchesDuration =
@@ -80,7 +81,7 @@ function Explore() {
 
       return matchesTheme && matchesAuthor && matchesPeriod && matchesDuration && matchesSearch;
     });
-  }, [activeTheme, authorFilter, durationFilter, label, localizedJourneys, localizedWorks, periodFilter, searchValue]);
+  }, [activeTheme, authorFilter, durationFilter, localizedJourneys, localizedWorks, periodFilter, searchValue]);
 
   const primaryJourney = filteredJourneys[0] ?? localizedJourneys[0];
   const primaryWork = localizedWorks.find((work) => work.id === primaryJourney?.works?.[0]) ?? localizedWorks[0];
@@ -108,7 +109,7 @@ function Explore() {
   };
 
   const openRoute = (journey) => {
-    handleThemeSelect(label(journey.focusTheme));
+    handleThemeSelect(journey.canonicalFocusTheme ?? journey.focusTheme);
     navigate(`/route/${journey.id}`);
   };
 
@@ -198,7 +199,7 @@ function Explore() {
               <h2>{t("routeFilters")}</h2>
               <FilterSelect label={t("navAuthors")} value={authorFilter} onChange={setAuthorFilter} options={[{ value: "all", label: t("allAuthors") }, ...authorOptions.map((author) => ({ value: author, label: author }))]} />
               <FilterSelect label={t("period")} value={periodFilter} onChange={setPeriodFilter} options={[{ value: "all", label: t("allPeriods") }, ...periodOptions.map((period) => ({ value: period, label: period }))]} />
-              <FilterSelect label={t("themes")} value={activeTheme} onChange={handleThemeSelect} options={[{ value: "all", label: t("allThemes") }, ...themeOptions.map((theme) => ({ value: theme, label: theme }))]} />
+              <FilterSelect label={t("themes")} value={activeTheme} onChange={handleThemeSelect} options={[{ value: "all", label: t("allThemes") }, ...themeOptions]} />
               <FilterSelect label={t("language")} value={languageFilter} onChange={setLanguageFilter} options={[{ value: "all", label: t("allLanguages") }, { value: "kk", label: "KZ" }, { value: "ru", label: "RU" }, { value: "en", label: "EN" }]} />
               <FilterSelect label={t("duration")} value={durationFilter} onChange={setDurationFilter} options={[{ value: "all", label: t("anyDuration") }, { value: "short", label: t("shortRoute") }, { value: "medium", label: t("mediumRoute") }, { value: "long", label: t("longRoute") }]} />
               <button type="button" onClick={resetFilters}>{t("apply")}</button>

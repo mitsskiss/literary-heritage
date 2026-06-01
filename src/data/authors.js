@@ -1,9 +1,9 @@
-import abaiPortrait from "../assets/authors/abai.png";
-import archiveAuthors from "../assets/mura/portal-authors.png";
-import archivePoetry from "../assets/mura/collection-poetry.png";
-import archiveProse from "../assets/mura/collection-prose.png";
-import archiveThoughts from "../assets/mura/collection-thoughts.png";
-import archiveRoutes from "../assets/mura/collection-routes.png";
+import abaiPortrait from "../assets/authors/abai.jpg";
+import archiveAuthors from "../assets/mura/portal-authors.jpg";
+import archivePoetry from "../assets/mura/collection-poetry.jpg";
+import archiveProse from "../assets/mura/collection-prose.jpg";
+import archiveThoughts from "../assets/mura/collection-thoughts.jpg";
+import archiveRoutes from "../assets/mura/collection-routes.jpg";
 
 export const authors = [
   {

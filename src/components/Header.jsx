@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
-import { useI18n } from "../i18n/I18nContext";
+import { useI18n } from "../i18n/useI18n";
 import { useTheme } from "../theme/ThemeContext";
 import { authors } from "../data/authors";
 import { literaryEpochs } from "../data/epochs";
@@ -16,6 +16,7 @@ function Header() {
     label,
     localizeAuthors,
     localizeJourneys,
+    localizeMapMarker,
     localizeWorks,
     setLanguage,
     t,
@@ -28,11 +29,13 @@ function Header() {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isLanguageOpen, setIsLanguageOpen] = useState(false);
   const [highlightedResult, setHighlightedResult] = useState(0);
   const [localAvatar, setLocalAvatar] = useState("");
   const menuRef = useRef(null);
   const profileRef = useRef(null);
   const searchRef = useRef(null);
+  const languageRef = useRef(null);
   const avatarDataUrl = profile?.avatar_data_url || localAvatar;
 
   const navItems = [
@@ -49,10 +52,11 @@ function Header() {
     setIsMenuOpen(false);
     setIsProfileOpen(false);
     setIsSearchOpen(false);
+    setIsLanguageOpen(false);
   }, [location.pathname]);
 
   useEffect(() => {
-    if (!isMenuOpen && !isProfileOpen && !isSearchOpen) return undefined;
+    if (!isMenuOpen && !isProfileOpen && !isSearchOpen && !isLanguageOpen) return undefined;
 
     const handlePointerDown = (event) => {
       if (isMenuOpen && !menuRef.current?.contains(event.target)) {
@@ -64,11 +68,25 @@ function Header() {
       if (isSearchOpen && !searchRef.current?.contains(event.target)) {
         setIsSearchOpen(false);
       }
+      if (isLanguageOpen && !languageRef.current?.contains(event.target)) {
+        setIsLanguageOpen(false);
+      }
     };
 
     document.addEventListener("pointerdown", handlePointerDown);
     return () => document.removeEventListener("pointerdown", handlePointerDown);
-  }, [isMenuOpen, isProfileOpen, isSearchOpen]);
+  }, [isLanguageOpen, isMenuOpen, isProfileOpen, isSearchOpen]);
+
+  useEffect(() => {
+    if (!isLanguageOpen) return undefined;
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") setIsLanguageOpen(false);
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [isLanguageOpen]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -92,6 +110,10 @@ function Header() {
   const localizedWorks = useMemo(() => localizeWorks(works), [localizeWorks]);
   const localizedAuthors = useMemo(() => localizeAuthors(authors), [localizeAuthors]);
   const localizedRoutes = useMemo(() => localizeJourneys(readingRoutes), [localizeJourneys]);
+  const localizedWorldMarkers = useMemo(
+    () => literaryWorldMarkers.map(localizeMapMarker),
+    [localizeMapMarker]
+  );
 
   const searchResults = useMemo(() => {
     const normalizedQuery = searchQuery.trim().toLowerCase();
@@ -113,9 +135,9 @@ function Header() {
         makeResult(
           t("searchTypeWork"),
           work.title,
-          `${work.author} · ${work.description}`,
+          `${work.author} В· ${work.description}`,
           `/reading/${work.id}`,
-          [work.originalTitle, work.period, work.genre, ...(work.themes ?? [])]
+          [work.originalTitle, work.period, work.genre, ...(work.themes ?? []), ...(work.canonicalThemes ?? [])]
         )
       ),
       ...localizedAuthors.map((author) =>
@@ -131,7 +153,7 @@ function Header() {
         makeResult(
           t("searchTypeEpoch"),
           epoch.title,
-          `${epoch.years} · ${epoch.description}`,
+          `${epoch.years} В· ${epoch.description}`,
           "/epochs",
           [epoch.id, ...(epoch.authors ?? []), ...(epoch.works ?? [])]
         )
@@ -145,11 +167,11 @@ function Header() {
           [route.focusTheme, route.difficulty, ...(route.works ?? [])]
         )
       ),
-      ...literaryWorldMarkers.map((place) =>
+      ...localizedWorldMarkers.map((place) =>
         makeResult(
           t("searchTypePlace"),
           place.name,
-          `${place.city} · ${place.description}`,
+          `${place.city} В· ${place.description}`,
           "/map",
           [place.author, place.region, place.type]
         )
@@ -179,7 +201,7 @@ function Header() {
     return results
       .filter((result) => result.haystack.includes(normalizedQuery))
       .slice(0, 8);
-  }, [label, localizedAuthors, localizedRoutes, localizedWorks, searchQuery, t]);
+  }, [label, localizedAuthors, localizedRoutes, localizedWorks, localizedWorldMarkers, searchQuery, t]);
 
   useEffect(() => {
     setHighlightedResult(0);
@@ -286,25 +308,27 @@ function Header() {
                 </div>
               ) : null}
             </div>
-            <select
-              className="heritage-language"
-              value={language}
-              onChange={(event) => setLanguage(event.target.value)}
-              aria-label={t("language")}
-            >
-              {languages.map((item) => (
-                <option key={item.code} value={item.code}>
-                  {item.shortLabel}
-                </option>
-              ))}
-            </select>
+            <LanguageDropdown
+              rootRef={languageRef}
+              language={language}
+              languages={languages}
+              isOpen={isLanguageOpen}
+              label={t("language")}
+              onToggle={() => setIsLanguageOpen((current) => !current)}
+              onSelect={(nextLanguage) => {
+                setLanguage(nextLanguage);
+                setIsLanguageOpen(false);
+              }}
+            />
             <button
               type="button"
               className="heritage-theme"
               onClick={toggleTheme}
               aria-label={isDark ? t("switchToLight") : t("switchToDark")}
+              title={isDark ? t("switchToLight") : t("switchToDark")}
+              data-theme-state={isDark ? "dark" : "light"}
             >
-              {isDark ? "Light" : "Dark"}
+              <span className="heritage-theme__glyph" aria-hidden="true" />
             </button>
             <div className="heritage-profile" ref={profileRef}>
               <button
@@ -314,13 +338,16 @@ function Header() {
                 aria-expanded={isProfileOpen}
                 onClick={() => setIsProfileOpen((current) => !current)}
               >
-                {avatarDataUrl ? <img src={avatarDataUrl} alt="" /> : <span aria-hidden="true" />}
+                {avatarDataUrl ? (
+                  <img src={avatarDataUrl} alt="" />
+                ) : (
+                  <span className="heritage-avatar__glyph" aria-hidden="true" />
+                )}
               </button>
               {isProfileOpen ? (
                 <div className="heritage-profile__menu">
                   <Link to="/profile">{t("profile")}</Link>
                   <Link to="/progress">{t("navProgress")}</Link>
-                  <Link to="/admin">{t("adminPanel")}</Link>
                 </div>
               ) : null}
             </div>
@@ -392,17 +419,68 @@ function Header() {
             <button type="button" onClick={toggleTheme}>
               {isDark ? t("lightMode") : t("darkMode")}
             </button>
-            <select value={language} onChange={(event) => setLanguage(event.target.value)}>
-              {languages.map((item) => (
-                <option key={item.code} value={item.code}>
-                  {item.shortLabel}
-                </option>
-              ))}
-            </select>
+            <LanguageDropdown
+              rootRef={languageRef}
+              language={language}
+              languages={languages}
+              isOpen={isLanguageOpen}
+              label={t("language")}
+              onToggle={() => setIsLanguageOpen((current) => !current)}
+              onSelect={(nextLanguage) => {
+                setLanguage(nextLanguage);
+                setIsLanguageOpen(false);
+              }}
+            />
           </div>
         </div>
       ) : null}
     </>
+  );
+}
+
+function LanguageDropdown({
+  rootRef,
+  language,
+  languages,
+  isOpen,
+  label,
+  onToggle,
+  onSelect,
+}) {
+  const activeLanguage = languages.find((item) => item.code === language) ?? languages[0];
+
+  return (
+    <div className="heritage-language" ref={rootRef} data-current-language={language}>
+      <button
+        type="button"
+        className="heritage-language__button"
+        aria-label={label}
+        aria-haspopup="listbox"
+        aria-expanded={isOpen}
+        onClick={onToggle}
+      >
+        <span>{activeLanguage?.shortLabel ?? language.toUpperCase()}</span>
+        <i aria-hidden="true" />
+      </button>
+      {isOpen ? (
+        <div className="heritage-language__menu" role="listbox" aria-label={label}>
+          {languages.map((item) => (
+            <button
+              key={item.code}
+              type="button"
+              role="option"
+              aria-selected={item.code === language}
+              data-language={item.code}
+              className={item.code === language ? "is-active" : ""}
+              onClick={() => onSelect(item.code)}
+            >
+              <strong>{item.shortLabel}</strong>
+              <span>{item.label}</span>
+            </button>
+          ))}
+        </div>
+      ) : null}
+    </div>
   );
 }
 

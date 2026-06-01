@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useAuth } from "../auth/AuthContext";
 import { isSupabaseConfigured, supabase } from "../lib/supabaseClient";
-import { useI18n } from "../i18n/I18nContext";
+import { useI18n } from "../i18n/useI18n";
 import "./BookSocial.css";
 
 const MAX_COMMENT_LENGTH = 800;
@@ -187,7 +187,7 @@ function BookSocial({ work }) {
             onClick={handleLike}
             disabled={!isSupabaseConfigured}
           >
-            {hasLiked ? t("liked") : t("likeWork")} · {likesCount}
+            {hasLiked ? t("liked") : t("likeWork")} В· {likesCount}
           </button>
           <button type="button" onClick={handleShare}>
             {t("shareWork")}

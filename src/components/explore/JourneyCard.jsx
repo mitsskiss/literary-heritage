@@ -1,4 +1,4 @@
-import { useI18n } from "../../i18n/I18nContext";
+import { useI18n } from "../../i18n/useI18n";
 
 function JourneyCard({ journey, worksCount, onBegin }) {
   const { t } = useI18n();

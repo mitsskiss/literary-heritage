@@ -1,4 +1,5 @@
-﻿import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { I18nContext } from "./context";
 import {
   authorTranslations,
   defaultLanguage,
@@ -23,8 +24,6 @@ import {
   workMetadataTranslations,
   workTranslations,
 } from "./translations";
-
-const I18nContext = createContext(null);
 
 function getInitialLanguage() {
   if (typeof window === "undefined") return defaultLanguage;
@@ -51,6 +50,7 @@ function mergeWork(base, translated = {}) {
     ...translated,
     canonicalTitle: base.title,
     canonicalAuthor: base.author,
+    canonicalThemes: base.themes ?? [],
     themes: base.themes?.map((theme) => localizeLabel(theme, themeLabels, translated.lang)) ?? base.themes,
     fragments: translated.fragments
       ? mergeByIndex(base.fragments, translated.fragments).map((fragment, index) => ({
@@ -189,6 +189,7 @@ export function I18nProvider({ children }) {
     const localizeJourney = (journey) => ({
       ...journey,
       ...(journeyTranslations[journey.id]?.[language] ?? {}),
+      canonicalFocusTheme: journey.focusTheme,
       focusTheme: localizeLabel(journey.focusTheme, themeLabels, language),
     });
 
@@ -240,10 +241,20 @@ export function I18nProvider({ children }) {
           : mapCategoryTranslations[key]?.[language] ?? meta.label,
     });
 
-    const localizeMapMarker = (marker) => ({
-      ...marker,
-      ...(mapMarkerTranslations[marker.id]?.[language] ?? {}),
-    });
+    const localizeMapMarker = (marker) => {
+      const translated =
+        mapMarkerTranslations[marker.id]?.[language] ??
+        literaryTimelineTranslations[marker.id]?.[language] ??
+        {};
+      const localizedCategory = localizeMapCategory(marker.category, { label: marker.type });
+
+      return {
+        ...marker,
+        ...translated,
+        canonicalType: marker.type,
+        type: translated.type ?? localizedCategory.label ?? marker.type,
+      };
+    };
 
     const localizeThemes = (themes = []) =>
       themes.map((theme) => localizeLabel(theme, themeLabels, language));
@@ -292,12 +303,4 @@ export function I18nProvider({ children }) {
   }, [language]);
 
   return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>;
-}
-
-export function useI18n() {
-  const context = useContext(I18nContext);
-  if (!context) {
-    throw new Error("useI18n must be used inside I18nProvider");
-  }
-  return context;
 }

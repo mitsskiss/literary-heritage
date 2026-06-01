@@ -579,3 +579,19 @@
   background: linear-gradient(180deg, var(--heritage-gold), var(--heritage-gold-strong));
   color: #fff8ec;
 }
+
+/* Calm definition rows for fragments */
+.reading-fragment-card__annotations {
+  display: grid;
+  gap: 10px;
+}
+
+.reading-fragment-card__annotations span {
+  display: block;
+  border: 0;
+  border-left: 3px solid color-mix(in srgb, var(--heritage-gold) 70%, var(--heritage-line));
+  border-radius: 0;
+  background: color-mix(in srgb, var(--heritage-surface-strong) 70%, transparent);
+  padding: 10px 0 10px 14px;
+  box-shadow: none;
+}

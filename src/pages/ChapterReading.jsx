@@ -14,7 +14,7 @@ import {
 import { useAdminContent } from "../hooks/useAdminContent";
 import { useProgressStore } from "../store/useProgressStore";
 import "./ChapterReading.css";
-import { useI18n } from "../i18n/I18nContext";
+import { useI18n } from "../i18n/useI18n";
 
 function ChapterReading() {
   const {
@@ -88,33 +88,24 @@ function ChapterReading() {
     }
   }, [chapter, ensureStory, migrateLegacyProgress]);
 
-  if (!work || !storyBook || !chapter) {
-    return (
-      <main className="chapter-page">
-        <div className="chapter-page__container">
-          <div className="chapter-fallback">
-            <h1 className="chapter-fallback__title">{t("chapterNotFound")}</h1>
-            <p className="chapter-fallback__text">
-              {t("chapterNotFoundText")}
-            </p>
-            <Link to="/explore" className="chapter-fallback__action">
-              {t("backToExplore")}
-            </Link>
-          </div>
-        </div>
-      </main>
-    );
-  }
-
-  const progress = storyProgress[chapter.id] ?? {
+  const hasChapterData = Boolean(work && storyBook && chapter);
+  const scenes = chapter?.scenes ?? [];
+  const progress = chapter
+    ? storyProgress[chapter.id] ?? {
+        currentSceneIndex: 0,
+        completed: false,
+        earnedXp: 0,
+        choices: {},
+      }
+    : {
     currentSceneIndex: 0,
     completed: false,
     earnedXp: 0,
     choices: {},
   };
 
-  const currentScene = chapter.scenes[progress.currentSceneIndex];
-  const currentFragment = work.fragments?.[progress.currentSceneIndex] ?? work.fragments?.[0];
+  const currentScene = scenes[progress.currentSceneIndex];
+  const currentFragment = work?.fragments?.[progress.currentSceneIndex] ?? work?.fragments?.[0];
   const leftComparisonScene = localizeStoryInLanguage(
     baseChapter,
     leftComparisonLanguage
@@ -129,36 +120,36 @@ function ChapterReading() {
   const selectedChoice = currentScene?.choices.find(
     (choice) => choice.id === selectedChoiceId
   );
-  const isLastScene = progress.currentSceneIndex === chapter.scenes.length - 1;
+  const isLastScene = progress.currentSceneIndex === scenes.length - 1;
   const isCompleted = progress.completed;
-  const correctAnswers = chapter.scenes.reduce((sum, scene) => {
+  const correctAnswers = scenes.reduce((sum, scene) => {
     const choiceId = progress.choices[scene.id];
     const selected = scene.choices.find((choice) => choice.id === choiceId);
 
     return sum + (selected?.result?.isCorrect ? 1 : 0);
   }, 0);
-  const nextChapter = storyBook.chapters.find(
-    (item) => item.chapterNumber === chapter.chapterNumber + 1
+  const nextChapter = storyBook?.chapters.find(
+    (item) => item.chapterNumber === chapter?.chapterNumber + 1
   );
-  const preferredTheme = work.themes?.[0];
+  const preferredTheme = work?.themes?.[0];
   const recommendedWork =
     localizedWorks.find(
       (item) =>
-        item.id !== work.id &&
+        item.id !== work?.id &&
         preferredTheme &&
         item.themes?.includes(preferredTheme)
-    ) ?? localizedWorks.find((item) => item.id !== work.id);
+    ) ?? localizedWorks.find((item) => item.id !== work?.id);
   const visibleSceneNumber = Math.min(
     progress.currentSceneIndex + 1,
-    chapter.scenes.length
+    scenes.length
   );
   const answeredSceneCount = Object.keys(progress.choices).length;
   const chapterProgressPercent =
-    chapter.scenes.length > 0
-      ? Math.round((answeredSceneCount / chapter.scenes.length) * 100)
+    scenes.length > 0
+      ? Math.round((answeredSceneCount / scenes.length) * 100)
       : 0;
-  const finalQuizAnswers = finalQuizzes[chapter.id] ?? {};
-  const finalQuiz = chapter.scenes.slice(0, 3).map((scene) => ({
+  const finalQuizAnswers = chapter ? finalQuizzes[chapter.id] ?? {} : {};
+  const finalQuiz = scenes.slice(0, 3).map((scene) => ({
     id: `final-${scene.id}`,
     question: scene.prompt,
     options: scene.choices.map((choice) => ({
@@ -201,13 +192,15 @@ function ChapterReading() {
       title: t("challengeFinishChapter"),
       hint: t("challengeFinishChapterHint", {
         done: answeredSceneCount,
-        total: chapter.scenes.length,
+        total: scenes.length,
       }),
-      complete: isCompleted || answeredSceneCount >= chapter.scenes.length,
+      complete: isCompleted || answeredSceneCount >= scenes.length,
     },
   ];
 
   const handleChoice = (choice) => {
+    if (!chapter || !currentScene) return;
+
     const nextCorrectAnswers =
       correctAnswers + (choice.result.isCorrect && !selectedChoiceId ? 1 : 0);
 
@@ -299,17 +292,39 @@ function ChapterReading() {
   }, [activeAnnotation]);
 
   const handleContinue = () => {
+    if (!chapter) return;
+
     if (isLastScene) {
       completeStory(chapter.id);
       return;
     }
 
-    advanceScene(chapter.id, chapter.scenes.length);
+    advanceScene(chapter.id, scenes.length);
   };
 
   const handleFinalQuizAnswer = (question, option) => {
+    if (!chapter) return;
+
     recordFinalQuizAnswer(chapter.id, question.id, option.id, option.isCorrect);
   };
+
+  if (!hasChapterData) {
+    return (
+      <main className="chapter-page">
+        <div className="chapter-page__container">
+          <div className="chapter-fallback">
+            <h1 className="chapter-fallback__title">{t("chapterNotFound")}</h1>
+            <p className="chapter-fallback__text">
+              {t("chapterNotFoundText")}
+            </p>
+            <Link to="/explore" className="chapter-fallback__action">
+              {t("backToExplore")}
+            </Link>
+          </div>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="chapter-page">
@@ -319,9 +334,9 @@ function ChapterReading() {
             className={`chapter-xp-toast is-${xpPulse.tone}`}
             aria-live="polite"
           >
-            <span className="chapter-xp-toast__icon">★</span>
+            <span className="chapter-xp-toast__icon">{"\u2605"}</span>
             <div className="chapter-xp-toast__content">
-              <strong>+{xpPulse.value} XP</strong>
+              <strong>{t("readingPointsDelta", { count: xpPulse.value })}</strong>
               <span>{xpPulse.status}</span>
             </div>
           </div>
@@ -336,7 +351,7 @@ function ChapterReading() {
             <div className="chapter-topbar__main">
               <h1 className="chapter-topbar__title">{work.title}</h1>
               <p className="chapter-topbar__subtitle">
-                {t("chapter", { number: chapter.chapterNumber })} · {chapter.chapterTitle}
+                {t("chapter", { number: chapter.chapterNumber })} {"\u00B7"} {chapter.chapterTitle}
               </p>
             </div>
           </div>
@@ -359,17 +374,17 @@ function ChapterReading() {
 
               <div className="chapter-topbar__meta">
               <span className="chapter-topbar__metric">
-                <strong>🔥</strong> {streak}
+                <strong>{"\u{1F525}"}</strong> {streak}
               </span>
               <span className="chapter-topbar__metric">
-                <strong>♥</strong> {lives}
+                <strong>{"\u2665"}</strong> {lives}
               </span>
               <span
                 className={`chapter-topbar__metric ${
                   xpPulse ? "is-xp-active" : ""
                 }`}
               >
-                <strong>★</strong> {xp}
+                <strong>{"\u2605"}</strong> {xp}
               </span>
             </div>
           </div>
@@ -646,7 +661,9 @@ function ChapterReading() {
                       {selectedChoice.result.status}
                     </h3>
                   </div>
-                  <span className="chapter-result__xp">+{selectedChoice.xp} XP</span>
+                  <span className="chapter-result__xp">
+                    {t("readingPointsDelta", { count: selectedChoice.xp })}
+                  </span>
                 </div>
 
                 <div className="chapter-result__grid">

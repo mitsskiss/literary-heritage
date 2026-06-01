@@ -1,4 +1,4 @@
-import mapPlaceImage from "../assets/mura/map-place-abai.png";
+import mapPlaceImage from "../assets/mura/map-place-abai.jpg";
 
 export const mapCategoryMeta = {
   museum: { label: "Museum", color: "#c89531" },
