@@ -97,7 +97,7 @@ function WorldMap() {
                   className="mura-map-place__region"
                   data-label={[selectedPlace.city, selectedPlace.region, selectedPlace.type].filter(Boolean).join(" - ")}
                 >
-                  {selectedPlace.city} В· {selectedPlace.region} В· {selectedPlace.type}
+                  {selectedPlace.city} · {selectedPlace.region} · {selectedPlace.type}
                 </p>
                 <h2>{selectedPlace.name}</h2>
                 <p>{selectedPlace.description}</p>

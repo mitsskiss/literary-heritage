@@ -1,4 +1,4 @@
-import abaiPortrait from "../assets/authors/abai.jpg";
+﻿import abaiPortrait from "../assets/authors/abai.jpg";
 import archiveAuthors from "../assets/mura/portal-authors.jpg";
 import archivePoetry from "../assets/mura/collection-poetry.jpg";
 import archiveProse from "../assets/mura/collection-prose.jpg";
@@ -245,3 +245,4 @@ export const authors = [
     sourceHint: "Modern Kazakh poetry materials",
   },
 ];
+

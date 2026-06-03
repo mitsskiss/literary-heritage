@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+﻿import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { works } from "../data/works";
 import {
@@ -372,7 +372,7 @@ function ChapterReading() {
               </div>
             </div>
 
-              <div className="chapter-topbar__meta">
+            <div className="chapter-topbar__meta">
               <span className="chapter-topbar__metric">
                 <strong>{"\u{1F525}"}</strong> {streak}
               </span>
@@ -390,7 +390,11 @@ function ChapterReading() {
           </div>
 
           {!isCompleted && currentScene ? (
-            <div className="chapter-topbar__tools">
+            <div className="chapter-topbar__tools mura-reader-actions">
+              <span className="mura-reader-actions__group" aria-label={t("language")}>
+                <button type="button" className="is-active">KZ</button>
+                <button type="button">RU</button>
+              </span>
               <button
                 type="button"
                 className="chapter-language-toggle"
@@ -400,15 +404,99 @@ function ChapterReading() {
                   ? t("hideLanguageComparison")
                   : t("compareLanguages")}
               </button>
+              <button type="button" className="mura-reader-icon-button" aria-label={t("saveFavorite")} title={t("saveFavorite")}>
+                {"\u25A1"}
+              </button>
+              <button type="button" className="mura-reader-icon-button" aria-label={t("shareWork")} title={t("shareWork")}>
+                {"\u2197"}
+              </button>
             </div>
           ) : null}
         </section>
+
+        {!isCompleted && currentScene ? (
+          <section className="chapter-flow-strip" aria-label={t("chapterFlowText")}>
+            <p>{t("chapterFlowText")}</p>
+            <ol>
+              <li className="is-active">
+                <span>1</span>
+                <strong>{t("chapterReadStep")}</strong>
+              </li>
+              <li className={selectedChoice ? "is-complete" : ""}>
+                <span>{selectedChoice ? "✓" : "2"}</span>
+                <strong>{t("chapterChooseStep")}</strong>
+              </li>
+              <li className={selectedChoice ? "is-active" : ""}>
+                <span>3</span>
+                <strong>{t("chapterContinueStep")}</strong>
+              </li>
+            </ol>
+          </section>
+        ) : null}
+
+        {!isCompleted && currentScene ? (
+          <aside className="mura-reader-rail" aria-label={t("routeProgress")}>
+            <div className="mura-reader-rail__top">
+              <span>{t("routeProgress")}</span>
+              <strong>{visibleSceneNumber}/{chapter.scenes.length}</strong>
+            </div>
+            <ol>
+              {scenes.map((scene, index) => {
+                const isAnswered = Boolean(progress.choices[scene.id]);
+                const isActive = index === progress.currentSceneIndex;
+
+                return (
+                  <li key={scene.id} className={`${isActive ? "is-active" : ""} ${isAnswered ? "is-complete" : ""}`}>
+                    <span>{isAnswered ? "✓" : index + 1}</span>
+                    <small>{scene.sceneNumber ?? index + 1}</small>
+                  </li>
+                );
+              })}
+            </ol>
+            <div className="mura-reader-rail__foot">
+              <span>{chapterProgressPercent}%</span>
+            </div>
+          </aside>
+        ) : null}
 
         <div
           className="chapter-visual"
           style={{ backgroundImage: `url(${work.image})` }}
           aria-hidden="true"
         />
+
+        {!isCompleted && currentScene ? (
+          <aside className="mura-reader-aside">
+            <article className="mura-reader-panel">
+              <h2>{t("explanation")}</h2>
+              <p>
+                {selectedChoice?.result?.explanation ??
+                  currentScene.context?.[0] ??
+                  chapter.tagline}
+              </p>
+            </article>
+            <article className="mura-reader-panel">
+              <h2>{t("themes")}</h2>
+              <div className="mura-reader-tags">
+                {(work.themes ?? []).slice(0, 4).map((theme) => (
+                  <span key={theme}>{theme}</span>
+                ))}
+              </div>
+            </article>
+            <article className="mura-reader-panel mura-reader-panel--compare">
+              <div>
+                <h2>{t("compareLanguages")}</h2>
+                <button type="button" onClick={() => setIsComparisonOpen((current) => !current)}>
+                  {isComparisonOpen ? t("hideLanguageComparison") : t("compareLanguages")}
+                </button>
+              </div>
+              <div className="mura-reader-compare-mini">
+                <p>{leftComparisonScene?.context?.[0] ?? currentScene.context?.[0]}</p>
+                <p>{rightComparisonScene?.context?.[0] ?? currentScene.context?.[1] ?? currentScene.context?.[0]}</p>
+              </div>
+            </article>
+          </aside>
+        ) : null}
 
         {!isCompleted ? (
           <section className="chapter-challenges">
@@ -768,3 +856,4 @@ function renderAnnotatedText(text, annotations = [], activeAnnotation, onToggle)
 }
 
 export default ChapterReading;
+

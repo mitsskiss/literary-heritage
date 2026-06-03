@@ -595,3 +595,133 @@
   padding: 10px 0 10px 14px;
   box-shadow: none;
 }
+
+/* Reader flow clarity */
+.reading-book-hero__metaLine {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  align-items: center;
+  color: var(--heritage-gold-strong);
+  font-size: 12px;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.reading-book-hero__metaLine i {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.55;
+}
+
+.reading-book-hero__actions {
+  align-items: stretch;
+}
+
+.reading-book-hero__themes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, max-content));
+  gap: 8px;
+  align-items: center;
+}
+
+.reading-book-hero__themes p {
+  grid-column: 1 / -1;
+  margin: 0 0 2px;
+  color: var(--heritage-gold-strong);
+  font-size: 12px;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.reading-book-theme {
+  justify-content: center;
+  min-height: 36px;
+  border-radius: 4px;
+  box-shadow: none;
+}
+
+.reading-flow-guide {
+  display: grid;
+  grid-template-columns: minmax(210px, 0.36fr) minmax(0, 1fr);
+  gap: 18px;
+  align-items: stretch;
+  margin-top: 22px;
+  border: 1px solid var(--heritage-line);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--heritage-surface) 90%, transparent);
+  padding: 20px;
+  box-shadow: var(--heritage-shadow);
+}
+
+.reading-flow-guide__label {
+  margin: 0 0 8px;
+  color: var(--heritage-gold-strong);
+  font-size: 12px;
+  font-weight: 850;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.reading-flow-guide h2 {
+  margin: 0;
+  color: var(--heritage-ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 500;
+  line-height: 1;
+}
+
+.reading-flow-guide ol {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.reading-flow-guide li {
+  min-width: 0;
+  border-left: 1px solid var(--heritage-line);
+  padding-left: 14px;
+}
+
+.reading-flow-guide strong,
+.reading-flow-guide span {
+  display: block;
+}
+
+.reading-flow-guide strong {
+  color: var(--heritage-ink);
+  font-size: 14px;
+}
+
+.reading-flow-guide span {
+  margin-top: 6px;
+  color: var(--heritage-text);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+:root[data-theme="dark"] .reading-flow-guide,
+:root[data-theme="dark"] .reading-book-hero__metaLine {
+  color: var(--text);
+}
+
+@media (max-width: 760px) {
+  .reading-flow-guide,
+  .reading-flow-guide ol {
+    grid-template-columns: 1fr;
+  }
+
+  .reading-flow-guide li {
+    border-left: 0;
+    border-top: 1px solid var(--heritage-line);
+    padding: 12px 0 0;
+  }
+}

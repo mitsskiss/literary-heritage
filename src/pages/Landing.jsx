@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import { useI18n } from "../i18n/useI18n";
 import { authors } from "../data/authors";
 import { readingRoutes } from "../data/routes";
@@ -16,6 +17,8 @@ import portalQuotes from "../assets/mura/portal-quotes.jpg";
 
 function Landing() {
   const { t } = useI18n();
+  const [subscriberEmail, setSubscriberEmail] = useState("");
+  const [subscribeMessage, setSubscribeMessage] = useState("");
 
   const portalCards = [
     {
@@ -65,6 +68,16 @@ function Landing() {
     { title: t("interactiveReading"), text: t("landingInteractiveText") },
     { title: t("dashboard"), text: t("landingProgressText") },
   ];
+
+  const handleSubscribe = () => {
+    const email = subscriberEmail.trim();
+    if (!email) return;
+
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem("mura_newsletter_email", email);
+    }
+    setSubscribeMessage(t("landingSubscribeSaved"));
+  };
 
   return (
     <main className="miras-home">
@@ -163,11 +176,27 @@ function Landing() {
         <div className="miras-footer__subscribe">
           <span>{t("landingSubscribe")}</span>
           <div>
-            <input aria-label="Email" placeholder="Email" />
-            <button type="button" aria-label={t("landingSubscribe")}>
+            <input
+              aria-label="Email"
+              placeholder="Email"
+              type="email"
+              value={subscriberEmail}
+              onChange={(event) => {
+                setSubscriberEmail(event.target.value);
+                setSubscribeMessage("");
+              }}
+              onKeyDown={(event) => {
+                if (event.key === "Enter") {
+                  event.preventDefault();
+                  handleSubscribe();
+                }
+              }}
+            />
+            <button type="button" aria-label={t("landingSubscribe")} onClick={handleSubscribe}>
               {"\u2192"}
             </button>
           </div>
+          {subscribeMessage ? <small role="status">{subscribeMessage}</small> : null}
         </div>
       </footer>
     </main>

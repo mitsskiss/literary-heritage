@@ -135,9 +135,11 @@ function Reading() {
           </div>
 
           <div className="reading-book-hero__content">
-            <div className="reading-book-hero__topline">
+            <div className="reading-book-hero__metaLine">
               <span>{metadata?.period ?? t("literaryArchive")}</span>
+              <i aria-hidden="true" />
               <span>{metadata?.type ?? t("work")}</span>
+              <i aria-hidden="true" />
               <span>{t("minRoute", { count: storyBook.totalMinutes })}</span>
             </div>
 
@@ -166,6 +168,17 @@ function Reading() {
             </div>
 
             <div className="reading-book-hero__actions">
+              <Link
+                to={getChapterPath(work.id, nextChapter.chapterNumber)}
+                className="reading-book-hero__action is-primary"
+              >
+                {nextChapter.isStarted && !nextChapter.isCompleted
+                  ? t("continueReading")
+                  : t("startReading")}
+              </Link>
+              <Link to="/progress" className="reading-book-hero__action">
+                {t("viewProgress")}
+              </Link>
               <button
                 type="button"
                 className={`reading-book-hero__action ${
@@ -183,20 +196,30 @@ function Reading() {
               >
                 {isWorkFavorite ? t("savedFavorite") : t("saveFavorite")}
               </button>
-              <Link
-                to={getChapterPath(work.id, nextChapter.chapterNumber)}
-                className="reading-book-hero__action is-primary"
-              >
-                {nextChapter.isStarted && !nextChapter.isCompleted
-                  ? t("continueReading")
-                  : t("startReading")}
-              </Link>
-              <Link to="/progress" className="reading-book-hero__action">
-                {t("viewProgress")}
-              </Link>
+            </div>
+
+            <div className="mura-book-reference-row">
+              <article className="mura-book-progress-card">
+                <span>{t("routeProgress")}</span>
+                <strong>{progressPercent}%</strong>
+                <div className="mura-ref-progress" aria-hidden="true">
+                  <i style={{ width: `${progressPercent}%` }} />
+                </div>
+                <small>{t("chaptersCompleted", { done: completedChapters.length, total: chapterCards.length })}</small>
+              </article>
+              <article className="mura-book-quote-card">
+                <span aria-hidden="true">&ldquo;</span>
+                <p>
+                  {work.fragments?.[0]?.reflection?.resonanceQuote?.text ??
+                    work.fragments?.[0]?.text ??
+                    storyBook.overview}
+                </p>
+                <small>{work.fragments?.[0]?.reflection?.resonanceQuote?.author ?? work.author}</small>
+              </article>
             </div>
 
             <div className="reading-book-hero__themes">
+              <p>{t("themes")}</p>
               {work.themes.map((theme) => (
                 <button
                   key={theme}
@@ -219,6 +242,27 @@ function Reading() {
               ))}
             </div>
           </div>
+        </section>
+
+        <section className="reading-flow-guide" aria-label={t("readingFlowTitle")}>
+          <div>
+            <p className="reading-flow-guide__label">{t("readingFlowTitle")}</p>
+            <h2>{t("chapterRoute")}</h2>
+          </div>
+          <ol>
+            <li>
+              <strong>{t("readingFlowStepOne")}</strong>
+              <span>{t("readingFlowStepOneText")}</span>
+            </li>
+            <li>
+              <strong>{t("readingFlowStepTwo")}</strong>
+              <span>{t("readingFlowStepTwoText")}</span>
+            </li>
+            <li>
+              <strong>{t("readingFlowStepThree")}</strong>
+              <span>{t("readingFlowStepThreeText")}</span>
+            </li>
+          </ol>
         </section>
 
         {work.fragments?.length > 0 ? (
@@ -311,6 +355,18 @@ function Reading() {
               {t("chapterRouteText")}
             </p>
           </div>
+
+          <nav className="mura-book-chapter-tabs" aria-label={t("chapterRoute")}>
+            {chapterCards.map((chapter) => (
+              <Link
+                key={`${chapter.id}-tab`}
+                to={getChapterPath(work.id, chapter.chapterNumber)}
+                className={chapter.isStarted ? "is-started" : ""}
+              >
+                {chapter.chapterNumber}-{t("sceneFocus").split(" ")[0]}
+              </Link>
+            ))}
+          </nav>
 
           <div className="reading-book-chapters__list">
             {chapterCards.map((chapter) => (

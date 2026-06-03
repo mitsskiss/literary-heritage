@@ -135,7 +135,7 @@ function Header() {
         makeResult(
           t("searchTypeWork"),
           work.title,
-          `${work.author} В· ${work.description}`,
+          `${work.author} · ${work.description}`,
           `/reading/${work.id}`,
           [work.originalTitle, work.period, work.genre, ...(work.themes ?? []), ...(work.canonicalThemes ?? [])]
         )
@@ -153,7 +153,7 @@ function Header() {
         makeResult(
           t("searchTypeEpoch"),
           epoch.title,
-          `${epoch.years} В· ${epoch.description}`,
+          `${epoch.years} · ${epoch.description}`,
           "/epochs",
           [epoch.id, ...(epoch.authors ?? []), ...(epoch.works ?? [])]
         )
@@ -171,7 +171,7 @@ function Header() {
         makeResult(
           t("searchTypePlace"),
           place.name,
-          `${place.city} В· ${place.description}`,
+          `${place.city} · ${place.description}`,
           "/map",
           [place.author, place.region, place.type]
         )
@@ -245,7 +245,7 @@ function Header() {
       <header className="site-header heritage-topbar">
         <div className="heritage-topbar__inner">
           <Link to="/" className="heritage-brand" aria-label="MURA">
-            <span className="heritage-brand__mark" aria-hidden="true" />
+            <BrandMark />
             <span className="heritage-brand__copy">
               <strong>MURA</strong>
               <small>{t("brandSubtitle")}</small>
@@ -258,11 +258,13 @@ function Header() {
                 key={`${item.href}-${item.label}`}
                 to={item.href}
                 end={item.href === "/"}
+                data-nav={item.kind}
                 className={({ isActive }) =>
                   isActive || (isRoutesSection && item.kind === "routes") ? "is-active" : ""
                 }
               >
-                {item.label}
+                <HeaderIcon kind={item.kind} />
+                <span className="heritage-nav-label">{item.label}</span>
               </NavLink>
             ))}
           </nav>
@@ -328,7 +330,7 @@ function Header() {
               title={isDark ? t("switchToLight") : t("switchToDark")}
               data-theme-state={isDark ? "dark" : "light"}
             >
-              <span className="heritage-theme__glyph" aria-hidden="true" />
+              <ThemeGlyph isDark={isDark} />
             </button>
             <div className="heritage-profile" ref={profileRef}>
               <button
@@ -410,8 +412,9 @@ function Header() {
           </div>
           <nav>
             {[...navItems, { label: t("profile"), href: "/profile", kind: "profile" }, { label: t("navProgress"), href: "/progress", kind: "progress" }].map((item) => (
-              <NavLink key={`${item.href}-${item.kind}-mobile`} to={item.href} end={item.href === "/"}>
-                {item.label}
+              <NavLink key={`${item.href}-${item.kind}-mobile`} to={item.href} end={item.href === "/"} data-nav={item.kind}>
+                <HeaderIcon kind={item.kind} />
+                <span className="heritage-nav-label">{item.label}</span>
               </NavLink>
             ))}
           </nav>
@@ -435,6 +438,107 @@ function Header() {
         </div>
       ) : null}
     </>
+  );
+}
+
+function BrandMark() {
+  return (
+    <span className="heritage-brand__mark" aria-hidden="true">
+      <svg viewBox="0 0 32 32" focusable="false">
+        <path d="M16 3.5v25" />
+        <path d="M3.5 16h25" />
+        <path d="M16 7.5 20.5 16 16 24.5 11.5 16Z" />
+        <path d="M7.5 16 16 11.5 24.5 16 16 20.5Z" />
+        <circle cx="16" cy="16" r="2.3" />
+      </svg>
+    </span>
+  );
+}
+
+function HeaderIcon({ kind }) {
+  const icons = {
+    home: (
+      <>
+        <path d="M3.5 10.5 12 3.8l8.5 6.7" />
+        <path d="M6.3 9.8v9.7h11.4V9.8" />
+        <path d="M10 19.5v-5h4v5" />
+      </>
+    ),
+    library: (
+      <>
+        <path d="M5 5.2h5.4a3.4 3.4 0 0 1 3.4 3.4v11.2a3.4 3.4 0 0 0-3.4-3.4H5Z" />
+        <path d="M13.8 8.6a3.4 3.4 0 0 1 3.4-3.4H22v11.2h-4.8a3.4 3.4 0 0 0-3.4 3.4Z" />
+      </>
+    ),
+    authors: (
+      <>
+        <path d="M8.2 19.7a5 5 0 0 1 9.6 0" />
+        <circle cx="13" cy="9" r="4" />
+        <path d="M18.6 8.2a3.2 3.2 0 0 1 2.9 3.2" />
+        <path d="M20.2 19.7a4.2 4.2 0 0 0-2-3.5" />
+      </>
+    ),
+    epochs: (
+      <>
+        <circle cx="12" cy="12" r="8.2" />
+        <path d="M12 6.5V12l3.8 2.4" />
+        <path d="M4.8 4.8 7 3.2" />
+        <path d="m17 3.2 2.2 1.6" />
+      </>
+    ),
+    routes: (
+      <>
+        <path d="M5 18.5c4.5-8.7 9.8 5.3 15-6.8" />
+        <circle cx="5" cy="18.5" r="2" />
+        <circle cx="20" cy="11.7" r="2" />
+      </>
+    ),
+    map: (
+      <>
+        <path d="M5 6.8 10.5 5l7 1.8L23 5v16.2l-5.5 1.8-7-1.8L5 23Z" />
+        <path d="M10.5 5v16.2" />
+        <path d="M17.5 6.8V23" />
+      </>
+    ),
+    about: (
+      <>
+        <circle cx="12" cy="12" r="8.5" />
+        <path d="M12 10.8v6" />
+        <path d="M12 7.2h.01" />
+      </>
+    ),
+    profile: (
+      <>
+        <circle cx="12" cy="8.6" r="3.6" />
+        <path d="M5.5 20a6.8 6.8 0 0 1 13 0" />
+      </>
+    ),
+    progress: (
+      <>
+        <path d="M6 19V9" />
+        <path d="M12 19V5" />
+        <path d="M18 19v-7" />
+      </>
+    ),
+  };
+
+  return (
+    <span className="heritage-nav-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" focusable="false">
+        {icons[kind] ?? icons.about}
+      </svg>
+    </span>
+  );
+}
+
+function ThemeGlyph({ isDark }) {
+  return (
+    <span className="heritage-theme__glyph" aria-hidden="true">
+      <svg viewBox="0 0 24 24" focusable="false">
+        <circle cx="12" cy="12" r="8.5" />
+        {isDark ? <path d="M12 3.5a8.5 8.5 0 0 0 0 17 6.7 6.7 0 0 1 0-17Z" /> : <path d="M12 3.5v17" />}
+      </svg>
+    </span>
   );
 }
 
@@ -485,3 +589,4 @@ function LanguageDropdown({
 }
 
 export default Header;
+

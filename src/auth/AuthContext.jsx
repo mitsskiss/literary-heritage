@@ -1,29 +1,26 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import { isSupabaseConfigured, supabase } from "../lib/supabaseClient";
+import {
+  initialAuthCallback,
+  isSupabaseConfigured,
+  supabase,
+} from "../lib/supabaseClient";
 
 const AuthContext = createContext(null);
 const PRODUCTION_SITE_URL = "https://mitsskiss.github.io/literary-heritage/";
-const PRODUCTION_AUTH_URL = `${PRODUCTION_SITE_URL}#/auth`;
 
-function isLocalHost() {
-  if (typeof window === "undefined") return false;
-
-  return (
-    window.location.hostname === "localhost" ||
-    window.location.hostname === "127.0.0.1"
-  );
+function withTrailingSlash(value) {
+  return value.endsWith("/") ? value : `${value}/`;
 }
 
 function getSiteUrl() {
-  if (typeof window === "undefined" || isLocalHost()) return PRODUCTION_SITE_URL;
+  if (typeof window === "undefined") return PRODUCTION_SITE_URL;
 
-  return `${window.location.origin}${window.location.pathname}`;
+  const basePath = withTrailingSlash(import.meta.env.BASE_URL || "/");
+  return `${window.location.origin}${basePath}`;
 }
 
 function getAuthRedirectUrl() {
-  if (typeof window === "undefined" || isLocalHost()) return PRODUCTION_AUTH_URL;
-
-  return `${getSiteUrl()}#/auth`;
+  return getSiteUrl();
 }
 
 function getPasswordRecoveryRedirectUrl() {
@@ -35,6 +32,9 @@ export function AuthProvider({ children }) {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(isSupabaseConfigured);
   const [authEvent, setAuthEvent] = useState(null);
+  const [authRedirectType, setAuthRedirectType] = useState(
+    initialAuthCallback.isCallback ? initialAuthCallback.type : null
+  );
 
   useEffect(() => {
     if (!supabase) {
@@ -47,6 +47,12 @@ export function AuthProvider({ children }) {
     supabase.auth.getSession().then(({ data }) => {
       if (!isMounted) return;
       setSession(data.session ?? null);
+      if (initialAuthCallback.isCallback && data.session) {
+        setAuthEvent(
+          initialAuthCallback.type === "recovery" ? "PASSWORD_RECOVERY" : "SIGNED_IN"
+        );
+        setAuthRedirectType(initialAuthCallback.type ?? "auth");
+      }
       setLoading(false);
     });
 
@@ -54,6 +60,9 @@ export function AuthProvider({ children }) {
       (event, nextSession) => {
         setAuthEvent(event);
         setSession(nextSession ?? null);
+        if (initialAuthCallback.isCallback && nextSession) {
+          setAuthRedirectType(initialAuthCallback.type ?? "auth");
+        }
       }
     );
 
@@ -102,6 +111,7 @@ export function AuthProvider({ children }) {
       profile,
       loading,
       authEvent,
+      authRedirectType,
       isConfigured: isSupabaseConfigured,
       signIn: async ({ email, password }) => {
         if (!supabase) throw new Error("Supabase is not configured");
@@ -151,7 +161,10 @@ export function AuthProvider({ children }) {
         const payload = {
           id: session.user.id,
           email: session.user.email,
-          ...updates,
+          display_name: updates.display_name,
+          bio: updates.bio,
+          reading_goal: updates.reading_goal,
+          avatar_data_url: updates.avatar_data_url,
           updated_at: new Date().toISOString(),
         };
 
@@ -178,7 +191,7 @@ export function AuthProvider({ children }) {
         return data ?? null;
       },
     }),
-    [authEvent, loading, profile, session]
+    [authEvent, authRedirectType, loading, profile, session]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

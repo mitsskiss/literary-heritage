@@ -281,6 +281,15 @@
   background: color-mix(in srgb, var(--heritage-gold) 18%, transparent);
 }
 
+.route-action-status {
+  grid-column: 2;
+  justify-self: end;
+  color: var(--heritage-gold-strong);
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+}
+
 .route-action-bar__buttons a:hover,
 .route-action-bar__buttons button:hover,
 .route-stage-nav button:hover,
@@ -440,6 +449,48 @@
   margin-top: 16px;
 }
 
+.route-stage-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.route-stage-list button {
+  display: grid;
+  gap: 5px;
+  border: 1px solid var(--heritage-line);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--heritage-surface) 82%, transparent);
+  color: var(--heritage-text);
+  padding: 12px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.route-stage-list button.is-current {
+  border-color: var(--heritage-gold);
+  background: color-mix(in srgb, var(--heritage-gold) 12%, var(--heritage-surface));
+}
+
+.route-stage-list span {
+  color: var(--heritage-gold-strong);
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.route-stage-list strong {
+  color: var(--heritage-ink);
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 13px;
+}
+
+.route-stage-list small {
+  line-height: 1.45;
+}
+
 .route-active-stage {
   min-width: 0;
   padding: 30px;
@@ -474,6 +525,49 @@
   font-size: 12px;
   font-weight: 900;
   text-transform: uppercase;
+}
+
+.route-active-stage__top button.is-active,
+.route-parchment footer button.is-active {
+  border-color: var(--heritage-gold);
+  background: color-mix(in srgb, var(--heritage-gold) 16%, var(--heritage-surface));
+  color: var(--heritage-ink);
+}
+
+.route-language-compare {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.route-language-compare article {
+  border: 1px solid var(--heritage-line);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--heritage-surface) 84%, transparent);
+  padding: 14px;
+}
+
+.route-language-compare span {
+  color: var(--heritage-gold-strong);
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.route-language-compare strong {
+  display: block;
+  margin-top: 8px;
+  color: var(--heritage-ink);
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 13px;
+}
+
+.route-language-compare p {
+  margin: 8px 0 0;
+  color: var(--heritage-text);
+  font-size: 13px;
+  line-height: 1.55;
 }
 
 .route-active-stage h2 {
@@ -528,7 +622,7 @@
   text-transform: uppercase;
 }
 
-.route-parchment footer span:last-child {
+.route-parchment footer .route-source-pill {
   margin-left: auto;
   border: 1px solid var(--heritage-line);
   border-radius: 4px;
@@ -536,6 +630,13 @@
   padding: 10px 14px;
   font-family: Inter, system-ui, sans-serif;
   font-size: 12px;
+}
+
+.route-parchment footer .route-inline-status {
+  color: var(--heritage-gold-strong);
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 800;
 }
 
 .route-sound-icon,
@@ -578,6 +679,44 @@
   margin: 0;
   color: var(--heritage-text);
   line-height: 1.6;
+}
+
+.route-quiz-card small {
+  display: block;
+  margin-top: 10px;
+  color: var(--heritage-text);
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.route-quiz-card small.is-correct,
+.route-quiz-card__options button.is-correct {
+  border-color: #2f8f64;
+  background: color-mix(in srgb, #2f8f64 18%, var(--heritage-surface));
+  color: #176445;
+}
+
+.route-quiz-card small.is-incorrect,
+.route-quiz-card__options button.is-incorrect {
+  border-color: #b35c35;
+  background: color-mix(in srgb, #b35c35 16%, var(--heritage-surface));
+  color: #8d3e1c;
+}
+
+.route-quiz-card__options {
+  display: grid;
+  gap: 10px;
+  min-width: min(280px, 100%);
+}
+
+.route-quiz-card__options button {
+  width: 100%;
+}
+
+.route-quiz-card button:disabled {
+  cursor: default;
+  transform: none;
 }
 
 .route-quiz-card--finish {

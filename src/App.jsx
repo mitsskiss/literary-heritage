@@ -23,14 +23,19 @@ const Epochs = lazy(() => import("./pages/Epochs"));
 const RoutePage = lazy(() => import("./pages/RoutePage"));
 
 function AuthRecoveryBridge() {
-  const { authEvent } = useAuth();
+  const { authEvent, authRedirectType } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (authEvent === "PASSWORD_RECOVERY") {
+    if (authEvent === "PASSWORD_RECOVERY" || authRedirectType === "recovery") {
       navigate("/auth", { replace: true });
+      return;
     }
-  }, [authEvent, navigate]);
+
+    if (authEvent === "SIGNED_IN" && authRedirectType) {
+      navigate("/profile", { replace: true });
+    }
+  }, [authEvent, authRedirectType, navigate]);
 
   return null;
 }

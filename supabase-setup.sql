@@ -129,8 +129,37 @@ grant select on public.work_likes to anon, authenticated;
 grant insert, delete on public.work_likes to authenticated;
 grant select, insert on public.work_comments to anon, authenticated;
 grant delete on public.work_comments to authenticated;
-grant select, insert, update on public.profiles to authenticated;
+revoke insert, update on public.profiles from authenticated;
+grant select on public.profiles to authenticated;
+grant insert (id, email, display_name, bio, reading_goal, avatar_data_url, updated_at)
+on public.profiles to authenticated;
+grant update (email, display_name, bio, reading_goal, avatar_data_url, updated_at)
+on public.profiles to authenticated;
 grant select, insert, update on public.user_progress to authenticated;
+
+create or replace function public.protect_profile_role()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  if auth.uid() is not null then
+    if tg_op = 'INSERT' then
+      new.role := 'reader';
+    elsif new.role is distinct from old.role then
+      new.role := old.role;
+    end if;
+  end if;
+
+  return new;
+end;
+$$;
+
+drop trigger if exists protect_profile_role_before_write on public.profiles;
+create trigger protect_profile_role_before_write
+before insert or update on public.profiles
+for each row execute function public.protect_profile_role();
 
 create or replace function public.handle_new_user()
 returns trigger

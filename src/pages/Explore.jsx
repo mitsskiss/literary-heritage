@@ -179,6 +179,24 @@ function Explore() {
             </article>
           </div>
 
+          <section className="explore-route-flow explore-reveal" aria-label={t("readingFlowTitle")}>
+            <article>
+              <span>1</span>
+              <strong>{t("startRoute")}</strong>
+              <p>{t("readingFlowStepOneText")}</p>
+            </article>
+            <article>
+              <span>2</span>
+              <strong>{t("compareLanguages")}</strong>
+              <p>{t("chapterFlowText")}</p>
+            </article>
+            <article>
+              <span>3</span>
+              <strong>{t("viewProgress")}</strong>
+              <p>{t("readingFlowStepThreeText")}</p>
+            </article>
+          </section>
+
           <section id="routes" className="explore-recommendations explore-reveal">
             <div className="heritage-section-head">
               <h2>{t("recommendedRoutes")}</h2>
@@ -196,7 +214,10 @@ function Explore() {
             </label>
 
             <section className="explore-filter-card explore-filter-card--inline explore-reveal" aria-label={t("exploreFilters")}>
-              <h2>{t("routeFilters")}</h2>
+              <div className="explore-filter-card__head">
+                <h2>{t("routeFilters")}</h2>
+                <p>{t("routeFiltersHint")}</p>
+              </div>
               <FilterSelect label={t("navAuthors")} value={authorFilter} onChange={setAuthorFilter} options={[{ value: "all", label: t("allAuthors") }, ...authorOptions.map((author) => ({ value: author, label: author }))]} />
               <FilterSelect label={t("period")} value={periodFilter} onChange={setPeriodFilter} options={[{ value: "all", label: t("allPeriods") }, ...periodOptions.map((period) => ({ value: period, label: period }))]} />
               <FilterSelect label={t("themes")} value={activeTheme} onChange={handleThemeSelect} options={[{ value: "all", label: t("allThemes") }, ...themeOptions]} />

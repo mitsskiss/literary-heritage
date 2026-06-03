@@ -4,7 +4,6 @@ import { readingRoutes } from "../data/routes";
 import { works } from "../data/works";
 import { useI18n } from "../i18n/useI18n";
 import { useProgressStore } from "../store/useProgressStore";
-import routesHero from "../assets/mura/routes-hero.jpg";
 import "./RoutePage.css";
 
 const ROUTE_STEP_STORAGE_PREFIX = "mura_route_step:";
@@ -25,7 +24,7 @@ function getStoredText(key) {
 
 function RoutePage() {
   const { routeId } = useParams();
-  const { t, localizeJourneys, localizeWorks } = useI18n();
+  const { t, language, localizeJourneys, localizeWorks } = useI18n();
   const localizedRoutes = useMemo(() => localizeJourneys(readingRoutes), [localizeJourneys]);
   const route = useMemo(
     () => localizedRoutes.find((item) => item.id === routeId),
@@ -69,6 +68,8 @@ function RoutePage() {
       noteSaved: t("routeNoteSaved"),
       quizTitle: t("routeQuizTitle"),
       quizAction: t("routeQuizAction"),
+      quizOptionA: t("routeQuizOptionA"),
+      quizOptionB: t("routeQuizOptionB"),
       recommendation: t("recommendedNext"),
       medium: t("mediumRoute"),
       notReady: t("routeNotReady"),
@@ -84,6 +85,13 @@ function RoutePage() {
   const [currentStep, setCurrentStep] = useState(0);
   const [activeTab, setActiveTab] = useState("context");
   const [noteDraft, setNoteDraft] = useState("");
+  const [isAllStagesOpen, setIsAllStagesOpen] = useState(false);
+  const [isLanguageComparisonOpen, setIsLanguageComparisonOpen] = useState(false);
+  const [speakingStepKey, setSpeakingStepKey] = useState("");
+  const [listenMessage, setListenMessage] = useState("");
+  const [shareMessage, setShareMessage] = useState("");
+  const [noteMessage, setNoteMessage] = useState("");
+  const [quizAnswers, setQuizAnswers] = useState({});
 
   const steps = route?.steps ?? [];
   const stepStorageKey = `${ROUTE_STEP_STORAGE_PREFIX}${routeId ?? "missing"}`;
@@ -95,6 +103,11 @@ function RoutePage() {
     setCurrentStep(Math.max(0, Math.min(storedStep, route.steps.length - 1)));
     setNoteDraft(getStoredText(noteStorageKey));
     setActiveTab("context");
+    setIsAllStagesOpen(false);
+    setIsLanguageComparisonOpen(false);
+    setShareMessage("");
+    setNoteMessage("");
+    setListenMessage("");
   }, [route, stepStorageKey, noteStorageKey]);
 
   useEffect(() => {
@@ -124,45 +137,88 @@ function RoutePage() {
   }
 
   const activeStep = steps[currentStep] ?? steps[0];
+  const activeStepKey = `${route.id}:${currentStep}:${activeStep?.type ?? "step"}`;
   const nextRoute = localizedRoutes.find((item) => item.id === route.recommendedNext) ?? localizedRoutes[0];
   const routeState = storyProgress[route.id];
   const isRouteCompleted = Boolean(routeState?.completed);
   const isRouteFavorite = favorites.some((favorite) => favorite.type === "route" && favorite.id === route.id);
-  const progressPercent = Math.round(((currentStep + 1) / steps.length) * 100);
+  const progressPercent = isRouteCompleted
+    ? 100
+    : Math.round(((currentStep + 1) / Math.max(steps.length, 1)) * 100);
   const activeWork =
     localizedWorks.find((work) => work.id === activeStep?.workId) ??
     routeWorks.find((work) => activeStep?.text?.includes(work.title)) ??
     routeWorks[0];
   const continueHref = activeWork ? `/reading/${activeWork.id}` : "/works";
-  const uniqueAuthors = new Set(routeWorks.map((work) => work.author)).size || route.authorsCount || 1;
-  const heroImage = route.heroImage ?? routesHero;
-  const portraitImage = route.portraitImage ?? routeWorks[0]?.image;
-  const routeDifficulty = route.difficulty === "Medium" ? labels.medium : route.difficulty ?? labels.medium;
   const routeLanguages = route.languages ?? "KZ / RU / EN";
   const getStepTitle = (step) => t(`routeStep_${step.type}`);
-  const stepContent = t(`routeStepContent_${activeStep.type}`);
+  const useCanonicalStepText = language === "en";
+  const stepContent = useCanonicalStepText
+    ? activeStep.content ?? t(`routeStepContent_${activeStep.type}`)
+    : t(`routeStepContent_${activeStep.type}`);
+  const stepContext = useCanonicalStepText
+    ? activeStep.context ?? t("routeContextFallback", { route: route.title })
+    : t("routeContextFallback", { route: route.title });
+  const stepExplanation = useCanonicalStepText
+    ? activeStep.explanation ?? t("routeExplanationFallback")
+    : t("routeExplanationFallback");
+  const stepQuote =
+    useCanonicalStepText
+      ? activeStep.quote ??
+        activeWork?.fragments?.[0]?.reflection?.resonanceQuote?.text ??
+        activeWork?.fragments?.[0]?.text ??
+        t("routeQuoteFallback")
+      : t("routeQuoteFallback");
+  const stepSource = useCanonicalStepText
+    ? activeStep.source ?? activeWork?.author ?? route.title
+    : activeWork?.author ?? route.title;
+  const quizQuestion = useCanonicalStepText
+    ? activeStep.quiz?.question ?? t("routeQuizQuestion")
+    : t("routeQuizQuestion");
+  const quizOptions =
+    useCanonicalStepText && activeStep.quiz?.options?.length
+      ? activeStep.quiz.options
+      : [labels.quizOptionA, labels.quizOptionB];
   const tabContent = {
-    context:
-      t("routeContextFallback", { route: route.title }),
-    explanation:
-      t("routeExplanationFallback"),
-    quotes:
-      t("routeQuoteFallback") ??
-      activeWork?.fragments?.[0]?.reflection?.resonanceQuote?.text ??
-      activeWork?.fragments?.[0]?.text ??
-      route.subtitle,
+    context: stepContext,
+    explanation: stepExplanation,
+    quotes: stepQuote,
     notes: noteDraft,
+  };
+  const routeTabs = [
+    { key: "theme", label: route.focusTheme, tab: "context" },
+    { key: "explanation", label: labels.explanation, tab: "explanation" },
+    { key: "quotes", label: labels.quotes, tab: "quotes" },
+    { key: "notes", label: labels.notes, tab: "notes" },
+  ].filter((item) => item.label);
+
+  const clearTransientMessages = () => {
+    setListenMessage("");
+    setShareMessage("");
+    setNoteMessage("");
+    if (typeof window !== "undefined" && "speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
+    }
+    setSpeakingStepKey("");
+  };
+
+  const selectStep = (index) => {
+    const boundedStep = Math.max(0, Math.min(steps.length - 1, index));
+    clearTransientMessages();
+    setCurrentStep(boundedStep);
+    setActiveTab("context");
+    setIsLanguageComparisonOpen(false);
   };
 
   const saveNote = () => {
     if (typeof window !== "undefined") {
       window.localStorage.setItem(noteStorageKey, noteDraft);
     }
+    setNoteMessage(labels.noteSaved);
   };
 
   const resetRoute = () => {
-    setCurrentStep(0);
-    setActiveTab("context");
+    selectStep(0);
     if (typeof window !== "undefined") {
       window.localStorage.setItem(stepStorageKey, "0");
     }
@@ -172,7 +228,7 @@ function RoutePage() {
     if (!isRouteCompleted) {
       completeStory(route.id, ROUTE_XP_REWARD);
     }
-    setCurrentStep(steps.length - 1);
+    selectStep(steps.length - 1);
   };
 
   const toggleRouteFavorite = () => {
@@ -191,98 +247,146 @@ function RoutePage() {
     try {
       if (navigator.share) {
         await navigator.share({ title: route.title, text: route.subtitle, url });
+        setShareMessage(t("shareLinkCopied"));
         return;
       }
       await navigator.clipboard?.writeText(url);
+      setShareMessage(t("shareLinkCopied"));
     } catch {
-      // Sharing can be cancelled by the user; the route page should stay quiet.
+      setShareMessage(labels.notReady);
     }
   };
 
   const goToPreviousStep = () => {
-    setCurrentStep((step) => Math.max(0, step - 1));
+    selectStep(currentStep - 1);
   };
 
   const goToNextStep = () => {
-    setCurrentStep((step) => Math.min(steps.length - 1, step + 1));
+    selectStep(currentStep + 1);
   };
+
+  const openLanguageComparison = () => {
+    setIsLanguageComparisonOpen((current) => !current);
+    setActiveTab("explanation");
+  };
+
+  const listenToStep = () => {
+    if (typeof window === "undefined" || !("speechSynthesis" in window)) {
+      setSpeakingStepKey("");
+      setListenMessage(labels.notReady);
+      return;
+    }
+
+    if (speakingStepKey === activeStepKey) {
+      window.speechSynthesis.cancel();
+      setSpeakingStepKey("");
+      setListenMessage("");
+      return;
+    }
+
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(
+      [getStepTitle(activeStep), stepContent].filter(Boolean).join(". ")
+    );
+    const languageCode = language === "ru" ? "ru-RU" : language === "kk" ? "kk-KZ" : "en-US";
+    utterance.lang = languageCode;
+    utterance.onend = () => {
+      setSpeakingStepKey("");
+      setListenMessage("");
+    };
+    utterance.onerror = () => {
+      setSpeakingStepKey("");
+      setListenMessage(labels.notReady);
+    };
+    setSpeakingStepKey(activeStepKey);
+    setListenMessage(labels.listen);
+    window.speechSynthesis.speak(utterance);
+  };
+
+  const handleWorkFavorite = () => {
+    if (!activeWork) return;
+    toggleFavorite({
+      type: "work",
+      id: activeWork.id,
+      title: activeWork.title,
+      subtitle: activeWork.author,
+      href: `/reading/${activeWork.id}`,
+    });
+  };
+
+  const handleRouteQuizAnswer = (option, index) => {
+    setQuizAnswers((current) => ({
+      ...current,
+      [activeStepKey]: {
+        option,
+        isCorrect: index === 0,
+      },
+    }));
+  };
+
+  const activeQuizAnswer = quizAnswers[activeStepKey];
+  const activeWorkFavorite = activeWork
+    ? favorites.some((favorite) => favorite.type === "work" && favorite.id === activeWork.id)
+    : false;
 
   return (
     <main className="route-page">
-      <section className="route-journey-hero" style={{ "--route-hero-image": `url(${heroImage})` }}>
-        <div className="route-breadcrumbs">
-          <Link to="/explore">{labels.routes}</Link>
-          <span>/</span>
-          <strong>{route.title}</strong>
+      <section className="mura-route-reference">
+        <div className="mura-route-reference__head">
+          <div>
+            <div className="route-breadcrumbs">
+              <Link to="/explore">{labels.routes}</Link>
+              <span>/</span>
+              <strong>{route.title}</strong>
+            </div>
+            <h1>{route.title}</h1>
+            <p>{route.subtitle}</p>
+          </div>
+          <button type="button" onClick={toggleRouteFavorite} className={isRouteFavorite ? "is-active" : ""}>
+            {isRouteFavorite ? labels.saved : labels.favorite}
+          </button>
         </div>
-        {portraitImage ? <img className="route-journey-hero__portrait" src={portraitImage} alt="" /> : null}
-        <div className="route-journey-hero__copy">
-          <h1>{route.title}</h1>
-          <p>{route.subtitle}</p>
+
+        <div className="mura-route-tabs" role="tablist" aria-label={labels.routes}>
+          {routeTabs.map((item) => (
+            <button
+              key={`${route.id}-${item.key}`}
+              type="button"
+              role="tab"
+              aria-selected={activeTab === item.tab}
+              className={activeTab === item.tab ? "is-active" : ""}
+              onClick={() => setActiveTab(item.tab)}
+            >
+              {item.label}
+            </button>
+          ))}
         </div>
-      </section>
 
-      <section className="route-stat-band" aria-label={t("catalogStats")}>
-        <article>
-          <span className="route-stat-icon route-stat-icon--book" />
-          <strong>{routeWorks.length}</strong>
-          <small>{labels.works}</small>
-        </article>
-        <article>
-          <span className="route-stat-icon route-stat-icon--authors" />
-          <strong>{uniqueAuthors}</strong>
-          <small>{labels.authorsContext}</small>
-        </article>
-        <article>
-          <span className="route-stat-icon route-stat-icon--flag" />
-          <strong>{steps.length}</strong>
-          <small>{labels.stages}</small>
-        </article>
-        <article>
-          <span className="route-stat-icon route-stat-icon--time" />
-          <strong>{route.minutes}</strong>
-          <small>{labels.time}</small>
-        </article>
-        <article>
-          <span className="route-stat-icon route-stat-icon--level" />
-          <strong>{routeDifficulty}</strong>
-          <small>{labels.level}</small>
-        </article>
-        <article>
-          <span className="route-stat-icon route-stat-icon--globe" />
-          <strong>{routeLanguages}</strong>
-          <small>{labels.language}</small>
-        </article>
-      </section>
+        <div className="mura-route-card-grid">
+          {routeWorks.slice(0, 4).map((workItem, index) => (
+            <article className="mura-route-card" key={workItem.id}>
+              <img src={workItem.image} alt={workItem.title} />
+              <div>
+                <span>{labels.stage} {index + 1}</span>
+                <h2>{workItem.title}</h2>
+                <p>{workItem.description}</p>
+                <small>{workItem.readingTime ?? route.minutes} {t("min")} · {workItem.author}</small>
+                <Link to={`/reading/${workItem.id}`}>{labels.continueReading}</Link>
+              </div>
+            </article>
+          ))}
+        </div>
 
-      <section className="route-action-bar">
-        <div className="route-action-bar__progress">
+        <div className="mura-route-progress-strip">
           <span>{labels.yourProgress}</span>
           <div className="route-progress-track" aria-hidden="true">
             <i style={{ width: `${progressPercent}%` }} />
           </div>
           <strong>{progressPercent}%</strong>
-        </div>
-        <div className="route-action-bar__buttons">
           <Link to={continueHref}>{labels.continueReading}</Link>
           <button type="button" onClick={resetRoute}>{labels.restart}</button>
-          <button
-            type="button"
-            className={isRouteFavorite ? "is-active" : ""}
-            onClick={toggleRouteFavorite}
-          >
-            {isRouteFavorite ? labels.saved : labels.favorite}
-          </button>
-          <button
-            type="button"
-            className="route-share-button"
-            aria-label={labels.share}
-            title={labels.share}
-            onClick={shareRoute}
-          >
-            <span className="route-share-icon" aria-hidden="true" />
-            <span>{labels.share}</span>
-          </button>
+          <button type="button" onClick={shareRoute}>{labels.share}</button>
+          {shareMessage ? <small className="route-action-status">{shareMessage}</small> : null}
         </div>
       </section>
 
@@ -300,24 +404,63 @@ function RoutePage() {
                   key={`${step.type}-${index}`}
                   className={`${isCompleted ? "is-completed" : ""} ${isCurrent ? "is-current" : ""}`}
                 >
-                  <button type="button" onClick={() => setCurrentStep(index)}>
-                    <span>{isCompleted ? "?" : index + 1}</span>
+                  <button type="button" onClick={() => selectStep(index)}>
+                    <span>{isCompleted ? "\u2713" : index + 1}</span>
                     <strong>{getStepTitle(step)}</strong>
                   </button>
                 </li>
               );
             })}
           </ol>
-          <button type="button" className="route-show-all">
+          <button
+            type="button"
+            className="route-show-all"
+            aria-expanded={isAllStagesOpen}
+            onClick={() => setIsAllStagesOpen((current) => !current)}
+          >
             {labels.showAllStages}
           </button>
+          {isAllStagesOpen ? (
+            <div className="route-stage-list" role="region" aria-label={labels.showAllStages}>
+              {steps.map((step, index) => (
+                <button
+                  type="button"
+                  key={`${step.type}-${index}-details`}
+                  className={index === currentStep ? "is-current" : ""}
+                  onClick={() => selectStep(index)}
+                >
+                  <span>{labels.stage} {index + 1}</span>
+                  <strong>{getStepTitle(step)}</strong>
+                  <small>{step.text ?? t(`routeStep_${step.type}`)}</small>
+                </button>
+              ))}
+            </div>
+          ) : null}
         </aside>
 
         <section className="route-active-stage">
           <div className="route-active-stage__top">
             <p>{labels.stage} {currentStep + 1} {t("of")} {steps.length}</p>
-            <button type="button">{labels.compareLanguages}</button>
+            <button
+              type="button"
+              className={isLanguageComparisonOpen ? "is-active" : ""}
+              aria-expanded={isLanguageComparisonOpen}
+              onClick={openLanguageComparison}
+            >
+              {labels.compareLanguages}
+            </button>
           </div>
+          {isLanguageComparisonOpen ? (
+            <div className="route-language-compare" role="region" aria-label={labels.compareLanguages}>
+              {routeLanguages.split("/").map((code) => (
+                <article key={`${activeStepKey}-${code.trim()}`}>
+                  <span>{code.trim()}</span>
+                  <strong>{getStepTitle(activeStep)}</strong>
+                  <p>{stepContent}</p>
+                </article>
+              ))}
+            </div>
+          ) : null}
           <h2>{getStepTitle(activeStep)}</h2>
           <p>{t(`routeStep_${activeStep.type}`)}</p>
 
@@ -325,14 +468,25 @@ function RoutePage() {
             <p>{stepContent}</p>
             {activeWork ? (
               <footer>
-                <button type="button">
+                <button
+                  type="button"
+                  className={speakingStepKey === activeStepKey ? "is-active" : ""}
+                  onClick={listenToStep}
+                >
                   <span className="route-sound-icon" aria-hidden="true" />
                   {labels.listen}
                 </button>
-                <button type="button" aria-label={labels.favorite}>
+                <button
+                  type="button"
+                  className={activeWorkFavorite ? "is-active" : ""}
+                  aria-label={activeWorkFavorite ? labels.saved : labels.favorite}
+                  title={activeWorkFavorite ? labels.saved : labels.favorite}
+                  onClick={handleWorkFavorite}
+                >
                   <span className="route-bookmark-icon" aria-hidden="true" />
                 </button>
-                <span>{labels.source}: {activeStep.source ?? activeWork.title}</span>
+                <span className="route-source-pill">{labels.source}: {stepSource}</span>
+                {listenMessage ? <small className="route-inline-status">{listenMessage}</small> : null}
               </footer>
             ) : null}
           </article>
@@ -341,9 +495,33 @@ function RoutePage() {
             <div className="route-quiz-card">
               <div>
                 <h3>{labels.quizTitle}</h3>
-                <p>{t("routeQuizQuestion")}</p>
+                <p>{quizQuestion}</p>
+                {activeQuizAnswer ? (
+                  <small className={activeQuizAnswer.isCorrect ? "is-correct" : "is-incorrect"}>
+                    {activeQuizAnswer.isCorrect ? t("quizCorrect") : t("quizIncorrect")} {" - "}
+                    {stepExplanation}
+                  </small>
+                ) : null}
               </div>
-              <button type="button">{labels.quizAction}</button>
+              <div className="route-quiz-card__options">
+                {quizOptions.map((option, index) => (
+                  <button
+                    key={`${activeStepKey}-${option}`}
+                    type="button"
+                    className={
+                      activeQuizAnswer?.option === option
+                        ? activeQuizAnswer.isCorrect
+                          ? "is-correct"
+                          : "is-incorrect"
+                        : ""
+                    }
+                    disabled={Boolean(activeQuizAnswer)}
+                    onClick={() => handleRouteQuizAnswer(option, index)}
+                  >
+                    {option}
+                  </button>
+                ))}
+              </div>
             </div>
           ) : null}
 
@@ -398,21 +576,24 @@ function RoutePage() {
             <div className="route-note-editor">
               <textarea
                 value={noteDraft}
-                onChange={(event) => setNoteDraft(event.target.value)}
+                onChange={(event) => {
+                  setNoteDraft(event.target.value);
+                  setNoteMessage("");
+                }}
                 placeholder={labels.notePlaceholder}
               />
               <button type="button" onClick={saveNote}>{labels.save}</button>
-              {noteDraft ? <small>{labels.noteSaved}</small> : null}
+              {noteMessage ? <small>{noteMessage}</small> : null}
             </div>
           ) : (
             <article className="route-tab-card">
-              {activeTab === "quotes" ? <span className="route-quote-mark">“</span> : null}
+              {activeTab === "quotes" ? <span className="route-quote-mark">&ldquo;</span> : null}
               <p>{tabContent[activeTab]}</p>
               {activeTab === "quotes" ? (
-                <small>— {activeWork?.author ?? route.title}</small>
+                <small>{stepSource}</small>
               ) : (
                 <Link to={activeWork ? `/reading/${activeWork.id}` : "/works"}>
-                  {activeWork ? activeWork.title : labels.notReady} {"›"}
+                  {activeWork ? activeWork.title : labels.notReady} {"\u203A"}
                 </Link>
               )}
             </article>
@@ -431,4 +612,5 @@ function RoutePage() {
 }
 
 export default RoutePage;
+
 
