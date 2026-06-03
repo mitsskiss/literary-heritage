@@ -1,1 +1,0 @@
-var e=`/literary-heritage/assets/routes-hero-C38xreiX.jpg`;export{e as t};
