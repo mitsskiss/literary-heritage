@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { works } from "../data/works";
 import { workMetadataById } from "../data/exploreData";
@@ -13,10 +13,18 @@ import { useProgressStore } from "../store/useProgressStore";
 import BookSocial from "../components/BookSocial";
 import "./Reading.css";
 import { useI18n } from "../i18n/useI18n";
+import manuscriptTexture from "../assets/mura/abai-manuscript-bg.svg";
+import abaiBookCover from "../assets/mura/book-abai.svg";
+import {
+  MuraArrowIcon,
+  MuraBookmarkIcon,
+  MuraShareIcon,
+} from "../components/icons/MuraIconSet";
 
 function Reading() {
   const { t, language, localizeMetadata, localizeStoryBook, localizeWork } = useI18n();
   const { id } = useParams();
+  const [shareMessage, setShareMessage] = useState("");
   const { content: adminContent } = useAdminContent();
   const allWorks = mergeAdminWorks(works.map(localizeWork), adminContent, language);
   const work = allWorks.find((item) => item.id === id);
@@ -118,33 +126,124 @@ function Reading() {
     favorites.some(
       (favorite) => favorite.type === type && favorite.id === favoriteId
     );
+  const [displayBookTitle, secondaryBookTitle = ""] = work.title.includes(" / ")
+    ? work.title.split(" / ").map((part) => part.trim())
+    : [
+        work.title,
+        work.originalTitle && work.originalTitle !== work.title
+          ? work.originalTitle
+          : "",
+      ];
+  const heroPortrait = id === "abai-words" ? work.image : work.image;
+  const heroBookCover = id === "abai-words" ? abaiBookCover : null;
+  const abaiHeroCategory =
+    language === "kk"
+      ? "Философиялық мұра"
+      : language === "ru"
+        ? "Философское наследие"
+        : "Philosophical heritage";
+  const heroCategory = id === "abai-words"
+    ? abaiHeroCategory
+    : metadata?.type ?? t("literaryArchive");
+  const breadcrumbItems = [
+    { label: t("works"), href: "/explore" },
+    { label: work.author },
+    { label: displayBookTitle },
+  ];
+
+  const handleShareWork = async () => {
+    if (typeof window === "undefined") return;
+
+    const url = window.location.href;
+    setShareMessage("");
+
+    const copyUrl = async () => {
+      if (navigator.clipboard?.writeText) {
+        try {
+          await navigator.clipboard.writeText(url);
+          return;
+        } catch {
+          // Fall back to a temporary selection for browsers that deny clipboard API.
+        }
+      }
+
+      const textArea = document.createElement("textarea");
+      textArea.value = url;
+      textArea.setAttribute("readonly", "");
+      textArea.style.position = "fixed";
+      textArea.style.left = "-9999px";
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textArea);
+    };
+
+    try {
+      await copyUrl();
+      setShareMessage(t("shareLinkCopied"));
+    } catch (error) {
+      if (error?.name === "AbortError") return;
+
+      try {
+        await copyUrl();
+        setShareMessage(t("shareLinkCopied"));
+      } catch {
+        setShareMessage(t("socialActionFailed"));
+      }
+    }
+  };
 
   return (
     <main className="reading-book-page">
       <div className="reading-book-page__container">
-        <Link to="/explore" className="reading-book-page__backLink">
-          {t("backToExplore")}
-        </Link>
+        <nav className="reading-book-breadcrumb" aria-label={t("chapterRoute")}>
+          {breadcrumbItems.map((item, index) => (
+            <span className="reading-book-breadcrumb__item" key={`${item.label}-${index}`}>
+              {index > 0 ? (
+                <span className="reading-book-breadcrumb__separator" aria-hidden="true">
+                  &gt;
+                </span>
+              ) : null}
+              {item.href ? (
+                <Link to={item.href}>{item.label}</Link>
+              ) : (
+                <span>{item.label}</span>
+              )}
+            </span>
+          ))}
+        </nav>
 
-        <section className="reading-book-hero">
+        <section className="reading-book-hero reading-book-hero--reference">
           <div className="reading-book-hero__media">
-            <div
-              className="reading-book-hero__cover"
-              style={{ backgroundImage: `url(${work.image})` }}
+            <img
+              className="reading-book-hero__manuscript"
+              src={manuscriptTexture}
+              alt=""
+              aria-hidden="true"
+            />
+            <img
+              className="reading-book-hero__portrait"
+              src={heroPortrait}
+              alt={work.author}
             />
           </div>
 
           <div className="reading-book-hero__content">
+            <p className="reading-book-hero__category">
+              {heroCategory}
+            </p>
+            <p className="reading-book-hero__author">{work.author}</p>
+            <h1 className="reading-book-hero__title">{displayBookTitle}</h1>
+            {secondaryBookTitle ? (
+              <p className="reading-book-hero__titleSub">{secondaryBookTitle}</p>
+            ) : null}
             <div className="reading-book-hero__metaLine">
-              <span>{metadata?.period ?? t("literaryArchive")}</span>
+              <span>{storyBook.totalScenes} {t("scenes").toLowerCase()}</span>
               <i aria-hidden="true" />
-              <span>{metadata?.type ?? t("work")}</span>
+              <span>{metadata?.period ?? t("literaryArchive")}</span>
               <i aria-hidden="true" />
               <span>{t("minRoute", { count: storyBook.totalMinutes })}</span>
             </div>
-
-            <h1 className="reading-book-hero__title">{work.title}</h1>
-            <p className="reading-book-hero__author">{work.author}</p>
             <p className="reading-book-hero__description">{work.description}</p>
             <p className="reading-book-hero__overview">{storyBook.overview}</p>
 
@@ -167,21 +266,10 @@ function Reading() {
               </article>
             </div>
 
-            <div className="reading-book-hero__actions">
-              <Link
-                to={getChapterPath(work.id, nextChapter.chapterNumber)}
-                className="reading-book-hero__action is-primary"
-              >
-                {nextChapter.isStarted && !nextChapter.isCompleted
-                  ? t("continueReading")
-                  : t("startReading")}
-              </Link>
-              <Link to="/progress" className="reading-book-hero__action">
-                {t("viewProgress")}
-              </Link>
+            <div className="reading-book-hero__utilityActions" aria-label={t("shareWork")}>
               <button
                 type="button"
-                className={`reading-book-hero__action ${
+                className={`reading-book-hero__utilityButton ${
                   isWorkFavorite ? "is-favorite" : ""
                 }`}
                 onClick={() =>
@@ -194,55 +282,96 @@ function Reading() {
                   })
                 }
               >
+                <MuraBookmarkIcon />
                 {isWorkFavorite ? t("savedFavorite") : t("saveFavorite")}
               </button>
+              <button
+                type="button"
+                className="reading-book-hero__utilityButton"
+                onClick={handleShareWork}
+              >
+                <MuraShareIcon />
+                {t("shareWork")}
+              </button>
+              {shareMessage ? (
+                <span className="reading-book-hero__shareStatus" role="status">
+                  {shareMessage}
+                </span>
+              ) : null}
             </div>
 
-            <div className="mura-book-reference-row">
-              <article className="mura-book-progress-card">
-                <span>{t("routeProgress")}</span>
-                <strong>{progressPercent}%</strong>
-                <div className="mura-ref-progress" aria-hidden="true">
-                  <i style={{ width: `${progressPercent}%` }} />
-                </div>
-                <small>{t("chaptersCompleted", { done: completedChapters.length, total: chapterCards.length })}</small>
-              </article>
-              <article className="mura-book-quote-card">
-                <span aria-hidden="true">&ldquo;</span>
-                <p>
-                  {work.fragments?.[0]?.reflection?.resonanceQuote?.text ??
-                    work.fragments?.[0]?.text ??
-                    storyBook.overview}
-                </p>
-                <small>{work.fragments?.[0]?.reflection?.resonanceQuote?.author ?? work.author}</small>
-              </article>
-            </div>
-
-            <div className="reading-book-hero__themes">
-              <p>{t("themes")}</p>
-              {work.themes.map((theme) => (
-                <button
-                  key={theme}
-                  type="button"
-                  className={`reading-book-theme ${
-                    isFavorite("theme", `${work.id}:${theme}`) ? "is-favorite" : ""
-                  }`}
-                  onClick={() =>
-                    toggleFavorite({
-                      type: "theme",
-                      id: `${work.id}:${theme}`,
-                      title: theme,
-                      subtitle: work.title,
-                      href: `/reading/${work.id}`,
-                    })
-                  }
-                >
-                  {theme}
-                </button>
-              ))}
+            <div className="reading-book-hero__actions">
+              <Link
+                to={getChapterPath(work.id, nextChapter.chapterNumber)}
+                className="reading-book-hero__action is-primary"
+              >
+                {nextChapter.isStarted && !nextChapter.isCompleted
+                  ? t("continueReading")
+                  : t("startReading")}
+                <MuraArrowIcon />
+              </Link>
+              <Link to="/progress" className="reading-book-hero__action">
+                {t("viewProgress")}
+              </Link>
             </div>
           </div>
+
+          <div className="reading-book-hero__bookObject" aria-hidden="true">
+            {heroBookCover ? (
+              <img src={heroBookCover} alt="" />
+            ) : (
+              <>
+                <span>MURA</span>
+                <strong>{displayBookTitle}</strong>
+                <small>{work.author}</small>
+              </>
+            )}
+          </div>
         </section>
+
+        <div className="mura-book-reference-row">
+          <article className="mura-book-progress-card">
+            <span>{t("routeProgress")}</span>
+            <strong>{progressPercent}%</strong>
+            <div className="mura-ref-progress" aria-hidden="true">
+              <i style={{ width: `${progressPercent}%` }} />
+            </div>
+            <small>{t("chaptersCompleted", { done: completedChapters.length, total: chapterCards.length })}</small>
+          </article>
+          <article className="mura-book-quote-card">
+            <span aria-hidden="true">&ldquo;</span>
+            <p>
+              {work.fragments?.[0]?.reflection?.resonanceQuote?.text ??
+                work.fragments?.[0]?.text ??
+                storyBook.overview}
+            </p>
+            <small>{work.fragments?.[0]?.reflection?.resonanceQuote?.author ?? work.author}</small>
+          </article>
+        </div>
+
+        <div className="reading-book-hero__themes">
+          <p>{t("themes")}</p>
+          {work.themes.map((theme) => (
+            <button
+              key={theme}
+              type="button"
+              className={`reading-book-theme ${
+                isFavorite("theme", `${work.id}:${theme}`) ? "is-favorite" : ""
+              }`}
+              onClick={() =>
+                toggleFavorite({
+                  type: "theme",
+                  id: `${work.id}:${theme}`,
+                  title: theme,
+                  subtitle: work.title,
+                  href: `/reading/${work.id}`,
+                })
+              }
+            >
+              {theme}
+            </button>
+          ))}
+        </div>
 
         <section className="reading-flow-guide" aria-label={t("readingFlowTitle")}>
           <div>

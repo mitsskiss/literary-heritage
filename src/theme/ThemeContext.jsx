@@ -13,12 +13,25 @@ function getInitialTheme() {
 }
 
 export function ThemeProvider({ children }) {
-  const [theme, setTheme] = useState(getInitialTheme);
+  const [theme, setThemeState] = useState(getInitialTheme);
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
     window.localStorage.setItem(STORAGE_KEY, theme);
   }, [theme]);
+
+  const setTheme = (nextTheme) => {
+    setThemeState((currentTheme) => {
+      const resolvedTheme = typeof nextTheme === "function" ? nextTheme(currentTheme) : nextTheme;
+
+      if (typeof window !== "undefined") {
+        document.documentElement.dataset.theme = resolvedTheme;
+        window.localStorage.setItem(STORAGE_KEY, resolvedTheme);
+      }
+
+      return resolvedTheme;
+    });
+  };
 
   const value = useMemo(
     () => ({

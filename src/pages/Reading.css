@@ -725,3 +725,2153 @@
     padding: 12px 0 0;
   }
 }
+
+/* MIRAS v2 book detail: same composition in light and dark. */
+.reading-book-page {
+  min-height: 100dvh;
+  padding-top: 34px !important;
+  padding-right: clamp(18px, 2.4vw, 34px) !important;
+  padding-bottom: 74px !important;
+  background:
+    radial-gradient(circle at 72% -8%, color-mix(in srgb, var(--miras-gold) 16%, transparent), transparent 28rem),
+    linear-gradient(180deg, var(--miras-bg-soft), var(--miras-bg) 58%, var(--miras-bg-soft));
+  color: var(--miras-ink);
+}
+
+:root[data-theme="dark"] .reading-book-page {
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    radial-gradient(circle at 68% 4%, rgba(28, 100, 82, 0.24), transparent 24rem),
+    linear-gradient(180deg, #020c0b, var(--miras-bg) 54%, #041512);
+  background-size: 84px 84px, 84px 84px, auto, auto;
+}
+
+.reading-book-page__container {
+  width: min(100%, var(--miras-page-max));
+  margin: 0 auto;
+}
+
+.reading-book-page__backLink {
+  margin: 0 0 18px;
+  color: var(--miras-text);
+  font-size: 0.86rem;
+  font-weight: 720;
+  text-decoration: none;
+}
+
+.reading-book-page__backLink:hover {
+  color: var(--miras-gold-strong);
+}
+
+.reading-book-hero {
+  display: grid !important;
+  grid-template-columns: minmax(250px, 0.36fr) minmax(0, 0.64fr) !important;
+  gap: 0 !important;
+  overflow: hidden !important;
+  border: 1px solid var(--miras-line) !important;
+  border-radius: var(--miras-radius) !important;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--miras-panel) 92%, transparent), color-mix(in srgb, var(--miras-panel-strong) 86%, transparent));
+  box-shadow: var(--miras-shadow) !important;
+}
+
+:root[data-theme="dark"] .reading-book-hero {
+  border-color: var(--miras-line) !important;
+  background:
+    radial-gradient(circle at 20% 0%, rgba(32, 112, 91, 0.2), transparent 22rem),
+    linear-gradient(135deg, rgba(8, 31, 27, 0.92), rgba(3, 17, 15, 0.96));
+}
+
+.reading-book-hero__media {
+  min-height: clamp(390px, 42vw, 560px) !important;
+}
+
+.reading-book-hero__cover {
+  min-height: clamp(390px, 42vw, 560px) !important;
+  background-size: cover !important;
+  background-position: center top !important;
+  filter: saturate(0.78) contrast(1.08);
+}
+
+:root[data-theme="dark"] .reading-book-hero__cover {
+  filter: grayscale(0.82) contrast(1.12) brightness(0.72);
+}
+
+.reading-book-hero__cover::after {
+  background:
+    linear-gradient(180deg, rgba(3, 17, 15, 0), rgba(3, 17, 15, 0.34)),
+    linear-gradient(90deg, rgba(3, 17, 15, 0.08), rgba(3, 17, 15, 0.46));
+}
+
+.reading-book-hero__content {
+  min-width: 0;
+  padding: clamp(24px, 3.4vw, 42px) !important;
+}
+
+.reading-book-hero__metaLine {
+  gap: 9px;
+  color: var(--miras-gold-strong);
+  font-size: 0.73rem;
+  font-weight: 820;
+  letter-spacing: 0.08em;
+}
+
+.reading-book-hero__title {
+  max-width: 15ch;
+  margin: 18px 0 0 !important;
+  color: var(--miras-ink) !important;
+  font-size: clamp(2.65rem, 4.2vw, 4.7rem) !important;
+  line-height: 0.94 !important;
+  letter-spacing: 0 !important;
+  text-wrap: balance;
+}
+
+.reading-book-hero__author {
+  margin-top: 18px !important;
+  color: var(--miras-ink);
+  font-size: 1rem;
+  font-weight: 780;
+}
+
+.reading-book-hero__description,
+.reading-book-hero__overview {
+  max-width: 64ch;
+  color: var(--miras-text) !important;
+  font-size: 0.94rem !important;
+  line-height: 1.62 !important;
+}
+
+.reading-book-hero__metrics {
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+  margin-top: 22px !important;
+}
+
+.reading-book-hero__metrics article,
+.reading-book-summary__card,
+.reading-chapter-card,
+.reading-fragment-card,
+.reading-book-fallback,
+.reading-flow-guide {
+  border: 1px solid var(--miras-line) !important;
+  border-radius: var(--miras-radius) !important;
+  background: var(--miras-panel) !important;
+  box-shadow: none !important;
+}
+
+.reading-book-hero__metrics article {
+  min-height: 76px;
+  padding: 14px 15px !important;
+}
+
+.reading-book-hero__metrics span,
+.reading-book-summary__label,
+.reading-chapter-card__eyebrow,
+.reading-fragment-card__top p,
+.reading-flow-guide__label {
+  color: var(--miras-muted) !important;
+  font-size: 0.68rem !important;
+  letter-spacing: 0.14em !important;
+  font-weight: 760 !important;
+}
+
+.reading-book-hero__metrics strong,
+.reading-book-summary__row h2 {
+  color: var(--miras-ink) !important;
+  font-variant-numeric: tabular-nums;
+}
+
+.reading-book-hero__actions {
+  gap: 10px !important;
+  margin-top: 22px !important;
+}
+
+.reading-book-hero__action,
+.reading-book-fallback__action,
+.reading-chapter-card__action,
+.reading-fragment-card__save,
+.reading-book-theme {
+  min-height: 40px !important;
+  border: 1px solid var(--miras-line) !important;
+  border-radius: 7px !important;
+  background: color-mix(in srgb, var(--miras-panel-strong) 78%, transparent) !important;
+  color: var(--miras-ink) !important;
+  padding-inline: 15px !important;
+  font-size: 0.78rem !important;
+  font-weight: 840 !important;
+}
+
+.reading-book-hero__action.is-primary,
+.reading-book-fallback__action,
+.reading-chapter-card__action {
+  border-color: var(--miras-gold) !important;
+  background: linear-gradient(180deg, var(--miras-gold), var(--miras-gold-strong)) !important;
+  color: #fff7e8 !important;
+}
+
+.reading-book-hero__action:hover,
+.reading-book-fallback__action:hover,
+.reading-chapter-card__action:hover,
+.reading-fragment-card__save:hover,
+.reading-book-theme:hover {
+  transform: translateY(-1px);
+  border-color: var(--miras-line-strong) !important;
+}
+
+.mura-book-reference-row,
+.reading-book-summary {
+  display: grid !important;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr) !important;
+  gap: 14px !important;
+  margin-top: 20px !important;
+}
+
+.mura-book-progress-card,
+.mura-book-quote-card,
+.reading-book-summary__card {
+  border: 1px solid var(--miras-line) !important;
+  border-radius: var(--miras-radius) !important;
+  background: color-mix(in srgb, var(--miras-panel) 88%, transparent) !important;
+  box-shadow: none !important;
+}
+
+.mura-book-progress-card,
+.mura-book-quote-card {
+  padding: 16px !important;
+}
+
+.mura-book-progress-card span,
+.mura-book-quote-card span,
+.reading-book-hero__themes p {
+  color: var(--miras-muted) !important;
+}
+
+.mura-ref-progress,
+.reading-book-summary__track {
+  height: 8px !important;
+  background: color-mix(in srgb, var(--miras-gold) 14%, var(--miras-panel-strong)) !important;
+}
+
+.mura-ref-progress i,
+.reading-book-summary__fill {
+  background: linear-gradient(90deg, var(--miras-gold), var(--miras-gold-strong)) !important;
+}
+
+.mura-book-quote-card p,
+.reading-fragment-card blockquote {
+  color: var(--miras-ink) !important;
+}
+
+.reading-book-hero__themes {
+  grid-template-columns: repeat(auto-fit, minmax(112px, max-content)) !important;
+  margin-top: 18px !important;
+}
+
+.reading-book-chapters,
+.reading-book-fragments {
+  margin-top: 30px !important;
+}
+
+.reading-book-chapters__head,
+.reading-book-fragments__head {
+  align-items: end !important;
+  margin-bottom: 16px !important;
+}
+
+.reading-book-chapters__title,
+.reading-book-fragments__head h2,
+.reading-chapter-card__title,
+.reading-flow-guide h2 {
+  color: var(--miras-ink) !important;
+  letter-spacing: 0 !important;
+}
+
+.mura-book-chapter-tabs {
+  display: flex !important;
+  gap: 8px !important;
+  overflow-x: auto;
+  margin: 0 0 16px !important;
+  padding-bottom: 4px;
+}
+
+.mura-book-chapter-tabs a {
+  min-width: 78px;
+  min-height: 38px;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--miras-line) !important;
+  border-radius: 7px !important;
+  background: var(--miras-panel) !important;
+  color: var(--miras-text) !important;
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 820;
+}
+
+.mura-book-chapter-tabs a.is-started,
+.mura-book-chapter-tabs a:hover {
+  border-color: var(--miras-line-strong) !important;
+  color: var(--miras-ink) !important;
+  background: color-mix(in srgb, var(--miras-gold) 14%, var(--miras-panel)) !important;
+}
+
+.reading-book-chapters__list,
+.reading-book-fragments__grid {
+  gap: 14px !important;
+}
+
+.reading-chapter-card,
+.reading-fragment-card {
+  padding: 20px !important;
+}
+
+.reading-chapter-card__meta span,
+.reading-book-summary__meta span,
+.reading-chapter-card__state {
+  border-radius: 7px !important;
+  border-color: var(--miras-line) !important;
+  background: color-mix(in srgb, var(--miras-panel-strong) 72%, transparent) !important;
+  color: var(--miras-text) !important;
+}
+
+.reading-flow-guide {
+  grid-template-columns: minmax(190px, 0.32fr) minmax(0, 1fr) !important;
+  margin-top: 18px !important;
+}
+
+@media (min-width: 1024px) {
+  .reading-book-page {
+    padding-left: var(--miras-content-offset) !important;
+  }
+}
+
+@media (max-width: 1100px) {
+  .reading-book-hero {
+    grid-template-columns: 1fr !important;
+  }
+
+  .reading-book-hero__media,
+  .reading-book-hero__cover {
+    min-height: 360px !important;
+  }
+
+  .reading-book-hero__title {
+    max-width: 14ch;
+  }
+}
+
+@media (max-width: 760px) {
+  .reading-book-page {
+    padding: 92px 14px 58px !important;
+  }
+
+  .reading-book-hero__content {
+    padding: 22px !important;
+  }
+
+  .reading-book-hero__metrics,
+  .mura-book-reference-row,
+  .reading-book-summary,
+  .reading-flow-guide,
+  .reading-flow-guide ol {
+    grid-template-columns: 1fr !important;
+  }
+
+  .reading-book-hero__title {
+    max-width: 100%;
+    font-size: clamp(2.25rem, 12vw, 3.4rem) !important;
+  }
+}
+
+/* MIRAS reference refinement: dense archive hero with portrait/book composition. */
+.reading-book-page__container {
+  width: min(100%, 1160px) !important;
+}
+
+.reading-book-hero {
+  grid-template-columns: minmax(340px, 0.46fr) minmax(0, 0.54fr) !important;
+  min-height: 438px;
+  background:
+    radial-gradient(circle at 82% 8%, color-mix(in srgb, var(--miras-gold) 13%, transparent), transparent 22rem),
+    linear-gradient(120deg, color-mix(in srgb, var(--miras-panel) 94%, transparent), color-mix(in srgb, var(--miras-bg-soft) 80%, transparent)) !important;
+}
+
+:root[data-theme="dark"] .reading-book-hero {
+  background:
+    radial-gradient(circle at 76% 10%, rgba(31, 118, 92, 0.2), transparent 20rem),
+    linear-gradient(120deg, rgba(4, 14, 12, 0.94), rgba(7, 25, 21, 0.91) 58%, rgba(2, 10, 9, 0.96)) !important;
+}
+
+.reading-book-hero__media {
+  position: relative;
+  min-height: 438px !important;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 42% 18%, rgba(255, 255, 255, 0.12), transparent 18rem),
+    #081916;
+}
+
+.reading-book-hero__cover {
+  position: absolute;
+  inset: 0;
+  min-height: 100% !important;
+  background-size: cover !important;
+  background-position: center top !important;
+  transform: scale(1.02);
+}
+
+.reading-book-hero__cover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(3, 17, 15, 0.08), rgba(3, 17, 15, 0.5) 82%),
+    linear-gradient(180deg, rgba(3, 17, 15, 0), rgba(3, 17, 15, 0.38)) !important;
+}
+
+:root[data-theme="dark"] .reading-book-hero__cover::after {
+  background:
+    linear-gradient(90deg, rgba(1, 8, 7, 0.14), rgba(1, 8, 7, 0.76) 82%),
+    linear-gradient(180deg, rgba(1, 8, 7, 0.1), rgba(1, 8, 7, 0.64)) !important;
+}
+
+.reading-book-hero__bookObject {
+  position: absolute;
+  z-index: 2;
+  top: clamp(34px, 5vw, 58px);
+  right: clamp(26px, 4vw, 48px);
+  width: 118px;
+  height: 176px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 18px 15px;
+  border: 1px solid rgba(226, 199, 143, 0.35);
+  border-radius: 4px;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.12), transparent 18%),
+    linear-gradient(145deg, #0b3b2d, #051d18 72%);
+  box-shadow:
+    16px 18px 34px rgba(0, 0, 0, 0.34),
+    inset 8px 0 0 rgba(0, 0, 0, 0.18);
+  color: #f3ead7;
+  transform: perspective(560px) rotateY(-8deg) rotateZ(1deg);
+}
+
+.reading-book-hero__bookObject span,
+.reading-book-hero__bookObject small {
+  color: rgba(243, 234, 215, 0.66);
+  font-size: 0.58rem;
+  font-weight: 760;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.reading-book-hero__bookObject strong {
+  color: #f7efe0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.08rem;
+  line-height: 1.08;
+  letter-spacing: 0;
+}
+
+.reading-book-hero__content {
+  display: flex;
+  min-height: 438px;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(30px, 4vw, 52px) clamp(30px, 4.4vw, 58px) !important;
+}
+
+.reading-book-hero__metaLine {
+  width: fit-content;
+  padding: 0 !important;
+  color: var(--miras-gold-strong) !important;
+  text-transform: none;
+}
+
+.reading-book-hero__title {
+  max-width: 10ch !important;
+  margin-top: 12px !important;
+  font-size: clamp(3.05rem, 5.25vw, 5.5rem) !important;
+}
+
+.reading-book-hero__titleSub {
+  margin: 10px 0 0;
+  color: var(--miras-gold-strong);
+  font-size: 0.78rem;
+  font-weight: 820;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.reading-book-hero__author {
+  margin-top: 20px !important;
+}
+
+.reading-book-hero__description {
+  max-width: 50ch !important;
+  margin-top: 14px !important;
+}
+
+.reading-book-hero__overview {
+  display: none !important;
+}
+
+.reading-book-hero__metrics {
+  display: none !important;
+}
+
+.reading-book-hero__actions {
+  margin-top: 26px !important;
+}
+
+.reading-book-hero__action {
+  min-width: 128px;
+  justify-content: center;
+}
+
+.mura-book-reference-row {
+  margin-top: 14px !important;
+}
+
+.mura-book-progress-card,
+.mura-book-quote-card {
+  min-height: 104px;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--miras-panel) 92%, transparent), color-mix(in srgb, var(--miras-panel-strong) 78%, transparent)) !important;
+}
+
+:root[data-theme="dark"] .mura-book-progress-card,
+:root[data-theme="dark"] .mura-book-quote-card {
+  background:
+    linear-gradient(135deg, rgba(9, 28, 24, 0.82), rgba(4, 17, 15, 0.92)) !important;
+}
+
+.reading-book-hero__themes {
+  display: flex !important;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px !important;
+  margin-top: 14px !important;
+}
+
+.reading-book-hero__themes p {
+  width: auto !important;
+  margin: 0 8px 0 0 !important;
+  color: var(--miras-muted) !important;
+  font-size: 0.68rem !important;
+  font-weight: 820 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase;
+}
+
+.reading-book-theme {
+  min-height: 34px !important;
+  padding: 0 13px !important;
+  border-radius: 6px !important;
+}
+
+.reading-flow-guide {
+  display: none !important;
+}
+
+@media (max-width: 1100px) {
+  .reading-book-hero {
+    grid-template-columns: 1fr !important;
+  }
+
+  .reading-book-hero__media {
+    min-height: 360px !important;
+  }
+
+  .reading-book-hero__content {
+    min-height: 0;
+  }
+}
+
+@media (max-width: 760px) {
+  .reading-book-hero__bookObject {
+    width: 94px;
+    height: 142px;
+    top: 22px;
+    right: 20px;
+    padding: 14px 12px;
+  }
+
+  .reading-book-hero__bookObject strong {
+    font-size: 0.92rem;
+  }
+
+  .reading-book-hero__title {
+    max-width: 100% !important;
+  }
+
+  .reading-book-hero__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .reading-book-hero__action {
+    width: 100%;
+  }
+}
+/* FINAL: book page closer to dark MURA reference */
+.reading-book-page {
+  min-height: 100dvh !important;
+  padding: 34px clamp(18px, 2.4vw, 34px) 72px var(--miras-content-offset, 224px) !important;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.014) 1px, transparent 1px),
+    radial-gradient(circle at 72% 4%, rgba(39, 112, 91, 0.18), transparent 28rem),
+    linear-gradient(180deg, #020b0a 0%, #061613 54%, #020b0a 100%) !important;
+  background-size: 88px 88px, 88px 88px, auto, auto !important;
+  color: #f4f1e9 !important;
+}
+
+.reading-book-page__container {
+  width: min(100%, 1160px) !important;
+  margin: 0 auto !important;
+}
+
+.reading-book-page__backLink {
+  margin: 0 0 14px !important;
+  color: rgba(244, 241, 233, 0.72) !important;
+  font-size: 0.84rem !important;
+  font-weight: 760 !important;
+  text-decoration: none !important;
+}
+
+.reading-book-hero--reference {
+  position: relative !important;
+  display: grid !important;
+  grid-template-columns: minmax(300px, 0.34fr) minmax(0, 0.66fr) !important;
+  min-height: 390px !important;
+  overflow: hidden !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background:
+    linear-gradient(90deg, rgba(2, 11, 10, 0.1), rgba(2, 11, 10, 0.8) 45%, rgba(2, 11, 10, 0.16)),
+    radial-gradient(circle at 72% 24%, rgba(200, 149, 49, 0.12), transparent 18rem),
+    linear-gradient(180deg, rgba(5, 20, 18, 0.96), rgba(2, 11, 10, 0.98)) !important;
+  box-shadow: none !important;
+}
+
+.reading-book-hero--reference::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+  background:
+    linear-gradient(90deg, rgba(2, 11, 10, 0.02), rgba(2, 11, 10, 0.68) 38%, rgba(2, 11, 10, 0.18)),
+    radial-gradient(circle at 50% 50%, transparent 0%, rgba(0, 0, 0, 0.42) 78%) !important;
+}
+
+.reading-book-hero--reference::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+  opacity: 0.13 !important;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent 0,
+      transparent 12px,
+      rgba(214, 184, 118, 0.12) 13px
+    );
+  mask-image: linear-gradient(90deg, transparent, black 38%, black 78%, transparent);
+}
+
+.reading-book-hero--reference .reading-book-hero__media {
+  position: relative !important;
+  z-index: 1 !important;
+  min-height: 390px !important;
+  overflow: hidden !important;
+  border: 0 !important;
+}
+
+.reading-book-hero--reference .reading-book-hero__cover {
+  position: absolute !important;
+  inset: 0 !important;
+  min-height: 100% !important;
+  background-size: cover !important;
+  background-position: center top !important;
+  filter: grayscale(1) contrast(1.08) brightness(0.58) !important;
+  transform: scale(1.04) !important;
+}
+
+.reading-book-hero--reference .reading-book-hero__cover::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  background:
+    linear-gradient(90deg, rgba(2, 11, 10, 0.08), rgba(2, 11, 10, 0.8) 92%),
+    linear-gradient(180deg, rgba(2, 11, 10, 0.02), rgba(2, 11, 10, 0.58)) !important;
+}
+
+.reading-book-hero--reference .reading-book-hero__content {
+  position: relative !important;
+  z-index: 2 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  min-height: 390px !important;
+  padding: 42px 220px 42px 42px !important;
+  color: #f4f1e9 !important;
+}
+
+.reading-book-hero--reference .reading-book-hero__metaLine {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+  align-items: center !important;
+  color: #d0a34d !important;
+  font-size: 0.68rem !important;
+  font-weight: 850 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+}
+
+.reading-book-hero--reference .reading-book-hero__title {
+  max-width: 10ch !important;
+  margin: 12px 0 0 !important;
+  color: #f4f1e9 !important;
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-size: clamp(3.2rem, 5.8vw, 5.8rem) !important;
+  font-weight: 500 !important;
+  line-height: 0.9 !important;
+  letter-spacing: -0.04em !important;
+}
+
+.reading-book-hero--reference .reading-book-hero__titleSub {
+  margin: 8px 0 0 !important;
+  color: rgba(244, 241, 233, 0.58) !important;
+  font-size: 0.72rem !important;
+  font-weight: 850 !important;
+  letter-spacing: 0.16em !important;
+  text-transform: uppercase !important;
+}
+
+.reading-book-hero--reference .reading-book-hero__author {
+  margin: 20px 0 0 !important;
+  color: rgba(244, 241, 233, 0.82) !important;
+  font-size: 0.94rem !important;
+  font-weight: 760 !important;
+}
+
+.reading-book-hero--reference .reading-book-hero__description {
+  max-width: 48ch !important;
+  margin: 12px 0 0 !important;
+  color: rgba(244, 241, 233, 0.64) !important;
+  font-size: 0.9rem !important;
+  line-height: 1.55 !important;
+}
+
+.reading-book-hero--reference .reading-book-hero__overview,
+.reading-book-hero--reference .reading-book-hero__metrics {
+  display: none !important;
+}
+
+.reading-book-hero--reference .reading-book-hero__actions {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 10px !important;
+  margin-top: 22px !important;
+}
+
+.reading-book-hero--reference .reading-book-hero__action {
+  min-height: 38px !important;
+  padding: 0 20px !important;
+  border: 1px solid rgba(214, 184, 118, 0.22) !important;
+  border-radius: 4px !important;
+  background: rgba(255, 255, 255, 0.035) !important;
+  color: #f4f1e9 !important;
+  font-size: 0.78rem !important;
+  font-weight: 820 !important;
+  text-decoration: none !important;
+}
+
+.reading-book-hero--reference .reading-book-hero__action.is-primary {
+  border-color: rgba(23, 154, 112, 0.8) !important;
+  background: #0f7d61 !important;
+  color: #f4f1e9 !important;
+}
+
+.reading-book-hero--reference .reading-book-hero__bookObject {
+  position: absolute !important;
+  z-index: 3 !important;
+  top: 52px !important;
+  right: 72px !important;
+  width: 126px !important;
+  height: 202px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  padding: 18px 14px !important;
+  border: 1px solid rgba(214, 184, 118, 0.3) !important;
+  border-radius: 2px !important;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.11), transparent 16%),
+    linear-gradient(145deg, #0d3a2f, #051d18 76%) !important;
+  box-shadow:
+    20px 24px 48px rgba(0, 0, 0, 0.42),
+    inset 8px 0 0 rgba(0, 0, 0, 0.18) !important;
+  color: #f3ead7 !important;
+  transform: perspective(620px) rotateY(-8deg) rotateZ(1deg) !important;
+}
+
+.reading-book-hero--reference .reading-book-hero__bookObject span,
+.reading-book-hero--reference .reading-book-hero__bookObject small {
+  color: rgba(243, 234, 215, 0.64) !important;
+  font-size: 0.56rem !important;
+  font-weight: 760 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+}
+
+.reading-book-hero--reference .reading-book-hero__bookObject strong {
+  color: #f7efe0 !important;
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-size: 1rem !important;
+  line-height: 1.08 !important;
+}
+
+.mura-book-reference-row {
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr) !important;
+  gap: 14px !important;
+  margin-top: 14px !important;
+}
+
+.mura-book-progress-card,
+.mura-book-quote-card {
+  border: 1px solid rgba(214, 184, 118, 0.18) !important;
+  border-radius: 4px !important;
+  background: rgba(7, 24, 21, 0.72) !important;
+  color: #f4f1e9 !important;
+  box-shadow: none !important;
+}
+
+.reading-flow-guide,
+.reading-book-summary {
+  display: none !important;
+}
+
+.reading-book-chapters {
+  margin-top: 28px !important;
+}
+
+.reading-book-chapters__head {
+  display: flex !important;
+  align-items: end !important;
+  justify-content: space-between !important;
+  gap: 18px !important;
+  margin-bottom: 14px !important;
+  border-bottom: 1px solid rgba(214, 184, 118, 0.16) !important;
+  padding-bottom: 12px !important;
+}
+
+.reading-book-chapters__title {
+  margin: 0 !important;
+  color: #f4f1e9 !important;
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-size: clamp(1.6rem, 2.5vw, 2.3rem) !important;
+  font-weight: 500 !important;
+}
+
+.mura-book-chapter-tabs {
+  display: flex !important;
+  gap: 8px !important;
+  overflow-x: auto !important;
+  margin-bottom: 16px !important;
+}
+
+.mura-book-chapter-tabs a {
+  min-width: 82px !important;
+  min-height: 36px !important;
+  border-radius: 4px !important;
+  border: 1px solid rgba(214, 184, 118, 0.16) !important;
+  background: rgba(8, 31, 27, 0.72) !important;
+  color: rgba(244, 241, 233, 0.72) !important;
+}
+
+/* Light theme still readable, but dark is the reference */
+:root[data-theme="light"] .reading-book-page {
+  background:
+    radial-gradient(circle at 72% -8%, rgba(200, 149, 49, 0.12), transparent 26rem),
+    linear-gradient(180deg, #f8f0e1, #efe2ca 58%, #f8f0e1) !important;
+  color: #173f39 !important;
+}
+
+:root[data-theme="light"] .reading-book-hero--reference {
+  border: 1px solid rgba(92, 64, 32, 0.16) !important;
+  background:
+    linear-gradient(90deg, rgba(255, 248, 236, 0.02), rgba(255, 248, 236, 0.76) 45%, rgba(255, 248, 236, 0.2)),
+    linear-gradient(180deg, #fff8ec, #ead9c5) !important;
+}
+
+:root[data-theme="light"] .reading-book-hero--reference .reading-book-hero__title,
+:root[data-theme="light"] .reading-book-hero--reference .reading-book-hero__author,
+:root[data-theme="light"] .reading-book-chapters__title {
+  color: #173f39 !important;
+}
+
+:root[data-theme="light"] .reading-book-hero--reference .reading-book-hero__description,
+:root[data-theme="light"] .reading-book-hero--reference .reading-book-hero__titleSub {
+  color: rgba(23, 63, 57, 0.68) !important;
+}
+
+@media (max-width: 1100px) {
+  .reading-book-hero--reference {
+    grid-template-columns: 1fr !important;
+  }
+
+  .reading-book-hero--reference .reading-book-hero__content {
+    padding: 26px !important;
+  }
+
+  .reading-book-hero--reference .reading-book-hero__bookObject {
+    top: 36px !important;
+    right: 34px !important;
+  }
+}
+
+@media (max-width: 760px) {
+  .reading-book-page {
+    padding: 92px 14px 58px !important;
+  }
+
+  .reading-book-hero--reference .reading-book-hero__media {
+    min-height: 300px !important;
+  }
+
+  .reading-book-hero--reference .reading-book-hero__content {
+    min-height: auto !important;
+    padding: 24px !important;
+  }
+
+  .reading-book-hero--reference .reading-book-hero__title {
+    max-width: 100% !important;
+    font-size: clamp(2.4rem, 12vw, 3.7rem) !important;
+  }
+
+  .reading-book-hero--reference .reading-book-hero__actions,
+  .mura-book-reference-row {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+  }
+
+  .reading-book-hero--reference .reading-book-hero__bookObject {
+    width: 92px !important;
+    height: 140px !important;
+    top: 20px !important;
+    right: 20px !important;
+  }
+}
+
+/* Final strict MURA overview refinements */
+.reading-book-page {
+  --mura-ref-bg: #07110f;
+  --mura-ref-surface: #0d1714;
+  --mura-ref-surface-2: #101c18;
+  --mura-ref-border: rgba(190, 210, 190, 0.12);
+  --mura-ref-border-strong: rgba(190, 210, 190, 0.22);
+  --mura-ref-text: #e7eee8;
+  --mura-ref-text-2: rgba(231, 238, 232, 0.68);
+  --mura-ref-text-3: rgba(231, 238, 232, 0.45);
+  --mura-ref-accent: #62c99a;
+}
+
+.mura-book-reference-row {
+  display: grid !important;
+}
+
+.mura-book-progress-card,
+.mura-book-quote-card,
+.reading-chapter-card,
+.reading-fragment-card,
+.reading-book-fallback {
+  border-color: var(--mura-ref-border) !important;
+  border-radius: 6px !important;
+  background: rgba(13, 23, 20, 0.78) !important;
+  color: var(--mura-ref-text) !important;
+  box-shadow: none !important;
+}
+
+.mura-book-progress-card {
+  display: grid;
+  align-content: center;
+  gap: 8px;
+  padding: 20px !important;
+}
+
+.mura-book-progress-card span,
+.mura-book-progress-card small,
+.reading-book-chapters__meta,
+.reading-chapter-card__text,
+.reading-fragment-card__note {
+  color: var(--mura-ref-text-2) !important;
+}
+
+.mura-book-progress-card strong {
+  color: var(--mura-ref-text) !important;
+  font-size: 1.55rem !important;
+  font-weight: 760 !important;
+}
+
+.mura-ref-progress {
+  height: 4px !important;
+  border-radius: 999px !important;
+  background: rgba(190, 210, 190, 0.14) !important;
+}
+
+.mura-ref-progress i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--mura-ref-accent) !important;
+}
+
+.mura-book-quote-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 10px 14px;
+  align-content: center;
+  padding: 20px !important;
+}
+
+.mura-book-quote-card > span {
+  grid-row: 1 / span 2;
+  color: rgba(231, 238, 232, 0.32) !important;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 2.1rem !important;
+  line-height: 0.9;
+}
+
+.mura-book-quote-card p {
+  margin: 0 !important;
+  color: var(--mura-ref-text) !important;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.05rem, 1.7vw, 1.42rem) !important;
+  line-height: 1.36 !important;
+}
+
+.mura-book-quote-card small {
+  color: var(--mura-ref-text-3) !important;
+}
+
+.reading-chapter-card {
+  padding: 16px !important;
+}
+
+.reading-chapter-card__title {
+  font-family: var(--mura-font-sans) !important;
+  font-size: clamp(1.05rem, 1.7vw, 1.35rem) !important;
+  font-weight: 780 !important;
+  line-height: 1.16 !important;
+}
+
+.reading-chapter-card__eyebrow,
+.reading-chapter-card__state,
+.reading-chapter-card__meta span,
+.reading-book-theme {
+  border-radius: 5px !important;
+  border-color: var(--mura-ref-border) !important;
+  background: rgba(255, 255, 255, 0.035) !important;
+  color: var(--mura-ref-text-2) !important;
+  font-size: 0.72rem !important;
+}
+
+.reading-chapter-card__state.is-complete,
+.reading-book-theme.is-favorite,
+.reading-book-hero__action.is-favorite {
+  border-color: rgba(98, 201, 154, 0.42) !important;
+  background: rgba(98, 201, 154, 0.11) !important;
+  color: var(--mura-ref-text) !important;
+}
+
+.reading-chapter-card__action {
+  min-height: 36px !important;
+  border-radius: 5px !important;
+  border-color: var(--mura-ref-border-strong) !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  color: var(--mura-ref-text) !important;
+  font-size: 0.76rem !important;
+}
+
+.reading-chapter-card__action:hover {
+  border-color: rgba(98, 201, 154, 0.54) !important;
+  background: rgba(98, 201, 154, 0.1) !important;
+}
+
+.reading-book-hero--reference {
+  min-height: 420px !important;
+}
+
+.reading-book-hero--reference .reading-book-hero__media,
+.reading-book-hero--reference .reading-book-hero__cover,
+.reading-book-hero--reference .reading-book-hero__content {
+  min-height: 420px !important;
+}
+
+.reading-book-hero--reference .reading-book-hero__content {
+  padding-right: 178px !important;
+}
+
+.reading-book-hero--reference .reading-book-hero__title {
+  font-size: clamp(3rem, 5vw, 5.15rem) !important;
+}
+
+.reading-book-hero--reference .reading-book-hero__description {
+  max-width: 44ch !important;
+}
+
+.reading-book-hero--reference .reading-book-hero__action {
+  min-width: 112px !important;
+  min-height: 36px !important;
+  padding-inline: 16px !important;
+}
+
+:root[data-theme="light"] .mura-book-progress-card,
+:root[data-theme="light"] .mura-book-quote-card,
+:root[data-theme="light"] .reading-chapter-card,
+:root[data-theme="light"] .reading-fragment-card,
+:root[data-theme="light"] .reading-book-fallback {
+  border-color: rgba(85, 66, 38, 0.18) !important;
+  background: rgba(255, 248, 236, 0.86) !important;
+  color: #173f39 !important;
+}
+
+:root[data-theme="light"] .mura-book-quote-card p,
+:root[data-theme="light"] .mura-book-progress-card strong,
+:root[data-theme="light"] .reading-chapter-card__title {
+  color: #173f39 !important;
+}
+
+:root[data-theme="light"] .mura-book-progress-card span,
+:root[data-theme="light"] .mura-book-progress-card small,
+:root[data-theme="light"] .mura-book-quote-card small,
+:root[data-theme="light"] .reading-chapter-card__text {
+  color: rgba(23, 63, 57, 0.66) !important;
+}
+
+/* Stage 1: strict MURA work overview pass */
+.reading-book-page {
+  --mura-overview-bg: #07110f;
+  --mura-overview-bg-soft: #081310;
+  --mura-overview-surface: #0d1714;
+  --mura-overview-elevated: #111f1b;
+  --mura-overview-border: rgba(210, 225, 215, 0.12);
+  --mura-overview-border-strong: rgba(210, 225, 215, 0.2);
+  --mura-overview-text: #e7eee8;
+  --mura-overview-text-secondary: rgba(231, 238, 232, 0.68);
+  --mura-overview-text-muted: rgba(231, 238, 232, 0.45);
+  --mura-overview-accent: #4ea77f;
+  --mura-overview-accent-strong: #62c99a;
+  min-height: 100dvh !important;
+  padding: 28px clamp(18px, 2.1vw, 28px) 58px var(--miras-content-offset, 168px) !important;
+  background:
+    radial-gradient(circle at 72% 10%, rgba(42, 115, 92, 0.18), transparent 18rem),
+    linear-gradient(180deg, var(--mura-overview-bg-soft), var(--mura-overview-bg) 54%, #040b0a) !important;
+  background-size: auto !important;
+  color: var(--mura-overview-text) !important;
+}
+
+.reading-book-page__container {
+  width: min(100%, 920px) !important;
+  margin: 0 auto !important;
+}
+
+.reading-book-page__backLink {
+  margin: 0 0 12px !important;
+  color: var(--mura-overview-text-muted) !important;
+  font-size: 0.76rem !important;
+  font-weight: 650 !important;
+}
+
+.reading-book-page__backLink:hover {
+  color: var(--mura-overview-text) !important;
+}
+
+.reading-book-hero--reference {
+  display: grid !important;
+  grid-template-columns: minmax(220px, 292px) minmax(0, 1fr) 152px !important;
+  align-items: center !important;
+  gap: 22px !important;
+  min-height: 318px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  overflow: visible !important;
+  background:
+    linear-gradient(90deg, rgba(7, 17, 15, 0.06), rgba(7, 17, 15, 0.82) 50%, rgba(7, 17, 15, 0.16)),
+    radial-gradient(circle at 77% 32%, rgba(78, 167, 127, 0.12), transparent 14rem) !important;
+  box-shadow: none !important;
+}
+
+.reading-book-hero--reference::before {
+  inset: -8px 0 -6px !important;
+  z-index: 0 !important;
+  opacity: 0.58 !important;
+  background:
+    linear-gradient(90deg, transparent, rgba(7, 17, 15, 0.72) 34%, rgba(7, 17, 15, 0.42) 74%, transparent),
+    repeating-linear-gradient(0deg, transparent 0 14px, rgba(216, 185, 124, 0.05) 15px) !important;
+  pointer-events: none !important;
+}
+
+.reading-book-hero--reference::after {
+  content: none !important;
+}
+
+.reading-book-hero--reference .reading-book-hero__media {
+  position: relative !important;
+  z-index: 1 !important;
+  min-height: 318px !important;
+  height: 318px !important;
+  overflow: hidden !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+}
+
+.reading-book-hero--reference .reading-book-hero__cover {
+  position: absolute !important;
+  inset: 0 !important;
+  min-height: 100% !important;
+  background-size: cover !important;
+  background-position: center top !important;
+  filter: grayscale(1) contrast(1.12) brightness(0.72) !important;
+  transform: scale(1.02) !important;
+}
+
+.reading-book-hero--reference .reading-book-hero__cover::after {
+  background:
+    linear-gradient(90deg, rgba(7, 17, 15, 0.06), rgba(7, 17, 15, 0.8) 96%),
+    linear-gradient(180deg, rgba(7, 17, 15, 0), rgba(7, 17, 15, 0.58)) !important;
+}
+
+.reading-book-hero--reference .reading-book-hero__content {
+  position: relative !important;
+  z-index: 2 !important;
+  min-height: auto !important;
+  padding: 18px 0 20px !important;
+  color: var(--mura-overview-text) !important;
+}
+
+.reading-book-hero--reference .reading-book-hero__metaLine {
+  gap: 8px !important;
+  color: var(--mura-overview-accent-strong) !important;
+  font-size: 0.64rem !important;
+  font-weight: 760 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+}
+
+.reading-book-hero--reference .reading-book-hero__metaLine i {
+  width: 3px !important;
+  height: 3px !important;
+}
+
+.reading-book-hero--reference .reading-book-hero__title {
+  max-width: 8.5ch !important;
+  margin: 10px 0 0 !important;
+  color: var(--mura-overview-text) !important;
+  font-size: clamp(2.55rem, 5vw, 4.35rem) !important;
+  font-weight: 500 !important;
+  line-height: 0.91 !important;
+  letter-spacing: -0.035em !important;
+}
+
+.reading-book-hero--reference .reading-book-hero__titleSub {
+  margin-top: 6px !important;
+  color: var(--mura-overview-text-muted) !important;
+  font-size: 0.68rem !important;
+  font-weight: 760 !important;
+  letter-spacing: 0.12em !important;
+}
+
+.reading-book-hero--reference .reading-book-hero__author {
+  margin-top: 14px !important;
+  color: var(--mura-overview-text-secondary) !important;
+  font-size: 0.88rem !important;
+  font-weight: 700 !important;
+}
+
+.reading-book-hero--reference .reading-book-hero__description {
+  max-width: 38ch !important;
+  margin-top: 10px !important;
+  color: var(--mura-overview-text-secondary) !important;
+  font-size: 0.82rem !important;
+  line-height: 1.55 !important;
+}
+
+.reading-book-hero--reference .reading-book-hero__overview,
+.reading-book-hero--reference .reading-book-hero__metrics {
+  display: none !important;
+}
+
+.reading-book-hero__statsLine {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 13px;
+  color: var(--mura-overview-text-muted);
+  font-size: 0.72rem;
+}
+
+.reading-book-hero__statsLine span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 22px;
+  border: 1px solid var(--mura-overview-border);
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.026);
+  padding: 0 8px;
+}
+
+.reading-book-hero--reference .reading-book-hero__actions {
+  display: flex !important;
+  gap: 10px !important;
+  margin-top: 16px !important;
+}
+
+.reading-book-hero--reference .reading-book-hero__action {
+  min-width: 116px !important;
+  min-height: 38px !important;
+  border: 1px solid var(--mura-overview-border-strong) !important;
+  border-radius: 5px !important;
+  background: transparent !important;
+  color: var(--mura-overview-text) !important;
+  padding: 0 16px !important;
+  font-size: 0.76rem !important;
+  font-weight: 760 !important;
+}
+
+.reading-book-hero--reference .reading-book-hero__action.is-primary {
+  border-color: rgba(78, 167, 127, 0.78) !important;
+  background: linear-gradient(180deg, #1b8666, #106349) !important;
+  color: #f3f8f4 !important;
+}
+
+.reading-book-hero__utilityActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  margin-top: 13px;
+}
+
+.reading-book-hero__utilityButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 24px;
+  border: 0;
+  background: transparent;
+  color: var(--mura-overview-text-secondary);
+  padding: 0;
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.reading-book-hero__utilityButton::before {
+  content: "";
+  width: 13px;
+  height: 13px;
+  border: 1px solid currentColor;
+  border-radius: 2px;
+  opacity: 0.82;
+}
+
+.reading-book-hero__utilityButton:hover,
+.reading-book-hero__utilityButton.is-favorite {
+  color: var(--mura-overview-text);
+}
+
+.reading-book-hero__shareStatus {
+  color: var(--mura-overview-text-muted);
+  font-size: 0.7rem;
+}
+
+.reading-book-hero--reference .reading-book-hero__bookObject {
+  position: relative !important;
+  top: auto !important;
+  right: auto !important;
+  z-index: 2 !important;
+  justify-self: center !important;
+  align-self: start !important;
+  width: 116px !important;
+  height: 176px !important;
+  margin-top: 40px !important;
+  padding: 16px 13px !important;
+  border: 1px solid rgba(210, 225, 215, 0.2) !important;
+  border-radius: 2px !important;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.1), transparent 18%),
+    linear-gradient(145deg, #123d31, #071b17 72%) !important;
+  box-shadow:
+    14px 18px 34px rgba(0, 0, 0, 0.34),
+    inset 8px 0 0 rgba(0, 0, 0, 0.2) !important;
+  transform: perspective(540px) rotateY(-7deg) rotateZ(1deg) !important;
+}
+
+.reading-book-hero--reference .reading-book-hero__bookObject strong {
+  font-size: 0.92rem !important;
+}
+
+.mura-book-reference-row {
+  display: grid !important;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr) !important;
+  gap: 14px !important;
+  margin-top: 14px !important;
+}
+
+.mura-book-progress-card,
+.mura-book-quote-card {
+  min-height: 98px !important;
+  border: 1px solid var(--mura-overview-border) !important;
+  border-radius: 6px !important;
+  background: rgba(13, 23, 20, 0.78) !important;
+  color: var(--mura-overview-text) !important;
+  padding: 18px !important;
+  box-shadow: none !important;
+}
+
+.mura-book-progress-card span,
+.mura-book-progress-card small {
+  color: var(--mura-overview-text-secondary) !important;
+  font-size: 0.72rem !important;
+}
+
+.mura-book-progress-card strong {
+  color: var(--mura-overview-text) !important;
+  font-size: 1.3rem !important;
+  font-weight: 650 !important;
+}
+
+.mura-ref-progress {
+  height: 3px !important;
+  background: rgba(210, 225, 215, 0.14) !important;
+}
+
+.mura-ref-progress i {
+  background: var(--mura-overview-accent-strong) !important;
+}
+
+.mura-book-quote-card {
+  grid-template-columns: auto minmax(0, 1fr) !important;
+}
+
+.mura-book-quote-card p {
+  color: var(--mura-overview-text) !important;
+  font-size: clamp(1rem, 1.5vw, 1.26rem) !important;
+  line-height: 1.36 !important;
+}
+
+.mura-book-quote-card small {
+  color: var(--mura-overview-text-muted) !important;
+}
+
+.reading-book-hero__themes {
+  margin-top: 12px !important;
+  gap: 7px !important;
+}
+
+.reading-book-hero__themes p {
+  color: var(--mura-overview-text-muted) !important;
+}
+
+.reading-book-theme {
+  min-height: 28px !important;
+  border-color: var(--mura-overview-border) !important;
+  border-radius: 5px !important;
+  background: rgba(255, 255, 255, 0.026) !important;
+  color: var(--mura-overview-text-secondary) !important;
+  padding: 0 9px !important;
+  font-size: 0.68rem !important;
+}
+
+.reading-book-theme:hover,
+.reading-book-theme.is-favorite {
+  border-color: rgba(78, 167, 127, 0.48) !important;
+  color: var(--mura-overview-text) !important;
+}
+
+.reading-book-chapters {
+  margin-top: 22px !important;
+}
+
+.reading-book-chapters__head {
+  margin-bottom: 12px !important;
+  border-bottom: 1px solid var(--mura-overview-border) !important;
+  padding-bottom: 10px !important;
+}
+
+.reading-book-chapters__title {
+  color: var(--mura-overview-text) !important;
+  font-size: clamp(1.32rem, 2vw, 1.75rem) !important;
+}
+
+.reading-book-chapters__meta {
+  color: var(--mura-overview-text-muted) !important;
+  font-size: 0.78rem !important;
+  line-height: 1.5 !important;
+}
+
+.mura-book-chapter-tabs {
+  gap: 8px !important;
+  margin-bottom: 12px !important;
+  padding-bottom: 3px !important;
+}
+
+.mura-book-chapter-tabs a {
+  min-width: 70px !important;
+  min-height: 32px !important;
+  border: 1px solid var(--mura-overview-border) !important;
+  border-radius: 5px !important;
+  background: rgba(13, 23, 20, 0.82) !important;
+  color: var(--mura-overview-text-secondary) !important;
+  font-size: 0.72rem !important;
+}
+
+.mura-book-chapter-tabs a.is-started,
+.mura-book-chapter-tabs a:hover {
+  border-color: rgba(78, 167, 127, 0.5) !important;
+  background: rgba(78, 167, 127, 0.12) !important;
+  color: var(--mura-overview-text) !important;
+}
+
+.reading-book-chapters__list {
+  grid-template-columns: 1fr !important;
+  gap: 10px !important;
+}
+
+.reading-chapter-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px 14px;
+  align-items: center;
+  border: 1px solid var(--mura-overview-border) !important;
+  border-radius: 6px !important;
+  background: rgba(13, 23, 20, 0.74) !important;
+  padding: 14px !important;
+  box-shadow: none !important;
+}
+
+.reading-chapter-card__top,
+.reading-chapter-card__title,
+.reading-chapter-card__text,
+.reading-chapter-card__meta {
+  grid-column: 1;
+}
+
+.reading-chapter-card__top {
+  align-items: center !important;
+}
+
+.reading-chapter-card__eyebrow {
+  margin: 0 !important;
+  color: var(--mura-overview-text-muted) !important;
+}
+
+.reading-chapter-card__state,
+.reading-chapter-card__meta span {
+  border: 1px solid var(--mura-overview-border) !important;
+  border-radius: 5px !important;
+  background: rgba(255, 255, 255, 0.026) !important;
+  color: var(--mura-overview-text-secondary) !important;
+  padding: 6px 8px !important;
+  font-size: 0.68rem !important;
+}
+
+.reading-chapter-card__state.is-complete {
+  border-color: rgba(78, 167, 127, 0.48) !important;
+  background: rgba(78, 167, 127, 0.12) !important;
+  color: var(--mura-overview-text) !important;
+}
+
+.reading-chapter-card__title {
+  margin: 6px 0 0 !important;
+  color: var(--mura-overview-text) !important;
+  font-family: var(--mura-font-sans) !important;
+  font-size: 1rem !important;
+  font-weight: 760 !important;
+  line-height: 1.25 !important;
+}
+
+.reading-chapter-card__text {
+  margin-top: 4px !important;
+  color: var(--mura-overview-text-secondary) !important;
+  font-size: 0.8rem !important;
+  line-height: 1.45 !important;
+}
+
+.reading-chapter-card__meta {
+  margin-top: 6px !important;
+  gap: 6px !important;
+}
+
+.reading-chapter-card__action {
+  grid-column: 2;
+  grid-row: 1 / span 4;
+  min-height: 34px !important;
+  align-self: center;
+  border: 1px solid var(--mura-overview-border-strong) !important;
+  border-radius: 5px !important;
+  background: transparent !important;
+  color: var(--mura-overview-text) !important;
+  padding: 0 12px !important;
+  font-size: 0.72rem !important;
+}
+
+.reading-book-fragments,
+.reading-flow-guide,
+.reading-book-summary {
+  display: none !important;
+}
+
+:root[data-theme="light"] .reading-book-page {
+  --mura-overview-bg: #f5eddf;
+  --mura-overview-bg-soft: #fff8ec;
+  --mura-overview-surface: #fff8ec;
+  --mura-overview-elevated: #f3e6d0;
+  --mura-overview-border: rgba(85, 66, 38, 0.16);
+  --mura-overview-border-strong: rgba(85, 66, 38, 0.28);
+  --mura-overview-text: #173f39;
+  --mura-overview-text-secondary: rgba(23, 63, 57, 0.68);
+  --mura-overview-text-muted: rgba(23, 63, 57, 0.46);
+  --mura-overview-accent: #0d7a5f;
+  --mura-overview-accent-strong: #0a6a52;
+  background:
+    radial-gradient(circle at 72% -6%, rgba(13, 122, 95, 0.12), transparent 20rem),
+    linear-gradient(180deg, #fff8ec, #f0e2ca 58%, #fff8ec) !important;
+  color: var(--mura-overview-text) !important;
+}
+
+:root[data-theme="light"] .reading-book-hero--reference {
+  background:
+    linear-gradient(90deg, rgba(255, 248, 236, 0.04), rgba(255, 248, 236, 0.84) 48%, rgba(255, 248, 236, 0.36)),
+    radial-gradient(circle at 77% 32%, rgba(13, 122, 95, 0.1), transparent 14rem) !important;
+}
+
+:root[data-theme="light"] .reading-book-hero--reference::before {
+  background: linear-gradient(90deg, transparent, rgba(255, 248, 236, 0.74) 34%, rgba(255, 248, 236, 0.36) 74%, transparent) !important;
+}
+
+:root[data-theme="light"] .reading-book-hero--reference .reading-book-hero__title,
+:root[data-theme="light"] .reading-book-hero--reference .reading-book-hero__author,
+:root[data-theme="light"] .reading-book-chapters__title,
+:root[data-theme="light"] .reading-chapter-card__title,
+:root[data-theme="light"] .mura-book-quote-card p,
+:root[data-theme="light"] .mura-book-progress-card strong {
+  color: var(--mura-overview-text) !important;
+}
+
+:root[data-theme="light"] .mura-book-progress-card,
+:root[data-theme="light"] .mura-book-quote-card,
+:root[data-theme="light"] .reading-chapter-card {
+  border-color: var(--mura-overview-border) !important;
+  background: rgba(255, 248, 236, 0.86) !important;
+}
+
+@media (max-width: 1100px) {
+  .reading-book-hero--reference {
+    grid-template-columns: minmax(210px, 0.8fr) minmax(0, 1.2fr) !important;
+  }
+
+  .reading-book-hero--reference .reading-book-hero__bookObject {
+    position: absolute !important;
+    top: 28px !important;
+    right: 24px !important;
+    width: 96px !important;
+    height: 144px !important;
+    margin: 0 !important;
+  }
+
+  .reading-book-hero--reference .reading-book-hero__content {
+    padding-right: 126px !important;
+  }
+}
+
+@media (max-width: 760px) {
+  .reading-book-page {
+    padding: 92px 14px 50px !important;
+  }
+
+  .reading-book-page__container {
+    width: 100% !important;
+  }
+
+  .reading-book-hero--reference {
+    grid-template-columns: 1fr !important;
+    gap: 0 !important;
+  }
+
+  .reading-book-hero--reference .reading-book-hero__media {
+    height: 300px !important;
+    min-height: 300px !important;
+  }
+
+  .reading-book-hero--reference .reading-book-hero__content {
+    padding: 22px 0 0 !important;
+  }
+
+  .reading-book-hero--reference .reading-book-hero__title {
+    max-width: 100% !important;
+    font-size: clamp(2.35rem, 12vw, 3.45rem) !important;
+  }
+
+  .reading-book-hero--reference .reading-book-hero__actions,
+  .mura-book-reference-row,
+  .reading-chapter-card {
+    grid-template-columns: 1fr !important;
+  }
+
+  .reading-book-hero--reference .reading-book-hero__bookObject {
+    top: 18px !important;
+    right: 18px !important;
+  }
+
+  .reading-book-hero--reference .reading-book-hero__action,
+  .reading-chapter-card__action {
+    width: 100% !important;
+    grid-column: 1 !important;
+    grid-row: auto !important;
+  }
+}
+
+@media (min-width: 761px) {
+  .reading-book-page .reading-book-hero.reading-book-hero--reference {
+    grid-template-columns: minmax(220px, 292px) minmax(0, 1fr) 152px !important;
+  }
+
+  .reading-book-page .reading-book-hero.reading-book-hero--reference .reading-book-hero__bookObject {
+    position: relative !important;
+    top: auto !important;
+    right: auto !important;
+    width: 116px !important;
+    height: 176px !important;
+    margin: 40px 0 0 !important;
+  }
+
+  .reading-book-page .reading-book-hero.reading-book-hero--reference .reading-book-hero__content {
+    padding-right: 0 !important;
+  }
+}
+
+/* Stage 1A: final MURA hero structure and assets */
+.reading-book-page {
+  --mura-hero-bg: #07110f;
+  --mura-hero-bg-soft: #081310;
+  --mura-hero-surface: #0d1714;
+  --mura-hero-border: rgba(210, 225, 215, 0.12);
+  --mura-hero-border-strong: rgba(210, 225, 215, 0.2);
+  --mura-hero-text: #e7eee8;
+  --mura-hero-text-soft: rgba(231, 238, 232, 0.68);
+  --mura-hero-text-muted: rgba(231, 238, 232, 0.45);
+  --mura-hero-accent: #62c99a;
+  padding-top: 22px !important;
+}
+
+.reading-book-breadcrumb {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0;
+  margin: 0 0 10px;
+  color: var(--mura-hero-text-muted);
+  font-size: 0.72rem;
+  line-height: 1.4;
+}
+
+.reading-book-breadcrumb__item {
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.reading-book-breadcrumb a,
+.reading-book-breadcrumb span {
+  color: inherit;
+  text-decoration: none;
+}
+
+.reading-book-breadcrumb a:hover {
+  color: var(--mura-hero-text);
+}
+
+.reading-book-breadcrumb__separator {
+  margin: 0 8px;
+  color: rgba(231, 238, 232, 0.28) !important;
+  font-size: 0.68rem;
+}
+
+.reading-book-hero.reading-book-hero--reference {
+  grid-template-columns: minmax(0, 31.5%) minmax(0, 46%) minmax(132px, 18.5%) !important;
+  align-items: start !important;
+  gap: 20px !important;
+  min-height: 324px !important;
+  border: 0 !important;
+  background:
+    radial-gradient(circle at 82% 22%, rgba(58, 124, 98, 0.14), transparent 12rem),
+    linear-gradient(90deg, rgba(7, 17, 15, 0.02), rgba(7, 17, 15, 0.76) 45%, rgba(7, 17, 15, 0.2)) !important;
+}
+
+.reading-book-hero.reading-book-hero--reference::before {
+  inset: -10px -8px -8px !important;
+  border-radius: 7px !important;
+  background:
+    linear-gradient(90deg, transparent, rgba(7, 17, 15, 0.58) 32%, rgba(7, 17, 15, 0.22) 74%, transparent),
+    radial-gradient(circle at 28% 48%, rgba(231, 238, 232, 0.05), transparent 12rem) !important;
+  opacity: 1 !important;
+}
+
+.reading-book-hero--reference .reading-book-hero__media {
+  isolation: isolate;
+  height: 318px !important;
+  min-height: 318px !important;
+  margin-top: 0 !important;
+  border-radius: 0 !important;
+  background: #06100e !important;
+}
+
+.reading-book-hero--reference .reading-book-hero__media::before,
+.reading-book-hero--reference .reading-book-hero__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.reading-book-hero--reference .reading-book-hero__media::before {
+  background:
+    linear-gradient(90deg, rgba(7, 17, 15, 0.04), rgba(7, 17, 15, 0.66) 92%),
+    linear-gradient(180deg, rgba(7, 17, 15, 0.04), rgba(7, 17, 15, 0.54));
+}
+
+.reading-book-hero--reference .reading-book-hero__media::after {
+  inset: -1px -1px -1px auto;
+  width: 38%;
+  background: linear-gradient(90deg, transparent, var(--mura-hero-bg));
+}
+
+.reading-book-hero__manuscript,
+.reading-book-hero__portrait {
+  position: absolute;
+  display: block;
+  max-width: none;
+  pointer-events: none;
+}
+
+.reading-book-hero__manuscript {
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.72;
+  mix-blend-mode: screen;
+}
+
+.reading-book-hero__portrait {
+  z-index: 2;
+  left: -58px;
+  bottom: -18px;
+  width: 142%;
+  height: 126%;
+  object-fit: cover;
+  object-position: 50% 8%;
+  filter: grayscale(1) contrast(1.08) brightness(0.8);
+}
+
+.reading-book-hero--reference .reading-book-hero__cover {
+  display: none !important;
+}
+
+.reading-book-hero--reference .reading-book-hero__content {
+  padding: 34px 0 0 !important;
+}
+
+.reading-book-hero__category {
+  display: inline-flex !important;
+  align-items: center;
+  width: fit-content !important;
+  max-width: 100%;
+  min-height: 20px;
+  margin: 0 0 9px;
+  border: 1px solid rgba(98, 201, 154, 0.22);
+  border-radius: 4px;
+  background: rgba(98, 201, 154, 0.08);
+  color: #d8b56d;
+  padding: 0 7px;
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.reading-book-hero--reference .reading-book-hero__author {
+  margin: 0 0 4px !important;
+  color: var(--mura-hero-text-soft) !important;
+  font-size: 0.9rem !important;
+  font-weight: 560 !important;
+}
+
+.reading-book-hero--reference .reading-book-hero__title {
+  max-width: 12ch !important;
+  margin: 0 !important;
+  font-size: clamp(2.45rem, 4.1vw, 3.35rem) !important;
+  font-weight: 520 !important;
+  line-height: 1 !important;
+  letter-spacing: 0 !important;
+  text-wrap: balance;
+}
+
+.reading-book-hero--reference .reading-book-hero__titleSub {
+  margin: 5px 0 0 !important;
+}
+
+.reading-book-hero--reference .reading-book-hero__metaLine {
+  display: flex !important;
+  flex-wrap: wrap;
+  gap: 7px !important;
+  margin-top: 8px !important;
+  color: var(--mura-hero-text-muted) !important;
+  font-size: 0.72rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+}
+
+.reading-book-hero--reference .reading-book-hero__metaLine i {
+  align-self: center;
+  background: rgba(231, 238, 232, 0.26) !important;
+}
+
+.reading-book-hero--reference .reading-book-hero__description {
+  max-width: 43ch !important;
+  margin-top: 13px !important;
+  color: var(--mura-hero-text-soft) !important;
+  font-size: 0.82rem !important;
+  line-height: 1.56 !important;
+}
+
+.reading-book-hero--reference .reading-book-hero__overview,
+.reading-book-hero--reference .reading-book-hero__statsLine,
+.reading-book-hero--reference .reading-book-hero__metrics {
+  display: none !important;
+}
+
+.reading-book-hero__utilityActions {
+  gap: 16px !important;
+  margin-top: 13px !important;
+}
+
+.reading-book-hero__utilityButton {
+  gap: 6px !important;
+  min-height: 24px !important;
+  color: var(--mura-hero-text-soft) !important;
+  font-size: 0.72rem !important;
+  line-height: 1 !important;
+}
+
+.reading-book-hero__utilityButton::before {
+  content: none !important;
+}
+
+.mura-icon {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.55;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.reading-book-hero__utilityButton:hover,
+.reading-book-hero__utilityButton.is-favorite {
+  color: var(--mura-hero-text) !important;
+}
+
+.reading-book-hero__shareStatus {
+  color: var(--mura-hero-text-muted) !important;
+}
+
+.reading-book-hero--reference .reading-book-hero__actions {
+  gap: 11px !important;
+  margin-top: 18px !important;
+}
+
+.reading-book-hero--reference .reading-book-hero__action {
+  gap: 8px !important;
+  min-width: 132px !important;
+  min-height: 40px !important;
+  border-radius: 5px !important;
+  padding: 0 18px !important;
+  font-size: 0.74rem !important;
+  font-weight: 760 !important;
+}
+
+.reading-book-hero--reference .reading-book-hero__action.is-primary {
+  border-color: rgba(98, 201, 154, 0.46) !important;
+  background: linear-gradient(180deg, rgba(27, 134, 102, 0.92), rgba(15, 92, 68, 0.96)) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+}
+
+.reading-book-hero--reference .reading-book-hero__action:not(.is-primary) {
+  background: rgba(255, 255, 255, 0.018) !important;
+}
+
+.reading-book-hero--reference .reading-book-hero__bookObject {
+  width: 132px !important;
+  height: 190px !important;
+  margin-top: 30px !important;
+  justify-self: start !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.reading-book-hero--reference .reading-book-hero__bookObject img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: saturate(0.95) brightness(0.92);
+}
+
+.mura-book-reference-row {
+  margin-top: 16px !important;
+}
+
+:root[data-theme="light"] .reading-book-page {
+  --mura-hero-bg: #f5eddf;
+  --mura-hero-bg-soft: #fff8ec;
+  --mura-hero-surface: #fff8ec;
+  --mura-hero-border: rgba(85, 66, 38, 0.16);
+  --mura-hero-border-strong: rgba(85, 66, 38, 0.28);
+  --mura-hero-text: #173f39;
+  --mura-hero-text-soft: rgba(23, 63, 57, 0.68);
+  --mura-hero-text-muted: rgba(23, 63, 57, 0.48);
+  --mura-hero-accent: #0d7a5f;
+}
+
+:root[data-theme="light"] .reading-book-breadcrumb {
+  color: rgba(23, 63, 57, 0.5);
+}
+
+:root[data-theme="light"] .reading-book-breadcrumb__separator {
+  color: rgba(23, 63, 57, 0.3) !important;
+}
+
+:root[data-theme="light"] .reading-book-hero.reading-book-hero--reference {
+  background:
+    radial-gradient(circle at 82% 22%, rgba(13, 122, 95, 0.1), transparent 12rem),
+    linear-gradient(90deg, rgba(255, 248, 236, 0.18), rgba(255, 248, 236, 0.84) 48%, rgba(255, 248, 236, 0.2)) !important;
+}
+
+:root[data-theme="light"] .reading-book-hero.reading-book-hero--reference::before {
+  background:
+    linear-gradient(90deg, transparent, rgba(255, 248, 236, 0.62) 33%, rgba(255, 248, 236, 0.2) 74%, transparent),
+    radial-gradient(circle at 28% 48%, rgba(23, 63, 57, 0.05), transparent 12rem) !important;
+}
+
+:root[data-theme="light"] .reading-book-hero__category {
+  border-color: rgba(13, 122, 95, 0.24);
+  background: rgba(13, 122, 95, 0.08);
+  color: #7a5a1a;
+}
+
+:root[data-theme="light"] .reading-book-hero--reference .reading-book-hero__media::before {
+  background:
+    linear-gradient(90deg, rgba(245, 237, 223, 0.02), rgba(245, 237, 223, 0.56) 94%),
+    linear-gradient(180deg, rgba(245, 237, 223, 0), rgba(245, 237, 223, 0.28));
+}
+
+:root[data-theme="light"] .reading-book-hero--reference .reading-book-hero__media::after {
+  background: linear-gradient(90deg, transparent, var(--mura-hero-bg));
+}
+
+:root[data-theme="light"] .reading-book-hero__portrait {
+  filter: grayscale(1) contrast(1.04) brightness(0.94);
+}
+
+@media (max-width: 1100px) {
+  .reading-book-hero.reading-book-hero--reference {
+    grid-template-columns: minmax(210px, 33%) minmax(0, 1fr) 126px !important;
+    gap: 18px !important;
+  }
+
+  .reading-book-hero--reference .reading-book-hero__bookObject {
+    width: 116px !important;
+    height: 168px !important;
+    margin-top: 34px !important;
+  }
+}
+
+@media (max-width: 760px) {
+  .reading-book-breadcrumb {
+    margin-bottom: 12px;
+    font-size: 0.68rem;
+  }
+
+  .reading-book-hero.reading-book-hero--reference {
+    grid-template-columns: 1fr !important;
+    min-height: 0 !important;
+    gap: 0 !important;
+  }
+
+  .reading-book-hero--reference .reading-book-hero__media {
+    height: 288px !important;
+    min-height: 288px !important;
+  }
+
+  .reading-book-hero--reference .reading-book-hero__content {
+    padding: 18px 0 0 !important;
+  }
+
+  .reading-book-hero--reference .reading-book-hero__title {
+    max-width: 100% !important;
+  }
+
+  .reading-book-hero--reference .reading-book-hero__bookObject {
+    position: absolute !important;
+    top: 18px !important;
+    right: 16px !important;
+    width: 92px !important;
+    height: auto !important;
+    margin: 0 !important;
+  }
+
+  .reading-book-hero--reference .reading-book-hero__action {
+    width: 100% !important;
+  }
+}
+
+@media (min-width: 761px) {
+  .reading-book-page .reading-book-hero.reading-book-hero--reference {
+    grid-template-columns: minmax(0, 31.5%) minmax(0, 46%) minmax(132px, 18.5%) !important;
+  }
+
+  .reading-book-page .reading-book-hero.reading-book-hero--reference .reading-book-hero__bookObject {
+    width: 132px !important;
+    height: 190px !important;
+    margin-top: 30px !important;
+    justify-self: start !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+  }
+}

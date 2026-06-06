@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 520" role="img" aria-label="Archival manuscript texture">
+  <defs>
+    <linearGradient id="paper" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#16241f"/>
+      <stop offset=".52" stop-color="#0b1512"/>
+      <stop offset="1" stop-color="#050908"/>
+    </linearGradient>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="3" seed="18"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer>
+        <feFuncA type="table" tableValues="0 .16"/>
+      </feComponentTransfer>
+    </filter>
+    <filter id="inkBlur">
+      <feGaussianBlur stdDeviation=".22"/>
+    </filter>
+  </defs>
+  <rect width="720" height="520" fill="url(#paper)"/>
+  <rect width="720" height="520" filter="url(#grain)" opacity=".42"/>
+  <g fill="none" stroke="#c9b177" stroke-width="1.6" stroke-linecap="round" opacity=".18" filter="url(#inkBlur)">
+    <path d="M112 72c55-12 99-12 154 1 38 9 88 14 133 2 35-9 74-10 116 1"/>
+    <path d="M148 105c36-9 83 8 119 1 70-14 119-19 185-1 45 12 79 10 122 0"/>
+    <path d="M96 141c68-17 112 13 181 2 68-12 117-23 184-1 41 14 90 9 133-2"/>
+    <path d="M126 176c43-12 82 7 125 0 52-8 94-20 145-3 54 18 111 7 155 0"/>
+    <path d="M95 213c52-10 93 8 143 0 72-12 116-22 191-2 46 12 91 6 135-2"/>
+    <path d="M150 249c62-13 93 8 154-1 49-7 88-17 137-3 44 12 83 8 125 0"/>
+    <path d="M92 287c64-16 111 13 176 0 48-10 100-14 148-1 54 15 109 10 159-1"/>
+    <path d="M128 326c57-15 89 9 142 1 70-12 119-21 188 0 37 11 76 8 112-1"/>
+    <path d="M102 365c46-9 83 7 129 0 81-13 134-19 211 0 50 12 93 8 137-1"/>
+    <path d="M154 402c38-11 73 7 112 0 65-12 111-19 174-1 45 13 86 8 128 0"/>
+  </g>
+  <g fill="none" stroke="#dfc689" stroke-width=".9" opacity=".08">
+    <path d="M0 86h720M0 171h720M0 256h720M0 341h720M0 426h720"/>
+    <path d="M86 0v520M172 0v520M258 0v520M344 0v520M430 0v520M516 0v520M602 0v520"/>
+  </g>
+  <rect width="720" height="520" fill="url(#paper)" opacity=".2"/>
+</svg>

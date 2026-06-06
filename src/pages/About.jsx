@@ -1,29 +1,35 @@
 import { Link } from "react-router-dom";
+import AboutRail, { AboutIcon } from "../components/AboutRail";
 import { useI18n } from "../i18n/useI18n";
+import aboutHeroArchive from "../assets/about-hero-archive.png";
+import memoryImage from "../assets/about-memory-heritage.png";
 import "./About.css";
 
-const conceptKeys = [
-  "aboutConceptDigitalHumanities",
-  "aboutConceptYouth",
-  "aboutConceptUdl",
-  "aboutConceptTranslingual",
-  "aboutConceptStorytelling",
-  "aboutConceptGamification",
+const stats = [
+  { key: "works", value: "12,450+", icon: "book" },
+  { key: "authors", value: "1,280+", icon: "author" },
+  { key: "routes", value: "86", icon: "map" },
 ];
 
-const architectureKeys = [
-  "aboutArchitectureContent",
-  "aboutArchitectureInteraction",
-  "aboutArchitectureGamification",
-  "aboutArchitectureUserData",
-  "aboutArchitectureAdmin",
+const journeySteps = [
+  { key: "collect", number: "01", icon: "source" },
+  { key: "digitize", number: "02", icon: "scan" },
+  { key: "curate", number: "03", icon: "tag" },
+  { key: "connect", number: "04", icon: "connect" },
+  { key: "share", number: "05", icon: "share" },
 ];
 
-const methodKeys = [
-  "aboutMethodRepresentation",
-  "aboutMethodEngagement",
-  "aboutMethodAction",
-  "aboutMethodBridge",
+const values = [
+  { key: "authenticity", icon: "shield" },
+  { key: "accessibility", icon: "lock" },
+  { key: "integrity", icon: "balance" },
+  { key: "innovation", icon: "spark" },
+];
+
+const memoryStats = [
+  { key: "archives", value: "35+" },
+  { key: "years", value: "7" },
+  { key: "access", value: "24/7" },
 ];
 
 function About() {
@@ -32,95 +38,129 @@ function About() {
   return (
     <main className="about-page">
       <div className="about-shell">
-        <section className="about-hero">
-          <p className="about-kicker">{t("aboutKicker")}</p>
-          <h1>{t("aboutTitle")}</h1>
-          <p>{t("aboutIntro")}</p>
-          <div className="about-hero__statement" aria-label={t("aboutMethodologySummary")}>
-            <span>{t("aboutStatementArchive")}</span>
-            <span>{t("aboutStatementAccess")}</span>
-            <span>{t("aboutStatementArchitecture")}</span>
+        <nav className="about-breadcrumb" aria-label={t("navigation")}>
+          <Link to="/">{t("navHome")}</Link>
+          <span aria-hidden="true">&gt;</span>
+          <span>{t("aboutBreadcrumbCurrent")}</span>
+        </nav>
+
+        <section className="about-hero" aria-labelledby="about-title">
+          <div className="about-hero__copy">
+            <p className="about-kicker">{t("aboutHeroKicker")}</p>
+            <h1 id="about-title">{t("aboutHeroTitle")}</h1>
+            <p className="about-hero__subtitle">{t("aboutHeroSubtitle")}</p>
+            <div className="about-divider" aria-hidden="true">
+              <span />
+              <i />
+            </div>
+            <p className="about-hero__intro">{t("aboutHeroIntro")}</p>
+            <div className="about-hero__actions">
+              <Link to="/works" className="about-button about-button--primary">
+                <AboutIcon kind="source" />
+                {t("aboutExploreArchive")}
+              </Link>
+              <Link to="/explore" className="about-button about-button--secondary">
+                <AboutIcon kind="globe" />
+                {t("aboutHowWorks")}
+              </Link>
+            </div>
           </div>
-          <div className="about-hero__actions">
-            <Link to="/works">{t("navWorks")}</Link>
-            <Link to="/explore">{t("navExplore")}</Link>
+
+          <div className="about-hero__visual" aria-hidden="true">
+            <img src={aboutHeroArchive} alt="" />
           </div>
         </section>
 
-        <section className="about-grid">
-          <article className="about-card is-wide">
-            <p className="about-kicker">{t("aboutMissionKicker")}</p>
-            <h2>{t("aboutMissionTitle")}</h2>
-            <p>{t("aboutMissionText")}</p>
-          </article>
-
-          <article className="about-card">
-            <p className="about-kicker">{t("aboutUniversityKicker")}</p>
-            <h2>{t("aboutUniversityTitle")}</h2>
-            <p>{t("aboutUniversityText")}</p>
-          </article>
-
-          <article className="about-card">
-            <p className="about-kicker">{t("aboutDifferenceKicker")}</p>
-            <h2>{t("aboutDifferenceTitle")}</h2>
-            <p>{t("aboutDifferenceText")}</p>
-          </article>
+        <section className="about-stats" aria-label={t("aboutStatsLabel")}>
+          {stats.map((item) => (
+            <article className="about-stat-card" key={item.key}>
+              <span className="about-stat-card__icon" aria-hidden="true">
+                <AboutIcon kind={item.icon} />
+              </span>
+              <div>
+                <strong>{item.value}</strong>
+                <h2>{t(`aboutStat${capitalize(item.key)}Title`)}</h2>
+                <p>{t(`aboutStat${capitalize(item.key)}Text`)}</p>
+              </div>
+            </article>
+          ))}
         </section>
 
-        <section className="about-card">
-          <div className="about-section-heading">
-            <p className="about-kicker">{t("aboutConceptKicker")}</p>
-            <h2>{t("aboutConceptTitle")}</h2>
-          </div>
-          <div className="about-team about-concept-grid">
-            {conceptKeys.map((key) => (
-              <article key={key}>
-                <span>{t(`${key}Kicker`)}</span>
-                <strong>{t(key)}</strong>
-                <small>{t(`${key}Text`)}</small>
+        <section className="about-journey-card">
+          <h2>{t("aboutJourneyTitle")}</h2>
+          <div className="about-journey">
+            {journeySteps.map((step) => (
+              <article className="about-journey-step" key={step.key}>
+                <span className="about-journey-step__icon" aria-hidden="true">
+                  <AboutIcon kind={step.icon} />
+                </span>
+                <strong>{step.number}</strong>
+                <h3>{t(`aboutJourney${capitalize(step.key)}Title`)}</h3>
+                <p>{t(`aboutJourney${capitalize(step.key)}Text`)}</p>
               </article>
             ))}
           </div>
         </section>
 
-        <section className="about-card">
-          <div className="about-section-heading">
-            <p className="about-kicker">{t("aboutArchitectureKicker")}</p>
-            <h2>{t("aboutArchitectureTitle")}</h2>
-          </div>
-          <div className="about-sources">
-            {architectureKeys.map((key) => (
-              <article key={key}>
-                <strong>{t(key)}</strong>
-                <p>{t(`${key}Text`)}</p>
-              </article>
-            ))}
-          </div>
-        </section>
+        <section className="about-lower-grid about-lower-grid--adaptive">
+  <article className="about-values-card about-values-card--adaptive">
+    <div className="about-card-title">
+      <span className="about-gold-star" aria-hidden="true" />
+      <h2>{t("aboutValuesTitle")}</h2>
+    </div>
 
-        <section className="about-card">
-          <div className="about-section-heading">
-            <p className="about-kicker">{t("aboutComplianceKicker")}</p>
-            <h2>{t("aboutComplianceTitle")}</h2>
-          </div>
-          <div className="about-checklist" aria-label="Requirement checklist">
-            {methodKeys.map((key) => (
-              <span key={key}>{t(key)}</span>
-            ))}
-          </div>
-        </section>
+    <div className="about-values-grid about-values-grid--adaptive">
+      {values.map((item) => (
+        <section className="about-value-item about-value-item--adaptive" key={item.key}>
+          <span className="about-icon-box" aria-hidden="true">
+            <AboutIcon kind={item.icon} />
+          </span>
 
-        <section className="about-contact">
-          <div>
-            <p className="about-kicker">{t("aboutContactKicker")}</p>
-            <h2>{t("aboutContactTitle")}</h2>
-            <p>{t("aboutContactText")}</p>
-          </div>
-          <Link to="/profile">{t("profile")}</Link>
+          <span className="about-value-item__text">
+            <strong>{t(`aboutValue${capitalize(item.key)}Title`)}</strong>
+            <small>{t(`aboutValue${capitalize(item.key)}Text`)}</small>
+          </span>
         </section>
+      ))}
+    </div>
+  </article>
+
+  <article className="about-memory-card about-memory-card--adaptive">
+    <div className="about-memory-card__image" aria-hidden="true">
+      <img src={memoryImage} alt="" />
+    </div>
+
+    <div className="about-memory-card__copy">
+      <div className="about-card-title">
+        <span className="about-gold-star" aria-hidden="true" />
+        <h2>{t("aboutMemoryTitle")}</h2>
+      </div>
+
+      <p>{t("aboutMemoryText")}</p>
+
+      <div className="about-memory-stats">
+        {memoryStats.map((item) => (
+          <span key={item.key}>
+            <strong>{item.value}</strong>
+            <small>{t(`aboutMemory${capitalize(item.key)}Label`)}</small>
+          </span>
+        ))}
+      </div>
+    </div>
+  </article>
+</section>
+
+
+        <aside className="about-inline-rail">
+          <AboutRail />
+        </aside>
       </div>
     </main>
   );
+}
+
+function capitalize(value) {
+  return value.charAt(0).toUpperCase() + value.slice(1);
 }
 
 export default About;

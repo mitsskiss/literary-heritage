@@ -1,13 +1,15 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { flushSync } from "react-dom";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "../auth/AuthContext";
 import { useI18n } from "../i18n/useI18n";
 import { useTheme } from "../theme/ThemeContext";
+import AboutRail from "./AboutRail";
 import { authors } from "../data/authors";
 import { literaryEpochs } from "../data/epochs";
 import { literaryWorldMarkers } from "../data/literaryWorldMap";
 import { readingRoutes } from "../data/routes";
 import { works } from "../data/works";
+
 
 function Header() {
   const {
@@ -21,92 +23,88 @@ function Header() {
     setLanguage,
     t,
   } = useI18n();
-  const { isDark, toggleTheme } = useTheme();
-  const { profile } = useAuth();
+  const { isDark, setTheme } = useTheme();
   const location = useLocation();
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [isLanguageOpen, setIsLanguageOpen] = useState(false);
+  const [openLanguageMenu, setOpenLanguageMenu] = useState(null);
   const [highlightedResult, setHighlightedResult] = useState(0);
-  const [localAvatar, setLocalAvatar] = useState("");
+  const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false);
+  const accountMenuRef = useRef(null);
   const menuRef = useRef(null);
-  const profileRef = useRef(null);
   const searchRef = useRef(null);
-  const languageRef = useRef(null);
-  const avatarDataUrl = profile?.avatar_data_url || localAvatar;
-
+  const searchInputRef = useRef(null);
+  const sidebarLanguageRef = useRef(null);
+  const mobileLanguageRef = useRef(null);
+  
   const navItems = [
-    { label: t("navHome"), href: "/", kind: "home" },
-    { label: t("navWorks"), href: "/works", kind: "library" },
-    { label: t("navAuthors"), href: "/authors", kind: "authors" },
-    { label: t("landingEpochs"), href: "/epochs", kind: "epochs" },
-    { label: t("navExplore"), href: "/explore", kind: "routes" },
-    { label: t("navMap"), href: "/map", kind: "map" },
-    { label: t("navAbout"), href: "/about", kind: "about" },
-  ];
+  { label: t("navHome"), href: "/", kind: "home" },
+  { label: t("navWorks"), href: "/works", kind: "library" },
+  { label: t("navAuthors"), href: "/authors", kind: "authors" },
+  { label: t("landingEpochs"), href: "/epochs", kind: "epochs" },
+  { label: t("navExplore"), href: "/explore", kind: "routes" },
+  { label: t("navMap"), href: "/map", kind: "map" },
+  { label: t("navProgress"), href: "/progress", kind: "progress" },
+  { label: t("navAbout"), href: "/about", kind: "about" },
+];
+
+useEffect(() => {
+  setIsMenuOpen(false);
+  setIsSearchOpen(false);
+  setOpenLanguageMenu(null);
+  setIsAccountMenuOpen(false);
+}, [location.pathname]);
+
 
   useEffect(() => {
-    setIsMenuOpen(false);
-    setIsProfileOpen(false);
-    setIsSearchOpen(false);
-    setIsLanguageOpen(false);
-  }, [location.pathname]);
-
-  useEffect(() => {
-    if (!isMenuOpen && !isProfileOpen && !isSearchOpen && !isLanguageOpen) return undefined;
+    if (!isMenuOpen && !isSearchOpen && !openLanguageMenu && !isAccountMenuOpen) return undefined;
 
     const handlePointerDown = (event) => {
       if (isMenuOpen && !menuRef.current?.contains(event.target)) {
         setIsMenuOpen(false);
       }
-      if (isProfileOpen && !profileRef.current?.contains(event.target)) {
-        setIsProfileOpen(false);
-      }
       if (isSearchOpen && !searchRef.current?.contains(event.target)) {
         setIsSearchOpen(false);
       }
-      if (isLanguageOpen && !languageRef.current?.contains(event.target)) {
-        setIsLanguageOpen(false);
+      if (
+        openLanguageMenu &&
+        !sidebarLanguageRef.current?.contains(event.target) &&
+        !mobileLanguageRef.current?.contains(event.target)
+      ) {
+        setOpenLanguageMenu(null);
+      }
+      if (isAccountMenuOpen && !accountMenuRef.current?.contains(event.target)) {
+        setIsAccountMenuOpen(false);
       }
     };
 
     document.addEventListener("pointerdown", handlePointerDown);
     return () => document.removeEventListener("pointerdown", handlePointerDown);
-  }, [isLanguageOpen, isMenuOpen, isProfileOpen, isSearchOpen]);
+  }, [isMenuOpen, isSearchOpen, openLanguageMenu, isAccountMenuOpen]);
 
   useEffect(() => {
-    if (!isLanguageOpen) return undefined;
+    if (!openLanguageMenu) return undefined;
 
     const handleKeyDown = (event) => {
-      if (event.key === "Escape") setIsLanguageOpen(false);
+      if (event.key === "Escape") setOpenLanguageMenu(null);
     };
 
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [isLanguageOpen]);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const readLocalAvatar = () => {
-      try {
-        const saved = window.localStorage.getItem("literary_heritage_profile_details");
-        const parsed = saved ? JSON.parse(saved) : null;
-        setLocalAvatar(parsed?.avatarDataUrl || "");
-      } catch {
-        setLocalAvatar("");
-      }
-    };
-
-    readLocalAvatar();
-    window.addEventListener("storage", readLocalAvatar);
-    return () => window.removeEventListener("storage", readLocalAvatar);
-  }, []);
+  }, [openLanguageMenu]);
 
   const isRoutesSection = location.pathname === "/explore" || location.pathname.startsWith("/route/");
+  const isAboutPage = location.pathname === "/about";
+
+  useEffect(() => {
+    document.documentElement.dataset.muraShell = isAboutPage ? "about" : "default";
+    return () => {
+      delete document.documentElement.dataset.muraShell;
+    };
+  }, [isAboutPage]);
+
   const localizedWorks = useMemo(() => localizeWorks(works), [localizeWorks]);
   const localizedAuthors = useMemo(() => localizeAuthors(authors), [localizeAuthors]);
   const localizedRoutes = useMemo(() => localizeJourneys(readingRoutes), [localizeJourneys]);
@@ -207,6 +205,16 @@ function Header() {
     setHighlightedResult(0);
   }, [searchQuery]);
 
+  useEffect(() => {
+    if (!isSearchOpen) return undefined;
+
+    const focusTimer = window.setTimeout(() => {
+      searchInputRef.current?.focus();
+    }, 80);
+
+    return () => window.clearTimeout(focusTimer);
+  }, [isSearchOpen]);
+
   const openSearchResult = (result = searchResults[highlightedResult]) => {
     if (!result) return;
     setSearchQuery("");
@@ -240,6 +248,44 @@ function Header() {
     }
   };
 
+  const runThemeToggle = (event) => {
+    const nextTheme = isDark ? "light" : "dark";
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (!document.startViewTransition || prefersReducedMotion) {
+      setTheme(nextTheme);
+      return;
+    }
+
+    const rect = event.currentTarget.getBoundingClientRect();
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
+    const endRadius = Math.hypot(
+      Math.max(x, window.innerWidth - x),
+      Math.max(y, window.innerHeight - y)
+    );
+
+    const transition = document.startViewTransition(() => {
+      flushSync(() => setTheme(nextTheme));
+    });
+
+    transition.ready.then(() => {
+      document.documentElement.animate(
+        {
+          clipPath: [
+            `circle(0px at ${x}px ${y}px)`,
+            `circle(${endRadius}px at ${x}px ${y}px)`,
+          ],
+        },
+        {
+          duration: 860,
+          easing: "cubic-bezier(0.16, 1, 0.3, 1)",
+          pseudoElement: "::view-transition-new(root)",
+        }
+      );
+    });
+  };
+
   return (
     <>
       <header className="site-header heritage-topbar">
@@ -269,11 +315,96 @@ function Header() {
             ))}
           </nav>
 
+          <div className="mura-sidebar-controls" aria-label={t("language")}>
+            <div className="mura-account-menu" ref={accountMenuRef}>
+  <button
+    type="button"
+    className="mura-settings-button mura-profile-trigger"
+    onClick={() => setIsAccountMenuOpen((current) => !current)}
+    aria-label={t("profile")}
+    aria-expanded={isAccountMenuOpen}
+    aria-haspopup="menu"
+  >
+    <HeaderIcon kind="profile" />
+  </button>
+
+  {isAccountMenuOpen ? (
+    <div className="mura-account-menu__panel" role="menu">
+      <NavLink
+        to="/profile"
+        className="mura-account-menu__item"
+        role="menuitem"
+        onClick={() => setIsAccountMenuOpen(false)}
+      >
+        <HeaderIcon kind="profile" />
+        <span>{t("profile")}</span>
+      </NavLink>
+
+      <NavLink
+        to="/progress"
+        className="mura-account-menu__item"
+        role="menuitem"
+        onClick={() => setIsAccountMenuOpen(false)}
+      >
+        <HeaderIcon kind="progress" />
+        <span>{t("navProgress")}</span>
+      </NavLink>
+
+      <NavLink
+        to="/admin"
+        className="mura-account-menu__item"
+        role="menuitem"
+        onClick={() => setIsAccountMenuOpen(false)}
+      >
+        <HeaderIcon kind="admin" />
+        <span>{t("navAdmin")}</span>
+      </NavLink>
+    </div>
+  ) : null}
+</div>
+            <button
+              type="button"
+              className="heritage-theme"
+              onClick={runThemeToggle}
+              aria-label={isDark ? t("switchToLight") : t("switchToDark")}
+              title={isDark ? t("switchToLight") : t("switchToDark")}
+              data-theme-state={isDark ? "dark" : "light"}
+            >
+              <ThemeGlyph isDark={isDark} />
+            </button>
+            <LanguageDropdown
+              rootRef={sidebarLanguageRef}
+              language={language}
+              languages={languages}
+              isOpen={openLanguageMenu === "sidebar"}
+              label={t("language")}
+              onToggle={() =>
+                setOpenLanguageMenu((current) => (current === "sidebar" ? null : "sidebar"))
+              }
+              onSelect={(nextLanguage) => {
+                setLanguage(nextLanguage);
+                setOpenLanguageMenu(null);
+              }}
+            />
+          </div>
+
           <div className="heritage-tools">
-            <div className="heritage-search" ref={searchRef}>
+            <div
+              className={`heritage-search ${isSearchOpen || searchQuery ? "is-expanded" : ""}`}
+              ref={searchRef}
+            >
+              <button
+                type="button"
+                className="heritage-search__trigger"
+                onClick={() => setIsSearchOpen(true)}
+                aria-label={t("globalSearch")}
+                aria-expanded={isSearchOpen || Boolean(searchQuery)}
+              >
+                <SearchGlyph />
+              </button>
               <label className="heritage-search__field">
-                <span className="heritage-icon heritage-icon--search" aria-hidden="true" />
                 <input
+                  ref={searchInputRef}
                   type="search"
                   value={searchQuery}
                   onChange={(event) => {
@@ -286,6 +417,19 @@ function Header() {
                   aria-label={t("globalSearch")}
                 />
               </label>
+              {searchQuery ? (
+                <button
+                  type="button"
+                  className="heritage-search__clear"
+                  onClick={() => {
+                    setSearchQuery("");
+                    setIsSearchOpen(true);
+                  }}
+                  aria-label={t("resetFilters")}
+                >
+                  <span aria-hidden="true">x</span>
+                </button>
+              ) : null}
               {isSearchOpen && searchQuery.trim() ? (
                 <div className="heritage-search__dropdown" role="listbox">
                   {searchResults.length > 0 ? (
@@ -310,62 +454,27 @@ function Header() {
                 </div>
               ) : null}
             </div>
-            <LanguageDropdown
-              rootRef={languageRef}
-              language={language}
-              languages={languages}
-              isOpen={isLanguageOpen}
-              label={t("language")}
-              onToggle={() => setIsLanguageOpen((current) => !current)}
-              onSelect={(nextLanguage) => {
-                setLanguage(nextLanguage);
-                setIsLanguageOpen(false);
-              }}
-            />
-            <button
-              type="button"
-              className="heritage-theme"
-              onClick={toggleTheme}
-              aria-label={isDark ? t("switchToLight") : t("switchToDark")}
-              title={isDark ? t("switchToLight") : t("switchToDark")}
-              data-theme-state={isDark ? "dark" : "light"}
-            >
-              <ThemeGlyph isDark={isDark} />
-            </button>
-            <div className="heritage-profile" ref={profileRef}>
-              <button
-                type="button"
-                className="heritage-avatar"
-                aria-label={t("profileMenu")}
-                aria-expanded={isProfileOpen}
-                onClick={() => setIsProfileOpen((current) => !current)}
-              >
-                {avatarDataUrl ? (
-                  <img src={avatarDataUrl} alt="" />
-                ) : (
-                  <span className="heritage-avatar__glyph" aria-hidden="true" />
-                )}
-              </button>
-              {isProfileOpen ? (
-                <div className="heritage-profile__menu">
-                  <Link to="/profile">{t("profile")}</Link>
-                  <Link to="/progress">{t("navProgress")}</Link>
-                </div>
-              ) : null}
-            </div>
-            <button
-              type="button"
-              className="heritage-menu-toggle"
-              onClick={() => setIsMenuOpen((current) => !current)}
-              aria-expanded={isMenuOpen}
-              aria-label={isMenuOpen ? t("closeMenu") : t("openMenu")}
-            >
-              <span />
-              <span />
-            </button>
           </div>
         </div>
       </header>
+
+      <button
+        type="button"
+        className="mura-mobile-menu-toggle heritage-menu-toggle"
+        onClick={() => setIsMenuOpen((current) => !current)}
+        aria-expanded={isMenuOpen}
+        aria-label={isMenuOpen ? t("closeMenu") : t("openMenu")}
+      >
+        <MenuGlyph isOpen={isMenuOpen} />
+      </button>
+
+      {isAboutPage ? (
+        <aside className="mura-right-panel" aria-label={t("navAbout")}>
+          <div className="mura-right-panel__body">
+            <AboutRail />
+          </div>
+        </aside>
+      ) : null}
       {isMenuOpen ? (
         <div className="heritage-mobile-menu" ref={menuRef}>
           <div className="heritage-mobile-menu__head">
@@ -411,7 +520,7 @@ function Header() {
             ) : null}
           </div>
           <nav>
-            {[...navItems, { label: t("profile"), href: "/profile", kind: "profile" }, { label: t("navProgress"), href: "/progress", kind: "progress" }].map((item) => (
+            {navItems.map((item) => (
               <NavLink key={`${item.href}-${item.kind}-mobile`} to={item.href} end={item.href === "/"} data-nav={item.kind}>
                 <HeaderIcon kind={item.kind} />
                 <span className="heritage-nav-label">{item.label}</span>
@@ -419,19 +528,21 @@ function Header() {
             ))}
           </nav>
           <div className="heritage-mobile-menu__settings">
-            <button type="button" onClick={toggleTheme}>
+            <button type="button" onClick={runThemeToggle}>
               {isDark ? t("lightMode") : t("darkMode")}
             </button>
             <LanguageDropdown
-              rootRef={languageRef}
+              rootRef={mobileLanguageRef}
               language={language}
               languages={languages}
-              isOpen={isLanguageOpen}
+              isOpen={openLanguageMenu === "mobile"}
               label={t("language")}
-              onToggle={() => setIsLanguageOpen((current) => !current)}
+              onToggle={() =>
+                setOpenLanguageMenu((current) => (current === "mobile" ? null : "mobile"))
+              }
               onSelect={(nextLanguage) => {
                 setLanguage(nextLanguage);
-                setIsLanguageOpen(false);
+                setOpenLanguageMenu(null);
               }}
             />
           </div>
@@ -441,15 +552,57 @@ function Header() {
   );
 }
 
+function SettingsGlyph() {
+  return (
+    <span className="mura-settings-button__glyph" aria-hidden="true">
+      <svg viewBox="0 0 24 24" focusable="false">
+        <path d="M12 8.2a3.8 3.8 0 1 1 0 7.6 3.8 3.8 0 0 1 0-7.6Z" />
+        <path d="m4.7 10.2 1.6-.9.4-1.1-.6-1.8 1.8-1.4 1.6 1 1.2-.4L12 3.8h2l.5 1.8 1.2.4 1.6-1 1.8 1.4-.6 1.8.4 1.1 1.6.9v2.2l-1.6.9-.4 1.1.6 1.8-1.8 1.4-1.6-1-1.2.4-.5 1.8h-2l-.5-1.8-1.2-.4-1.6 1-1.8-1.4.6-1.8-.4-1.1-1.6-.9Z" />
+      </svg>
+    </span>
+  );
+}
+
 function BrandMark() {
   return (
     <span className="heritage-brand__mark" aria-hidden="true">
       <svg viewBox="0 0 32 32" focusable="false">
-        <path d="M16 3.5v25" />
-        <path d="M3.5 16h25" />
-        <path d="M16 7.5 20.5 16 16 24.5 11.5 16Z" />
-        <path d="M7.5 16 16 11.5 24.5 16 16 20.5Z" />
-        <circle cx="16" cy="16" r="2.3" />
+        <path className="heritage-brand__star-fill" d="M16 3.8 19.2 13l9 3-9 3L16 28.2 12.8 19l-9-3 9-3Z" />
+        <path className="heritage-brand__star-line" d="M16 8.2v15.6" />
+        <path className="heritage-brand__star-line" d="M8.2 16h15.6" />
+        <circle cx="16" cy="16" r="2.2" />
+      </svg>
+    </span>
+  );
+}
+
+function MenuGlyph({ isOpen }) {
+  return (
+    <span className="heritage-menu-toggle__glyph" aria-hidden="true" data-state={isOpen ? "open" : "closed"}>
+      <svg viewBox="0 0 24 24" focusable="false">
+        {isOpen ? (
+          <>
+            <path d="M6.2 6.2 17.8 17.8" />
+            <path d="M17.8 6.2 6.2 17.8" />
+          </>
+        ) : (
+          <>
+            <path d="M4.5 7.2h15" />
+            <path d="M8.5 12h11" />
+            <path d="M4.5 16.8h15" />
+          </>
+        )}
+      </svg>
+    </span>
+  );
+}
+
+function SearchGlyph() {
+  return (
+    <span className="heritage-search__glyph" aria-hidden="true">
+      <svg viewBox="0 0 24 24" focusable="false">
+        <circle cx="10.8" cy="10.8" r="6.4" />
+        <path d="m16 16 4.1 4.1" />
       </svg>
     </span>
   );
@@ -520,6 +673,12 @@ function HeaderIcon({ kind }) {
         <path d="M18 19v-7" />
       </>
     ),
+    admin: (
+  <>
+    <path d="M12 3.8 19 7v5.4c0 4.2-2.8 7.2-7 8.8-4.2-1.6-7-4.6-7-8.8V7Z" />
+    <path d="M9.3 12.2 11.2 14l3.7-4.2" />
+  </>
+  ),
   };
 
   return (
@@ -535,8 +694,21 @@ function ThemeGlyph({ isDark }) {
   return (
     <span className="heritage-theme__glyph" aria-hidden="true">
       <svg viewBox="0 0 24 24" focusable="false">
-        <circle cx="12" cy="12" r="8.5" />
-        {isDark ? <path d="M12 3.5a8.5 8.5 0 0 0 0 17 6.7 6.7 0 0 1 0-17Z" /> : <path d="M12 3.5v17" />}
+        {isDark ? (
+          <>
+            <circle cx="12" cy="12" r="4.2" />
+            <path d="M12 2.8v2.4" />
+            <path d="M12 18.8v2.4" />
+            <path d="m4.2 4.2 1.7 1.7" />
+            <path d="m18.1 18.1 1.7 1.7" />
+            <path d="M2.8 12h2.4" />
+            <path d="M18.8 12h2.4" />
+            <path d="m4.2 19.8 1.7-1.7" />
+            <path d="m18.1 5.9 1.7-1.7" />
+          </>
+        ) : (
+          <path d="M19 14.6A7.2 7.2 0 1 1 9.4 5a5.8 5.8 0 0 0 9.6 9.6Z" />
+        )}
       </svg>
     </span>
   );
@@ -552,18 +724,28 @@ function LanguageDropdown({
   onSelect,
 }) {
   const activeLanguage = languages.find((item) => item.code === language) ?? languages[0];
+  const activeShortLabel = activeLanguage?.shortLabel ?? language.toUpperCase();
+  const handleSelectLanguage = (event, nextLanguage) => {
+    event.preventDefault();
+    event.stopPropagation();
+    onSelect(nextLanguage);
+  };
 
   return (
     <div className="heritage-language" ref={rootRef} data-current-language={language}>
       <button
         type="button"
         className="heritage-language__button"
-        aria-label={label}
+        aria-label={`${label}: ${activeLanguage?.label ?? activeShortLabel}`}
         aria-haspopup="listbox"
         aria-expanded={isOpen}
         onClick={onToggle}
       >
-        <span>{activeLanguage?.shortLabel ?? language.toUpperCase()}</span>
+        <span className="heritage-language__stack" aria-hidden="true">
+          {activeShortLabel.split("").map((letter) => (
+            <b key={`${activeShortLabel}-${letter}`}>{letter}</b>
+          ))}
+        </span>
         <i aria-hidden="true" />
       </button>
       {isOpen ? (
@@ -576,7 +758,8 @@ function LanguageDropdown({
               aria-selected={item.code === language}
               data-language={item.code}
               className={item.code === language ? "is-active" : ""}
-              onClick={() => onSelect(item.code)}
+              onPointerDown={(event) => handleSelectLanguage(event, item.code)}
+              onClick={(event) => handleSelectLanguage(event, item.code)}
             >
               <strong>{item.shortLabel}</strong>
               <span>{item.label}</span>

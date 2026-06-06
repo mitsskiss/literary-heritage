@@ -70,7 +70,7 @@ function WorldMap() {
               <span>{t("mapArchiveLayer")}</span>
               <strong>{visiblePlaces.length} {t("literaryPlaces")}</strong>
             </div>
-            {visiblePlaces.map((place, index) => {
+            {visiblePlaces.map((place) => {
               const meta = localizeMapCategory(place.category, mapCategoryMeta[place.category] ?? mapCategoryMeta.museum);
               return (
                 <button
@@ -81,9 +81,14 @@ function WorldMap() {
                   onClick={() => setSelectedId(place.id)}
                   aria-label={t("openMarker", { name: place.name })}
                 >
-                  <span aria-hidden="true">{index + 1}</span>
-                  <strong>{place.city}</strong>
-                  <small>{meta.label}</small>
+                  <span className="mura-map-marker__icon" aria-hidden="true">
+                    <MapMarkerIcon category={place.category} />
+                  </span>
+                  <span className="mura-map-marker__tooltip" aria-hidden="true">
+                    <strong>{place.city}</strong>
+                    <small>{place.name}</small>
+                    <em>{meta.label}</em>
+                  </span>
                 </button>
               );
             })}
@@ -186,6 +191,47 @@ function MapSelect({ label, value, onChange, options }) {
         ))}
       </select>
     </label>
+  );
+}
+
+function MapMarkerIcon({ category }) {
+  const icons = {
+    museum: (
+      <>
+        <path d="M4.5 9.2 12 5l7.5 4.2" />
+        <path d="M6.2 9.4h11.6" />
+        <path d="M7.4 18.8h9.2" />
+        <path d="M8.5 9.4v9.4" />
+        <path d="M12 9.4v9.4" />
+        <path d="M15.5 9.4v9.4" />
+      </>
+    ),
+    memorial: (
+      <>
+        <path d="M12 4.2 14.4 9l5.3.8-3.8 3.7.9 5.3L12 16.3l-4.8 2.5.9-5.3-3.8-3.7L9.6 9Z" />
+      </>
+    ),
+    archive: (
+      <>
+        <path d="M5.2 7.8h13.6v11H5.2Z" />
+        <path d="M7.1 5.2h9.8l1.9 2.6H5.2Z" />
+        <path d="M9 11.2h6" />
+        <path d="M9 14.4h4.8" />
+      </>
+    ),
+    route: (
+      <>
+        <path d="M5.2 17.6c4.5-8.8 9.6 5.2 13.6-6.8" />
+        <circle cx="5.2" cy="17.6" r="1.8" />
+        <circle cx="18.8" cy="10.8" r="1.8" />
+      </>
+    ),
+  };
+
+  return (
+    <svg viewBox="0 0 24 24" focusable="false">
+      {icons[category] ?? icons.museum}
+    </svg>
   );
 }
 

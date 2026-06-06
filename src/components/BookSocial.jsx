@@ -108,21 +108,39 @@ function BookSocial({ work }) {
   };
 
   const handleShare = async () => {
-    const shareData = {
-      title: work.title,
-      text: `${work.title} - ${work.author}`,
-      url: workUrl,
+    const copyUrl = async () => {
+      if (navigator.clipboard?.writeText) {
+        try {
+          await navigator.clipboard.writeText(workUrl);
+          return;
+        } catch {
+          // Fall back to a temporary selection for browsers that deny clipboard API.
+        }
+      }
+
+      const textArea = document.createElement("textarea");
+      textArea.value = workUrl;
+      textArea.setAttribute("readonly", "");
+      textArea.style.position = "fixed";
+      textArea.style.left = "-9999px";
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textArea);
     };
 
     try {
-      if (navigator.share) {
-        await navigator.share(shareData);
-      } else {
-        await navigator.clipboard.writeText(workUrl);
-        setMessage(t("shareLinkCopied"));
-      }
+      await copyUrl();
+      setMessage(t("shareLinkCopied"));
     } catch (error) {
-      if (error?.name !== "AbortError") setMessage(t("socialActionFailed"));
+      if (error?.name === "AbortError") return;
+
+      try {
+        await copyUrl();
+        setMessage(t("shareLinkCopied"));
+      } catch {
+        setMessage(t("socialActionFailed"));
+      }
     }
   };
 

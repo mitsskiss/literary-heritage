@@ -1,0 +1,52 @@
+.scroll-stack-scroller {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: visible;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  transform: translateZ(0);
+  will-change: scroll-position;
+}
+
+.scroll-stack-inner {
+  min-height: 100vh;
+  padding: 20vh 5rem 50rem;
+}
+
+.scroll-stack-card {
+  position: relative;
+  width: 100%;
+  min-height: 20rem;
+  margin: 30px 0;
+  padding: 3rem;
+  border-radius: 8px;
+  box-sizing: border-box;
+  transform-origin: top center;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  transform: var(--scroll-stack-transform, translateZ(0));
+  will-change: transform, filter;
+}
+
+.scroll-stack-card:hover {
+  transform: var(--scroll-stack-transform, translateZ(0)) !important;
+}
+
+.scroll-stack-end {
+  width: 100%;
+  height: 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-stack-scroller {
+    scroll-behavior: auto;
+  }
+
+  .scroll-stack-card {
+    transform: none !important;
+    filter: none !important;
+  }
+}

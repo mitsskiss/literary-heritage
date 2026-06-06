@@ -1112,3 +1112,515 @@
     grid-template-columns: 30px minmax(0, 1fr);
   }
 }
+
+/* MIRAS v2 route overview and workspace. */
+.route-page {
+  min-height: 100dvh;
+  padding-top: 34px !important;
+  padding-right: clamp(18px, 2.4vw, 34px) !important;
+  padding-bottom: 74px !important;
+  background:
+    radial-gradient(circle at 82% -10%, color-mix(in srgb, var(--miras-gold) 14%, transparent), transparent 26rem),
+    linear-gradient(180deg, var(--miras-bg-soft), var(--miras-bg) 56%, var(--miras-bg-soft)) !important;
+  color: var(--miras-ink);
+  overflow-x: hidden;
+}
+
+:root[data-theme="dark"] .route-page {
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    radial-gradient(circle at 78% 4%, rgba(28, 100, 82, 0.22), transparent 24rem),
+    linear-gradient(180deg, #020c0b, var(--miras-bg) 56%, #041512) !important;
+  background-size: 84px 84px, 84px 84px, auto, auto;
+}
+
+.mura-route-reference,
+.route-workspace,
+.route-missing-card {
+  width: min(100%, var(--miras-page-max)) !important;
+  margin-inline: auto !important;
+}
+
+.mura-route-reference {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 16px !important;
+  padding: clamp(22px, 2.8vw, 34px) !important;
+  border: 1px solid var(--miras-line) !important;
+  border-radius: var(--miras-radius) !important;
+  background:
+    radial-gradient(circle at 18% 0%, color-mix(in srgb, var(--miras-gold) 10%, transparent), transparent 18rem),
+    linear-gradient(135deg, color-mix(in srgb, var(--miras-panel) 92%, transparent), color-mix(in srgb, var(--miras-panel-strong) 84%, transparent)) !important;
+  box-shadow: var(--miras-shadow) !important;
+}
+
+:root[data-theme="dark"] .mura-route-reference {
+  background:
+    radial-gradient(circle at 26% 0%, rgba(32, 112, 91, 0.2), transparent 20rem),
+    linear-gradient(135deg, rgba(8, 31, 27, 0.92), rgba(3, 17, 15, 0.96)) !important;
+}
+
+.mura-route-reference::after {
+  content: "";
+  position: absolute;
+  right: -90px;
+  top: -90px;
+  width: 260px;
+  height: 260px;
+  border: 1px solid var(--miras-line);
+  border-radius: 50%;
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.mura-route-reference__head {
+  position: relative;
+  z-index: 1;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  gap: 18px !important;
+  align-items: start !important;
+}
+
+.mura-route-reference .route-breadcrumbs {
+  position: static !important;
+  display: flex !important;
+  gap: 9px !important;
+  margin-bottom: 12px !important;
+  color: var(--miras-muted) !important;
+  font-size: 0.78rem !important;
+  font-weight: 720 !important;
+}
+
+.mura-route-reference h1 {
+  max-width: 11ch;
+  margin: 0 0 12px !important;
+  color: var(--miras-ink) !important;
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-size: clamp(2.9rem, 5.6vw, 5.4rem) !important;
+  font-weight: 500 !important;
+  line-height: 0.92 !important;
+  letter-spacing: 0 !important;
+  text-wrap: balance;
+}
+
+.mura-route-reference p {
+  max-width: 66ch;
+  margin: 0 !important;
+  color: var(--miras-text) !important;
+  font-size: 1rem !important;
+  line-height: 1.7 !important;
+}
+
+.mura-route-reference__head > button {
+  min-height: 40px;
+  border: 1px solid var(--miras-line) !important;
+  border-radius: 7px !important;
+  background: color-mix(in srgb, var(--miras-panel-strong) 78%, transparent) !important;
+  color: var(--miras-ink) !important;
+  padding: 0 15px !important;
+  font-size: 0.78rem !important;
+  font-weight: 820 !important;
+  cursor: pointer;
+}
+
+.mura-route-reference__head > button.is-active,
+.mura-route-reference__head > button:hover {
+  border-color: var(--miras-line-strong) !important;
+  background: color-mix(in srgb, var(--miras-gold) 14%, var(--miras-panel)) !important;
+}
+
+.mura-route-stat-row {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  margin-top: 20px;
+  border: 1px solid var(--miras-line);
+  border-radius: var(--miras-radius);
+  overflow: hidden;
+  background: color-mix(in srgb, var(--miras-panel) 78%, transparent);
+}
+
+.mura-route-stat-row article {
+  min-width: 0;
+  min-height: 72px;
+  display: grid;
+  align-content: center;
+  gap: 8px;
+  border-right: 1px solid var(--miras-line);
+  padding: 13px 15px;
+}
+
+.mura-route-stat-row article:last-child {
+  border-right: 0;
+}
+
+.mura-route-stat-row span,
+.mura-route-card span,
+.mura-route-card small,
+.route-active-stage__top p,
+.route-active-stage > p,
+.route-panel-heading h2,
+.route-next-card span {
+  color: var(--miras-muted) !important;
+}
+
+.mura-route-stat-row span {
+  font-size: 0.68rem;
+  font-weight: 820;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.mura-route-stat-row strong {
+  color: var(--miras-ink);
+  font-size: clamp(1.05rem, 1.8vw, 1.45rem);
+  font-weight: 780;
+  line-height: 1.05;
+  font-variant-numeric: tabular-nums;
+}
+
+.mura-route-tabs {
+  position: relative;
+  z-index: 1;
+  display: flex !important;
+  gap: 8px !important;
+  flex-wrap: wrap !important;
+  margin: 20px 0 16px !important;
+}
+
+.mura-route-tabs button,
+.route-tabs button,
+.route-show-all,
+.route-stage-nav button,
+.route-quiz-card button,
+.route-note-editor button {
+  border-radius: 7px !important;
+  border-color: var(--miras-line) !important;
+  background: color-mix(in srgb, var(--miras-panel-strong) 72%, transparent) !important;
+  color: var(--miras-ink) !important;
+}
+
+.mura-route-tabs button.is-active,
+.mura-route-tabs button:hover,
+.route-tabs button.is-active,
+.route-tabs button:hover,
+.route-show-all:hover,
+.route-stage-nav button:hover,
+.route-quiz-card button:hover,
+.route-note-editor button:hover {
+  border-color: var(--miras-line-strong) !important;
+  background: color-mix(in srgb, var(--miras-gold) 14%, var(--miras-panel)) !important;
+  color: var(--miras-ink) !important;
+}
+
+.mura-route-card-grid {
+  position: relative;
+  z-index: 1;
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 14px !important;
+}
+
+.mura-route-card {
+  display: grid;
+  grid-template-columns: minmax(140px, 0.42fr) minmax(0, 0.58fr);
+  overflow: hidden;
+  border: 1px solid var(--miras-line) !important;
+  border-radius: var(--miras-radius) !important;
+  background: color-mix(in srgb, var(--miras-panel) 86%, transparent) !important;
+  box-shadow: none !important;
+}
+
+.mura-route-card img {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 184px;
+  aspect-ratio: auto !important;
+  object-fit: cover !important;
+  border-radius: 0 !important;
+  filter: saturate(0.74) contrast(1.06) !important;
+}
+
+:root[data-theme="dark"] .mura-route-card img {
+  filter: grayscale(0.85) contrast(1.08) brightness(0.72) !important;
+}
+
+.mura-route-card div {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  padding: 15px !important;
+}
+
+.mura-route-card h2 {
+  margin: 0 !important;
+  color: var(--miras-ink) !important;
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-size: clamp(1.22rem, 2vw, 1.62rem) !important;
+  font-weight: 500 !important;
+  line-height: 1.05 !important;
+  letter-spacing: 0 !important;
+}
+
+.mura-route-card p {
+  color: var(--miras-text) !important;
+  font-size: 0.9rem !important;
+  line-height: 1.58 !important;
+}
+
+.mura-route-card a,
+.mura-route-progress-strip a,
+.mura-route-progress-strip button,
+.route-stage-nav button:last-child,
+.route-quiz-card button {
+  border: 1px solid var(--miras-gold) !important;
+  border-radius: 7px !important;
+  background: linear-gradient(180deg, var(--miras-gold), var(--miras-gold-strong)) !important;
+  color: #fff7e8 !important;
+  text-decoration: none !important;
+}
+
+.mura-route-card a {
+  align-self: end;
+  justify-self: start;
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 14px;
+  font-size: 0.78rem;
+  font-weight: 840;
+}
+
+.mura-route-progress-strip {
+  position: relative;
+  z-index: 1;
+  display: grid !important;
+  align-items: center !important;
+  grid-template-columns: auto minmax(180px, 1fr) auto auto auto auto !important;
+  gap: 10px !important;
+  margin-top: 14px !important;
+  padding: 12px !important;
+  border: 1px solid var(--miras-line);
+  border-radius: var(--miras-radius);
+  background: color-mix(in srgb, var(--miras-panel) 78%, transparent);
+}
+
+.mura-route-progress-strip > span,
+.mura-route-progress-strip > strong {
+  color: var(--miras-ink);
+  font-weight: 820;
+}
+
+.route-progress-track {
+  background: color-mix(in srgb, var(--miras-gold) 14%, var(--miras-panel-strong)) !important;
+}
+
+.route-progress-track i {
+  background: linear-gradient(90deg, var(--miras-gold), var(--miras-gold-strong)) !important;
+}
+
+.mura-route-progress-strip button:not(:last-of-type) {
+  background: color-mix(in srgb, var(--miras-panel-strong) 72%, transparent) !important;
+  color: var(--miras-ink) !important;
+}
+
+.route-workspace {
+  display: grid !important;
+  grid-template-columns: minmax(210px, 0.25fr) minmax(0, 0.5fr) minmax(260px, 0.25fr) !important;
+  gap: 14px !important;
+  margin-top: 16px !important;
+}
+
+.route-timeline-panel,
+.route-active-stage,
+.route-context-panel,
+.route-missing-card,
+.route-parchment,
+.route-quiz-card,
+.route-tab-card,
+.route-note-editor,
+.route-next-card,
+.route-language-compare article {
+  border: 1px solid var(--miras-line) !important;
+  border-radius: var(--miras-radius) !important;
+  background: var(--miras-panel) !important;
+  box-shadow: none !important;
+}
+
+.route-timeline-panel,
+.route-active-stage,
+.route-context-panel {
+  overflow: hidden;
+}
+
+.route-timeline-panel {
+  padding: 18px !important;
+}
+
+.route-panel-heading h2 {
+  margin-bottom: 14px !important;
+  font-family: Inter, system-ui, sans-serif !important;
+  font-size: 0.75rem !important;
+  font-weight: 840 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+}
+
+.route-timeline::before {
+  background: color-mix(in srgb, var(--miras-gold) 44%, var(--miras-line)) !important;
+}
+
+.route-timeline button {
+  border-radius: 7px !important;
+  color: var(--miras-text) !important;
+}
+
+.route-timeline span {
+  border-color: var(--miras-line-strong) !important;
+  background: var(--miras-panel-strong) !important;
+  color: var(--miras-gold-strong) !important;
+}
+
+.route-timeline li.is-current button,
+.route-stage-list button.is-current {
+  background: color-mix(in srgb, var(--miras-gold) 14%, var(--miras-panel)) !important;
+  color: var(--miras-ink) !important;
+}
+
+.route-active-stage {
+  padding: clamp(22px, 3vw, 34px) !important;
+}
+
+.route-active-stage h2 {
+  color: var(--miras-ink) !important;
+  font-size: clamp(2.25rem, 4.4vw, 4.8rem) !important;
+  line-height: 0.95 !important;
+  letter-spacing: 0 !important;
+}
+
+.route-active-stage p,
+.route-parchment > p,
+.route-tab-card p,
+.route-next-card p,
+.route-quiz-card p,
+.route-language-compare p {
+  color: var(--miras-text) !important;
+}
+
+.route-parchment {
+  background:
+    radial-gradient(circle at 92% 100%, color-mix(in srgb, var(--miras-gold) 12%, transparent), transparent 12rem),
+    color-mix(in srgb, var(--miras-panel-strong) 82%, transparent) !important;
+  box-shadow: inset 0 0 22px color-mix(in srgb, var(--miras-gold) 10%, transparent) !important;
+}
+
+.route-parchment > p {
+  color: var(--miras-ink) !important;
+  font-size: clamp(1.4rem, 2.7vw, 2.35rem) !important;
+  line-height: 1.68 !important;
+}
+
+.route-parchment footer button,
+.route-parchment footer .route-source-pill {
+  border-color: var(--miras-line) !important;
+  border-radius: 7px !important;
+  background: color-mix(in srgb, var(--miras-panel-strong) 72%, transparent) !important;
+  color: var(--miras-ink) !important;
+}
+
+.route-context-panel .route-tabs {
+  border-color: var(--miras-line) !important;
+}
+
+.route-tab-card,
+.route-note-editor,
+.route-next-card {
+  margin: 14px !important;
+}
+
+.route-next-card strong,
+.route-quiz-card h3,
+.route-language-compare strong {
+  color: var(--miras-ink) !important;
+}
+
+.route-note-editor textarea {
+  border-color: var(--miras-line) !important;
+  border-radius: 7px !important;
+  background: color-mix(in srgb, var(--miras-panel-strong) 78%, transparent) !important;
+  color: var(--miras-ink) !important;
+}
+
+@media (min-width: 1024px) {
+  .route-page {
+    padding-left: var(--miras-content-offset) !important;
+  }
+}
+
+@media (max-width: 1180px) {
+  .mura-route-stat-row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .mura-route-stat-row article:nth-child(3n) {
+    border-right: 0;
+  }
+
+  .mura-route-stat-row article:nth-child(n + 4) {
+    border-top: 1px solid var(--miras-line);
+  }
+
+  .mura-route-card-grid,
+  .route-workspace {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 760px) {
+  .route-page {
+    padding: 92px 14px 58px !important;
+  }
+
+  .mura-route-reference {
+    padding: 22px !important;
+  }
+
+  .mura-route-reference__head,
+  .mura-route-card,
+  .mura-route-progress-strip,
+  .route-active-stage__top,
+  .route-stage-nav,
+  .route-quiz-card,
+  .route-language-compare {
+    grid-template-columns: 1fr !important;
+  }
+
+  .mura-route-reference h1 {
+    max-width: 100%;
+    font-size: clamp(2.55rem, 13vw, 4rem) !important;
+  }
+
+  .mura-route-stat-row {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .mura-route-stat-row article,
+  .mura-route-stat-row article:nth-child(3n) {
+    border-right: 1px solid var(--miras-line);
+  }
+
+  .mura-route-stat-row article:nth-child(2n) {
+    border-right: 0;
+  }
+
+  .mura-route-stat-row article:nth-child(n + 3) {
+    border-top: 1px solid var(--miras-line);
+  }
+
+  .mura-route-card img {
+    min-height: 240px;
+  }
+}

@@ -15,17 +15,25 @@ import { useAdminContent } from "../hooks/useAdminContent";
 import { useProgressStore } from "../store/useProgressStore";
 import "./ChapterReading.css";
 import { useI18n } from "../i18n/useI18n";
+import { useTheme } from "../theme/ThemeContext";
+import {
+  MuraBookmarkIcon,
+  MuraShareIcon,
+  MuraSettingsIcon,
+} from "../components/icons/MuraIconSet";
 
 function ChapterReading() {
   const {
     t,
     language,
     languages,
+    setLanguage,
     localizeStory,
     localizeStoryInLanguage,
     localizeStoryBook,
     localizeWork,
   } = useI18n();
+  const { toggleTheme } = useTheme();
   const { id, chapterNumber } = useParams();
   const { content: adminContent } = useAdminContent();
   const localizedWorks = mergeAdminWorks(works.map(localizeWork), adminContent, language);
@@ -52,24 +60,31 @@ function ChapterReading() {
     lives,
     storyProgress,
     finalQuizzes,
+    favorites,
     migrateLegacyProgress,
     ensureStory,
     recordChoice,
     recordFinalQuizAnswer,
+    recordReadingSession,
+    recordQuizTopicResult,
     advanceScene,
     completeStory,
+    toggleFavorite,
   } = useProgressStore();
   const [xpPulse, setXpPulse] = useState(null);
   const [choiceCelebration, setChoiceCelebration] = useState(null);
   const [streakReward, setStreakReward] = useState(null);
   const [progressGlow, setProgressGlow] = useState(false);
   const [isComparisonOpen, setIsComparisonOpen] = useState(false);
+  const [activeReaderTab, setActiveReaderTab] = useState("text");
   const [activeAnnotation, setActiveAnnotation] = useState(null);
+  const [shareMessage, setShareMessage] = useState("");
   const annotationAreaRef = useRef(null);
   const [leftComparisonLanguage, setLeftComparisonLanguage] = useState(language);
   const [rightComparisonLanguage, setRightComparisonLanguage] = useState(
     language === "en" ? "ru" : "en"
   );
+  const saveReadingSessionRef = useRef(() => {});
 
   useEffect(() => {
     setLeftComparisonLanguage(language);
@@ -87,6 +102,66 @@ function ChapterReading() {
       ensureStory(chapter.id);
     }
   }, [chapter, ensureStory, migrateLegacyProgress]);
+
+  useEffect(() => {
+    if (!chapter || !work) {
+      saveReadingSessionRef.current = () => {};
+      return undefined;
+    }
+
+    const chapterId = chapter.id;
+    const workId = work.id;
+    let startedAt = 0;
+    let isSaved = false;
+
+    const startSession = () => {
+      startedAt = Date.now();
+      isSaved = false;
+    };
+
+    const saveSession = ({ restart = false } = {}) => {
+      if (isSaved) return;
+
+      isSaved = true;
+
+      const elapsedMs = Date.now() - startedAt;
+      if (elapsedMs < 30_000) {
+        if (restart) startSession();
+        return;
+      }
+
+      recordReadingSession({
+        id: `${chapterId}:${language}:${startedAt}`,
+        storyId: chapterId,
+        workId,
+        chapterId,
+        minutes: Math.min(180, Math.round(elapsedMs / 60_000)),
+        language,
+        createdAt: new Date(startedAt).toISOString(),
+      });
+
+      if (restart) startSession();
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        saveSession();
+        return;
+      }
+
+      startSession();
+    };
+
+    saveReadingSessionRef.current = saveSession;
+    startSession();
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      saveSession();
+      saveReadingSessionRef.current = () => {};
+    };
+  }, [chapter, language, recordReadingSession, work]);
 
   const hasChapterData = Boolean(work && storyBook && chapter);
   const scenes = chapter?.scenes ?? [];
@@ -122,6 +197,9 @@ function ChapterReading() {
   );
   const isLastScene = progress.currentSceneIndex === scenes.length - 1;
   const isCompleted = progress.completed;
+  const isWorkFavorite = Boolean(
+    work && favorites.some((favorite) => favorite.type === "work" && favorite.id === work.id)
+  );
   const correctAnswers = scenes.reduce((sum, scene) => {
     const choiceId = progress.choices[scene.id];
     const selected = scene.choices.find((choice) => choice.id === choiceId);
@@ -143,6 +221,16 @@ function ChapterReading() {
     progress.currentSceneIndex + 1,
     scenes.length
   );
+  const sceneTitleLabel =
+    id === "abai-words" && currentScene?.sceneNumber
+      ? language === "kk"
+        ? `${currentScene.sceneNumber}-сөз`
+        : language === "ru"
+          ? `Слово ${currentScene.sceneNumber}`
+          : `Word ${currentScene.sceneNumber}`
+      : currentScene?.title;
+  const compareControlLabel =
+    language === "kk" ? "Салыстыру" : language === "ru" ? "Сравнить" : "Compare";
   const answeredSceneCount = Object.keys(progress.choices).length;
   const chapterProgressPercent =
     scenes.length > 0
@@ -152,6 +240,7 @@ function ChapterReading() {
   const finalQuiz = scenes.slice(0, 3).map((scene) => ({
     id: `final-${scene.id}`,
     question: scene.prompt,
+    topic: scene.topic ?? scene.category ?? scene.quizTopic ?? null,
     options: scene.choices.map((choice) => ({
       id: choice.id,
       label: choice.label,
@@ -295,6 +384,7 @@ function ChapterReading() {
     if (!chapter) return;
 
     if (isLastScene) {
+      saveReadingSessionRef.current();
       completeStory(chapter.id);
       return;
     }
@@ -306,6 +396,45 @@ function ChapterReading() {
     if (!chapter) return;
 
     recordFinalQuizAnswer(chapter.id, question.id, option.id, option.isCorrect);
+
+    if (question.topic) {
+      recordQuizTopicResult(question.topic, option.isCorrect ? 1 : 0, 1);
+    }
+  };
+
+  const handleShare = async () => {
+    if (typeof window === "undefined") return;
+
+    setShareMessage("");
+    const url = window.location.href;
+
+    const copyUrl = async () => {
+      if (navigator.clipboard?.writeText) {
+        try {
+          await navigator.clipboard.writeText(url);
+          return;
+        } catch {
+          // Fall back to a temporary selection for browsers that deny clipboard API.
+        }
+      }
+
+      const textArea = document.createElement("textarea");
+      textArea.value = url;
+      textArea.setAttribute("readonly", "");
+      textArea.style.position = "fixed";
+      textArea.style.left = "-9999px";
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textArea);
+    };
+
+    try {
+      await copyUrl();
+      setShareMessage(t("shareLinkCopied"));
+    } catch {
+      setShareMessage(t("socialActionFailed"));
+    }
   };
 
   if (!hasChapterData) {
@@ -392,24 +521,64 @@ function ChapterReading() {
           {!isCompleted && currentScene ? (
             <div className="chapter-topbar__tools mura-reader-actions">
               <span className="mura-reader-actions__group" aria-label={t("language")}>
-                <button type="button" className="is-active">KZ</button>
-                <button type="button">RU</button>
+                {languages.map((item) => (
+                  <button
+                    key={item.code}
+                    type="button"
+                    className={item.code === language ? "is-active" : ""}
+                    onClick={() => setLanguage(item.code)}
+                  >
+                    {item.shortLabel}
+                  </button>
+                ))}
               </span>
               <button
                 type="button"
                 className="chapter-language-toggle"
                 onClick={() => setIsComparisonOpen((current) => !current)}
               >
-                {isComparisonOpen
-                  ? t("hideLanguageComparison")
-                  : t("compareLanguages")}
+                {compareControlLabel}
               </button>
-              <button type="button" className="mura-reader-icon-button" aria-label={t("saveFavorite")} title={t("saveFavorite")}>
-                {"\u25A1"}
+              <button
+                type="button"
+                className={`mura-reader-icon-button ${isWorkFavorite ? "is-active" : ""}`}
+                aria-label={isWorkFavorite ? t("savedFavorite") : t("saveFavorite")}
+                title={isWorkFavorite ? t("savedFavorite") : t("saveFavorite")}
+                onClick={() =>
+                  toggleFavorite({
+                    type: "work",
+                    id: work.id,
+                    title: work.title,
+                    subtitle: work.author,
+                    href: `/reading/${work.id}`,
+                  })
+                }
+              >
+                <MuraBookmarkIcon />
               </button>
-              <button type="button" className="mura-reader-icon-button" aria-label={t("shareWork")} title={t("shareWork")}>
-                {"\u2197"}
+              <button
+                type="button"
+                className="mura-reader-icon-button"
+                aria-label={t("shareWork")}
+                title={t("shareWork")}
+                onClick={handleShare}
+              >
+                <MuraShareIcon />
               </button>
+              <button
+                type="button"
+                className="mura-reader-icon-button"
+                aria-label={t("theme")}
+                title={t("theme")}
+                onClick={toggleTheme}
+              >
+                <MuraSettingsIcon />
+              </button>
+              {shareMessage ? (
+                <span className="mura-reader-actions__status" role="status">
+                  {shareMessage}
+                </span>
+              ) : null}
             </div>
           ) : null}
         </section>
@@ -476,6 +645,10 @@ function ChapterReading() {
               </p>
             </article>
             <article className="mura-reader-panel">
+              <h2>{t("question")}</h2>
+              <p>{currentScene.prompt ?? chapter.tagline}</p>
+            </article>
+            <article className="mura-reader-panel">
               <h2>{t("themes")}</h2>
               <div className="mura-reader-tags">
                 {(work.themes ?? []).slice(0, 4).map((theme) => (
@@ -487,7 +660,7 @@ function ChapterReading() {
               <div>
                 <h2>{t("compareLanguages")}</h2>
                 <button type="button" onClick={() => setIsComparisonOpen((current) => !current)}>
-                  {isComparisonOpen ? t("hideLanguageComparison") : t("compareLanguages")}
+                  {compareControlLabel}
                 </button>
               </div>
               <div className="mura-reader-compare-mini">
@@ -682,20 +855,52 @@ function ChapterReading() {
         ) : (
           <article className="chapter-sceneCard">
             <div className="chapter-sceneCard__head">
-              <p className="chapter-sceneCard__eyebrow">{t("sceneFocus")}</p>
-              <h2 className="chapter-sceneCard__title">{currentScene.title}</h2>
+              <p className="chapter-sceneCard__eyebrow">{currentScene.title}</p>
+              <h2 className="chapter-sceneCard__title">{sceneTitleLabel}</h2>
             </div>
 
-            <section className="chapter-sceneCard__section">
+            <div className="mura-reader-tabs" role="tablist" aria-label={t("context")}>
+              <button
+                type="button"
+                className={activeReaderTab === "text" ? "is-active" : ""}
+                role="tab"
+                aria-selected={activeReaderTab === "text"}
+                onClick={() => setActiveReaderTab("text")}
+              >
+                {t("quoteFragment")}
+              </button>
+              <button
+                type="button"
+                className={activeReaderTab === "explanation" ? "is-active" : ""}
+                role="tab"
+                aria-selected={activeReaderTab === "explanation"}
+                onClick={() => setActiveReaderTab("explanation")}
+              >
+                {t("explanation")}
+              </button>
+              <button
+                type="button"
+                className={activeReaderTab === "context" ? "is-active" : ""}
+                role="tab"
+                aria-selected={activeReaderTab === "context"}
+                onClick={() => setActiveReaderTab("context")}
+              >
+                {t("context")}
+              </button>
+            </div>
+
+            {activeReaderTab === "context" ? (
+              <section className="chapter-sceneCard__section">
               <p className="chapter-sceneCard__label">{t("context")}</p>
               <div className="chapter-sceneCard__text">
                 {currentScene.context.map((paragraph) => (
                   <p key={paragraph}>{paragraph}</p>
                 ))}
               </div>
-            </section>
+              </section>
+            ) : null}
 
-            {currentFragment ? (
+            {activeReaderTab === "text" && currentFragment ? (
               <section
                 ref={annotationAreaRef}
                 className="chapter-sceneCard__section chapter-fragment"
@@ -709,6 +914,17 @@ function ChapterReading() {
                     setActiveAnnotation
                   )}
                 </blockquote>
+              </section>
+            ) : null}
+
+            {activeReaderTab === "explanation" ? (
+              <section className="chapter-sceneCard__section chapter-tab-explanation">
+                <p className="chapter-sceneCard__label">{t("explanation")}</p>
+                <p>
+                  {selectedChoice?.result?.explanation ??
+                    currentScene.context?.[0] ??
+                    chapter.tagline}
+                </p>
               </section>
             ) : null}
 

@@ -347,6 +347,33 @@ function RoutePage() {
           </button>
         </div>
 
+        <div className="mura-route-stat-row" aria-label={labels.routes}>
+          <article>
+            <span>{labels.works}</span>
+            <strong>{routeWorks.length}</strong>
+          </article>
+          <article>
+            <span>{labels.authorsContext}</span>
+            <strong>{route.authorsCount ?? routeWorks.length}</strong>
+          </article>
+          <article>
+            <span>{labels.stages}</span>
+            <strong>{steps.length}</strong>
+          </article>
+          <article>
+            <span>{labels.time}</span>
+            <strong>{route.minutes} {t("min")}</strong>
+          </article>
+          <article>
+            <span>{labels.level}</span>
+            <strong>{route.difficulty ?? labels.medium}</strong>
+          </article>
+          <article>
+            <span>{labels.language}</span>
+            <strong>{routeLanguages}</strong>
+          </article>
+        </div>
+
         <div className="mura-route-tabs" role="tablist" aria-label={labels.routes}>
           {routeTabs.map((item) => (
             <button
