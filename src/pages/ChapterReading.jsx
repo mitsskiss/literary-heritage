@@ -69,6 +69,7 @@ function ChapterReading() {
     recordQuizTopicResult,
     advanceScene,
     completeStory,
+    resetStory,
     toggleFavorite,
   } = useProgressStore();
   const [xpPulse, setXpPulse] = useState(null);
@@ -231,6 +232,12 @@ function ChapterReading() {
       : currentScene?.title;
   const compareControlLabel =
     language === "kk" ? "Салыстыру" : language === "ru" ? "Сравнить" : "Compare";
+  const retryChapterLabel =
+    language === "kk"
+      ? "Тарауды қайта оқу"
+      : language === "ru"
+        ? "Повторить главу"
+        : "Retry chapter";
   const answeredSceneCount = Object.keys(progress.choices).length;
   const chapterProgressPercent =
     scenes.length > 0
@@ -400,6 +407,20 @@ function ChapterReading() {
     if (question.topic) {
       recordQuizTopicResult(question.topic, option.isCorrect ? 1 : 0, 1);
     }
+  };
+
+  const handleRetryChapter = () => {
+    if (!chapter) return;
+
+    resetStory(chapter.id);
+    setActiveReaderTab("text");
+    setIsComparisonOpen(false);
+    setActiveAnnotation(null);
+    setShareMessage("");
+
+    window.requestAnimationFrame(() => {
+      document.querySelector(".chapter-page")?.scrollTo({ top: 0, left: 0 });
+    });
   };
 
   const handleShare = async () => {
@@ -807,6 +828,14 @@ function ChapterReading() {
             </section>
 
             <div className="chapter-completion__actions">
+              <button
+                type="button"
+                className="chapter-completion__action"
+                onClick={handleRetryChapter}
+              >
+                {retryChapterLabel}
+              </button>
+
               {nextChapter ? (
                 <Link
                   to={getChapterPath(work.id, nextChapter.chapterNumber)}

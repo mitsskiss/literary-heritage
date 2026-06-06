@@ -526,6 +526,27 @@ export const useProgressStore = create(
         });
       },
 
+      resetStory: (storyId) => {
+        set((state) => {
+          const nextStoryProgress = { ...state.storyProgress };
+          delete nextStoryProgress[storyId];
+
+          const nextFinalQuizzes = { ...state.finalQuizzes };
+          delete nextFinalQuizzes[storyId];
+
+          return {
+            ...state,
+            progressUpdatedAt: getNowIso(),
+            completedStories: state.completedStories.filter((id) => id !== storyId),
+            storyProgress: {
+              ...nextStoryProgress,
+              [storyId]: ensureStoryState(nextStoryProgress, storyId),
+            },
+            finalQuizzes: nextFinalQuizzes,
+          };
+        });
+      },
+
       toggleFavorite: (item) => {
         set((state) => {
           const exists = state.favorites.some(
