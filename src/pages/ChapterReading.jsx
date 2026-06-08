@@ -17,10 +17,14 @@ import "./ChapterReading.css";
 import { useI18n } from "../i18n/useI18n";
 import { useTheme } from "../theme/ThemeContext";
 import {
+  MuraBackIcon,
   MuraBookmarkIcon,
+  MuraNoteIcon,
+  MuraPencilIcon,
   MuraShareIcon,
   MuraSettingsIcon,
 } from "../components/icons/MuraIconSet";
+import { getWorkDisplayTitle } from "../utils/workTitles";
 
 function ChapterReading() {
   const {
@@ -68,6 +72,7 @@ function ChapterReading() {
     recordReadingSession,
     recordQuizTopicResult,
     advanceScene,
+    goToStoryScene,
     completeStory,
     resetStory,
     toggleFavorite,
@@ -80,7 +85,11 @@ function ChapterReading() {
   const [activeReaderTab, setActiveReaderTab] = useState("text");
   const [activeAnnotation, setActiveAnnotation] = useState(null);
   const [shareMessage, setShareMessage] = useState("");
+  const [quoteNote, setQuoteNote] = useState("");
+  const [isQuizVisible, setIsQuizVisible] = useState(false);
   const annotationAreaRef = useRef(null);
+  const comparisonSectionRef = useRef(null);
+  const quizSectionRef = useRef(null);
   const [leftComparisonLanguage, setLeftComparisonLanguage] = useState(language);
   const [rightComparisonLanguage, setRightComparisonLanguage] = useState(
     language === "en" ? "ru" : "en"
@@ -181,7 +190,12 @@ function ChapterReading() {
   };
 
   const currentScene = scenes[progress.currentSceneIndex];
-  const currentFragment = work?.fragments?.[progress.currentSceneIndex] ?? work?.fragments?.[0];
+  const currentFragment =
+  currentScene?.fragment ??
+  work?.fragments?.[progress.currentSceneIndex] ??
+  work?.fragments?.[0] ??
+  null;
+
   const leftComparisonScene = localizeStoryInLanguage(
     baseChapter,
     leftComparisonLanguage
@@ -223,15 +237,41 @@ function ChapterReading() {
     scenes.length
   );
   const sceneTitleLabel =
-    id === "abai-words" && currentScene?.sceneNumber
-      ? language === "kk"
-        ? `${currentScene.sceneNumber}-сөз`
-        : language === "ru"
-          ? `Слово ${currentScene.sceneNumber}`
-          : `Word ${currentScene.sceneNumber}`
-      : currentScene?.title;
+  getLocalizedValue(currentScene?.displayTitle, language) ||
+  getLocalizedValue(currentScene?.title, language) ||
+  t("sceneOf", {
+    current: visibleSceneNumber,
+    total: scenes.length,
+  });
   const compareControlLabel =
     language === "kk" ? "Салыстыру" : language === "ru" ? "Сравнить" : "Compare";
+  const textTabLabel =
+    language === "kk" ? "Мәтін" : language === "ru" ? "Фрагмент" : "Text";
+  const explanationTabLabel =
+    language === "kk" ? "Түсіндіру" : language === "ru" ? "Объяснение" : "Explanation";
+  const historyTabLabel =
+    language === "kk"
+      ? "Тарихи контекст"
+      : language === "ru"
+        ? "Контекст"
+        : "Historical context";
+  const quoteNotePlaceholder =
+    language === "kk"
+      ? "Цитатаға түсінік жазу..."
+      : language === "ru"
+        ? "Напишите пояснение к цитате..."
+        : "Write a note about this quote...";
+  const mainIdeaLabel =
+    language === "kk" ? "Негізгі идея" : language === "ru" ? "Главная идея" : "Main idea";
+  const lockedSceneLabel =
+    language === "kk" ? "Құлыптаулы сахна" : language === "ru" ? "Сцена заблокирована" : "Locked scene";
+  const openSceneLabel =
+    language === "kk" ? "Сахнаны ашу" : language === "ru" ? "Открыть сцену" : "Open scene";
+  const displayWorkTitle = work ? getWorkDisplayTitle(work, language) : "";
+  const breadcrumbLabel = work
+    ? `${work.author}. ${displayWorkTitle}`
+    : "";
+  const chapterTitleLabel = getLocalizedValue(chapter?.chapterTitle, language) || chapter?.chapterTitle;
   const retryChapterLabel =
     language === "kk"
       ? "Тарауды қайта оқу"
@@ -239,10 +279,35 @@ function ChapterReading() {
         ? "Повторить главу"
         : "Retry chapter";
   const answeredSceneCount = Object.keys(progress.choices).length;
+  const maxUnlockedSceneIndex = Math.max(
+    Number(progress.currentSceneIndex) || 0,
+    Number(progress.maxSceneIndex) || 0
+  );
   const chapterProgressPercent =
     scenes.length > 0
       ? Math.round((answeredSceneCount / scenes.length) * 100)
       : 0;
+  const sceneExplanation =
+    getLocalizedValue(currentScene?.explanation, language) ||
+    getLocalizedValue(currentScene?.context?.[0], language) ||
+    chapter?.tagline;
+  const sceneMainIdea =
+    getLocalizedValue(currentScene?.mainIdea, language) ||
+    getLocalizedValue(currentScene?.choices?.find((choice) => choice.result.isCorrect)?.result?.characterInsight, language) ||
+    getLocalizedValue(currentScene?.prompt, language) ||
+    chapter?.tagline;
+  const sceneHistoricalContext =
+    getLocalizedValue(currentScene?.historicalContext, language) ||
+    getLocalizedValue(currentScene?.context?.[1], language) ||
+    chapter?.tagline;
+  const sceneThemes =
+    currentScene?.themes?.length ? currentScene.themes : work?.themes ?? [];
+  const sceneDifficultWords = getDifficultWordsForLanguage(currentScene, language);
+  const sceneAnnotations = getAnnotationEntriesForLanguage(
+    currentFragment?.annotations,
+    sceneDifficultWords,
+    language
+  );
   const finalQuizAnswers = chapter ? finalQuizzes[chapter.id] ?? {} : {};
   const finalQuiz = scenes.slice(0, 3).map((scene) => ({
     id: `final-${scene.id}`,
@@ -372,7 +437,25 @@ function ChapterReading() {
 
   useEffect(() => {
     setActiveAnnotation(null);
+    setIsQuizVisible(false);
   }, [progress.currentSceneIndex]);
+
+  useEffect(() => {
+    if (!quizSectionRef.current) return undefined;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsQuizVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "0px 0px -18% 0px", threshold: 0.18 }
+    );
+
+    observer.observe(quizSectionRef.current);
+    return () => observer.disconnect();
+  }, [currentScene?.id, activeReaderTab]);
 
   useEffect(() => {
     if (!activeAnnotation) return undefined;
@@ -399,6 +482,19 @@ function ChapterReading() {
     advanceScene(chapter.id, scenes.length);
   };
 
+  const handleSceneNavigation = (sceneIndex) => {
+    if (!chapter || sceneIndex > maxUnlockedSceneIndex) return;
+
+    goToStoryScene(chapter.id, sceneIndex, scenes.length);
+    setActiveReaderTab("text");
+    setIsComparisonOpen(false);
+    setActiveAnnotation(null);
+
+    window.requestAnimationFrame(() => {
+      document.querySelector(".chapter-page")?.scrollTo({ top: 0, left: 0 });
+    });
+  };
+
   const handleFinalQuizAnswer = (question, option) => {
     if (!chapter) return;
 
@@ -417,6 +513,7 @@ function ChapterReading() {
     setIsComparisonOpen(false);
     setActiveAnnotation(null);
     setShareMessage("");
+    setQuoteNote("");
 
     window.requestAnimationFrame(() => {
       document.querySelector(".chapter-page")?.scrollTo({ top: 0, left: 0 });
@@ -458,6 +555,31 @@ function ChapterReading() {
     }
   };
 
+  useEffect(() => {
+    if (!shareMessage) return undefined;
+
+    const timeoutId = window.setTimeout(() => {
+      setShareMessage("");
+    }, 2400);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [shareMessage]);
+
+  useEffect(() => {
+    if (!isComparisonOpen || !comparisonSectionRef.current) return;
+
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    window.requestAnimationFrame(() => {
+      comparisonSectionRef.current?.scrollIntoView({
+        behavior: prefersReducedMotion ? "auto" : "smooth",
+        block: "start",
+      });
+    });
+  }, [isComparisonOpen]);
+
   if (!hasChapterData) {
     return (
       <main className="chapter-page">
@@ -479,29 +601,21 @@ function ChapterReading() {
   return (
     <main className="chapter-page">
       <div className="chapter-page__container">
-        {xpPulse ? (
-          <div
-            className={`chapter-xp-toast is-${xpPulse.tone}`}
-            aria-live="polite"
-          >
-            <span className="chapter-xp-toast__icon">{"\u2605"}</span>
-            <div className="chapter-xp-toast__content">
-              <strong>{t("readingPointsDelta", { count: xpPulse.value })}</strong>
-              <span>{xpPulse.status}</span>
-            </div>
-          </div>
-        ) : null}
-
         <section className="chapter-topbar">
           <div className="chapter-topbar__header">
-            <Link to={`/reading/${work.id}`} className="chapter-topbar__backButton" aria-label={t("backToBookPage")}>
-              ‹
+            <Link
+              to={`/reading/${work.id}`}
+              className="chapter-topbar__backButton"
+              aria-label={t("backToBookPage")}
+              title={t("backToBookPage")}
+            >
+              <MuraBackIcon />
             </Link>
 
             <div className="chapter-topbar__main">
-              <h1 className="chapter-topbar__title">{work.title}</h1>
+              <h1 className="chapter-topbar__title">{breadcrumbLabel}</h1>
               <p className="chapter-topbar__subtitle">
-                {t("chapter", { number: chapter.chapterNumber })} {"\u00B7"} {chapter.chapterTitle}
+                {t("chapter", { number: chapter.chapterNumber })} {"\u00B7"} {chapterTitleLabel}
               </p>
             </div>
           </div>
@@ -523,19 +637,6 @@ function ChapterReading() {
             </div>
 
             <div className="chapter-topbar__meta">
-              <span className="chapter-topbar__metric">
-                <strong>{"\u{1F525}"}</strong> {streak}
-              </span>
-              <span className="chapter-topbar__metric">
-                <strong>{"\u2665"}</strong> {lives}
-              </span>
-              <span
-                className={`chapter-topbar__metric ${
-                  xpPulse ? "is-xp-active" : ""
-                }`}
-              >
-                <strong>{"\u2605"}</strong> {xp}
-              </span>
             </div>
           </div>
 
@@ -555,7 +656,10 @@ function ChapterReading() {
               </span>
               <button
                 type="button"
-                className="chapter-language-toggle"
+                className={`mura-reader-compare-toggle ${
+                  isComparisonOpen ? "is-active" : ""
+                }`}
+                aria-pressed={isComparisonOpen}
                 onClick={() => setIsComparisonOpen((current) => !current)}
               >
                 {compareControlLabel}
@@ -595,11 +699,19 @@ function ChapterReading() {
               >
                 <MuraSettingsIcon />
               </button>
-              {shareMessage ? (
-                <span className="mura-reader-actions__status" role="status">
-                  {shareMessage}
-                </span>
-              ) : null}
+              <span className="chapter-topbar__metric">
+                <strong>{"\u{1F525}"}</strong> {streak}
+              </span>
+              <span className="chapter-topbar__metric">
+                <strong>{"\u2665"}</strong> {lives}
+              </span>
+              <span
+                className={`chapter-topbar__metric ${
+                  xpPulse ? "is-xp-active" : ""
+                }`}
+              >
+                <strong>{"\u2605"}</strong> {xp}
+              </span>
             </div>
           ) : null}
         </section>
@@ -634,10 +746,31 @@ function ChapterReading() {
               {scenes.map((scene, index) => {
                 const isAnswered = Boolean(progress.choices[scene.id]);
                 const isActive = index === progress.currentSceneIndex;
+                const isLocked = index > maxUnlockedSceneIndex;
+                const sceneLabel =
+                  getLocalizedValue(scene.displayTitle, language) ||
+                  getLocalizedValue(scene.title, language) ||
+                  t("sceneOf", { current: index + 1, total: scenes.length });
+                const buttonTitle = isLocked
+                  ? `${lockedSceneLabel}: ${sceneLabel}`
+                  : `${openSceneLabel}: ${sceneLabel}`;
 
                 return (
-                  <li key={scene.id} className={`${isActive ? "is-active" : ""} ${isAnswered ? "is-complete" : ""}`}>
-                    <span>{isAnswered ? "✓" : index + 1}</span>
+                  <li
+                    key={scene.id}
+                    className={`${isActive ? "is-active" : ""} ${isAnswered ? "is-complete" : ""} ${isLocked ? "is-locked" : ""}`}
+                  >
+                    <button
+                      type="button"
+                      className="mura-reader-rail__button"
+                      disabled={isLocked}
+                      aria-current={isActive ? "step" : undefined}
+                      aria-label={buttonTitle}
+                      title={buttonTitle}
+                      onClick={() => handleSceneNavigation(index)}
+                    >
+                      {isAnswered && !isActive ? "✓" : index + 1}
+                    </button>
                     <small>{scene.sceneNumber ?? index + 1}</small>
                   </li>
                 );
@@ -659,35 +792,36 @@ function ChapterReading() {
           <aside className="mura-reader-aside">
             <article className="mura-reader-panel">
               <h2>{t("explanation")}</h2>
-              <p>
-                {selectedChoice?.result?.explanation ??
-                  currentScene.context?.[0] ??
-                  chapter.tagline}
-              </p>
+              <p>{sceneExplanation}</p>
             </article>
             <article className="mura-reader-panel">
-              <h2>{t("question")}</h2>
-              <p>{currentScene.prompt ?? chapter.tagline}</p>
+              <h2>{mainIdeaLabel}</h2>
+              <p>{sceneMainIdea}</p>
             </article>
             <article className="mura-reader-panel">
               <h2>{t("themes")}</h2>
               <div className="mura-reader-tags">
-                {(work.themes ?? []).slice(0, 4).map((theme) => (
+                {sceneThemes.slice(0, 4).map((theme) => (
                   <span key={theme}>{theme}</span>
                 ))}
               </div>
             </article>
-            <article className="mura-reader-panel mura-reader-panel--compare">
-              <div>
-                <h2>{t("compareLanguages")}</h2>
-                <button type="button" onClick={() => setIsComparisonOpen((current) => !current)}>
-                  {compareControlLabel}
-                </button>
-              </div>
-              <div className="mura-reader-compare-mini">
-                <p>{leftComparisonScene?.context?.[0] ?? currentScene.context?.[0]}</p>
-                <p>{rightComparisonScene?.context?.[0] ?? currentScene.context?.[1] ?? currentScene.context?.[0]}</p>
-              </div>
+            {sceneDifficultWords.length ? (
+              <article className="mura-reader-panel">
+                <h2>{t("difficultWords")}</h2>
+                <div className="mura-reader-glossary-list">
+                  {sceneDifficultWords.slice(0, 6).map((word) => (
+                    <span key={word.term} className="mura-reader-glossary-chip">
+                      <strong>{word.term}</strong>
+                      <small>{word.meaning}</small>
+                    </span>
+                  ))}
+                </div>
+              </article>
+            ) : null}
+            <article className="mura-reader-panel">
+              <h2>{historyTabLabel}</h2>
+              <p>{sceneHistoricalContext}</p>
             </article>
           </aside>
         ) : null}
@@ -715,7 +849,7 @@ function ChapterReading() {
         ) : null}
 
         {!isCompleted && isComparisonOpen && currentScene ? (
-          <section className="chapter-language-compare">
+          <section className="chapter-language-compare" ref={comparisonSectionRef}>
             <p className="chapter-sceneCard__eyebrow">{t("comparisonContext")}</p>
             <div className="chapter-language-compare__grid">
               <LanguageComparisonColumn
@@ -736,19 +870,16 @@ function ChapterReading() {
           </section>
         ) : null}
 
-        {choiceCelebration ? (
-          <div
-            className={`chapter-choice-toast is-${choiceCelebration.tone}`}
-            aria-live="polite"
-          >
-            {choiceCelebration.title}
-          </div>
-        ) : null}
-
         {streakReward ? (
           <div className="chapter-reward-toast" aria-live="polite">
             <strong>{streakReward.title}</strong>
             <span>{streakReward.text}</span>
+          </div>
+        ) : null}
+
+        {shareMessage ? (
+          <div className="mura-reader-share-toast" role="status" aria-live="polite">
+            {shareMessage}
           </div>
         ) : null}
 
@@ -790,7 +921,7 @@ function ChapterReading() {
 
                   return (
                     <article className="chapter-final-question" key={question.id}>
-                      <p>{question.question}</p>
+                      <p>{getLocalizedValue(question.question, language)}</p>
                       <div className="chapter-final-question__options">
                         {question.options.map((option) => (
                           <button
@@ -806,7 +937,7 @@ function ChapterReading() {
                                 : ""
                             }
                           >
-                            {option.label}
+                            {getLocalizedValue(option.label, language)}
                           </button>
                         ))}
                       </div>
@@ -818,7 +949,7 @@ function ChapterReading() {
                               ? t("quizCorrect")
                               : t("quizIncorrect")}
                           </strong>
-                          <span>{selectedOption.explanation}</span>
+                          <span>{getLocalizedValue(selectedOption.explanation, language)}</span>
                         </div>
                       ) : null}
                     </article>
@@ -884,7 +1015,7 @@ function ChapterReading() {
         ) : (
           <article className="chapter-sceneCard">
             <div className="chapter-sceneCard__head">
-              <p className="chapter-sceneCard__eyebrow">{currentScene.title}</p>
+              <p className="chapter-sceneCard__eyebrow">{getLocalizedValue(currentScene.title, language)}</p>
               <h2 className="chapter-sceneCard__title">{sceneTitleLabel}</h2>
             </div>
 
@@ -896,7 +1027,7 @@ function ChapterReading() {
                 aria-selected={activeReaderTab === "text"}
                 onClick={() => setActiveReaderTab("text")}
               >
-                {t("quoteFragment")}
+                {textTabLabel}
               </button>
               <button
                 type="button"
@@ -905,7 +1036,7 @@ function ChapterReading() {
                 aria-selected={activeReaderTab === "explanation"}
                 onClick={() => setActiveReaderTab("explanation")}
               >
-                {t("explanation")}
+                {explanationTabLabel}
               </button>
               <button
                 type="button"
@@ -914,55 +1045,77 @@ function ChapterReading() {
                 aria-selected={activeReaderTab === "context"}
                 onClick={() => setActiveReaderTab("context")}
               >
-                {t("context")}
+                {historyTabLabel}
               </button>
             </div>
 
-            {activeReaderTab === "context" ? (
-              <section className="chapter-sceneCard__section">
-              <p className="chapter-sceneCard__label">{t("context")}</p>
-              <div className="chapter-sceneCard__text">
-                {currentScene.context.map((paragraph) => (
-                  <p key={paragraph}>{paragraph}</p>
-                ))}
-              </div>
-              </section>
-            ) : null}
 
-            {activeReaderTab === "text" && currentFragment ? (
+            {activeReaderTab === "text" ? (
               <section
                 ref={annotationAreaRef}
                 className="chapter-sceneCard__section chapter-fragment"
               >
                 <p className="chapter-sceneCard__label">{t("quoteFragment")}</p>
+
                 <blockquote>
-                  {renderAnnotatedText(
-                    currentFragment.text,
-                    currentFragment.annotations,
-                    activeAnnotation,
-                    setActiveAnnotation
+                  {currentFragment ? (
+                    renderAnnotatedText(
+                      getLocalizedValue(currentFragment.text, language),
+                      sceneAnnotations,
+                      activeAnnotation,
+                      setActiveAnnotation
+                    )
+                  ) : (
+                    getSceneParagraphs(currentScene).map((paragraph) => (
+                      <p key={getLocalizedValue(paragraph, language)}>
+                        {getLocalizedValue(paragraph, language)}
+                      </p>
+                    ))
                   )}
                 </blockquote>
+
+                <label className="mura-reader-note-row">
+                  <input
+                    type="text"
+                    value={quoteNote}
+                    onChange={(event) => setQuoteNote(event.target.value)}
+                    placeholder={quoteNotePlaceholder}
+                  />
+                  <span aria-hidden="true">
+                    <MuraPencilIcon />
+                  </span>
+                  <span aria-hidden="true">
+                    <MuraNoteIcon />
+                  </span>
+                </label>
               </section>
             ) : null}
 
             {activeReaderTab === "explanation" ? (
               <section className="chapter-sceneCard__section chapter-tab-explanation">
                 <p className="chapter-sceneCard__label">{t("explanation")}</p>
-                <p>
-                  {selectedChoice?.result?.explanation ??
-                    currentScene.context?.[0] ??
-                    chapter.tagline}
-                </p>
+                <p>{sceneExplanation}</p>
               </section>
             ) : null}
 
-            <section className="chapter-sceneCard__section">
-              <p className="chapter-sceneCard__label">{t("question")}</p>
-              <p className="chapter-sceneCard__question">{currentScene.prompt}</p>
-            </section>
+            {activeReaderTab === "context" ? (
+              <section className="chapter-sceneCard__section chapter-tab-context">
+                <p className="chapter-sceneCard__label">{historyTabLabel}</p>
+                <p>{sceneHistoricalContext}</p>
+              </section>
+            ) : null}
 
-            <section className="chapter-sceneCard__section">
+            <section
+              className={`chapter-sceneCard__section chapter-quiz-zone ${
+                isQuizVisible ? "is-visible" : ""
+              }`}
+              ref={quizSectionRef}
+            >
+              <p className="chapter-sceneCard__label">{t("question")}</p>
+              <p className="chapter-sceneCard__question">
+  {getLocalizedValue(currentScene.prompt, language)}
+</p>
+
               <p className="chapter-sceneCard__label">{t("options")}</p>
               <div className="chapter-sceneCard__choices" role="list">
                 {currentScene.choices.map((choice) => (
@@ -979,36 +1132,49 @@ function ChapterReading() {
                     onClick={() => handleChoice(choice)}
                     disabled={Boolean(selectedChoiceId)}
                   >
-                    <span className="chapter-choice__label">{choice.label}</span>
+                    <span className="chapter-choice__label">{getLocalizedValue(choice.label, language)}</span>
                   </button>
                 ))}
               </div>
-            </section>
-
-            {selectedChoice ? (
+              {selectedChoice ? (
               <section className="chapter-result">
                 <div className="chapter-result__top">
                   <div>
                     <p className="chapter-result__label">{t("result")}</p>
                     <h3 className={`chapter-result__status is-${selectedChoice.result.tone}`}>
-                      {selectedChoice.result.status}
+                      {getResultStatusLabel(selectedChoice.result, language)}
                     </h3>
                   </div>
-                  <span className="chapter-result__xp">
-                    {t("readingPointsDelta", { count: selectedChoice.xp })}
-                  </span>
+                  <div className="chapter-result__feedbackStack">
+                    <span className="chapter-result__xp">
+                      {t("readingPointsDelta", { count: selectedChoice.xp })}
+                    </span>
+                    {xpPulse ? (
+                      <span className={`chapter-xp-toast is-${xpPulse.tone}`} aria-live="polite">
+                        {t("readingPointsDelta", { count: xpPulse.value })}
+                      </span>
+                    ) : null}
+                    {choiceCelebration ? (
+                      <span
+                        className={`chapter-choice-toast is-${choiceCelebration.tone}`}
+                        aria-live="polite"
+                      >
+                        {choiceCelebration.title}
+                      </span>
+                    ) : null}
+                  </div>
                 </div>
 
                 <div className="chapter-result__grid">
                   <article className="chapter-result__card">
                     <p className="chapter-result__cardLabel">{t("explanation")}</p>
-                    <p>{selectedChoice.result.explanation}</p>
+                    <p>{getLocalizedValue(selectedChoice.result.explanation, language)}</p>
                   </article>
                   <article className="chapter-result__card">
                     <p className="chapter-result__cardLabel">
                       {t("appearsInWork")}
                     </p>
-                    <p>{selectedChoice.result.canonNote}</p>
+                    <p>{getLocalizedValue(selectedChoice.result.canonNote, language)}</p>
                   </article>
                 </div>
 
@@ -1023,6 +1189,7 @@ function ChapterReading() {
                 </div>
               </section>
             ) : null}
+            </section>
           </article>
         )}
       </div>
@@ -1053,27 +1220,111 @@ function LanguageComparisonColumn({
         </select>
       </label>
 
-      <h3>{scene.title}</h3>
+      <h3>{getLocalizedValue(scene.title, selectedLanguage)}</h3>
       <div className="chapter-language-column__context">
-        {scene.context.map((paragraph) => (
-          <p key={paragraph}>{paragraph}</p>
-        ))}
+        {getSceneParagraphs(scene).map((paragraph) => {
+          const localizedParagraph = getLocalizedValue(paragraph, selectedLanguage);
+
+          return <p key={localizedParagraph}>{localizedParagraph}</p>;
+        })}
       </div>
-      <p className="chapter-language-column__prompt">{scene.prompt}</p>
+      <p className="chapter-language-column__prompt">{getLocalizedValue(scene.prompt, selectedLanguage)}</p>
     </article>
   );
 }
+function getLocalizedValue(value, language = "en") {
+  if (!value) return "";
+  if (typeof value === "string") return value;
 
+  return (
+    value[language] ??
+    value.ru ??
+    value.en ??
+    value.kk ??
+    Object.values(value)[0] ??
+    ""
+  );
+}
 function normalizeWord(value) {
-  return value.toLowerCase().replace(/[^\p{L}\p{N}-]+/gu, "");
+  return String(value).toLowerCase().replace(/[^\p{L}\p{N}-]+/gu, "");
+}
+
+function getLanguageAliases(language = "en") {
+  if (language === "kk" || language === "kz") return ["kk", "kz"];
+  if (language === "ru") return ["ru"];
+  return ["en"];
+}
+
+function getDifficultWordsForLanguage(scene, language = "en") {
+  const glossary = scene?.difficultWords;
+  if (!glossary) return [];
+
+  if (Array.isArray(glossary)) {
+    return [];
+  }
+
+  const localizedWords = getLanguageAliases(language)
+    .flatMap((code) => glossary[code] ?? [])
+    .filter(Boolean);
+
+  return localizedWords
+    .map((entry) => {
+      if (typeof entry === "string") {
+        return {
+          term: entry,
+          meaning: "",
+          note: "",
+          forms: [],
+        };
+      }
+
+      return {
+        term: entry.term ?? "",
+        meaning: entry.meaning ?? "",
+        note: entry.note ?? "",
+        forms: Array.isArray(entry.forms) ? entry.forms : [],
+      };
+    })
+    .filter((entry) => entry.term);
+}
+
+function getAnnotationEntriesForLanguage(annotations = [], difficultWords = [], language = "en") {
+  if (difficultWords.length) {
+    return difficultWords.map((entry) => ({
+      term: entry.term,
+      meaning: entry.meaning,
+      note: entry.note,
+      forms: [entry.term, ...(entry.forms ?? [])],
+    }));
+  }
+
+  return annotations
+    .map((annotation) => {
+      const term = getLocalizedValue(annotation.word, language);
+      const meaning = getLocalizedValue(annotation.explanation, language);
+
+      return term && meaning
+        ? {
+            term,
+            meaning,
+            note: "",
+            forms: [term],
+          }
+        : null;
+    })
+    .filter(Boolean);
 }
 
 function renderAnnotatedText(text, annotations = [], activeAnnotation, onToggle) {
   const annotationMap = new Map(
-    annotations.map((annotation) => [normalizeWord(annotation.word), annotation])
+    annotations.flatMap((annotation) => {
+      const terms = [annotation.term, ...(annotation.forms ?? [])].filter(Boolean);
+
+      return terms.map((term) => [normalizeWord(term), annotation]);
+    })
   );
 
-  return text.split(/(\s+)/).map((token, index) => {
+  return String(text).split(/(\s+)/).map((token, index) => {
     const normalized = normalizeWord(token);
     const annotation = annotationMap.get(normalized);
     const isOpen = activeAnnotation === normalized;
@@ -1090,7 +1341,9 @@ function renderAnnotatedText(text, annotations = [], activeAnnotation, onToggle)
         </button>
         {isOpen ? (
           <span className="chapter-annotation-popover" role="tooltip">
-            {annotation.explanation}
+            <strong>{annotation.term}</strong>
+            <span>{annotation.meaning}</span>
+            {annotation.note ? <small>{annotation.note}</small> : null}
           </span>
         ) : null}
       </span>
@@ -1098,6 +1351,44 @@ function renderAnnotatedText(text, annotations = [], activeAnnotation, onToggle)
       <span key={`${token}-${index}`}>{token}</span>
     );
   });
+}
+function getSceneParagraphs(scene) {
+  if (Array.isArray(scene?.context) && scene.context.length) {
+    return scene.context;
+  }
+
+  if (scene?.fragment?.text) {
+    return [scene.fragment.text];
+  }
+
+  if (scene?.explanation) {
+    return [scene.explanation];
+  }
+
+  return [];
+}
+
+function getResultStatusLabel(result, language = "en") {
+  if (!result) return "";
+  const tone = result.tone;
+
+  if (tone === "correct") {
+    return language === "kk" ? "Дұрыс" : language === "ru" ? "Верно" : "Correct";
+  }
+
+  if (tone === "partial") {
+    return language === "kk"
+      ? "Ішінара дұрыс"
+      : language === "ru"
+        ? "Частично верно"
+        : "Partially correct";
+  }
+
+  return language === "kk"
+    ? "Дәл емес"
+    : language === "ru"
+      ? "Не совсем точно"
+      : "Not quite accurate";
 }
 
 export default ChapterReading;

@@ -4,10 +4,13 @@ import archivePoetry from "../assets/mura/collection-poetry.jpg";
 import archiveProse from "../assets/mura/collection-prose.jpg";
 import archiveThoughts from "../assets/mura/collection-thoughts.jpg";
 import archiveRoutes from "../assets/mura/collection-routes.jpg";
+import bookAbai from "../assets/mura/book-abai.svg";
+import manuscriptImage from "../assets/mura/abai-manuscript-bg.svg";
 
 export const authors = [
   {
     name: "Abai Kunanbayev",
+    slug: "abai-kunanbayev",
     image: abaiPortrait,
     period: "Kazakh Enlightenment · XIX century",
     years: "1845-1904",
@@ -22,6 +25,487 @@ export const authors = [
       "Abai is treated as a central figure of Kazakh enlightenment and a foundation for modern Kazakh literary thought.",
     mainWorks: ["Book of Words", "Selected poems", "Songs and translations"],
     sourceHint: "Adebiportal, Abai literary archive, public educational materials",
+    profile: {
+      en: {
+        name: "Abai Kunanbayev",
+        years: "1845-1904",
+        shortDescription:
+          "Great Kazakh poet, philosopher, thinker, educator, composer, and founder of modern written Kazakh literature.",
+        fullBiography: [
+          "Abai Kunanbayev was born in the Shyngystau region into the family of Kunanbay Uskenbayuly, a powerful bi and public figure. His early life joined the living oral tradition of the steppe with strict expectations of responsibility, judgment, and service.",
+          "He studied first in a traditional environment and then in a madrasa, where he encountered Arabic, Persian, and Eastern literary culture. Later he expanded his intellectual world through Russian and European literature, reading Pushkin, Lermontov, Krylov, and philosophical prose.",
+          "Abai's mature work created a new intellectual language for Kazakh literature. His poems, songs, translations, and the Book of Words speak about knowledge, labor, conscience, faith, justice, and the moral renewal of society.",
+        ],
+        quote:
+          "A person resembles this world: the more you know, the more strongly you feel your responsibility.",
+        metadata: [
+          {
+            label: "Born",
+            value: "10 August 1845",
+            detail: "Shyngystau mountains, Semey region",
+            icon: "calendar",
+          },
+          {
+            label: "Activity",
+            value: "Poet, prose writer, translator",
+            detail: "Philosopher, composer, educator",
+            icon: "feather",
+          },
+          {
+            label: "Epoch",
+            value: "XIX century",
+            detail: "Second half",
+            icon: "globe",
+          },
+          {
+            label: "Language of work",
+            value: "Kazakh",
+            detail: "Turkic literary tradition",
+            icon: "book",
+          },
+        ],
+        tabs: {
+          overview: "Overview",
+          biography: "Biography",
+          works: "Works",
+          quotes: "Quotes",
+          research: "Articles and research",
+          facts: "Facts",
+        },
+        labels: {
+          authors: "Authors",
+          save: "Save",
+          saved: "Saved",
+          share: "Share",
+          copied: "Link copied",
+          shortBio: "Short biography",
+          keyThemes: "Key themes",
+          cultureContribution: "Contribution to culture",
+          interestingFact: "Interesting fact",
+          majorWorks: "Major works",
+          viewAll: "View all",
+          readFullBio: "Read full biography",
+          readAbai: "Read Abai's works",
+          readAbaiText: "Enter the wisdom of the great thinker and poet.",
+          allWorks: "All works",
+          openWork: "Open work",
+          unavailable: "Available in works catalog",
+          articlesIntro: "Curated materials that help read Abai through history, philosophy, and literary memory.",
+        },
+        timeline: [
+          { year: "1845", text: "Born in the family of Kunanbay Uskenbayuly." },
+          { year: "1850-1860", text: "Received traditional education and studied Eastern literature." },
+          { year: "1860-1880", text: "Expanded his knowledge through Russian and European literature." },
+          { year: "1880-1904", text: "Created major poems, translations, songs, and philosophical prose." },
+          { year: "1904", text: "Passed away in the Semipalatinsk region." },
+        ],
+        keyThemes: [
+          "Human and society",
+          "Morality",
+          "Knowledge and enlightenment",
+          "Labor and idleness",
+          "Love and compassion",
+          "Faith and reason",
+          "Justice",
+          "Self-knowledge",
+        ],
+        cultureContribution:
+          "Abai laid a foundation for the Kazakh intellectual tradition, joining Eastern wisdom with Western thought. His work deeply influenced literature, language, education, and national self-awareness.",
+        interestingFact:
+          "Abai was not only a poet, but also a composer. More than twenty songs are traditionally associated with his name and are still performed today.",
+        quotes: [
+          "The one who does not seek knowledge cannot understand the value of the human path.",
+          "Labor, reason, and a warm heart must act together.",
+          "A word becomes alive when it awakens conscience in the reader.",
+        ],
+        works: [
+          {
+            workId: "abai-words",
+            title: "The Book of Words",
+            subtitle: "Philosophical prose",
+            years: "1890-1904",
+            genre: "Philosophical prose",
+            image: bookAbai,
+          },
+          {
+            workId: "auezov-abai-path",
+            title: "The Path of Abai",
+            subtitle: "Epic novel about Abai",
+            years: "1942-1956",
+            genre: "Novel-epic",
+            image: archiveAuthors,
+          },
+          {
+            title: "Poems",
+            subtitle: "Poetry",
+            years: "1870-1904",
+            genre: "Poetry",
+            href: "/works",
+            image: archiveRoutes,
+          },
+          {
+            title: "Translations",
+            subtitle: "Pushkin, Lermontov, Krylov",
+            years: "1870-1904",
+            genre: "Translations",
+            href: "/works",
+            image: manuscriptImage,
+          },
+        ],
+        research: [
+          {
+            title: "Abai and Kazakh enlightenment",
+            text: "How Abai linked education with conscience and public responsibility.",
+            href: "/route/abai-path",
+          },
+          {
+            title: "Reading the Book of Words",
+            text: "A guided entry into Abai's prose, themes, and difficult concepts.",
+            href: "/reading/abai-words",
+          },
+          {
+            title: "Abai in literary memory",
+            text: "The image of Abai in later Kazakh prose and cultural imagination.",
+            href: "/reading/auezov-abai-path",
+          },
+        ],
+        facts: [
+          "Abai translated works by Pushkin, Lermontov, Krylov, and other authors into Kazakh cultural language.",
+          "His songs combine poetic text, philosophical feeling, and musical form.",
+          "The Book of Words is read today as literature, moral philosophy, and cultural self-reflection.",
+        ],
+      },
+      ru: {
+        name: "Абай Кунанбаев",
+        years: "1845-1904",
+        shortDescription:
+          "Великий казахский поэт, философ, мыслитель, просветитель и основоположник новой письменной казахской литературы.",
+        fullBiography: [
+          "Абай Кунанбаев родился в урочище Шынгыстау в семье Кунанбая Ускенбайулы - влиятельного бия и общественного деятеля. Ранние годы Абая соединили живую устную культуру степи с представлением о долге, ответственности и справедливом слове.",
+          "Он получил традиционное образование, учился в медресе, познакомился с арабской, персидской и восточной литературой. Позднее Абай расширил круг чтения через русскую и европейскую культуру, обращаясь к Пушкину, Лермонтову, Крылову и философской прозе.",
+          "В зрелые годы Абай создал новый интеллектуальный язык казахской литературы. Его стихи, песни, переводы и Книга слов говорят о знании, труде, совести, вере, справедливости и нравственном обновлении общества.",
+        ],
+        quote:
+          "Человек подобен этому миру: чем больше познаешь, тем сильнее чувствуешь свою ответственность.",
+        metadata: [
+          {
+            label: "Родился",
+            value: "10 августа 1845",
+            detail: "Шынгыстау, Семипалатинская область",
+            icon: "calendar",
+          },
+          {
+            label: "Деятельность",
+            value: "Поэт, прозаик, переводчик",
+            detail: "Философ, композитор, просветитель",
+            icon: "feather",
+          },
+          {
+            label: "Эпоха",
+            value: "XIX век",
+            detail: "Вторая половина",
+            icon: "globe",
+          },
+          {
+            label: "Язык творчества",
+            value: "Казахский",
+            detail: "Тюркская литературная традиция",
+            icon: "book",
+          },
+        ],
+        tabs: {
+          overview: "Обзор",
+          biography: "Биография",
+          works: "Произведения",
+          quotes: "Цитаты",
+          research: "Статьи и исследования",
+          facts: "Факты",
+        },
+        labels: {
+          authors: "Авторы",
+          save: "Сохранить",
+          saved: "Сохранено",
+          share: "Поделиться",
+          copied: "Ссылка скопирована",
+          shortBio: "Краткая биография",
+          keyThemes: "Ключевые темы",
+          cultureContribution: "Вклад в культуру",
+          interestingFact: "Интересный факт",
+          majorWorks: "Основные произведения",
+          viewAll: "Смотреть все",
+          readFullBio: "Читать полную биографию",
+          readAbai: "Читайте произведения Абая",
+          readAbaiText: "Погрузитесь в мудрость великого мыслителя и поэта.",
+          allWorks: "Все произведения",
+          openWork: "Открыть произведение",
+          unavailable: "Доступно в каталоге произведений",
+          articlesIntro: "Материалы, которые помогают читать Абая через историю, философию и литературную память.",
+        },
+        timeline: [
+          { year: "1845", text: "Родился в семье известного бия Кунанбая Ускенбайулы." },
+          { year: "1850-1860", text: "Получил традиционное образование, изучал восточную литературу." },
+          { year: "1860-1880", text: "Расширил знания через русскую культуру и европейскую литературу." },
+          { year: "1880-1904", text: "Создал главные произведения, переводы и философские трактаты." },
+          { year: "1904", text: "Ушел из жизни в Семипалатинской области." },
+        ],
+        keyThemes: [
+          "Человек и общество",
+          "Нравственность",
+          "Знание и просвещение",
+          "Труд и лень",
+          "Любовь и сострадание",
+          "Вера и разум",
+          "Справедливость",
+          "Самопознание",
+        ],
+        cultureContribution:
+          "Абай заложил основы казахской интеллектуальной традиции, соединив восточную мудрость и западную мысль. Его творчество оказало огромное влияние на развитие литературы, языка и национального самосознания.",
+        interestingFact:
+          "Абай был не только поэтом, но и композитором. С его именем связывают более двадцати песен, которые исполняются и сегодня.",
+        quotes: [
+          "Тот, кто не стремится к знанию, не поймет ценности человеческого пути.",
+          "Труд, разум и горячее сердце должны действовать вместе.",
+          "Слово становится живым, когда пробуждает совесть читателя.",
+        ],
+        works: [
+          {
+            workId: "abai-words",
+            title: "Слова назидания",
+            subtitle: "Қара сөздер",
+            years: "1890-1904",
+            genre: "Философская проза",
+            image: bookAbai,
+          },
+          {
+            workId: "auezov-abai-path",
+            title: "Путь Абая",
+            subtitle: "Абай жолы",
+            years: "1942-1956",
+            genre: "Роман-эпопея",
+            image: archiveAuthors,
+          },
+          {
+            title: "Стихотворения",
+            subtitle: "Өлеңдер",
+            years: "1870-1904",
+            genre: "Поэзия",
+            href: "/works",
+            image: archiveRoutes,
+          },
+          {
+            title: "Переводы",
+            subtitle: "Пушкин, Лермонтов, Крылов",
+            years: "1870-1904",
+            genre: "Переводы",
+            href: "/works",
+            image: manuscriptImage,
+          },
+        ],
+        research: [
+          {
+            title: "Абай и казахское просвещение",
+            text: "Как Абай связал образование, совесть и общественную ответственность.",
+            href: "/route/abai-path",
+          },
+          {
+            title: "Чтение Книги слов",
+            text: "Маршрут к прозе Абая, ее темам и сложным понятиям.",
+            href: "/reading/abai-words",
+          },
+          {
+            title: "Абай в литературной памяти",
+            text: "Образ Абая в поздней казахской прозе и культурном воображении.",
+            href: "/reading/auezov-abai-path",
+          },
+        ],
+        facts: [
+          "Абай переводил Пушкина, Лермонтова, Крылова и других авторов на язык казахской культуры.",
+          "Его песни соединяют поэтический текст, философское чувство и музыкальную форму.",
+          "Книга слов сегодня читается как литература, нравственная философия и культурное самопознание.",
+        ],
+      },
+      kk: {
+        name: "Абай Құнанбайұлы",
+        years: "1845-1904",
+        shortDescription:
+          "Қазақтың ұлы ақыны, ойшылы, ағартушысы, композиторы және жаңа жазба әдебиеттің негізін қалаушы.",
+        fullBiography: [
+          "Абай Құнанбайұлы Шыңғыстау өңірінде, Құнанбай Өскенбайұлының отбасында дүниеге келді. Оның балалық шағы даладағы ауызша дәстүрмен, билік сөздің жауапкершілігімен және әділет ұғымымен тығыз байланысты болды.",
+          "Алғашқы білімін дәстүрлі ортада алып, кейін медреседе оқыды. Абай араб, парсы және шығыс әдебиетін таныды, ал кейін орыс және еуропалық әдебиет арқылы ой-өрісін кеңейтті.",
+          "Кемел шағында Абай қазақ әдебиетінің жаңа интеллектуалдық тілін қалыптастырды. Оның өлеңдері, әндері, аудармалары және Қара сөздері білім, еңбек, ар, иман, әділет және қоғамның рухани жаңаруы туралы ой қозғайды.",
+        ],
+        quote:
+          "Адам осы әлемге ұқсайды: неғұрлым көп таныған сайын, жауапкершілігіңді соғұрлым терең сезінесің.",
+        metadata: [
+          {
+            label: "Туған жылы",
+            value: "1845 жылғы 10 тамыз",
+            detail: "Шыңғыстау, Семей өңірі",
+            icon: "calendar",
+          },
+          {
+            label: "Қызметі",
+            value: "Ақын, прозаик, аудармашы",
+            detail: "Ойшыл, композитор, ағартушы",
+            icon: "feather",
+          },
+          {
+            label: "Дәуірі",
+            value: "XIX ғасыр",
+            detail: "Екінші жартысы",
+            icon: "globe",
+          },
+          {
+            label: "Шығармашылық тілі",
+            value: "Қазақ тілі",
+            detail: "Түркі әдеби дәстүрі",
+            icon: "book",
+          },
+        ],
+        tabs: {
+          overview: "Шолу",
+          biography: "Өмірбаян",
+          works: "Шығармалар",
+          quotes: "Дәйексөздер",
+          research: "Мақалалар мен зерттеулер",
+          facts: "Деректер",
+        },
+        labels: {
+          authors: "Авторлар",
+          save: "Сақтау",
+          saved: "Сақталды",
+          share: "Бөлісу",
+          copied: "Сілтеме көшірілді",
+          shortBio: "Қысқаша өмірбаян",
+          keyThemes: "Негізгі тақырыптар",
+          cultureContribution: "Мәдениетке қосқан үлесі",
+          interestingFact: "Қызықты дерек",
+          majorWorks: "Негізгі шығармалар",
+          viewAll: "Барлығын көру",
+          readFullBio: "Толық өмірбаянды оқу",
+          readAbai: "Абай шығармаларын оқыңыз",
+          readAbaiText: "Ұлы ойшыл әрі ақынның даналығына бойлаңыз.",
+          allWorks: "Барлық шығармалар",
+          openWork: "Шығарманы ашу",
+          unavailable: "Шығармалар каталогында қолжетімді",
+          articlesIntro: "Абайды тарих, философия және әдеби жады арқылы оқуға көмектесетін материалдар.",
+        },
+        timeline: [
+          { year: "1845", text: "Құнанбай Өскенбайұлының отбасында дүниеге келді." },
+          { year: "1850-1860", text: "Дәстүрлі білім алып, шығыс әдебиетін үйренді." },
+          { year: "1860-1880", text: "Орыс мәдениеті және еуропалық әдебиет арқылы білімін кеңейтті." },
+          { year: "1880-1904", text: "Басты шығармаларын, аудармаларын және философиялық қара сөздерін жазды." },
+          { year: "1904", text: "Семей өңірінде өмірден өтті." },
+        ],
+        keyThemes: [
+          "Адам және қоғам",
+          "Адамгершілік",
+          "Білім және ағарту",
+          "Еңбек пен жалқаулық",
+          "Махаббат пен мейірім",
+          "Иман және ақыл",
+          "Әділет",
+          "Өзін-өзі тану",
+        ],
+        cultureContribution:
+          "Абай шығыс даналығы мен батыс ойларын тоғыстырып, қазақ интеллектуалдық дәстүрінің негізін нығайтты. Оның шығармашылығы әдебиетке, тілге және ұлттық санаға терең ықпал етті.",
+        interestingFact:
+          "Абай ақын ғана емес, композитор да болған. Оның атымен байланысты жиырмадан астам ән бүгінге дейін орындалады.",
+        quotes: [
+          "Білімге ұмтылмаған адам адамдық жолдың қадірін түсінбейді.",
+          "Еңбек, ақыл және жылы жүрек бірге қызмет етуі керек.",
+          "Сөз оқырманның арын оятқанда ғана тірі болады.",
+        ],
+        works: [
+          {
+            workId: "abai-words",
+            title: "Қара сөздер",
+            subtitle: "Слова назидания",
+            years: "1890-1904",
+            genre: "Философиялық проза",
+            image: bookAbai,
+          },
+          {
+            workId: "auezov-abai-path",
+            title: "Абай жолы",
+            subtitle: "Путь Абая",
+            years: "1942-1956",
+            genre: "Роман-эпопея",
+            image: archiveAuthors,
+          },
+          {
+            title: "Өлеңдер",
+            subtitle: "Стихотворения",
+            years: "1870-1904",
+            genre: "Поэзия",
+            href: "/works",
+            image: archiveRoutes,
+          },
+          {
+            title: "Аудармалар",
+            subtitle: "Пушкин, Лермонтов, Крылов",
+            years: "1870-1904",
+            genre: "Аудармалар",
+            href: "/works",
+            image: manuscriptImage,
+          },
+        ],
+        research: [
+          {
+            title: "Абай және қазақ ағартушылығы",
+            text: "Абай білімді ар-ұждан және қоғамдық жауапкершілікпен қалай байланыстырды.",
+            href: "/route/abai-path",
+          },
+          {
+            title: "Қара сөздерді оқу",
+            text: "Абай прозасына, тақырыптарына және күрделі ұғымдарына бағытталған оқу.",
+            href: "/reading/abai-words",
+          },
+          {
+            title: "Абай әдеби жадыда",
+            text: "Кейінгі қазақ прозасындағы және мәдени қиялдағы Абай бейнесі.",
+            href: "/reading/auezov-abai-path",
+          },
+        ],
+        facts: [
+          "Абай Пушкин, Лермонтов, Крылов және басқа авторларды қазақ мәдени тіліне аударды.",
+          "Оның әндері поэтикалық сөзді, философиялық сезімді және музыкалық пішінді біріктіреді.",
+          "Қара сөздер бүгін әдебиет, моральдық философия және мәдени өзін-өзі тану ретінде оқылады.",
+        ],
+      },
+    },
+    workDetail: {
+      en: {
+        name: "Abai Kunanbayev",
+        role: "Poet, philosopher, composer, educator",
+        shortBio:
+          "Abai renewed Kazakh written literature by joining oral poetry, philosophy, music, and civic responsibility.",
+        culturalImportance:
+          "He is a central voice of Kazakh enlightenment and one of the foundations of modern Kazakh literary thought.",
+        connectionToWork:
+          "The Book of Words gathers Abai's reflections on conscience, knowledge, labor, faith, and the moral renewal of society.",
+      },
+      ru: {
+        name: "Абай Кунанбаев",
+        role: "Поэт, философ, композитор, просветитель",
+        shortBio:
+          "Абай обновил казахскую письменную литературу, соединив устную поэзию, философию, музыку и гражданскую ответственность.",
+        culturalImportance:
+          "Он является центральной фигурой казахского просвещения и основой современной казахской литературной мысли.",
+        connectionToWork:
+          "Книга слов объединяет размышления Абая о совести, знании, труде, вере и нравственном обновлении общества.",
+      },
+      kk: {
+        name: "Абай Құнанбайұлы",
+        role: "Ақын, ойшыл, композитор, ағартушы",
+        shortBio:
+          "Абай ауызша поэзияны, философиялық ойды, музыканы және азаматтық жауапкершілікті ұштастырып, қазақ жазба әдебиетін жаңартты.",
+        culturalImportance:
+          "Ол қазақ ағартушылығының өзекті тұлғасы және қазіргі қазақ әдеби ойының негіздерінің бірі.",
+        connectionToWork:
+          "Қара сөздер Абайдың ар, білім, еңбек, иман және қоғамның рухани жаңаруы туралы ойларын жинақтайды.",
+      },
+    },
   },
   {
     name: "Mukhtar Auezov",

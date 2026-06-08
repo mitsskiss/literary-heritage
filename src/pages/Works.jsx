@@ -7,6 +7,7 @@ import { useI18n } from "../i18n/useI18n";
 import { useProgressStore } from "../store/useProgressStore";
 import { mergeAdminWorks } from "../admin/adminContent";
 import { useAdminContent } from "../hooks/useAdminContent";
+import { getWorkDisplayTitle } from "../utils/workTitles";
 import "./Works.css";
 
 function Works() {
@@ -19,16 +20,21 @@ function Works() {
 
   const catalogWorks = useMemo(
     () =>
-      mergeAdminWorks(localizeWorks(works), adminContent, language).map((work) => ({
-        ...work,
-        ...localizeMetadata(work.id, {
-          ...(workMetadataById[work.id] ?? {}),
-          period: work.period ?? workMetadataById[work.id]?.period,
-          type: work.type ?? workMetadataById[work.id]?.type,
-          mood: work.mood ?? workMetadataById[work.id]?.mood,
-          readingTime: work.readingTime ?? workMetadataById[work.id]?.readingTime,
-        }),
-      })),
+      mergeAdminWorks(localizeWorks(works), adminContent, language).map((work) => {
+        const displayTitle = getWorkDisplayTitle(work, language);
+
+        return {
+          ...work,
+          displayTitle,
+          ...localizeMetadata(work.id, {
+            ...(workMetadataById[work.id] ?? {}),
+            period: work.period ?? workMetadataById[work.id]?.period,
+            type: work.type ?? workMetadataById[work.id]?.type,
+            mood: work.mood ?? workMetadataById[work.id]?.mood,
+            readingTime: work.readingTime ?? workMetadataById[work.id]?.readingTime,
+          }),
+        };
+      }),
     [adminContent, language, localizeMetadata, localizeWorks]
   );
 
@@ -43,7 +49,7 @@ function Works() {
     const matchesTheme = activeTheme === "all" || canonicalThemes.includes(activeTheme);
     const matchesQuery =
       normalizedQuery.length === 0 ||
-      [work.title, work.author, work.period, work.type, work.description]
+      [work.displayTitle, work.title, work.author, work.period, work.type, work.description]
         .filter(Boolean)
         .some((value) => value.toLowerCase().includes(normalizedQuery)) ||
       work.themes.some((theme) => theme.toLowerCase().includes(normalizedQuery)) ||
@@ -123,7 +129,7 @@ function Works() {
                 <Link
                   to={`/reading/${work.id}`}
                   className="works-card__image"
-                  aria-label={`${t("openWork")}: ${work.title}`}
+                  aria-label={`${t("openWork")}: ${work.displayTitle}`}
                 >
                   <img
                     src={work.image || fallbackCover}
@@ -139,15 +145,15 @@ function Works() {
                   className={`works-card__favorite ${isFavorite(work.id) ? "is-favorite" : ""}`}
                   aria-label={
                     isFavorite(work.id)
-                      ? `${t("savedFavorite")}: ${work.title}`
-                      : `${t("saveFavorite")}: ${work.title}`
+                      ? `${t("savedFavorite")}: ${work.displayTitle}`
+                      : `${t("saveFavorite")}: ${work.displayTitle}`
                   }
                   title={isFavorite(work.id) ? t("savedFavorite") : t("saveFavorite")}
                   onClick={() =>
                     toggleFavorite({
                       type: "work",
                       id: work.id,
-                      title: work.title,
+                      title: work.displayTitle,
                       subtitle: work.author,
                       href: `/reading/${work.id}`,
                     })
@@ -162,7 +168,7 @@ function Works() {
                     <span>{work.readingTime} {t("min")}</span>
                   </div>
 
-                  <h2>{work.title}</h2>
+                  <h2>{work.displayTitle}</h2>
                   <Link
                     to={`/author/${encodeURIComponent(work.canonicalAuthor ?? work.author)}`}
                     className="works-card__author"

@@ -9,7 +9,7 @@ import archiveRoutes from "../assets/mura/collection-routes.jpg";
 export const works = [
   {
     id: "abai-words",
-    title: "Қара сөздер / The Book of Words",
+    title: "The Book of Words",
     originalTitle: "Қара сөздер",
     author: "Abai Kunanbayev",
     image: abaiCover,

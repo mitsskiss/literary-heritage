@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { works } from "../data/works";
+import { authors } from "../data/authors";
 import { workMetadataById } from "../data/exploreData";
 import {
   getChapterPath,
@@ -20,6 +21,7 @@ import {
   MuraBookmarkIcon,
   MuraShareIcon,
 } from "../components/icons/MuraIconSet";
+import { getWorkDisplayTitle } from "../utils/workTitles";
 
 function Reading() {
   const { t, language, localizeMetadata, localizeStoryBook, localizeWork } = useI18n();
@@ -126,14 +128,24 @@ function Reading() {
     favorites.some(
       (favorite) => favorite.type === type && favorite.id === favoriteId
     );
-  const [displayBookTitle, secondaryBookTitle = ""] = work.title.includes(" / ")
-    ? work.title.split(" / ").map((part) => part.trim())
-    : [
-        work.title,
-        work.originalTitle && work.originalTitle !== work.title
-          ? work.originalTitle
-          : "",
-      ];
+  const displayBookTitle = getWorkDisplayTitle(work, language);
+  const secondaryBookTitle =
+    work.originalTitle && work.originalTitle !== displayBookTitle
+      ? work.originalTitle
+      : "";
+  const canonicalAuthorName = work.canonicalAuthor ?? work.author;
+  const authorRecord = authors.find(
+    (author) =>
+      author.name === canonicalAuthorName ||
+      author.name === work.author ||
+      author.workDetail?.[language]?.name === work.author
+  );
+  const localizedAuthor =
+    authorRecord?.workDetail?.[language] ??
+    authorRecord?.workDetail?.en ??
+    null;
+  const authorDisplayName = localizedAuthor?.name ?? work.author;
+  const authorRole = localizedAuthor?.role ?? authorRecord?.roles?.join(", ");
   const heroPortrait = id === "abai-words" ? work.image : work.image;
   const heroBookCover = id === "abai-words" ? abaiBookCover : null;
   const abaiHeroCategory =
@@ -147,7 +159,7 @@ function Reading() {
     : metadata?.type ?? t("literaryArchive");
   const breadcrumbItems = [
     { label: t("works"), href: "/explore" },
-    { label: work.author },
+    { label: authorDisplayName },
     { label: displayBookTitle },
   ];
 
@@ -194,7 +206,7 @@ function Reading() {
   };
 
   return (
-    <main className="reading-book-page">
+    <main className="reading-book-page reading-book-page--stage4">
       <div className="reading-book-page__container">
         <nav className="reading-book-breadcrumb" aria-label={t("chapterRoute")}>
           {breadcrumbItems.map((item, index) => (
@@ -213,7 +225,7 @@ function Reading() {
           ))}
         </nav>
 
-        <section className="reading-book-hero reading-book-hero--reference">
+        <section className="reading-book-hero reading-book-hero--reference reading-book-hero--stage4">
           <div className="reading-book-hero__media">
             <img
               className="reading-book-hero__manuscript"
@@ -224,7 +236,7 @@ function Reading() {
             <img
               className="reading-book-hero__portrait"
               src={heroPortrait}
-              alt={work.author}
+              alt={authorDisplayName}
             />
           </div>
 
@@ -232,7 +244,7 @@ function Reading() {
             <p className="reading-book-hero__category">
               {heroCategory}
             </p>
-            <p className="reading-book-hero__author">{work.author}</p>
+            <p className="reading-book-hero__author">{authorDisplayName}</p>
             <h1 className="reading-book-hero__title">{displayBookTitle}</h1>
             {secondaryBookTitle ? (
               <p className="reading-book-hero__titleSub">{secondaryBookTitle}</p>
@@ -276,8 +288,8 @@ function Reading() {
                   toggleFavorite({
                     type: "work",
                     id: work.id,
-                    title: work.title,
-                    subtitle: work.author,
+                    title: displayBookTitle,
+                    subtitle: authorDisplayName,
                     href: `/reading/${work.id}`,
                   })
                 }
@@ -323,7 +335,7 @@ function Reading() {
               <>
                 <span>MURA</span>
                 <strong>{displayBookTitle}</strong>
-                <small>{work.author}</small>
+                <small>{authorDisplayName}</small>
               </>
             )}
           </div>
@@ -345,7 +357,7 @@ function Reading() {
                 work.fragments?.[0]?.text ??
                 storyBook.overview}
             </p>
-            <small>{work.fragments?.[0]?.reflection?.resonanceQuote?.author ?? work.author}</small>
+            <small>{work.fragments?.[0]?.reflection?.resonanceQuote?.author ?? authorDisplayName}</small>
           </article>
         </div>
 
@@ -363,7 +375,7 @@ function Reading() {
                   type: "theme",
                   id: `${work.id}:${theme}`,
                   title: theme,
-                  subtitle: work.title,
+                  subtitle: displayBookTitle,
                   href: `/reading/${work.id}`,
                 })
               }
@@ -394,6 +406,26 @@ function Reading() {
           </ol>
         </section>
 
+        {localizedAuthor ? (
+          <section className="mura-author-profile" aria-label={authorDisplayName}>
+            <div className="mura-author-profile__portrait">
+              <img src={authorRecord.image} alt={authorDisplayName} />
+            </div>
+            <div className="mura-author-profile__body">
+              {authorRole ? (
+                <p className="mura-author-profile__label">{authorRole}</p>
+              ) : null}
+              <h2>{authorDisplayName}</h2>
+              <p>{localizedAuthor.shortBio}</p>
+              <div className="mura-author-profile__notes">
+                <span>{authorRecord.years}</span>
+                <span>{localizedAuthor.culturalImportance}</span>
+                <span>{localizedAuthor.connectionToWork}</span>
+              </div>
+            </div>
+          </section>
+        ) : null}
+
         {work.fragments?.length > 0 ? (
           <section className="reading-book-fragments">
             <div className="reading-book-fragments__head">
@@ -420,7 +452,7 @@ function Reading() {
                             type: "quote",
                             id: favoriteId,
                             title: fragment.text,
-                            subtitle: work.title,
+                            subtitle: displayBookTitle,
                             href: `/reading/${work.id}`,
                           })
                         }

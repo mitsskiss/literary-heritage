@@ -496,3 +496,17 @@
   border-bottom-color: var(--heritage-gold);
   background: transparent;
 }
+
+/* Stage 4 title localization guard */
+.works-card h2 {
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  overflow-wrap: anywhere;
+  hyphens: auto;
+}
+
+.works-card__title,
+.works-card__author,
+.works-card p {
+  min-width: 0;
+}

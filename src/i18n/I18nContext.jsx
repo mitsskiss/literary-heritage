@@ -111,6 +111,11 @@ function localizeLabel(value, dictionary, language) {
   return dictionary[value]?.[language] ?? value;
 }
 
+function localizeObjectValue(value, language) {
+  if (!value || typeof value !== "object") return value;
+  return value[language] ?? value.en ?? value.ru ?? value.kk ?? "";
+}
+
 function localizeArrayStrings(items, dictionary, language) {
   return items.map((item) => dictionary[item]?.[language] ?? item);
 }
@@ -246,13 +251,25 @@ export function I18nProvider({ children }) {
         mapMarkerTranslations[marker.id]?.[language] ??
         literaryTimelineTranslations[marker.id]?.[language] ??
         {};
-      const localizedCategory = localizeMapCategory(marker.category, { label: marker.type });
+      const localizedType = localizeObjectValue(marker.type, language);
+      const localizedTitle = localizeObjectValue(marker.title, language);
+      const localizedCity = localizeObjectValue(marker.city, language);
+      const localizedRegion = localizeObjectValue(marker.region, language);
+      const localizedDescription = localizeObjectValue(
+        marker.description ?? marker.shortDescription,
+        language
+      );
+      const localizedCategory = localizeMapCategory(marker.category, { label: localizedType });
 
       return {
         ...marker,
+        name: localizedTitle ?? marker.name,
+        city: localizedCity ?? marker.city,
+        region: localizedRegion ?? marker.region,
+        description: localizedDescription ?? marker.description,
         ...translated,
-        canonicalType: marker.type,
-        type: translated.type ?? localizedCategory.label ?? marker.type,
+        canonicalType: localizedType,
+        type: translated.type ?? localizedCategory.label ?? localizedType,
       };
     };
 

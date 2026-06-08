@@ -289,10 +289,24 @@ function applyDailyActivity(state) {
 }
 
 function ensureStoryState(storyProgress, storyId) {
-  if (storyProgress[storyId]) return storyProgress[storyId];
+  if (storyProgress[storyId]) {
+    const existing = storyProgress[storyId];
+
+    return {
+      ...existing,
+      currentSceneIndex: Number(existing.currentSceneIndex) || 0,
+      maxSceneIndex: Math.max(
+        Number(existing.maxSceneIndex) || 0,
+        Number(existing.currentSceneIndex) || 0
+      ),
+      choices: existing.choices ?? {},
+      quizzes: existing.quizzes ?? {},
+    };
+  }
 
   return {
     currentSceneIndex: 0,
+    maxSceneIndex: 0,
     completed: false,
     earnedXp: 0,
     choices: {},
@@ -418,6 +432,10 @@ export const useProgressStore = create(
 
           const updatedStoryState = {
             ...storyState,
+            maxSceneIndex: Math.max(
+              storyState.maxSceneIndex ?? storyState.currentSceneIndex ?? 0,
+              storyState.currentSceneIndex ?? 0
+            ),
             choices: {
               ...storyState.choices,
               [sceneId]: choiceId,
@@ -452,6 +470,10 @@ export const useProgressStore = create(
           const xpGain = isCorrect ? rewardXp : 0;
           const updatedStoryState = {
             ...storyState,
+            maxSceneIndex: Math.max(
+              storyState.maxSceneIndex ?? storyState.currentSceneIndex ?? 0,
+              storyState.currentSceneIndex ?? 0
+            ),
             quizzes: {
               ...storyState.quizzes,
               [sceneId]: {
@@ -498,6 +520,30 @@ export const useProgressStore = create(
               [storyId]: {
                 ...storyState,
                 currentSceneIndex: nextIndex,
+                maxSceneIndex: Math.max(storyState.maxSceneIndex ?? 0, nextIndex),
+              },
+            },
+          };
+        });
+      },
+
+      goToStoryScene: (storyId, sceneIndex, totalScenes) => {
+        set((state) => {
+          const storyState = ensureStoryState(state.storyProgress, storyId);
+          const safeIndex = Math.max(
+            0,
+            Math.min(Number(sceneIndex) || 0, Math.max(0, totalScenes - 1))
+          );
+
+          return {
+            ...state,
+            progressUpdatedAt: getNowIso(),
+            storyProgress: {
+              ...state.storyProgress,
+              [storyId]: {
+                ...storyState,
+                currentSceneIndex: safeIndex,
+                maxSceneIndex: Math.max(storyState.maxSceneIndex ?? 0, safeIndex),
               },
             },
           };

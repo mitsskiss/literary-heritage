@@ -2085,6 +2085,129 @@
   }
 }
 
+/* Stage 5D: language-aware glossary and translucent word highlighting */
+.chapter-page:not(:has(.chapter-completion)) .chapter-annotated-word {
+  display: inline !important;
+  margin: 0 !important;
+  padding: 0.02em 0.14em 0.04em !important;
+  border: 1px solid color-mix(in srgb, var(--stage5-accent) 54%, transparent) !important;
+  border-radius: 3px !important;
+  background: color-mix(in srgb, var(--stage5-accent) 20%, transparent) !important;
+  color: var(--stage5-text) !important;
+  box-shadow: inset 0 -0.36em 0 color-mix(in srgb, var(--stage5-accent) 18%, transparent) !important;
+  font: inherit !important;
+  font-weight: 650 !important;
+  text-decoration: none !important;
+  cursor: pointer !important;
+  transition:
+    background 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-annotated-word:hover,
+.chapter-page:not(:has(.chapter-completion)) .chapter-annotated-word[aria-expanded="true"] {
+  border-color: color-mix(in srgb, var(--stage5-accent) 74%, transparent) !important;
+  background: color-mix(in srgb, var(--stage5-accent) 28%, transparent) !important;
+  box-shadow:
+    inset 0 -0.5em 0 color-mix(in srgb, var(--stage5-accent) 24%, transparent),
+    0 0 0 2px color-mix(in srgb, var(--stage5-accent) 10%, transparent) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-annotation-popover {
+  width: min(320px, calc(100vw - 42px)) !important;
+  max-width: min(320px, calc(100vw - 42px)) !important;
+  display: grid !important;
+  gap: 7px !important;
+  padding: 12px 13px !important;
+  border-radius: 8px !important;
+  overflow-wrap: anywhere !important;
+  white-space: normal !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-annotation-popover strong {
+  color: var(--stage5-accent) !important;
+  font-size: 0.88rem !important;
+  line-height: 1.25 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-annotation-popover span,
+.chapter-page:not(:has(.chapter-completion)) .chapter-annotation-popover small {
+  color: var(--stage5-text) !important;
+  font-size: 0.84rem !important;
+  line-height: 1.5 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-annotation-popover small {
+  color: var(--stage5-muted) !important;
+}
+
+.mura-reader-glossary-list {
+  display: grid;
+  gap: 9px;
+}
+
+.mura-reader-glossary-chip {
+  display: grid;
+  gap: 4px;
+  padding: 9px 10px;
+  border: 1px solid var(--stage5-line);
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--stage5-surface) 72%, transparent);
+}
+
+.mura-reader-glossary-chip strong {
+  color: var(--stage5-text);
+  font-size: 0.84rem;
+  line-height: 1.3;
+}
+
+.mura-reader-glossary-chip small {
+  color: var(--stage5-muted);
+  font-size: 0.76rem;
+  line-height: 1.45;
+}
+
+@media (max-width: 640px) {
+  .chapter-page:not(:has(.chapter-completion)) .chapter-annotated-word-wrap {
+    position: static !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .chapter-annotation-popover {
+    position: fixed !important;
+    left: 14px !important;
+    right: 14px !important;
+    bottom: 16px !important;
+    width: auto !important;
+    max-width: none !important;
+    z-index: 40 !important;
+  }
+}
+
+/* Stage 5C final surface cleanup: scene heading/text are not cards. */
+.chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard,
+.chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard__head,
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-tabs,
+.chapter-page:not(:has(.chapter-completion)) .chapter-fragment,
+.chapter-page:not(:has(.chapter-completion)) .chapter-quiz-zone {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard {
+  border: 0 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard__head {
+  border: 0 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-tabs {
+  border-top: 1px solid var(--stage5-line) !important;
+  border-bottom: 1px solid var(--stage5-line) !important;
+  padding-top: 14px !important;
+}
+
 /* Stage 2 strict MURA reading reference pass */
 .chapter-page {
   --mura-reader-bg: #07110f;
@@ -2800,5 +2923,2810 @@
   .chapter-language-compare__grid,
   .chapter-challenges__grid {
     grid-template-columns: 1fr !important;
+  }
+}
+
+/* Stage 2C: active reader scale and spacing correction, sidebar preserved */
+.chapter-page:not(:has(.chapter-completion)) {
+  --mura-reader-bg: #07110f;
+  --mura-reader-bg-soft: #081310;
+  --mura-reader-surface: #0c1613;
+  --mura-reader-elevated: #101c18;
+  --mura-reader-border: rgba(210, 225, 215, 0.13);
+  --mura-reader-border-strong: rgba(210, 225, 215, 0.22);
+  --mura-reader-text: #e7eee8;
+  --mura-reader-text-soft: rgba(231, 238, 232, 0.72);
+  --mura-reader-text-muted: rgba(231, 238, 232, 0.48);
+  --mura-reader-accent: #62c99a;
+  --mura-reader-accent-soft: rgba(98, 201, 154, 0.13);
+  padding: 0 22px 46px max(16px, calc(var(--miras-content-offset, 168px) - 142px)) !important;
+  background:
+    radial-gradient(circle at 74% 8%, rgba(34, 96, 76, 0.11), transparent 17rem),
+    linear-gradient(180deg, #06100e 0%, #020807 62%, #030908 100%) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-page__container {
+  width: min(100%, calc(100vw - var(--miras-content-offset, 168px) - 42px)) !important;
+  max-width: 1148px !important;
+  min-height: auto !important;
+  margin: 0 !important;
+  display: grid !important;
+  grid-template-columns: 64px minmax(640px, 1fr) minmax(306px, 326px) !important;
+  grid-auto-rows: min-content !important;
+  gap: 0 24px !important;
+  padding: 24px 0 52px !important;
+  align-items: start !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-topbar {
+  display: contents !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-topbar__header {
+  grid-column: 2 !important;
+  grid-row: 1 !important;
+  min-width: 0 !important;
+  padding-top: 24px !important;
+  gap: 13px !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-topbar__backButton {
+  width: 34px !important;
+  height: 34px !important;
+  min-height: 34px !important;
+  border: 1px solid var(--mura-reader-border) !important;
+  border-radius: 6px !important;
+  background: rgba(255, 255, 255, 0.026) !important;
+  color: var(--mura-reader-text-soft) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-topbar__title {
+  max-width: 340px !important;
+  color: var(--mura-reader-text-muted) !important;
+  font-size: 0.82rem !important;
+  font-weight: 560 !important;
+  line-height: 1.45 !important;
+  white-space: normal !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-topbar__tools {
+  grid-column: 2 / 4 !important;
+  grid-row: 1 !important;
+  justify-content: end !important;
+  min-width: 0 !important;
+  padding-top: 24px !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-actions {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: end !important;
+  gap: 8px !important;
+  max-width: calc(100% - 280px) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-actions__group {
+  min-height: 36px !important;
+  border-radius: 6px !important;
+  background: rgba(255, 255, 255, 0.026) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-actions__group button {
+  min-width: 39px !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  padding: 0 10px !important;
+  color: var(--mura-reader-text-soft) !important;
+  font-size: 0.72rem !important;
+  font-weight: 700 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-actions__group button.is-active {
+  background: rgba(98, 201, 154, 0.13) !important;
+  color: var(--mura-reader-text) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-compare-toggle,
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-compare-toggle:hover,
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-compare-toggle:focus-visible,
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-compare-toggle:active {
+  height: 36px !important;
+  min-height: 36px !important;
+  max-width: none !important;
+  border: 1px solid var(--mura-reader-border) !important;
+  border-radius: 6px !important;
+  background: rgba(255, 255, 255, 0.026) !important;
+  background-image: none !important;
+  color: var(--mura-reader-text-soft) !important;
+  padding: 0 13px !important;
+  font-size: 0.74rem !important;
+  font-weight: 700 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-icon-button {
+  width: 36px !important;
+  min-width: 36px !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  display: inline-grid !important;
+  place-items: center !important;
+  border: 1px solid var(--mura-reader-border) !important;
+  border-radius: 6px !important;
+  background: rgba(255, 255, 255, 0.026) !important;
+  color: var(--mura-reader-text-soft) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-icon-button .mura-icon,
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-note-row .mura-icon {
+  width: 17px !important;
+  height: 17px !important;
+  stroke: currentColor !important;
+  stroke-width: 1.65 !important;
+  fill: none !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-topbar__metric {
+  width: auto !important;
+  min-width: 36px !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  border-radius: 6px !important;
+  padding: 0 9px !important;
+  color: var(--mura-reader-text-soft) !important;
+  font-size: 0.74rem !important;
+  white-space: nowrap !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-rail {
+  grid-column: 1 !important;
+  grid-row: 1 / span 5 !important;
+  width: 64px !important;
+  min-height: 642px !important;
+  position: static !important;
+  padding: 24px 10px 0 0 !important;
+  border-right: 1px solid rgba(210, 225, 215, 0.1) !important;
+  background: transparent !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-rail__top {
+  gap: 5px !important;
+  margin-bottom: 24px !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-rail__top span,
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-rail__foot span {
+  color: var(--mura-reader-text-muted) !important;
+  font-size: 0.68rem !important;
+  font-weight: 620 !important;
+  letter-spacing: 0 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-rail__top strong {
+  color: var(--mura-reader-text) !important;
+  font-size: 0.88rem !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-rail ol {
+  gap: 13px !important;
+  margin: 0 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-rail li > span {
+  width: 23px !important;
+  height: 23px !important;
+  border-radius: 999px !important;
+  font-size: 0.74rem !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-rail li small {
+  display: none !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-rail__foot {
+  margin-top: 42px !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard {
+  grid-column: 2 !important;
+  grid-row: 2 !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 28px 0 34px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard__eyebrow {
+  margin: 0 0 6px !important;
+  color: var(--mura-reader-accent) !important;
+  font-size: 0.75rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.01em !important;
+  text-transform: none !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard__title {
+  margin: 0 !important;
+  color: var(--mura-reader-text) !important;
+  font-size: clamp(2.15rem, 3.15vw, 2.5rem) !important;
+  font-weight: 560 !important;
+  line-height: 1.02 !important;
+  letter-spacing: 0 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-tabs {
+  min-height: 38px !important;
+  margin: 20px 0 0 !important;
+  gap: 28px !important;
+  border-bottom: 1px solid rgba(210, 225, 215, 0.14) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-tabs button {
+  min-height: 38px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  padding: 0 0 10px !important;
+  color: var(--mura-reader-text-muted) !important;
+  font-size: 0.83rem !important;
+  font-weight: 650 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-tabs button.is-active {
+  color: var(--mura-reader-text) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard__section {
+  margin-top: 18px !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-reader-text {
+  margin-top: 18px !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard__text {
+  display: grid !important;
+  gap: 16px !important;
+  margin-top: 0 !important;
+  background: transparent !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard__text p {
+  max-width: 46rem !important;
+  margin: 0 !important;
+  color: var(--mura-reader-text) !important;
+  background: transparent !important;
+  font-size: clamp(1.08rem, 1.22vw, 1.22rem) !important;
+  line-height: 1.68 !important;
+  font-weight: 420 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-fragment {
+  margin-top: 20px !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-fragment .chapter-sceneCard__label {
+  display: none !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-fragment blockquote {
+  margin: 0 !important;
+  border: 1px solid rgba(98, 201, 154, 0.13) !important;
+  border-radius: 6px !important;
+  background: rgba(18, 69, 52, 0.32) !important;
+  color: var(--mura-reader-text) !important;
+  padding: 16px 18px !important;
+  font-size: clamp(1.05rem, 1.14vw, 1.16rem) !important;
+  line-height: 1.62 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-annotated-word {
+  border: 1px solid rgba(98, 201, 154, 0.22) !important;
+  border-radius: 4px !important;
+  background: rgba(98, 201, 154, 0.13) !important;
+  color: var(--mura-reader-text) !important;
+  padding: 0 5px !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-note-row {
+  min-height: 42px;
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 22px 22px;
+  align-items: center;
+  gap: 9px;
+  border: 1px solid rgba(210, 225, 215, 0.14);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.018);
+  padding: 0 11px 0 13px;
+  color: var(--mura-reader-text-muted);
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-note-row input {
+  min-width: 0;
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--mura-reader-text);
+  font: inherit;
+  font-size: 0.86rem;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-note-row input::placeholder {
+  color: var(--mura-reader-text-muted);
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard__label {
+  margin-bottom: 8px !important;
+  color: var(--mura-reader-accent) !important;
+  font-size: 0.68rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.04em !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard__question {
+  max-width: 45rem !important;
+  margin: 0 !important;
+  color: var(--mura-reader-text) !important;
+  font-size: 1rem !important;
+  line-height: 1.55 !important;
+  font-weight: 650 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard__choices {
+  gap: 8px !important;
+  margin-top: 9px !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-choice {
+  width: 100% !important;
+  min-height: 40px !important;
+  border: 1px solid rgba(210, 225, 215, 0.13) !important;
+  border-radius: 6px !important;
+  background: rgba(255, 255, 255, 0.018) !important;
+  color: var(--mura-reader-text-soft) !important;
+  padding: 10px 13px 10px 32px !important;
+  font-size: 0.94rem !important;
+  line-height: 1.42 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-choice::before {
+  left: 12px !important;
+  top: 50% !important;
+  width: 10px !important;
+  height: 10px !important;
+  transform: translateY(-50%) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-choice.is-selected {
+  border-color: rgba(98, 201, 154, 0.52) !important;
+  background: rgba(98, 201, 154, 0.1) !important;
+  color: var(--mura-reader-text) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-result {
+  margin-top: 18px !important;
+  border-radius: 7px !important;
+  border-color: rgba(210, 225, 215, 0.14) !important;
+  background: rgba(13, 23, 20, 0.66) !important;
+  padding: 16px !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-aside {
+  grid-column: 3 !important;
+  grid-row: 2 !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  position: static !important;
+  padding-top: 28px !important;
+  gap: 12px !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-panel {
+  border-radius: 7px !important;
+  border: 1px solid rgba(210, 225, 215, 0.13) !important;
+  background: rgba(13, 23, 20, 0.68) !important;
+  padding: 16px !important;
+  box-shadow: none !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-panel h2 {
+  margin: 0 0 10px !important;
+  color: var(--mura-reader-text) !important;
+  font-size: 0.82rem !important;
+  font-weight: 800 !important;
+  line-height: 1.25 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-panel p {
+  color: var(--mura-reader-text-soft) !important;
+  font-size: 0.88rem !important;
+  line-height: 1.58 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-tags {
+  gap: 6px !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-tags span {
+  min-height: 23px !important;
+  border-radius: 5px !important;
+  padding: 0 8px !important;
+  font-size: 0.7rem !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-panel--compare {
+  margin-top: 12px !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-panel--compare > div:first-child {
+  gap: 12px !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-panel--compare button {
+  white-space: nowrap !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-compare-mini {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+  gap: 14px !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-compare-mini p + p {
+  border-left: 1px solid rgba(210, 225, 215, 0.12);
+  padding-left: 14px;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-share-toast {
+  position: fixed;
+  right: 24px;
+  top: 24px;
+  z-index: 30;
+  max-width: 280px;
+  border: 1px solid var(--mura-reader-border-strong);
+  border-radius: 7px;
+  background: rgba(13, 23, 20, 0.94);
+  color: var(--mura-reader-text);
+  padding: 10px 13px;
+  font-size: 0.82rem;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.28);
+}
+
+:root[data-theme="light"] .chapter-page:not(:has(.chapter-completion)) {
+  --mura-reader-bg: #f5eddf;
+  --mura-reader-bg-soft: #fff8ec;
+  --mura-reader-surface: rgba(255, 248, 236, 0.78);
+  --mura-reader-elevated: #fff8ec;
+  --mura-reader-border: rgba(85, 66, 38, 0.17);
+  --mura-reader-border-strong: rgba(85, 66, 38, 0.3);
+  --mura-reader-text: #173f39;
+  --mura-reader-text-soft: rgba(23, 63, 57, 0.74);
+  --mura-reader-text-muted: rgba(23, 63, 57, 0.5);
+  --mura-reader-accent: #0d7a5f;
+  --mura-reader-accent-soft: rgba(13, 122, 95, 0.11);
+  background:
+    radial-gradient(circle at 72% 10%, rgba(13, 122, 95, 0.08), transparent 17rem),
+    linear-gradient(180deg, #fbf5ea 0%, #f4ead9 64%, #fbf5ea 100%) !important;
+}
+
+:root[data-theme="light"] .chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard,
+:root[data-theme="light"] .chapter-page:not(:has(.chapter-completion)) .chapter-reader-text,
+:root[data-theme="light"] .chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard__text {
+  background: transparent !important;
+}
+
+:root[data-theme="light"] .chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard__text p,
+:root[data-theme="light"] .chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard__question {
+  color: var(--mura-reader-text) !important;
+}
+
+:root[data-theme="light"] .chapter-page:not(:has(.chapter-completion)) .chapter-fragment blockquote {
+  border-color: rgba(13, 122, 95, 0.16) !important;
+  background: rgba(13, 122, 95, 0.08) !important;
+}
+
+:root[data-theme="light"] .chapter-page:not(:has(.chapter-completion)) .mura-reader-note-row,
+:root[data-theme="light"] .chapter-page:not(:has(.chapter-completion)) .chapter-choice,
+:root[data-theme="light"] .chapter-page:not(:has(.chapter-completion)) .mura-reader-panel,
+:root[data-theme="light"] .chapter-page:not(:has(.chapter-completion)) .chapter-result {
+  background: rgba(255, 248, 236, 0.7) !important;
+}
+
+:root[data-theme="light"] .chapter-page:not(:has(.chapter-completion)) .mura-reader-share-toast {
+  background: rgba(255, 248, 236, 0.96);
+  color: var(--mura-reader-text);
+}
+
+@media (max-width: 1240px) {
+  .chapter-page:not(:has(.chapter-completion)) .chapter-page__container {
+    grid-template-columns: 62px minmax(0, 1fr) minmax(292px, 310px) !important;
+    gap: 0 20px !important;
+  }
+}
+
+@media (max-width: 1040px) {
+  .chapter-page:not(:has(.chapter-completion)) .chapter-page__container {
+    grid-template-columns: 60px minmax(0, 1fr) !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .mura-reader-aside {
+    grid-column: 2 !important;
+    grid-row: 3 !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .chapter-page:not(:has(.chapter-completion)) {
+    padding: 88px 16px 46px !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .chapter-page__container {
+    width: min(100%, 700px) !important;
+    max-width: none !important;
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .chapter-topbar {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .chapter-topbar__header,
+  .chapter-page:not(:has(.chapter-completion)) .chapter-topbar__tools,
+  .chapter-page:not(:has(.chapter-completion)) .mura-reader-rail,
+  .chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard,
+  .chapter-page:not(:has(.chapter-completion)) .mura-reader-aside {
+    grid-column: 1 !important;
+    grid-row: auto !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .mura-reader-actions {
+    justify-content: start !important;
+    max-width: 100% !important;
+    flex-wrap: wrap !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .mura-reader-rail {
+    width: 100% !important;
+    min-height: 0 !important;
+    border-right: 0 !important;
+    border-bottom: 1px solid var(--mura-reader-border) !important;
+    padding: 0 0 14px !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .mura-reader-rail ol {
+    grid-auto-flow: column !important;
+    grid-auto-columns: min-content !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .mura-reader-aside {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Stage 2C desktop fit refinement */
+@media (min-width: 901px) {
+  .chapter-page:not(:has(.chapter-completion)) {
+    padding-left: 10px !important;
+    padding-right: 20px !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .chapter-page__container {
+    width: min(100%, calc(100vw - var(--miras-content-offset, 168px) - 30px)) !important;
+    max-width: 1220px !important;
+    grid-template-columns: 64px minmax(560px, 1fr) minmax(306px, 326px) !important;
+    gap: 0 20px !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .chapter-topbar__tools {
+    grid-column: 3 !important;
+    justify-self: stretch !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .mura-reader-actions {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex-wrap: wrap !important;
+    justify-content: end !important;
+    row-gap: 7px !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .chapter-topbar__metric {
+    order: 5;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard__text p {
+    font-size: clamp(1.125rem, 1.22vw, 1.22rem) !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  #root > main.chapter-page:not(:has(.chapter-completion)) {
+    padding-left: 10px !important;
+    padding-right: 20px !important;
+  }
+}
+
+/* Stage 2D: functionality-visible comparison and adaptive text layout */
+.chapter-page:not(:has(.chapter-completion)) .chapter-page__container,
+.chapter-page:not(:has(.chapter-completion)) .chapter-topbar__header,
+.chapter-page:not(:has(.chapter-completion)) .chapter-topbar__tools,
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-rail,
+.chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard,
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-aside,
+.chapter-page:not(:has(.chapter-completion)) .chapter-language-compare,
+.chapter-page:not(:has(.chapter-completion)) .chapter-language-column,
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-panel,
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-compare-mini,
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-compare-mini p {
+  min-width: 0 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard,
+.chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard::before,
+.chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard::after,
+.chapter-page:not(:has(.chapter-completion)) .chapter-reader-text,
+.chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard__text,
+.chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard__text p {
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard {
+  max-width: 760px !important;
+  justify-self: start !important;
+  overflow: visible !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard__text p,
+.chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard__question,
+.chapter-page:not(:has(.chapter-completion)) .chapter-fragment blockquote,
+.chapter-page:not(:has(.chapter-completion)) .chapter-choice,
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-panel p,
+.chapter-page:not(:has(.chapter-completion)) .chapter-language-column__context,
+.chapter-page:not(:has(.chapter-completion)) .chapter-language-column__prompt {
+  overflow: visible !important;
+  overflow-wrap: anywhere;
+  word-break: normal;
+  hyphens: auto;
+  text-overflow: clip !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-icon-button .mura-icon,
+.chapter-page:not(:has(.chapter-completion)) .chapter-topbar__backButton .mura-icon,
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-note-row .mura-icon {
+  width: 18px !important;
+  height: 18px !important;
+  display: block !important;
+  fill: none !important;
+  stroke: currentColor !important;
+  stroke-width: 1.85 !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+  opacity: 1 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-compare-toggle.is-active,
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-compare-toggle.is-active:hover,
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-panel--compare.is-active button {
+  border-color: rgba(98, 201, 154, 0.52) !important;
+  background: rgba(98, 201, 154, 0.14) !important;
+  color: var(--mura-reader-text) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-panel--compare.is-active {
+  border-color: rgba(98, 201, 154, 0.35) !important;
+  background: rgba(13, 36, 28, 0.78) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-panel--compare > div:first-child {
+  align-items: center !important;
+  min-width: 0 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-panel--compare h2 {
+  min-width: 0 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-panel--compare button {
+  flex: 0 0 auto;
+  min-height: 30px;
+  border: 1px solid var(--mura-reader-border) !important;
+  border-radius: 5px;
+  padding: 0 9px;
+  background: transparent !important;
+  color: var(--mura-reader-text-soft) !important;
+  font-size: 0.68rem !important;
+  white-space: nowrap !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-compare-mini {
+  align-items: start !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-compare-mini p {
+  display: block !important;
+  -webkit-line-clamp: unset !important;
+  -webkit-box-orient: initial !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-language-compare {
+  display: block !important;
+  grid-column: 2 / 4 !important;
+  grid-row: 4 !important;
+  margin-top: 22px !important;
+  border: 1px solid var(--mura-reader-border) !important;
+  border-radius: 7px !important;
+  background: rgba(13, 23, 20, 0.66) !important;
+  padding: 16px !important;
+  box-shadow: none !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-language-compare__grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 14px !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-language-column {
+  border: 1px solid var(--mura-reader-border) !important;
+  border-radius: 6px !important;
+  background: rgba(255, 255, 255, 0.018) !important;
+  padding: 13px !important;
+  overflow: visible !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-language-column select {
+  max-width: 100%;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-language-column__context,
+.chapter-page:not(:has(.chapter-completion)) .chapter-language-column__prompt {
+  max-height: none !important;
+  color: var(--mura-reader-text-soft) !important;
+  font-size: 0.86rem !important;
+  line-height: 1.55 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-share-toast {
+  pointer-events: none;
+}
+
+@media (min-width: 901px) {
+  .chapter-page:not(:has(.chapter-completion)) .chapter-page__container {
+    grid-template-columns: 64px minmax(0, 1fr) clamp(280px, 24vw, 340px) !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .chapter-topbar__tools {
+    grid-column: 3 !important;
+  }
+}
+
+@media (max-width: 1180px) and (min-width: 981px) {
+  .chapter-page:not(:has(.chapter-completion)) .chapter-page__container {
+    gap: 0 18px !important;
+    grid-template-columns: 60px minmax(0, 1fr) minmax(280px, 300px) !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .mura-reader-actions {
+    gap: 6px !important;
+  }
+}
+
+@media (max-width: 980px) and (min-width: 721px) {
+  .chapter-page:not(:has(.chapter-completion)) .chapter-page__container {
+    grid-template-columns: 60px minmax(0, 1fr) !important;
+    gap: 0 18px !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .chapter-topbar__header,
+  .chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard {
+    grid-column: 2 !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .chapter-topbar__tools,
+  .chapter-page:not(:has(.chapter-completion)) .mura-reader-aside,
+  .chapter-page:not(:has(.chapter-completion)) .chapter-language-compare {
+    grid-column: 2 !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .chapter-topbar__tools {
+    grid-row: 2 !important;
+    justify-content: start !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .mura-reader-aside {
+    grid-row: 4 !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .chapter-language-compare {
+    grid-row: 5 !important;
+  }
+}
+
+@media (max-width: 720px) {
+  .chapter-page:not(:has(.chapter-completion)) .chapter-page__container {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .mura-reader-rail,
+  .chapter-page:not(:has(.chapter-completion)) .chapter-topbar__header,
+  .chapter-page:not(:has(.chapter-completion)) .chapter-topbar__tools,
+  .chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard,
+  .chapter-page:not(:has(.chapter-completion)) .mura-reader-aside,
+  .chapter-page:not(:has(.chapter-completion)) .chapter-language-compare {
+    grid-column: 1 !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .chapter-language-compare__grid,
+  .chapter-page:not(:has(.chapter-completion)) .mura-reader-compare-mini {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .mura-reader-compare-mini p + p {
+    border-left: 0;
+    border-top: 1px solid var(--mura-reader-border);
+    padding-left: 0;
+    padding-top: 12px;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .mura-reader-rail {
+    display: grid !important;
+    width: 100% !important;
+    min-height: 0 !important;
+    border-right: 0 !important;
+    border-bottom: 1px solid var(--mura-reader-border) !important;
+    padding: 0 0 14px !important;
+    gap: 10px !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .mura-reader-rail ol {
+    display: grid !important;
+    grid-auto-flow: column !important;
+    grid-auto-columns: min-content !important;
+    justify-content: start !important;
+    gap: 10px !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .mura-reader-rail__top,
+  .chapter-page:not(:has(.chapter-completion)) .mura-reader-rail__foot {
+    margin: 0 !important;
+  }
+}
+
+:root[data-theme="light"] .chapter-page:not(:has(.chapter-completion)) .mura-reader-panel--compare.is-active,
+:root[data-theme="light"] .chapter-page:not(:has(.chapter-completion)) .chapter-language-compare {
+  background: rgba(255, 248, 236, 0.76) !important;
+}
+
+/* Stage 2 motion: restrained archival reader interactions */
+.chapter-page:not(:has(.chapter-completion)) {
+  scroll-behavior: smooth;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-topbar__backButton,
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-actions__group button,
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-compare-toggle,
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-icon-button,
+.chapter-page:not(:has(.chapter-completion)) .chapter-topbar__metric,
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-panel button,
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-tabs button,
+.chapter-page:not(:has(.chapter-completion)) .chapter-choice,
+.chapter-page:not(:has(.chapter-completion)) .chapter-result__action,
+.chapter-page:not(:has(.chapter-completion)) .chapter-final-question button,
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-note-row,
+.chapter-page:not(:has(.chapter-completion)) .chapter-annotated-word {
+  transition:
+    color 160ms ease,
+    background-color 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    opacity 160ms ease,
+    transform 160ms ease;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-panel,
+.chapter-page:not(:has(.chapter-completion)) .chapter-fragment blockquote,
+.chapter-page:not(:has(.chapter-completion)) .chapter-result,
+.chapter-page:not(:has(.chapter-completion)) .chapter-language-compare,
+.chapter-page:not(:has(.chapter-completion)) .chapter-language-column {
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    opacity 180ms ease;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-topbar__backButton:hover,
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-compare-toggle:hover,
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-icon-button:hover,
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-panel button:hover,
+.chapter-page:not(:has(.chapter-completion)) .chapter-result__action:hover,
+.chapter-page:not(:has(.chapter-completion)) .chapter-choice:not(:disabled):hover {
+  transform: translateY(-1px);
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-topbar__backButton:active,
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-compare-toggle:active,
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-icon-button:active,
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-panel button:active,
+.chapter-page:not(:has(.chapter-completion)) .chapter-result__action:active,
+.chapter-page:not(:has(.chapter-completion)) .chapter-choice:not(:disabled):active {
+  transform: translateY(0);
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-tabs button::after {
+  transition: transform 180ms ease, background-color 180ms ease;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-rail li > span {
+  transition:
+    color 180ms ease,
+    background-color 180ms ease,
+    border-color 180ms ease,
+    transform 180ms ease;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-rail li.is-active > span {
+  transform: translateY(-1px);
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-choice.is-selected,
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-icon-button.is-active,
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-compare-toggle.is-active {
+  transition:
+    color 170ms ease,
+    background-color 170ms ease,
+    border-color 170ms ease,
+    transform 170ms ease;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-language-compare {
+  animation: mura-reader-compare-enter 220ms ease both;
+  transform-origin: top center;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-share-toast {
+  animation: mura-reader-toast-enter 180ms ease both;
+}
+
+@keyframes mura-reader-compare-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes mura-reader-toast-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Stage 2F: active reader conflict cleanup.
+   Keeps completed/quiz styling above intact while neutralizing legacy/global card surfaces. */
+.chapter-page:not(:has(.chapter-completion)) {
+  --mura-reader-bg: #07110f;
+  --mura-reader-bg-soft: #081310;
+  --mura-reader-surface: #0d1714;
+  --mura-reader-elevated: #111f1b;
+  --mura-reader-border: rgba(210, 225, 215, 0.12);
+  --mura-reader-border-strong: rgba(210, 225, 215, 0.22);
+  --mura-reader-text: #e7eee8;
+  --mura-reader-text-soft: rgba(231, 238, 232, 0.7);
+  --mura-reader-text-muted: rgba(231, 238, 232, 0.48);
+  --mura-reader-accent: #62c99a;
+  --mura-reader-accent-soft: rgba(98, 201, 154, 0.13);
+  padding: 0 20px 52px 10px !important;
+  overflow-x: hidden !important;
+  background:
+    radial-gradient(circle at 76% 4%, rgba(41, 115, 91, 0.11), transparent 18rem),
+    linear-gradient(180deg, var(--mura-reader-bg-soft), var(--mura-reader-bg) 62%, #040b0a) !important;
+  color: var(--mura-reader-text) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-page__container {
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 20px 0 56px !important;
+  display: grid !important;
+  grid-template-columns: 64px minmax(0, 1fr) clamp(300px, 24vw, 340px) !important;
+  gap: 0 24px !important;
+  align-items: start !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-topbar {
+  display: contents !important;
+  border: 0 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-topbar__header {
+  grid-column: 2 !important;
+  grid-row: 1 !important;
+  min-width: 0 !important;
+  padding-top: 20px !important;
+  display: grid !important;
+  grid-template-columns: 34px minmax(0, 1fr) !important;
+  gap: 14px !important;
+  align-items: start !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-topbar__tools {
+  grid-column: 3 !important;
+  grid-row: 1 !important;
+  min-width: 0 !important;
+  padding-top: 20px !important;
+  justify-content: end !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-actions {
+  width: 100% !important;
+  max-width: none !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-topbar__backButton,
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-icon-button {
+  width: 36px !important;
+  min-width: 36px !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  display: inline-grid !important;
+  place-items: center !important;
+  padding: 0 !important;
+  border: 1px solid var(--mura-reader-border) !important;
+  border-radius: 6px !important;
+  background: rgba(255, 255, 255, 0.026) !important;
+  background-color: rgba(255, 255, 255, 0.026) !important;
+  color: var(--mura-reader-text-soft) !important;
+  font-size: 0 !important;
+  line-height: 1 !important;
+  box-shadow: none !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-topbar__backButton .mura-icon,
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-icon-button .mura-icon,
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-note-row .mura-icon {
+  width: 18px !important;
+  height: 18px !important;
+  display: block !important;
+  fill: none !important;
+  stroke: currentColor !important;
+  stroke-width: 1.7 !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+  opacity: 1 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-actions__group {
+  min-height: 36px !important;
+  display: inline-flex !important;
+  overflow: hidden !important;
+  border: 1px solid var(--mura-reader-border) !important;
+  border-radius: 6px !important;
+  background: rgba(255, 255, 255, 0.026) !important;
+  background-color: rgba(255, 255, 255, 0.026) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-actions__group button,
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-compare-toggle,
+.chapter-page:not(:has(.chapter-completion)) .chapter-topbar__metric {
+  height: 36px !important;
+  min-height: 36px !important;
+  border: 1px solid var(--mura-reader-border) !important;
+  border-radius: 6px !important;
+  background: rgba(255, 255, 255, 0.026) !important;
+  background-color: rgba(255, 255, 255, 0.026) !important;
+  color: var(--mura-reader-text-soft) !important;
+  box-shadow: none !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-actions__group button {
+  min-width: 39px !important;
+  border: 0 !important;
+  border-right: 1px solid var(--mura-reader-border) !important;
+  border-radius: 0 !important;
+  padding: 0 10px !important;
+  font-size: 0.72rem !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-actions__group button:last-child {
+  border-right: 0 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-compare-toggle {
+  padding: 0 13px !important;
+  white-space: nowrap !important;
+  font-size: 0.74rem !important;
+  font-weight: 700 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-actions__group button.is-active,
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-compare-toggle.is-active,
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-icon-button.is-active {
+  border-color: rgba(98, 201, 154, 0.48) !important;
+  background: var(--mura-reader-accent-soft) !important;
+  background-color: var(--mura-reader-accent-soft) !important;
+  color: var(--mura-reader-text) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-topbar__metric {
+  width: auto !important;
+  min-width: 36px !important;
+  padding: 0 9px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 5px !important;
+  font-size: 0.74rem !important;
+  white-space: nowrap !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-topbar__title {
+  max-width: none !important;
+  margin: 0 !important;
+  color: var(--mura-reader-text-muted) !important;
+  font-family: var(--mura-font-sans) !important;
+  font-size: 0.82rem !important;
+  font-weight: 560 !important;
+  line-height: 1.45 !important;
+  letter-spacing: 0 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-topbar__subtitle {
+  margin: 4px 0 0 !important;
+  color: var(--mura-reader-text-soft) !important;
+  font-size: 0.88rem !important;
+  font-weight: 700 !important;
+  line-height: 1.35 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-rail {
+  grid-column: 1 !important;
+  grid-row: 1 / span 4 !important;
+  width: 64px !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  position: static !important;
+  padding: 20px 10px 0 0 !important;
+  border: 0 !important;
+  border-right: 1px solid rgba(210, 225, 215, 0.1) !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  color: var(--mura-reader-text-muted) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-rail__top {
+  display: grid !important;
+  gap: 5px !important;
+  margin: 0 0 22px !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-rail__top span,
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-rail__foot span {
+  color: var(--mura-reader-text-muted) !important;
+  font-size: 0.68rem !important;
+  font-weight: 620 !important;
+  line-height: 1.25 !important;
+  letter-spacing: 0 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-rail__top strong {
+  color: var(--mura-reader-text) !important;
+  font-size: 0.92rem !important;
+  font-variant-numeric: tabular-nums !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-rail ol {
+  display: grid !important;
+  gap: 12px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-rail li {
+  display: block !important;
+  color: var(--mura-reader-text-muted) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-rail li > span {
+  width: 23px !important;
+  height: 23px !important;
+  display: grid !important;
+  place-items: center !important;
+  border: 1px solid rgba(210, 225, 215, 0.12) !important;
+  border-radius: 999px !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  color: var(--mura-reader-text-muted) !important;
+  font-size: 0.72rem !important;
+  line-height: 1 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-rail li.is-active > span {
+  border-color: rgba(98, 201, 154, 0.62) !important;
+  background: rgba(98, 201, 154, 0.14) !important;
+  background-color: rgba(98, 201, 154, 0.14) !important;
+  color: var(--mura-reader-accent) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-rail li.is-complete:not(.is-active) > span {
+  border-color: rgba(98, 201, 154, 0.22) !important;
+  color: var(--mura-reader-text-soft) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-rail li small {
+  display: none !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-rail__foot {
+  margin-top: 24px !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard,
+.chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard__head,
+.chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard__section,
+.chapter-page:not(:has(.chapter-completion)) .chapter-reader-text,
+.chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard__text,
+.chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard__text p {
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard {
+  grid-column: 2 !important;
+  grid-row: 2 !important;
+  width: 100% !important;
+  max-width: 760px !important;
+  min-width: 0 !important;
+  justify-self: start !important;
+  margin: 0 !important;
+  padding: 26px 0 34px !important;
+  color: var(--mura-reader-text) !important;
+  overflow: visible !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard__eyebrow {
+  margin: 0 0 6px !important;
+  color: var(--mura-reader-accent) !important;
+  font-size: 0.75rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.01em !important;
+  text-transform: none !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard__title {
+  margin: 0 !important;
+  color: var(--mura-reader-text) !important;
+  font-family: var(--mura-font-sans) !important;
+  font-size: clamp(2.15rem, 3vw, 2.55rem) !important;
+  font-weight: 560 !important;
+  line-height: 1.02 !important;
+  letter-spacing: 0 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-tabs {
+  min-height: 38px !important;
+  margin: 18px 0 0 !important;
+  display: flex !important;
+  gap: 28px !important;
+  border: 0 !important;
+  border-bottom: 1px solid rgba(210, 225, 215, 0.14) !important;
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-tabs button {
+  min-height: 38px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  padding: 0 0 10px !important;
+  color: var(--mura-reader-text-muted) !important;
+  font-size: 0.83rem !important;
+  font-weight: 650 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-tabs button.is-active {
+  color: var(--mura-reader-text) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard__section {
+  margin-top: 18px !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-reader-text {
+  margin-top: 18px !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard__text {
+  display: grid !important;
+  gap: 16px !important;
+  margin: 0 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard__text p {
+  max-width: 46rem !important;
+  margin: 0 !important;
+  color: var(--mura-reader-text) !important;
+  font-size: clamp(1.1rem, 1.24vw, 1.24rem) !important;
+  line-height: 1.66 !important;
+  font-weight: 420 !important;
+  overflow: visible !important;
+  overflow-wrap: anywhere !important;
+  text-overflow: clip !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-fragment {
+  margin-top: 20px !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-fragment .chapter-sceneCard__label {
+  display: none !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-fragment blockquote {
+  margin: 0 !important;
+  border: 1px solid rgba(98, 201, 154, 0.14) !important;
+  border-radius: 6px !important;
+  background: rgba(18, 69, 52, 0.32) !important;
+  background-color: rgba(18, 69, 52, 0.32) !important;
+  color: var(--mura-reader-text) !important;
+  padding: 16px 18px !important;
+  font-size: clamp(1.05rem, 1.16vw, 1.16rem) !important;
+  line-height: 1.62 !important;
+  overflow: visible !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-annotated-word {
+  border: 1px solid rgba(98, 201, 154, 0.24) !important;
+  border-radius: 4px !important;
+  background: rgba(98, 201, 154, 0.13) !important;
+  background-color: rgba(98, 201, 154, 0.13) !important;
+  color: var(--mura-reader-text) !important;
+  padding: 0 5px !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-note-row {
+  min-height: 42px !important;
+  margin-top: 12px !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) 22px 22px !important;
+  align-items: center !important;
+  gap: 9px !important;
+  border: 1px solid rgba(210, 225, 215, 0.14) !important;
+  border-radius: 6px !important;
+  background: rgba(255, 255, 255, 0.018) !important;
+  background-color: rgba(255, 255, 255, 0.018) !important;
+  padding: 0 11px 0 13px !important;
+  color: var(--mura-reader-text-muted) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-note-row input {
+  min-width: 0 !important;
+  width: 100% !important;
+  border: 0 !important;
+  outline: 0 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  color: var(--mura-reader-text) !important;
+  font: inherit !important;
+  font-size: 0.86rem !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard__label {
+  margin: 0 0 8px !important;
+  color: var(--mura-reader-accent) !important;
+  font-size: 0.68rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard__question {
+  max-width: 45rem !important;
+  margin: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  color: var(--mura-reader-text) !important;
+  font-size: 1rem !important;
+  line-height: 1.55 !important;
+  font-weight: 650 !important;
+  overflow: visible !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard__choices {
+  display: grid !important;
+  gap: 8px !important;
+  margin-top: 9px !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-choice {
+  width: 100% !important;
+  min-height: 40px !important;
+  border: 1px solid rgba(210, 225, 215, 0.13) !important;
+  border-radius: 6px !important;
+  background: rgba(255, 255, 255, 0.018) !important;
+  background-color: rgba(255, 255, 255, 0.018) !important;
+  color: var(--mura-reader-text-soft) !important;
+  padding: 10px 13px 10px 32px !important;
+  font-size: 0.94rem !important;
+  line-height: 1.42 !important;
+  overflow: visible !important;
+  box-shadow: none !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-choice.is-selected {
+  border-color: rgba(98, 201, 154, 0.52) !important;
+  background: rgba(98, 201, 154, 0.1) !important;
+  background-color: rgba(98, 201, 154, 0.1) !important;
+  color: var(--mura-reader-text) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-aside {
+  grid-column: 3 !important;
+  grid-row: 2 !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  position: static !important;
+  display: grid !important;
+  gap: 12px !important;
+  padding-top: 26px !important;
+  overflow: visible !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-panel {
+  min-width: 0 !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  border: 1px solid rgba(210, 225, 215, 0.13) !important;
+  border-radius: 7px !important;
+  background: rgba(13, 23, 20, 0.68) !important;
+  background-color: rgba(13, 23, 20, 0.68) !important;
+  color: var(--mura-reader-text) !important;
+  padding: 16px !important;
+  overflow: visible !important;
+  box-shadow: none !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-panel h2 {
+  margin: 0 0 10px !important;
+  color: var(--mura-reader-text) !important;
+  font-size: 0.82rem !important;
+  font-weight: 800 !important;
+  line-height: 1.25 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-panel p,
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-compare-mini p,
+.chapter-page:not(:has(.chapter-completion)) .chapter-language-column__context,
+.chapter-page:not(:has(.chapter-completion)) .chapter-language-column__prompt {
+  max-height: none !important;
+  display: block !important;
+  margin: 0 !important;
+  color: var(--mura-reader-text-soft) !important;
+  font-size: 0.88rem !important;
+  line-height: 1.58 !important;
+  overflow: visible !important;
+  overflow-wrap: break-word !important;
+  word-break: normal !important;
+  text-overflow: clip !important;
+  -webkit-line-clamp: unset !important;
+  -webkit-box-orient: initial !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-tags {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 6px !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-tags span {
+  min-height: 23px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  border: 1px solid rgba(98, 201, 154, 0.22) !important;
+  border-radius: 5px !important;
+  background: rgba(98, 201, 154, 0.08) !important;
+  background-color: rgba(98, 201, 154, 0.08) !important;
+  color: var(--mura-reader-text-soft) !important;
+  padding: 0 8px !important;
+  font-size: 0.7rem !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-panel--compare {
+  margin-top: 12px !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-panel--compare.is-active {
+  border-color: rgba(98, 201, 154, 0.35) !important;
+  background: rgba(13, 36, 28, 0.78) !important;
+  background-color: rgba(13, 36, 28, 0.78) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-panel--compare > div:first-child {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  min-width: 0 !important;
+  margin-bottom: 12px !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-panel--compare button {
+  flex: 0 0 auto !important;
+  min-height: 30px !important;
+  border: 1px solid var(--mura-reader-border) !important;
+  border-radius: 5px !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  color: var(--mura-reader-text-soft) !important;
+  padding: 0 9px !important;
+  font-size: 0.68rem !important;
+  white-space: nowrap !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-compare-mini {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+  gap: 14px !important;
+  align-items: start !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-compare-mini p + p {
+  border-left: 1px solid rgba(210, 225, 215, 0.12) !important;
+  padding-left: 14px !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-language-compare {
+  grid-column: 2 / 4 !important;
+  grid-row: 4 !important;
+  margin-top: 22px !important;
+  border: 1px solid var(--mura-reader-border) !important;
+  border-radius: 7px !important;
+  background: rgba(13, 23, 20, 0.62) !important;
+  background-color: rgba(13, 23, 20, 0.62) !important;
+  padding: 16px !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-language-compare__grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 14px !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-language-column {
+  min-width: 0 !important;
+  border: 1px solid var(--mura-reader-border) !important;
+  border-radius: 6px !important;
+  background: rgba(255, 255, 255, 0.018) !important;
+  background-color: rgba(255, 255, 255, 0.018) !important;
+  padding: 13px !important;
+  overflow: visible !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-result {
+  margin-top: 18px !important;
+  border: 1px solid rgba(210, 225, 215, 0.14) !important;
+  border-radius: 7px !important;
+  background: rgba(13, 23, 20, 0.66) !important;
+  background-color: rgba(13, 23, 20, 0.66) !important;
+  padding: 16px !important;
+}
+
+:root[data-theme="light"] .chapter-page:not(:has(.chapter-completion)) {
+  --mura-reader-bg: #f5eddf;
+  --mura-reader-bg-soft: #fff8ec;
+  --mura-reader-surface: rgba(255, 248, 236, 0.78);
+  --mura-reader-elevated: #fff8ec;
+  --mura-reader-border: rgba(85, 66, 38, 0.17);
+  --mura-reader-border-strong: rgba(85, 66, 38, 0.3);
+  --mura-reader-text: #173f39;
+  --mura-reader-text-soft: rgba(23, 63, 57, 0.74);
+  --mura-reader-text-muted: rgba(23, 63, 57, 0.5);
+  --mura-reader-accent: #0d7a5f;
+  --mura-reader-accent-soft: rgba(13, 122, 95, 0.11);
+  background:
+    radial-gradient(circle at 72% 10%, rgba(13, 122, 95, 0.08), transparent 17rem),
+    linear-gradient(180deg, #fbf5ea 0%, #f4ead9 64%, #fbf5ea 100%) !important;
+}
+
+:root[data-theme="light"] .chapter-page:not(:has(.chapter-completion)) .chapter-fragment blockquote {
+  border-color: rgba(13, 122, 95, 0.16) !important;
+  background: rgba(13, 122, 95, 0.08) !important;
+  background-color: rgba(13, 122, 95, 0.08) !important;
+}
+
+:root[data-theme="light"] .chapter-page:not(:has(.chapter-completion)) .mura-reader-note-row,
+:root[data-theme="light"] .chapter-page:not(:has(.chapter-completion)) .chapter-choice,
+:root[data-theme="light"] .chapter-page:not(:has(.chapter-completion)) .mura-reader-panel,
+:root[data-theme="light"] .chapter-page:not(:has(.chapter-completion)) .chapter-language-compare,
+:root[data-theme="light"] .chapter-page:not(:has(.chapter-completion)) .chapter-language-column,
+:root[data-theme="light"] .chapter-page:not(:has(.chapter-completion)) .chapter-result {
+  background: rgba(255, 248, 236, 0.72) !important;
+  background-color: rgba(255, 248, 236, 0.72) !important;
+}
+
+@media (max-width: 1180px) and (min-width: 981px) {
+  .chapter-page:not(:has(.chapter-completion)) .chapter-page__container {
+    grid-template-columns: 60px minmax(0, 1fr) minmax(280px, 300px) !important;
+    gap: 0 18px !important;
+  }
+}
+
+@media (max-width: 980px) and (min-width: 721px) {
+  .chapter-page:not(:has(.chapter-completion)) .chapter-page__container {
+    grid-template-columns: 60px minmax(0, 1fr) !important;
+    gap: 0 18px !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .chapter-topbar__header,
+  .chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard {
+    grid-column: 2 !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .chapter-topbar__tools,
+  .chapter-page:not(:has(.chapter-completion)) .mura-reader-aside,
+  .chapter-page:not(:has(.chapter-completion)) .chapter-language-compare {
+    grid-column: 2 !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .chapter-topbar__tools {
+    grid-row: 2 !important;
+    justify-content: start !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .mura-reader-aside {
+    grid-row: 4 !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .chapter-language-compare {
+    grid-row: 5 !important;
+  }
+}
+
+@media (max-width: 720px) {
+  .chapter-page:not(:has(.chapter-completion)) {
+    padding: 0 14px 42px !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .chapter-page__container {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 14px !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .mura-reader-rail,
+  .chapter-page:not(:has(.chapter-completion)) .chapter-topbar__header,
+  .chapter-page:not(:has(.chapter-completion)) .chapter-topbar__tools,
+  .chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard,
+  .chapter-page:not(:has(.chapter-completion)) .mura-reader-aside,
+  .chapter-page:not(:has(.chapter-completion)) .chapter-language-compare {
+    grid-column: 1 !important;
+    grid-row: auto !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .mura-reader-actions {
+    justify-content: start !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .mura-reader-rail {
+    width: 100% !important;
+    display: grid !important;
+    grid-template-columns: auto minmax(0, 1fr) auto !important;
+    align-items: center !important;
+    gap: 12px !important;
+    padding: 0 0 12px !important;
+    border-right: 0 !important;
+    border-bottom: 1px solid var(--mura-reader-border) !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .mura-reader-rail__top,
+  .chapter-page:not(:has(.chapter-completion)) .mura-reader-rail__foot {
+    margin: 0 !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .mura-reader-rail ol {
+    grid-auto-flow: column !important;
+    grid-auto-columns: min-content !important;
+    gap: 10px !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .mura-reader-aside,
+  .chapter-page:not(:has(.chapter-completion)) .chapter-language-compare__grid,
+  .chapter-page:not(:has(.chapter-completion)) .mura-reader-compare-mini {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .mura-reader-compare-mini p + p {
+    border-left: 0 !important;
+    border-top: 1px solid var(--mura-reader-border) !important;
+    padding-left: 0 !important;
+    padding-top: 12px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chapter-page:not(:has(.chapter-completion)),
+  .chapter-page:not(:has(.chapter-completion)) * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+/* Remove boxed background behind the main fragment text */
+.chapter-sceneCard .chapter-fragment {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  padding: 22px 0 18px !important;
+}
+
+.chapter-sceneCard .chapter-fragment blockquote {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  max-width: 100%;
+}
+
+/* Keep only highlighted terms as small chips */
+.chapter-annotated-word {
+  background: rgba(180, 210, 190, 0.18) !important;
+  border: 1px solid rgba(126, 239, 181, 0.22) !important;
+  border-radius: 5px !important;
+  padding: 1px 6px !important;
+}
+
+/* Keep note row separate, not attached to quote card */
+.chapter-fragment .mura-reader-note-row {
+  margin-top: 18px !important;
+}
+/* Bigger literary fragment text */
+.chapter-page:not(:has(.chapter-completion)) .chapter-fragment blockquote {
+  font-size: clamp(1.18rem, 1.45vw, 1.42rem) !important;
+  line-height: 1.78 !important;
+  letter-spacing: -0.01em !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-annotated-word {
+  font-size: inherit !important;
+  font-weight: 800 !important;
+}
+
+/* Stage 5 active chapter reader */
+.chapter-page:not(:has(.chapter-completion)) {
+  --stage5-bg: #06110f;
+  --stage5-bg-soft: #0a1714;
+  --stage5-surface: rgba(12, 25, 22, 0.78);
+  --stage5-surface-strong: rgba(15, 32, 28, 0.94);
+  --stage5-line: rgba(231, 238, 232, 0.13);
+  --stage5-line-strong: rgba(231, 238, 232, 0.22);
+  --stage5-text: #edf3ed;
+  --stage5-muted: rgba(237, 243, 237, 0.68);
+  --stage5-soft: rgba(237, 243, 237, 0.46);
+  --stage5-accent: #73d6a5;
+  --stage5-accent-soft: rgba(115, 214, 165, 0.13);
+  --stage5-gold: #d0a45c;
+  min-height: 100dvh !important;
+  padding: 24px clamp(14px, 2vw, 28px) 64px var(--miras-content-offset, 224px) !important;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.014) 1px, transparent 1px),
+    radial-gradient(circle at 75% 8%, rgba(31, 109, 82, 0.18), transparent 28rem),
+    linear-gradient(180deg, #020907 0%, var(--stage5-bg) 64%, #020907 100%) !important;
+  background-size: 92px 92px, 92px 92px, auto, auto !important;
+  color: var(--stage5-text) !important;
+}
+
+:root[data-theme="light"] .chapter-page:not(:has(.chapter-completion)) {
+  --stage5-bg: #f3eadb;
+  --stage5-bg-soft: #fff8ed;
+  --stage5-surface: rgba(255, 249, 239, 0.82);
+  --stage5-surface-strong: rgba(255, 252, 245, 0.96);
+  --stage5-line: rgba(82, 63, 34, 0.16);
+  --stage5-line-strong: rgba(82, 63, 34, 0.28);
+  --stage5-text: #143d37;
+  --stage5-muted: rgba(20, 61, 55, 0.7);
+  --stage5-soft: rgba(20, 61, 55, 0.48);
+  --stage5-accent: #0b7459;
+  --stage5-accent-soft: rgba(11, 116, 89, 0.11);
+  --stage5-gold: #b8782b;
+  background:
+    radial-gradient(circle at 18% 0%, rgba(184, 120, 43, 0.1), transparent 24rem),
+    linear-gradient(180deg, #f8f0e2 0%, var(--stage5-bg) 100%) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-page__container {
+  width: min(100%, 1160px) !important;
+  display: grid !important;
+  grid-template-columns: 66px minmax(0, 1fr) minmax(250px, 300px) !important;
+  gap: 18px !important;
+  align-items: start !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-topbar {
+  grid-column: 2 / 4 !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  grid-template-areas: "head tools" "status tools" !important;
+  gap: 10px 16px !important;
+  padding: 0 0 14px !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--stage5-line) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-topbar__header {
+  grid-area: head !important;
+  display: grid !important;
+  grid-template-columns: 34px minmax(0, 1fr) !important;
+  gap: 12px !important;
+  align-items: start !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-topbar__status {
+  grid-area: status !important;
+  display: block !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-topbar__tools {
+  grid-area: tools !important;
+  align-self: start !important;
+  justify-content: end !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-topbar__title {
+  margin: 0 !important;
+  color: var(--stage5-soft) !important;
+  font-family: Inter, system-ui, sans-serif !important;
+  font-size: 0.76rem !important;
+  font-weight: 650 !important;
+  letter-spacing: 0 !important;
+  line-height: 1.3 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-topbar__subtitle {
+  margin-top: 7px !important;
+  color: var(--stage5-text) !important;
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-size: clamp(1.9rem, 4vw, 2.9rem) !important;
+  line-height: 0.98 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-topbar__backButton,
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-icon-button {
+  width: 34px !important;
+  height: 34px !important;
+  min-height: 34px !important;
+  border: 1px solid var(--stage5-line) !important;
+  border-radius: 5px !important;
+  background: transparent !important;
+  color: var(--stage5-muted) !important;
+  box-shadow: none !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-icon-button:hover,
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-icon-button.is-active,
+.chapter-page:not(:has(.chapter-completion)) .chapter-topbar__backButton:hover {
+  border-color: var(--stage5-line-strong) !important;
+  color: var(--stage5-text) !important;
+  background: var(--stage5-accent-soft) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-actions {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  justify-content: flex-end !important;
+  gap: 8px !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-actions__group {
+  display: inline-flex !important;
+  height: 34px !important;
+  overflow: hidden !important;
+  border: 1px solid var(--stage5-line) !important;
+  border-radius: 5px !important;
+  background: transparent !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-actions__group button,
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-compare-toggle,
+.chapter-page:not(:has(.chapter-completion)) .chapter-topbar__metric {
+  min-height: 34px !important;
+  border: 1px solid var(--stage5-line) !important;
+  border-radius: 5px !important;
+  background: transparent !important;
+  color: var(--stage5-muted) !important;
+  padding: 0 11px !important;
+  box-shadow: none !important;
+  font-size: 0.74rem !important;
+  font-weight: 750 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-actions__group button {
+  border: 0 !important;
+  border-right: 1px solid var(--stage5-line) !important;
+  border-radius: 0 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-actions__group button:last-child {
+  border-right: 0 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-actions__group button.is-active,
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-compare-toggle.is-active {
+  color: var(--stage5-text) !important;
+  background: var(--stage5-accent-soft) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-topbar__progressLabels {
+  margin-bottom: 6px !important;
+  color: var(--stage5-soft) !important;
+  font-size: 0.72rem !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-topbar__progressTrack {
+  height: 4px !important;
+  background: color-mix(in srgb, var(--stage5-text) 10%, transparent) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-topbar__progressFill {
+  background: var(--stage5-accent) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-flow-strip,
+.chapter-page:not(:has(.chapter-completion)) .chapter-challenges,
+.chapter-page:not(:has(.chapter-completion)) .chapter-visual,
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-panel--compare {
+  display: none !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-rail {
+  grid-column: 1 !important;
+  position: sticky !important;
+  top: 22px !important;
+  min-height: calc(100dvh - 44px) !important;
+  display: grid !important;
+  grid-template-rows: auto 1fr auto !important;
+  align-self: start !important;
+  padding: 10px 0 !important;
+  border: 0 !important;
+  border-right: 1px solid var(--stage5-line) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: var(--stage5-soft) !important;
+  box-shadow: none !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-rail__top,
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-rail__foot {
+  display: grid !important;
+  gap: 6px !important;
+  justify-items: start !important;
+  padding-right: 10px !important;
+  font-size: 0.68rem !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-rail__top strong,
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-rail__foot span {
+  color: var(--stage5-text) !important;
+  font-size: 0.9rem !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-rail ol {
+  align-self: center !important;
+  display: grid !important;
+  gap: 12px !important;
+  margin: 24px 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-rail li {
+  display: grid !important;
+  gap: 5px !important;
+  justify-items: start !important;
+  color: var(--stage5-soft) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-rail li > span {
+  width: 25px !important;
+  height: 25px !important;
+  display: grid !important;
+  place-items: center !important;
+  border: 1px solid var(--stage5-line-strong) !important;
+  border-radius: 50% !important;
+  background: transparent !important;
+  color: inherit !important;
+  font-size: 0.72rem !important;
+  font-weight: 800 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-rail li.is-active > span {
+  border-color: var(--stage5-accent) !important;
+  color: var(--stage5-accent) !important;
+  box-shadow: 0 0 0 4px var(--stage5-accent-soft) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-rail li.is-complete:not(.is-active) > span {
+  color: var(--stage5-text) !important;
+  background: var(--stage5-accent-soft) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-rail li small {
+  font-size: 0.66rem !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard {
+  grid-column: 2 !important;
+  min-width: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard__head {
+  padding: 0 0 14px !important;
+  border-bottom: 1px solid var(--stage5-line) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard__eyebrow,
+.chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard__label,
+.chapter-page:not(:has(.chapter-completion)) .chapter-result__label,
+.chapter-page:not(:has(.chapter-completion)) .chapter-result__cardLabel {
+  color: var(--stage5-accent) !important;
+  font-size: 0.72rem !important;
+  font-weight: 780 !important;
+  letter-spacing: 0.08em !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard__title {
+  margin-top: 6px !important;
+  color: var(--stage5-text) !important;
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-size: clamp(2rem, 4.3vw, 3.25rem) !important;
+  line-height: 0.98 !important;
+  letter-spacing: 0 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-tabs {
+  margin-top: 14px !important;
+  border-bottom: 1px solid var(--stage5-line) !important;
+  gap: 24px !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-tabs button {
+  border: 0 !important;
+  border-bottom: 1px solid transparent !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: var(--stage5-muted) !important;
+  padding: 0 0 10px !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-tabs button.is-active {
+  border-bottom-color: var(--stage5-accent) !important;
+  color: var(--stage5-text) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard__section {
+  margin-top: 24px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-fragment blockquote {
+  margin-top: 14px !important;
+  padding: 18px 20px !important;
+  border: 1px solid var(--stage5-line) !important;
+  border-left: 3px solid var(--stage5-accent) !important;
+  border-radius: 6px !important;
+  background: color-mix(in srgb, var(--stage5-accent) 8%, transparent) !important;
+  color: var(--stage5-text) !important;
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-size: clamp(1.15rem, 2.2vw, 1.55rem) !important;
+  line-height: 1.75 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-tab-explanation p,
+.chapter-page:not(:has(.chapter-completion)) .chapter-tab-context p {
+  color: var(--stage5-text) !important;
+  font-size: clamp(1rem, 1.4vw, 1.12rem) !important;
+  line-height: 1.85 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-annotated-word {
+  border-bottom: 1px dashed var(--stage5-accent) !important;
+  border-radius: 3px !important;
+  background: color-mix(in srgb, var(--stage5-accent) 16%, transparent) !important;
+  color: var(--stage5-text) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-annotation-popover {
+  border: 1px solid var(--stage5-line-strong) !important;
+  border-radius: 6px !important;
+  background: var(--stage5-surface-strong) !important;
+  color: var(--stage5-text) !important;
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.26) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-note-row {
+  border: 1px solid var(--stage5-line) !important;
+  border-radius: 6px !important;
+  background: transparent !important;
+  color: var(--stage5-muted) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-note-row input {
+  color: var(--stage5-text) !important;
+  font-size: 0.9rem !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-quiz-zone {
+  opacity: 0.2;
+  transform: translateY(18px);
+  transition:
+    opacity 420ms ease,
+    transform 420ms ease;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-quiz-zone.is-visible,
+.chapter-page:not(:has(.chapter-completion)) .chapter-quiz-zone:has(.chapter-result) {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard__question {
+  max-width: 54ch !important;
+  margin-top: 10px !important;
+  color: var(--stage5-text) !important;
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-size: clamp(1.35rem, 2.5vw, 1.9rem) !important;
+  line-height: 1.45 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard__choices {
+  gap: 9px !important;
+  margin-top: 12px !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-choice {
+  min-height: 44px !important;
+  padding: 11px 13px !important;
+  border: 1px solid var(--stage5-line) !important;
+  border-radius: 5px !important;
+  background: transparent !important;
+  color: var(--stage5-muted) !important;
+  font-size: 0.95rem !important;
+  line-height: 1.55 !important;
+  box-shadow: none !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-choice:hover,
+.chapter-page:not(:has(.chapter-completion)) .chapter-choice.is-selected {
+  border-color: var(--stage5-accent) !important;
+  background: var(--stage5-accent-soft) !important;
+  color: var(--stage5-text) !important;
+  transform: translateY(-1px) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-result {
+  margin-top: 18px !important;
+  padding: 16px !important;
+  border: 1px solid var(--stage5-line-strong) !important;
+  border-radius: 6px !important;
+  background: var(--stage5-surface) !important;
+  animation: chapter-result-reveal 360ms ease both !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-result__status {
+  color: var(--stage5-text) !important;
+  font-size: clamp(1.5rem, 3vw, 2.25rem) !important;
+  letter-spacing: 0 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-result__feedbackStack {
+  display: grid;
+  justify-items: end;
+  gap: 6px;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-result__xp,
+.chapter-page:not(:has(.chapter-completion)) .chapter-xp-toast,
+.chapter-page:not(:has(.chapter-completion)) .chapter-choice-toast {
+  position: static !important;
+  display: inline-flex !important;
+  width: fit-content !important;
+  min-height: 0 !important;
+  border: 1px solid var(--stage5-line) !important;
+  border-radius: 999px !important;
+  background: var(--stage5-accent-soft) !important;
+  color: var(--stage5-text) !important;
+  padding: 6px 10px !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  animation: mura-reader-local-feedback 420ms ease both !important;
+  font-size: 0.74rem !important;
+  font-weight: 800 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-result__grid {
+  gap: 10px !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-result__card {
+  padding: 12px 0 0 !important;
+  border: 0 !important;
+  border-top: 1px solid var(--stage5-line) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-result__card p:not(.chapter-result__cardLabel) {
+  color: var(--stage5-muted) !important;
+  font-size: 0.96rem !important;
+  line-height: 1.7 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-result__action {
+  min-height: 42px !important;
+  border-radius: 5px !important;
+  border-color: var(--stage5-accent) !important;
+  background: var(--stage5-accent) !important;
+  color: #052019 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-aside {
+  grid-column: 3 !important;
+  position: sticky !important;
+  top: 22px !important;
+  display: grid !important;
+  gap: 12px !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-panel {
+  padding: 14px !important;
+  border: 1px solid var(--stage5-line) !important;
+  border-radius: 6px !important;
+  background: var(--stage5-surface) !important;
+  color: var(--stage5-text) !important;
+  box-shadow: none !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-panel h2 {
+  margin: 0 0 8px !important;
+  color: var(--stage5-text) !important;
+  font-family: Inter, system-ui, sans-serif !important;
+  font-size: 0.82rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.04em !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-panel p {
+  color: var(--stage5-muted) !important;
+  font-size: 0.9rem !important;
+  line-height: 1.65 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-tags {
+  gap: 6px !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-tags span {
+  border: 1px solid var(--stage5-line) !important;
+  border-radius: 999px !important;
+  background: var(--stage5-accent-soft) !important;
+  color: var(--stage5-muted) !important;
+  padding: 5px 7px !important;
+  font-size: 0.72rem !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-language-compare {
+  grid-column: 2 / 4 !important;
+  margin-top: 6px !important;
+  padding: 18px !important;
+  border: 1px solid var(--stage5-line) !important;
+  border-radius: 6px !important;
+  background: var(--stage5-surface) !important;
+  box-shadow: none !important;
+  animation: mura-reader-compare-enter 260ms ease both !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-language-compare__grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-language-column {
+  min-width: 0 !important;
+  padding: 14px !important;
+  border: 1px solid var(--stage5-line) !important;
+  border-radius: 6px !important;
+  background: color-mix(in srgb, var(--stage5-surface-strong) 65%, transparent) !important;
+  color: var(--stage5-text) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-language-column select {
+  border: 1px solid var(--stage5-line) !important;
+  border-radius: 5px !important;
+  background: transparent !important;
+  color: var(--stage5-text) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-language-column h3 {
+  color: var(--stage5-text) !important;
+  font-size: clamp(1.25rem, 2.5vw, 1.8rem) !important;
+  letter-spacing: 0 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-language-column__context p,
+.chapter-page:not(:has(.chapter-completion)) .chapter-language-column__prompt {
+  color: var(--stage5-muted) !important;
+  font-size: 0.98rem !important;
+  line-height: 1.75 !important;
+  overflow-wrap: anywhere;
+}
+
+@keyframes mura-reader-local-feedback {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1180px) {
+  .chapter-page:not(:has(.chapter-completion)) .chapter-page__container {
+    grid-template-columns: 58px minmax(0, 1fr) !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .chapter-topbar,
+  .chapter-page:not(:has(.chapter-completion)) .chapter-language-compare {
+    grid-column: 2 !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .mura-reader-aside {
+    grid-column: 2 !important;
+    position: static !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 760px) {
+  .chapter-page:not(:has(.chapter-completion)) {
+    padding: 64px 12px 48px !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .chapter-page__container {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .chapter-topbar,
+  .chapter-page:not(:has(.chapter-completion)) .mura-reader-rail,
+  .chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard,
+  .chapter-page:not(:has(.chapter-completion)) .mura-reader-aside,
+  .chapter-page:not(:has(.chapter-completion)) .chapter-language-compare {
+    grid-column: 1 !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .chapter-topbar {
+    grid-template-columns: 1fr !important;
+    grid-template-areas: "head" "tools" "status" !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .chapter-topbar__tools,
+  .chapter-page:not(:has(.chapter-completion)) .mura-reader-actions {
+    justify-content: start !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .mura-reader-rail {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 12 !important;
+    min-height: 0 !important;
+    grid-template-columns: auto minmax(0, 1fr) auto !important;
+    grid-template-rows: none !important;
+    align-items: center !important;
+    gap: 10px !important;
+    padding: 10px 0 !important;
+    border-right: 0 !important;
+    border-bottom: 1px solid var(--stage5-line) !important;
+    background: color-mix(in srgb, var(--stage5-bg) 88%, transparent) !important;
+    backdrop-filter: blur(12px);
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .mura-reader-rail__top,
+  .chapter-page:not(:has(.chapter-completion)) .mura-reader-rail__foot {
+    padding: 0 !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .mura-reader-rail ol {
+    display: flex !important;
+    gap: 8px !important;
+    margin: 0 !important;
+    overflow-x: auto;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .mura-reader-rail li {
+    flex: 0 0 auto;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .mura-reader-rail li small {
+    display: none !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .mura-reader-aside,
+  .chapter-page:not(:has(.chapter-completion)) .chapter-language-compare__grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .chapter-result__top {
+    display: grid !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .chapter-result__feedbackStack {
+    justify-items: start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chapter-page:not(:has(.chapter-completion)) *,
+  .chapter-page:not(:has(.chapter-completion)) *::before,
+  .chapter-page:not(:has(.chapter-completion)) *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* Stage 5 final polish: remove residual boxed reading/header surfaces. */
+.chapter-page:not(:has(.chapter-completion)) .chapter-topbar {
+  padding: 0 0 18px !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--stage5-line) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-topbar__subtitle {
+  margin-top: 4px !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-fragment blockquote {
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  font-size: clamp(1.2rem, 2vw, 1.48rem) !important;
+  line-height: 1.82 !important;
+}
+
+:root[data-theme="light"] .chapter-page:not(:has(.chapter-completion)) .chapter-fragment blockquote {
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-annotated-word {
+  padding: 0 3px !important;
+  border: 1px solid color-mix(in srgb, var(--stage5-accent) 55%, transparent) !important;
+  border-radius: 4px !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-quiz-zone {
+  margin-top: 28px !important;
+  padding-top: 18px !important;
+  border-top: 1px solid var(--stage5-line) !important;
+}
+
+/* Stage 5C: locked rail navigation, local quiz feedback, and readability pass. */
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-rail {
+  top: 18px !important;
+  min-height: 0 !important;
+  max-height: calc(100dvh - 36px) !important;
+  grid-template-rows: auto auto auto !important;
+  align-content: start !important;
+  gap: 18px !important;
+  padding: 4px 12px 4px 0 !important;
+  border-right: 1px solid var(--stage5-line) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-rail__top {
+  gap: 4px !important;
+  padding-right: 0 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-rail__top span,
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-rail__foot span {
+  color: var(--stage5-soft) !important;
+  font-size: 0.68rem !important;
+  letter-spacing: 0.05em !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-rail__top strong {
+  color: var(--stage5-text) !important;
+  font-size: 0.98rem !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-rail ol {
+  align-self: start !important;
+  gap: 10px !important;
+  margin: 0 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-rail li {
+  justify-items: start !important;
+  opacity: 1 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-rail__button {
+  width: 28px !important;
+  height: 28px !important;
+  display: grid !important;
+  place-items: center !important;
+  border: 1px solid var(--stage5-line-strong) !important;
+  border-radius: 50% !important;
+  background: transparent !important;
+  color: var(--stage5-muted) !important;
+  cursor: pointer !important;
+  font-size: 0.74rem !important;
+  font-weight: 850 !important;
+  line-height: 1 !important;
+  transition:
+    border-color 180ms ease,
+    background 180ms ease,
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-rail__button:hover:not(:disabled) {
+  border-color: var(--stage5-accent) !important;
+  background: var(--stage5-accent-soft) !important;
+  color: var(--stage5-text) !important;
+  transform: translateY(-1px) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-rail li.is-active .mura-reader-rail__button {
+  border-color: var(--stage5-accent) !important;
+  background: var(--stage5-accent-soft) !important;
+  color: var(--stage5-accent) !important;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--stage5-accent) 15%, transparent) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-rail li.is-complete:not(.is-active) .mura-reader-rail__button {
+  border-color: color-mix(in srgb, var(--stage5-accent) 62%, var(--stage5-line)) !important;
+  background: var(--stage5-accent-soft) !important;
+  color: var(--stage5-text) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-rail li.is-locked .mura-reader-rail__button {
+  cursor: not-allowed !important;
+  opacity: 0.42 !important;
+  border-style: dashed !important;
+  color: var(--stage5-soft) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-rail li > span {
+  display: none !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-rail li small {
+  color: var(--stage5-soft) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard__head {
+  padding-bottom: 12px !important;
+  border-bottom: 1px solid var(--stage5-line) !important;
+  background: transparent !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-sceneCard__eyebrow {
+  color: var(--stage5-accent) !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  font-size: clamp(0.86rem, 1.1vw, 0.98rem) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-fragment blockquote {
+  max-width: 66ch !important;
+  color: var(--stage5-text) !important;
+  font-size: clamp(1.22rem, 1.65vw, 1.56rem) !important;
+  line-height: 1.86 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-note-row input,
+.chapter-page:not(:has(.chapter-completion)) .chapter-choice,
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-panel p,
+.chapter-page:not(:has(.chapter-completion)) .chapter-result__card p:not(.chapter-result__cardLabel) {
+  font-size: clamp(0.98rem, 1.1vw, 1.05rem) !important;
+  line-height: 1.72 !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-choice {
+  color: var(--stage5-text) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .mura-reader-panel h2 {
+  font-size: 0.86rem !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-result {
+  position: relative !important;
+  overflow: visible !important;
+  animation: mura-reader-result-enter 360ms ease both !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-result__top {
+  position: relative !important;
+  min-height: 58px !important;
+  padding-right: min(210px, 38%) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-result__feedbackStack {
+  position: absolute !important;
+  top: 0 !important;
+  right: 0 !important;
+  z-index: 2 !important;
+  display: grid !important;
+  justify-items: end !important;
+  gap: 6px !important;
+  pointer-events: none !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-result__xp {
+  background: var(--stage5-surface-strong) !important;
+  border-color: var(--stage5-line-strong) !important;
+}
+
+.chapter-page:not(:has(.chapter-completion)) .chapter-xp-toast,
+.chapter-page:not(:has(.chapter-completion)) .chapter-choice-toast {
+  position: static !important;
+  background: var(--stage5-surface-strong) !important;
+  color: var(--stage5-text) !important;
+  border-color: color-mix(in srgb, var(--stage5-accent) 70%, var(--stage5-line)) !important;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.22) !important;
+  animation: mura-reader-xp-local-pop 2.35s ease both !important;
+}
+
+:root[data-theme="light"] .chapter-page:not(:has(.chapter-completion)) .chapter-xp-toast,
+:root[data-theme="light"] .chapter-page:not(:has(.chapter-completion)) .chapter-choice-toast,
+:root[data-theme="light"] .chapter-page:not(:has(.chapter-completion)) .chapter-result__xp {
+  background: #fff8eb !important;
+  color: #123d36 !important;
+  box-shadow: 0 12px 26px rgba(88, 64, 28, 0.16) !important;
+}
+
+@keyframes mura-reader-result-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes mura-reader-xp-local-pop {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  18% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  78% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+@media (max-width: 1180px) {
+  .chapter-page:not(:has(.chapter-completion)) .mura-reader-rail {
+    max-height: none !important;
+  }
+}
+
+@media (max-width: 760px) {
+  .chapter-page:not(:has(.chapter-completion)) .mura-reader-rail {
+    grid-template-columns: auto minmax(0, 1fr) auto !important;
+    gap: 12px !important;
+    padding: 10px 0 !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .mura-reader-rail__top {
+    min-width: 92px !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .mura-reader-rail ol {
+    align-items: center !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .mura-reader-rail__button {
+    width: 30px !important;
+    height: 30px !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .chapter-result__top {
+    padding-right: 0 !important;
+  }
+
+  .chapter-page:not(:has(.chapter-completion)) .chapter-result__feedbackStack {
+    position: static !important;
+    justify-items: start !important;
+    margin-top: 10px !important;
   }
 }

@@ -31,7 +31,7 @@ export const ui = {
     soundOn: "Sound on",
     skipIntro: "Skip intro",
     navigation: "Navigation",
-    heroKicker: "DIGITAL HUMANITIES PLATFORM FOR LITERARY HERITAGE",
+    heroKicker: "DISCOVER THE SOUL OF THE GREAT STEPPE",
     heroTitle: "MURA - Kazakh literary heritage",
     heroSubtitle: "Explore Kazakh literary memory through authors, works, places, multilingual interpretation, and guided reading routes for a new generation of readers.",
     beginJourney: "Begin your journey",
@@ -67,6 +67,8 @@ export const ui = {
     landingCulturalAccess: "Cultural access",
     landingSubscribe: "Subscribe to news",
     landingSubscribeSaved: "Subscription saved.",
+    landingEmailPlaceholder: "Your e-mail",
+    landingFollowUs: "Follow us",
     explore: "Explore",
     footerText: "Interactive platform for Kazakh literary heritage.",
     copyright: "© 2026 Literary Heritage. Developed by Samal Tleuberdikyzy",
@@ -898,6 +900,8 @@ export const ui = {
     landingProgressText: "Достижения и маршруты чтения в личном профиле.",
     landingSubscribe: "Подписка на новости",
     landingSubscribeSaved: "Подписка сохранена.",
+    landingEmailPlaceholder: "Ваш e-mail",
+    landingFollowUs: "Мы в соцсетях",
     explore: "Открыть",
     footerText: "Интерактивная платформа для изучения литературы.",
     copyright: "© 2026 Литературное наследие. Разработала Самал Тлеубердикызы",
@@ -1683,6 +1687,8 @@ export const ui = {
     landingProgressText: "Жеке профильдегі жетістіктер мен оқу маршруттары.",
     landingSubscribe: "Жаңалықтарға жазылу",
     landingSubscribeSaved: "Жазылым сақталды.",
+    landingEmailPlaceholder: "E-mail",
+    landingFollowUs: "Әлеуметтік желілер",
     explore: "Ашу",
     footerText: "Әдебиетті зерттеуге арналған интерактивті платформа.",
     copyright: "© 2026 Әдеби мұра. Самал Тлеубердіқызы әзірледі",
@@ -3244,12 +3250,12 @@ export const achievementLabels = {
 export const workTranslations = {
   "abai-words": {
     "ru": {
-      "title": "Қара сөздер / The Book of Words",
+      "title": "Книга слов",
       "author": "Абай Кунанбаев",
       "description": "Философская проза о совести, знании, характере и обновлении казахского общества."
     },
     "kk": {
-      "title": "Қара сөздер / The Book of Words",
+      "title": "Қара сөздер",
       "author": "Абай Құнанбайұлы",
       "description": "Ар, білім, мінез және қазақ қоғамын жаңарту туралы философиялық прозалық ойлар."
     }
