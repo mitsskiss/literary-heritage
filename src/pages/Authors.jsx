@@ -5,6 +5,7 @@ import { works } from "../data/works";
 import { useI18n } from "../i18n/useI18n";
 import { mergeAdminAuthors, mergeAdminWorks } from "../admin/adminContent";
 import { useAdminContent } from "../hooks/useAdminContent";
+import AuthorPortrait from "../components/AuthorPortrait";
 import "./Author.css";
 
 function Authors() {
@@ -106,11 +107,7 @@ function Authors() {
                 className="author-card"
               >
                 <div className="author-card__portrait">
-                  <img
-                    src={author.image}
-                    alt={author.name}
-                    className="author-avatar"
-                  />
+                  <AuthorPortrait author={author} displayName={author.name} language={language} loading="eager" />
                 </div>
 
                 <div className="author-card__body">

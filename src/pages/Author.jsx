@@ -6,6 +6,7 @@ import { useI18n } from "../i18n/useI18n";
 import { useProgressStore } from "../store/useProgressStore";
 import { mergeAdminAuthors, mergeAdminWorks } from "../admin/adminContent";
 import { useAdminContent } from "../hooks/useAdminContent";
+import AuthorPortrait from "../components/AuthorPortrait";
 import {
   MuraArrowIcon,
   MuraBookOpenIcon,
@@ -331,7 +332,13 @@ function Author() {
 
           <div className="author-profile-hero-grid">
             <div className="author-profile-portrait">
-              {authorInfo.image ? <img src={authorInfo.image} alt={displayName} /> : <span>{displayName.slice(0, 2)}</span>}
+              <AuthorPortrait
+                author={authorInfo}
+                displayName={displayName}
+                language={language}
+                loading="eager"
+                showCredit
+              />
             </div>
 
             <div className="author-profile-identity">

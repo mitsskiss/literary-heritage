@@ -165,8 +165,11 @@
 }
 
 .author-card__portrait {
+  position: relative;
   overflow: hidden;
-  background: var(--heritage-surface-strong);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--heritage-surface-strong) 86%, #173f35), color-mix(in srgb, var(--heritage-gold) 10%, transparent)),
+    var(--heritage-surface-strong);
 }
 
 .author-card__portrait img,
@@ -177,6 +180,33 @@
   display: block;
   object-fit: cover;
   filter: sepia(0.22) saturate(0.88) contrast(1.02);
+}
+
+.author-portrait-image {
+  opacity: 0;
+  transform: scale(1.01);
+  transition: opacity 260ms ease, transform 420ms ease;
+}
+
+.author-portrait-image.is-loaded {
+  opacity: 1;
+}
+
+.author-card:hover .author-portrait-image.is-loaded {
+  transform: scale(1.045);
+}
+
+.author-portrait-fallback {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  color: var(--heritage-gold);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 58px;
+  background:
+    radial-gradient(circle at 50% 30%, color-mix(in srgb, var(--heritage-gold) 22%, transparent), transparent 42%),
+    linear-gradient(135deg, var(--heritage-surface-strong), color-mix(in srgb, var(--heritage-ink) 16%, var(--heritage-surface)));
 }
 
 .author-card__body {
@@ -727,9 +757,8 @@
   min-height: 410px;
   display: block;
   object-fit: cover;
-  object-position: 52% 55%;
   filter: grayscale(0.38) sepia(0.24) contrast(1.08) brightness(0.9);
-  transform: scale(1.16);
+  transform: scale(1.025);
 }
 
 :root[data-theme="light"] .author-profile-portrait img {
@@ -740,8 +769,9 @@
   content: "";
   position: absolute;
   inset: 0;
+  pointer-events: none;
   background:
-    linear-gradient(180deg, transparent 56%, rgba(0, 28, 23, 0.55)),
+    linear-gradient(180deg, transparent 60%, rgba(0, 28, 23, 0.58)),
     radial-gradient(circle at 72% 20%, rgba(216, 165, 77, 0.2), transparent 22%);
 }
 
@@ -752,6 +782,30 @@
   color: var(--author-gold);
   font-family: var(--author-serif);
   font-size: 72px;
+}
+
+.author-profile-portrait-credit {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 12px;
+  z-index: 2;
+  margin: 0;
+  color: rgba(245, 239, 226, 0.74);
+  font-size: 11px;
+  line-height: 1.35;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.46);
+}
+
+.author-profile-portrait-credit span {
+  color: var(--author-gold-strong);
+  font-weight: 820;
+}
+
+.author-profile-portrait-credit a {
+  color: inherit;
+  text-decoration-color: color-mix(in srgb, currentColor 48%, transparent);
+  text-underline-offset: 3px;
 }
 
 .author-profile-identity h1 {
@@ -1172,7 +1226,7 @@
 }
 
 .author-profile-portrait:hover img {
-  transform: scale(1.16);
+  transform: scale(1.045);
 }
 
 .author-profile-work-card__body {
@@ -1445,6 +1499,7 @@
   .author-profile-tab-panel,
   .author-profile-button,
   .author-profile-outline-action,
+  .author-portrait-image,
   .author-profile-work-card,
   .author-profile-work-card__image img,
   .author-profile-research-card {
