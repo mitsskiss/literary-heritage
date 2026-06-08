@@ -1,0 +1,1 @@
+var e={en:`The Book of Words`,ru:`Книга слов`,kk:`Қара сөздер`};function t(t,n=`en`){if(!t)return``;if(t.id===`abai-words`)return e[n]??e.en;let r=String(t.title??``).trim();if(!r.includes(` / `))return r;let[i,a]=r.split(` / `).map(e=>e.trim());return n===`en`?a||i||r:n===`kk`?t.originalTitle||i||a||r:i||a||r}export{t};
