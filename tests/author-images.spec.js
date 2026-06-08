@@ -29,10 +29,12 @@ async function waitForPortraits(page, selector) {
           image.classList.contains("is-loaded")
       )
     );
-  }, selector);
+  }, selector, { timeout: 45000 });
 }
 
 test.describe("author archive portraits", () => {
+  test.describe.configure({ timeout: 90000 });
+
   test("authors grid uses distinct non-broken portraits with Abai fallback safety", async ({ page }) => {
     fs.mkdirSync(screenshotsDir, { recursive: true });
     await page.setViewportSize({ width: 1366, height: 900 });

@@ -1,8 +1,10 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import {
   cleanAuthCallbackUrl,
+  debugAuth,
   initialAuthCallback,
   isSupabaseConfigured,
+  normalizeAuthEmail,
   supabase,
 } from "../lib/supabaseClient";
 
@@ -78,12 +80,21 @@ export function AuthProvider({ children }) {
       if (!isMounted) return;
 
       if (hydrated?.error) {
+        debugAuth("callback hydration error", {
+          type: initialAuthCallback.type,
+          error: hydrated.error.message,
+        });
         setAuthCallbackError(hydrated.error.message);
       }
 
       const { data } = await supabase.auth.getSession();
       if (!isMounted) return;
       setSession(data.session ?? null);
+      debugAuth("initial session loaded", {
+        callbackType: initialAuthCallback.type,
+        hasSession: Boolean(data.session),
+        routePath: initialAuthCallback.routePath,
+      });
       if (initialAuthCallback.isCallback) {
         if (initialAuthCallback.type === "recovery") {
           setRecoveryReady(Boolean(data.session));
@@ -101,6 +112,10 @@ export function AuthProvider({ children }) {
 
     const { data: listener } = supabase.auth.onAuthStateChange(
       (event, nextSession) => {
+        debugAuth("auth event", {
+          event,
+          hasSession: Boolean(nextSession),
+        });
         setAuthEvent(event);
         setSession(nextSession ?? null);
         if (event === "PASSWORD_RECOVERY") {
@@ -164,12 +179,28 @@ export function AuthProvider({ children }) {
       isConfigured: isSupabaseConfigured,
       signIn: async ({ email, password }) => {
         if (!supabase) throw new Error("Supabase is not configured");
-        return supabase.auth.signInWithPassword({ email: email.trim(), password });
+        const normalizedEmail = normalizeAuthEmail(email);
+        debugAuth("signInWithPassword request", { normalizedEmail });
+        const currentSession = await supabase.auth.getSession();
+        if (currentSession.data.session) {
+          await supabase.auth.signOut({ scope: "local" });
+        }
+        const result = await supabase.auth.signInWithPassword({ email: normalizedEmail, password });
+        debugAuth("signInWithPassword response", {
+          normalizedEmail,
+          hasSession: Boolean(result.data?.session),
+          error: result.error?.message,
+          errorCode: result.error?.code,
+          status: result.error?.status,
+        });
+        return result;
       },
       signUp: async ({ email, password, displayName }) => {
         if (!supabase) throw new Error("Supabase is not configured");
+        const normalizedEmail = normalizeAuthEmail(email);
+        debugAuth("signUp request", { normalizedEmail });
         const result = await supabase.auth.signUp({
-          email: email.trim(),
+          email: normalizedEmail,
           password,
           options: {
             emailRedirectTo: getAuthRedirectUrl(),
@@ -182,9 +213,11 @@ export function AuthProvider({ children }) {
       },
       resendConfirmation: async ({ email }) => {
         if (!supabase) throw new Error("Supabase is not configured");
+        const normalizedEmail = normalizeAuthEmail(email);
+        debugAuth("resend confirmation request", { normalizedEmail });
         return supabase.auth.resend({
           type: "signup",
-          email: email.trim(),
+          email: normalizedEmail,
           options: {
             emailRedirectTo: getAuthRedirectUrl(),
           },
@@ -192,7 +225,9 @@ export function AuthProvider({ children }) {
       },
       resetPassword: async ({ email }) => {
         if (!supabase) throw new Error("Supabase is not configured");
-        return supabase.auth.resetPasswordForEmail(email.trim(), {
+        const normalizedEmail = normalizeAuthEmail(email);
+        debugAuth("reset password request", { normalizedEmail });
+        return supabase.auth.resetPasswordForEmail(normalizedEmail, {
           redirectTo: getPasswordRecoveryRedirectUrl(),
         });
       },
@@ -205,7 +240,20 @@ export function AuthProvider({ children }) {
             error: new Error("Password recovery session is missing or expired."),
           };
         }
-        return supabase.auth.updateUser({ password });
+        const result = await supabase.auth.updateUser({ password });
+        debugAuth("update password response", {
+          hasUser: Boolean(result.data?.user),
+          error: result.error?.message,
+          errorCode: result.error?.code,
+          status: result.error?.status,
+        });
+        if (!result.error) {
+          setRecoveryReady(false);
+          setAuthRedirectType(null);
+          await supabase.auth.signOut({ scope: "local" });
+          setSession(null);
+        }
+        return result;
       },
       signOut: async () => {
         if (!supabase) return;

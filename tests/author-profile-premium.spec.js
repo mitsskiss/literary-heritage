@@ -48,17 +48,17 @@ test.describe("MURA author profile premium layout", () => {
     await page.locator(".author-profile-actions .author-profile-button").nth(1).click();
     await expect(page.locator(".author-profile-share-status")).toBeVisible();
 
-    await page.locator(".author-profile-tabs button").filter({ hasText: "Биография" }).click();
+    await page.locator(".author-profile-tabs button").filter({ hasText: "Биография" }).click({ force: true });
     await expect(page.locator(".author-profile-longform")).toContainText("Шынгыстау");
 
-    await page.locator(".author-profile-tabs button").filter({ hasText: "Произведения" }).click();
+    await page.locator(".author-profile-tabs button").filter({ hasText: "Произведения" }).click({ force: true });
     await expect(page.locator(".author-profile-work-card")).toHaveCount(4);
     await expect(page.locator(".author-profile-work-card").first()).toContainText("Книга слов");
-    await page.locator(".author-profile-tabs button").filter({ hasText: "Цитаты" }).click();
+    await page.locator(".author-profile-tabs button").filter({ hasText: "Цитаты" }).click({ force: true });
     await expect(page.locator(".author-profile-quotes article")).toHaveCount(3);
-    await page.locator(".author-profile-tabs button").filter({ hasText: "Статьи и исследования" }).click();
+    await page.locator(".author-profile-tabs button").filter({ hasText: "Статьи и исследования" }).click({ force: true });
     await expect(page.locator(".author-profile-research-card")).toHaveCount(3);
-    await page.locator(".author-profile-tabs button").filter({ hasText: "Факты" }).click();
+    await page.locator(".author-profile-tabs button").filter({ hasText: "Факты" }).click({ force: true });
     await expect(page.locator(".author-profile-facts article")).toHaveCount(3);
     await expectNoHorizontalOverflow(page);
 

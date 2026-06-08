@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 import { useI18n } from "../i18n/useI18n";
+import { debugAuth, normalizeAuthEmail } from "../lib/supabaseClient";
 import "./Auth.css";
 
 const PASSWORD_MIN_LENGTH = 6;
@@ -18,6 +19,7 @@ function Auth() {
     session,
     signIn,
     signUp,
+    signOut,
     updatePassword,
   } = useAuth();
   const location = useLocation();
@@ -32,7 +34,7 @@ function Auth() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isResending, setIsResending] = useState(false);
 
-  const normalizedEmail = email.trim();
+  const normalizedEmail = normalizeAuthEmail(email);
   const isPasswordUpdate = mode === "update-password";
   const needsPassword = mode !== "reset";
   const isRecoveryRoute = location.pathname === "/reset-password";
@@ -86,6 +88,9 @@ function Auth() {
       if (normalized.includes("expired") || normalized.includes("invalid token") || normalized.includes("otp")) {
         return t("authRecoveryExpired");
       }
+      if (normalized.includes("new password should be different") || normalized.includes("different from the old password")) {
+        return t("authPasswordAlreadyCurrent");
+      }
       if (normalized.includes("failed to fetch") || normalized.includes("network")) {
         return t("authNetworkError");
       }
@@ -106,7 +111,7 @@ function Auth() {
       if (authCallbackError) {
         setMessage(getAuthErrorMessage(authCallbackError));
         setIsError(true);
-      } else if (recoveryReady || authEvent === "PASSWORD_RECOVERY") {
+      } else if (recoveryReady || session?.user) {
         setMessage(t("authReadyForNewPassword"));
         setIsError(false);
       } else {
@@ -114,7 +119,7 @@ function Auth() {
         setIsError(true);
       }
     }
-  }, [authCallbackError, authEvent, getAuthErrorMessage, isRecoveryRoute, recoveryReady, t]);
+  }, [authCallbackError, authEvent, getAuthErrorMessage, isRecoveryRoute, recoveryReady, session?.user, t]);
 
   useEffect(() => {
     const urlText = `${window.location.href}`.toLowerCase();
@@ -159,6 +164,12 @@ function Auth() {
 
     try {
       let result;
+      debugAuth("auth form submit", {
+        mode,
+        normalizedEmail: isPasswordUpdate ? undefined : normalizedEmail,
+        recoveryReady,
+        hasSession: Boolean(session),
+      });
 
       if (mode === "signin") {
         result = await signIn({ email: normalizedEmail, password });
@@ -193,6 +204,7 @@ function Auth() {
 
       if (mode === "update-password") {
         setMessage(t("authPasswordUpdated"));
+        await signOut();
         window.setTimeout(() => navigate("/auth", { replace: true }), 900);
         return;
       }

@@ -2,6 +2,34 @@
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+const isDevelopment = import.meta.env.DEV;
+
+export function normalizeAuthEmail(email = "") {
+  return String(email).trim().toLowerCase();
+}
+
+export function getSupabasePublicHost() {
+  if (!supabaseUrl) return "not-configured";
+
+  try {
+    return new URL(supabaseUrl).host;
+  } catch {
+    return "invalid-url";
+  }
+}
+
+export function debugAuth(message, details = {}) {
+  if (!isDevelopment || typeof console === "undefined") return;
+
+  const safeDetails = Object.fromEntries(
+    Object.entries(details).filter(([key]) => !key.toLowerCase().includes("token"))
+  );
+
+  console.info("[MURA auth]", message, {
+    supabaseHost: getSupabasePublicHost(),
+    ...safeDetails,
+  });
+}
 
 function readAuthCallbackFromLocation() {
   if (typeof window === "undefined") {
@@ -108,3 +136,8 @@ export const supabase = isSupabaseConfigured
       },
     })
   : null;
+
+debugAuth("Supabase client initialized", {
+  configured: isSupabaseConfigured,
+  baseUrl: import.meta.env.BASE_URL,
+});
