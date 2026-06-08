@@ -65,7 +65,8 @@ test.describe("author archive portraits", () => {
         /stamp|KZMakataev|CPA_4065|CPA 4065|Musrepov\.jpg/i.test(`${item.source} ${item.src}`)
       )
     ).toBe(false);
-    expect(imageAudit.filter((item) => item.source?.startsWith("local:mura-generated/")).length).toBeGreaterThanOrEqual(8);
+    expect(imageAudit.some((item) => item.source?.startsWith("local:mura-generated/"))).toBe(false);
+    expect(imageAudit.filter((item) => item.source?.startsWith("local:mura-placeholder/")).length).toBeGreaterThanOrEqual(4);
 
     const abaiImage = page.locator('.author-card__portrait img[data-author-portrait="Abai Kunanbayev"]');
     await expect(abaiImage).toHaveAttribute("alt", /Abai/);
@@ -95,7 +96,7 @@ test.describe("author archive portraits", () => {
     await page.screenshot({ path: `${screenshotsDir}/author-abai-portrait-profile.png`, fullPage: true });
   });
 
-  test("generated author profile hero uses the same MURA portrait source", async ({ page }) => {
+  test("real author profile hero uses the same archival portrait source", async ({ page }) => {
     fs.mkdirSync(screenshotsDir, { recursive: true });
     await page.setViewportSize({ width: 1280, height: 900 });
     await gotoApp(page, "/author/Mukhtar%20Auezov", { theme: "dark", language: "en" });
@@ -104,14 +105,34 @@ test.describe("author archive portraits", () => {
     const heroImage = page.locator(".author-profile-portrait img");
     await waitForPortraits(page, ".author-profile-portrait img");
     await expect(heroImage).toHaveAttribute("alt", /Mukhtar Auezov/);
-    await expect(heroImage).toHaveAttribute("data-portrait-source", "local:mura-generated/mukhtar-auezov");
-    await expect(page.locator(".author-profile-portrait-credit")).toContainText("MURA generated archival portrait");
+    await expect(heroImage).toHaveAttribute("data-portrait-source", /Auezov_Mukhtar/);
+    await expect(page.locator(".author-profile-portrait-credit")).toContainText("Wikimedia Commons");
 
     const brokenImages = await page.locator("img").evaluateAll((images) =>
       images.filter((image) => image.complete && image.naturalWidth === 0).length
     );
     expect(brokenImages).toBe(0);
 
-    await page.screenshot({ path: `${screenshotsDir}/author-auezov-generated-profile.png`, fullPage: true });
+    await page.screenshot({ path: `${screenshotsDir}/author-auezov-real-profile.png`, fullPage: true });
+  });
+
+  test("unavailable portrait profile uses neutral non-human placeholder", async ({ page }) => {
+    fs.mkdirSync(screenshotsDir, { recursive: true });
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await gotoApp(page, "/author/Fariza%20Ongarsynova", { theme: "light", language: "en" });
+    await expect(page.locator(".author-page--profile")).toBeVisible();
+
+    const heroImage = page.locator(".author-profile-portrait img");
+    await waitForPortraits(page, ".author-profile-portrait img");
+    await expect(heroImage).toHaveAttribute("alt", /Neutral MURA archival placeholder/);
+    await expect(heroImage).toHaveAttribute("data-portrait-source", "local:mura-placeholder/fariza-ongarsynova");
+    await expect(page.locator(".author-profile-portrait-credit")).toContainText("MURA neutral archival placeholder");
+
+    const placeholderSvg = await heroImage.evaluate((image) =>
+      decodeURIComponent(image.currentSrc.replace("data:image/svg+xml;charset=UTF-8,", ""))
+    );
+    expect(placeholderSvg).not.toMatch(/<ellipse|<circle|moustache|beard/i);
+
+    await page.screenshot({ path: `${screenshotsDir}/author-fariza-neutral-placeholder-profile.png`, fullPage: true });
   });
 });
