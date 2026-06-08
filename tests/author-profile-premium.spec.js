@@ -51,7 +51,7 @@ test.describe("MURA author profile premium layout", () => {
 
     await page.locator(".author-profile-tabs button").filter({ hasText: "Произведения" }).click();
     await expect(page.locator(".author-profile-work-card")).toHaveCount(4);
-    await expect(page.locator(".author-profile-work-card").first()).toContainText("Слова назидания");
+    await expect(page.locator(".author-profile-work-card").first()).toContainText("Книга слов");
     await page.locator(".author-profile-tabs button").filter({ hasText: "Цитаты" }).click();
     await expect(page.locator(".author-profile-quotes article")).toHaveCount(3);
     await page.locator(".author-profile-tabs button").filter({ hasText: "Статьи и исследования" }).click();

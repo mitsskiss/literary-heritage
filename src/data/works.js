@@ -686,3 +686,280 @@ export const works = [
     ],
   },
 ];
+
+const finalWorkContent = {
+  "abai-words": {
+    relatedAuthor: "Abai Kunanbayev",
+    shortTitle: { en: "Book of Words", ru: "Книга слов", kk: "Қара сөздер" },
+    fullDescription: {
+      en: "Abai's Book of Words is a cycle of philosophical prose that turns everyday moral questions into a disciplined practice of reading. It studies knowledge, conscience, labor, faith, speech, vanity, and responsibility, asking how a person becomes worthy of learning. In the MURA reader it is connected to scenes, annotations, difficult words, quotes, and the Path of Abai route.",
+      ru: "«Книга слов» Абая — цикл философской прозы, превращающий повседневные нравственные вопросы в внимательное чтение. Текст исследует знание, совесть, труд, веру, слово, тщеславие и ответственность, спрашивая, как человек становится достойным знания. В reader MURA произведение связано со сценами, аннотациями, сложными словами, цитатами и маршрутом «Путь Абая».",
+      kk: "Абайдың «Қара сөздері» — күнделікті адамгершілік сұрақтарын терең оқуға айналдыратын философиялық проза циклі. Мәтін білім, ар, еңбек, иман, сөз, мақтан және жауапкершілікті талдап, адамның білімге қалай лайық болатынын сұрайды. MURA reader ішінде ол сахналармен, түсіндірмелермен, күрделі сөздермен, дәйексөздермен және «Абай жолы» маршрутымен байланысқан.",
+    },
+    tags: ["abai", "philosophy", "reader", "ethics"],
+    locales: {
+      en: { title: "The Book of Words", shortTitle: "Book of Words", genre: "Philosophical prose" },
+      ru: { title: "Книга слов", shortTitle: "Книга слов", genre: "Философская проза" },
+      kk: { title: "Қара сөздер", shortTitle: "Қара сөздер", genre: "Философиялық проза" },
+    },
+  },
+  "auezov-abai-path": {
+    relatedAuthor: "Mukhtar Auezov",
+    shortTitle: { en: "Path of Abai", ru: "Путь Абая", kk: "Абай жолы" },
+    fullDescription: {
+      en: "Auezov's epic novel reconstructs Abai's life as a broad cultural memory of the Kazakh steppe. It follows family, education, conflict, speech, justice, and the formation of a moral voice. In the archive it works as both a literary monument and the main companion route for reading Abai.",
+      ru: "Роман-эпопея Ауэзова воссоздает жизнь Абая как широкую культурную память казахской степи. В нем соединяются семья, образование, конфликт, слово, справедливость и становление нравственного голоса. В архиве это и литературный памятник, и главный маршрут-связка для чтения Абая.",
+      kk: "Әуезовтің роман-эпопеясы Абай өмірін қазақ даласының кең мәдени жады ретінде қайта құрады. Онда отбасы, білім, тартыс, сөз, әділет және рухани дауыстың қалыптасуы тоғысады. Архивте бұл шығарма Абайды оқуға арналған басты байланыстырушы маршрут қызметін атқарады.",
+    },
+    tags: ["auezov", "abai", "novel-epic", "memory"],
+    locales: {
+      en: { title: "The Path of Abai", shortTitle: "Path of Abai", genre: "Epic novel" },
+      ru: { title: "Путь Абая", shortTitle: "Путь Абая", genre: "Роман-эпопея" },
+      kk: { title: "Абай жолы", shortTitle: "Абай жолы", genre: "Роман-эпопея" },
+    },
+  },
+  "auezov-enlik-kebek": {
+    relatedAuthor: "Mukhtar Auezov",
+    shortTitle: { en: "Enlik-Kebek", ru: "Енлик-Кебек", kk: "Еңлік-Кебек" },
+    fullDescription: {
+      en: "A dramatic work where love, custom, clan authority, and justice collide. Auezov turns an inherited oral plot into modern stage literature and asks whether social law can hear the human heart.",
+      ru: "Драма, где сталкиваются любовь, обычай, родовая власть и справедливость. Ауэзов превращает устный сюжет в современную сценическую литературу и спрашивает, способен ли общественный закон услышать человеческое сердце.",
+      kk: "Махаббат, салт, ру билігі және әділет қақтығысатын драма. Әуезов ауызша сюжетті заманауи сахналық әдебиетке айналдырып, қоғамдық заң адам жүрегін ести ала ма деген сұрақ қояды.",
+    },
+    tags: ["drama", "oral-tradition", "love", "custom"],
+  },
+  "seifullin-thorny-path": {
+    relatedAuthor: "Saken Seifullin",
+    shortTitle: { en: "Thorny Path", ru: "Тернистый путь", kk: "Тар жол" },
+    fullDescription: {
+      en: "Memoir-prose that records historical rupture as lived experience. It connects revolution, public duty, danger, memory, and the responsibility of testimony.",
+      ru: "Мемуарная проза, где исторический перелом показан как личный опыт. Произведение соединяет революцию, общественный долг, опасность, память и ответственность свидетельства.",
+      kk: "Тарихи сілкіністі жеке тәжірибе ретінде көрсететін мемуарлық проза. Шығарма революцияны, қоғамдық борышты, қауіпті, жадты және куәлік жауапкершілігін байланыстырады.",
+    },
+    tags: ["memory", "repression", "testimony", "history"],
+  },
+  "seifullin-kokshetau": {
+    relatedAuthor: "Saken Seifullin",
+    shortTitle: { en: "Kokshetau", ru: "Кокшетау", kk: "Көкшетау" },
+    fullDescription: {
+      en: "A poem where mountain, lake, legend, and public feeling turn landscape into cultural memory.",
+      ru: "Поэма, где гора, озеро, легенда и народное чувство превращают пейзаж в культурную память.",
+      kk: "Тау, көл, аңыз және халық сезімі пейзажды мәдени жадқа айналдыратын поэма.",
+    },
+    tags: ["landscape", "poetry", "memory", "kokshetau"],
+  },
+  "zhumabayev-batyr-bayan": {
+    relatedAuthor: "Magzhan Zhumabayev",
+    shortTitle: { en: "Batyr Bayan", ru: "Батыр Баян", kk: "Батыр Баян" },
+    fullDescription: {
+      en: "A historical poem where heroism is read through love, sacrifice, sorrow, and national imagination.",
+      ru: "Историческая поэма, где героизм раскрывается через любовь, жертву, скорбь и национальное воображение.",
+      kk: "Ерлік махаббат, құрбандық, қайғы және ұлттық қиял арқылы ашылатын тарихи поэма.",
+    },
+    tags: ["alash", "heroic-poem", "memory", "sacrifice"],
+  },
+  "zhumabayev-sholpan": {
+    relatedAuthor: "Magzhan Zhumabayev",
+    shortTitle: { en: "Sholpan", ru: "Шолпан", kk: "Шолпан" },
+    fullDescription: {
+      en: "An early lyric collection where beauty, longing, homeland, and language form a musical poetic world.",
+      ru: "Ранний лирический сборник, где красота, тоска, родина и язык складываются в музыкальный поэтический мир.",
+      kk: "Сұлулық, сағыныш, туған жер және тіл музыкалық поэтикалық әлемге айналған ерте лирикалық жинақ.",
+    },
+    tags: ["lyric", "language", "beauty", "homeland"],
+  },
+  "zhansugurov-kulager": {
+    relatedAuthor: "Ilyas Zhansugurov",
+    shortTitle: { en: "Kulager", ru: "Кулагер", kk: "Құлагер" },
+    fullDescription: {
+      en: "A major poem about art, envy, tragedy, and the wounded image of beauty in the steppe.",
+      ru: "Крупная поэма об искусстве, зависти, трагедии и раненом образе красоты в степи.",
+      kk: "Өнер, қызғаныш, трагедия және даладағы жараланған сұлулық бейнесі туралы ірі поэма.",
+    },
+    tags: ["poem", "art", "horse", "tragedy"],
+  },
+  "baitursynuly-masa": {
+    relatedAuthor: "Akhmet Baitursynuly",
+    shortTitle: { en: "Masa", ru: "Маса", kk: "Маса" },
+    fullDescription: {
+      en: "A civic poetic collection that treats literature as an alarm for language, education, dignity, and public responsibility.",
+      ru: "Гражданский поэтический сборник, где литература становится сигналом к языку, образованию, достоинству и общественной ответственности.",
+      kk: "Әдебиетті тілге, білімге, қадірге және қоғамдық жауапкершілікке шақыратын дабыл ретінде көрсететін азаматтық жинақ.",
+    },
+    tags: ["alash", "language", "education", "awakening"],
+  },
+  "baitursynuly-forty-fables": {
+    relatedAuthor: "Akhmet Baitursynuly",
+    shortTitle: { en: "Forty Fables", ru: "Сорок басен", kk: "Қырық мысал" },
+    fullDescription: {
+      en: "Adapted fables that use simple narrative form for moral education, literacy, and civic attention.",
+      ru: "Адаптированные басни, использующие простую повествовательную форму для нравственного воспитания, грамотности и общественной внимательности.",
+      kk: "Қарапайым мысал формасы арқылы адамгершілік, сауат және қоғамдық зейін тәрбиелейтін бейімделген шығармалар.",
+    },
+    tags: ["fables", "education", "morality", "language"],
+  },
+  "shakarim-three-truths": {
+    relatedAuthor: "Shakarim Kudaiberdiuly",
+    shortTitle: { en: "Three Truths", ru: "Три истины", kk: "Үш анық" },
+    fullDescription: {
+      en: "Philosophical prose about conscience, faith, reason, and the search for a moral foundation of life.",
+      ru: "Философская проза о совести, вере, разуме и поиске нравственного основания жизни.",
+      kk: "Ар, иман, ақыл және өмірдің моральдық негізін іздеу туралы философиялық проза.",
+    },
+    tags: ["philosophy", "conscience", "faith", "truth"],
+  },
+  "shakarim-qalqaman-mamyr": {
+    relatedAuthor: "Shakarim Kudaiberdiuly",
+    shortTitle: { en: "Qalqaman-Mamyr", ru: "Калкаман-Мамыр", kk: "Қалқаман-Мамыр" },
+    fullDescription: {
+      en: "A narrative poem where love and custom reveal the human cost of social judgment.",
+      ru: "Поэма, где любовь и обычай раскрывают человеческую цену общественного суда.",
+      kk: "Махаббат пен салт қоғамдық үкімнің адамдық құнын ашатын поэма.",
+    },
+    tags: ["narrative-poem", "custom", "love", "ethics"],
+  },
+  "makatayev-selected-poetry": {
+    relatedAuthor: "Mukagali Makatayev",
+    shortTitle: { en: "Selected Poetry", ru: "Избранная поэзия", kk: "Таңдамалы өлеңдер" },
+    fullDescription: {
+      en: "Modern lyric poetry where homeland, memory, sincerity, love, and tenderness speak in a direct human voice.",
+      ru: "Современная лирика, где родина, память, искренность, любовь и нежность звучат прямым человеческим голосом.",
+      kk: "Туған жер, жады, шынайылық, махаббат және мейірім адамға жақын дауыспен сөйлейтін қазіргі лирика.",
+    },
+    tags: ["modern-poetry", "homeland", "love", "memory"],
+  },
+  "makatayev-raiymbek": {
+    relatedAuthor: "Mukagali Makatayev",
+    shortTitle: { en: "Raiymbek!", ru: "Райымбек!", kk: "Райымбек!" },
+    fullDescription: {
+      en: "A poem that calls historical memory back into the present through heroic address and emotional responsibility.",
+      ru: "Поэма, возвращающая историческую память в настоящее через героическое обращение и эмоциональную ответственность.",
+      kk: "Тарихи жадты батырлық үндеу және эмоциялық жауапкершілік арқылы бүгінге қайтаратын поэма.",
+    },
+    tags: ["history", "heroic-memory", "mountain", "identity"],
+  },
+  "zhabayev-selected-aitys": {
+    relatedAuthor: "Zhambyl Zhabayev",
+    shortTitle: { en: "Aitys and Poems", ru: "Айтысы и стихи", kk: "Айтыстар мен өлеңдер" },
+    fullDescription: {
+      en: "Improvisational poetry that preserves oral performance, public speech, and the communal memory of the steppe.",
+      ru: "Импровизационная поэзия, сохраняющая устное исполнение, публичное слово и общинную память степи.",
+      kk: "Ауызша орындауды, көпшілік сөзді және даланың ортақ жадын сақтайтын импровизациялық поэзия.",
+    },
+    tags: ["aitys", "oral-tradition", "aqyn", "public-voice"],
+  },
+  "dulatuly-wake-up-kazakh": {
+    relatedAuthor: "Mirzhakyp Dulatuly",
+    shortTitle: { en: "Wake Up, Kazakh!", ru: "Проснись, казах!", kk: "Оян, қазақ!" },
+    fullDescription: {
+      en: "A civic poetic call that joins education, language, awakening, and national responsibility.",
+      ru: "Гражданский поэтический призыв, соединяющий образование, язык, пробуждение и национальную ответственность.",
+      kk: "Білім, тіл, ояну және ұлттық жауапкершілікті біріктіретін азаматтық поэтикалық үндеу.",
+    },
+    tags: ["alash", "awakening", "education", "identity"],
+  },
+  "mailin-shuganyn-belgisi": {
+    relatedAuthor: "Beimbet Mailin",
+    shortTitle: { en: "Shuga's Sign", ru: "Памятник Шуге", kk: "Шұғаның белгісі" },
+    fullDescription: {
+      en: "Short prose where remembered love, village life, and social barriers create a concise emotional archive.",
+      ru: "Короткая проза, где память о любви, аульная жизнь и социальные преграды создают сжатый эмоциональный архив.",
+      kk: "Махаббат жады, ауыл өмірі және әлеуметтік кедергі қысқа эмоциялық архивке айналатын проза.",
+    },
+    tags: ["short-prose", "village", "love", "realism"],
+  },
+  "musrepov-ulpan": {
+    relatedAuthor: "Gabit Musrepov",
+    shortTitle: { en: "Ulpan", ru: "Улпан", kk: "Ұлпан" },
+    fullDescription: {
+      en: "A novel about dignity, leadership, womanhood, social conscience, and moral intelligence in the steppe.",
+      ru: "Роман о достоинстве, лидерстве, женском образе, общественной совести и нравственном уме в степи.",
+      kk: "Даладағы қадір, көшбасшылық, әйел болмысы, қоғамдық ар және моральдық зерде туралы роман.",
+    },
+    tags: ["novel", "womanhood", "dignity", "society"],
+  },
+  "suleimenov-az-i-ya": {
+    relatedAuthor: "Olzhas Suleimenov",
+    shortTitle: { en: "Az i Ya", ru: "Аз и Я", kk: "Аз и Я" },
+    fullDescription: {
+      en: "A literary-cultural essay that reads language as an archive of history, contact, and Eurasian memory.",
+      ru: "Литературно-культурное эссе, читающее язык как архив истории, контактов и евразийской памяти.",
+      kk: "Тілді тарих, байланыс және еуразиялық жад архиві ретінде оқитын әдеби-мәдени эссе.",
+    },
+    tags: ["essay", "language", "history", "eurasian-memory"],
+  },
+  "ongarsynova-selected-poetry": {
+    relatedAuthor: "Fariza Ongarsynova",
+    shortTitle: { en: "Selected Poems", ru: "Избранные стихи", kk: "Таңдамалы өлеңдер" },
+    fullDescription: {
+      en: "Modern lyric poetry about dignity, womanhood, homeland, tenderness, responsibility, and emotional courage.",
+      ru: "Современная лирика о достоинстве, женском опыте, родине, нежности, ответственности и эмоциональной смелости.",
+      kk: "Ар-намыс, әйел тәжірибесі, туған жер, мейірім, жауапкершілік және рухани батылдық туралы қазіргі лирика.",
+    },
+    tags: ["modern-poetry", "womanhood", "dignity", "homeland"],
+  },
+};
+
+const localizedWorkAuthors = {
+  "Abai Kunanbayev": { en: "Abai Kunanbayev", ru: "Абай Кунанбаев", kk: "Абай Құнанбайұлы" },
+  "Mukhtar Auezov": { en: "Mukhtar Auezov", ru: "Мухтар Ауэзов", kk: "Мұхтар Әуезов" },
+  "Saken Seifullin": { en: "Saken Seifullin", ru: "Сакен Сейфуллин", kk: "Сәкен Сейфуллин" },
+  "Magzhan Zhumabayev": { en: "Magzhan Zhumabayev", ru: "Магжан Жумабаев", kk: "Мағжан Жұмабаев" },
+  "Ilyas Zhansugurov": { en: "Ilyas Zhansugurov", ru: "Ильяс Жансугуров", kk: "Ілияс Жансүгіров" },
+  "Akhmet Baitursynuly": { en: "Akhmet Baitursynuly", ru: "Ахмет Байтурсынулы", kk: "Ахмет Байтұрсынұлы" },
+  "Shakarim Kudaiberdiuly": { en: "Shakarim Kudaiberdiuly", ru: "Шакарим Кудайбердиев", kk: "Шәкәрім Құдайбердіұлы" },
+  "Mukagali Makatayev": { en: "Mukagali Makatayev", ru: "Мукагали Макатаев", kk: "Мұқағали Мақатаев" },
+  "Zhambyl Zhabayev": { en: "Zhambyl Zhabayev", ru: "Жамбыл Жабаев", kk: "Жамбыл Жабаев" },
+  "Mirzhakyp Dulatuly": { en: "Mirzhakyp Dulatuly", ru: "Миржакып Дулатов", kk: "Міржақып Дулатұлы" },
+  "Beimbet Mailin": { en: "Beimbet Mailin", ru: "Бейимбет Майлин", kk: "Бейімбет Майлин" },
+  "Gabit Musrepov": { en: "Gabit Musrepov", ru: "Габит Мусрепов", kk: "Ғабит Мүсірепов" },
+  "Olzhas Suleimenov": { en: "Olzhas Suleimenov", ru: "Олжас Сулейменов", kk: "Олжас Сүлейменов" },
+  "Fariza Ongarsynova": { en: "Fariza Ongarsynova", ru: "Фариза Онгарсынова", kk: "Фариза Оңғарсынова" },
+};
+
+for (const work of works) {
+  const content = finalWorkContent[work.id];
+  if (!content) continue;
+  const localizedAuthor = localizedWorkAuthors[work.author] ?? {
+    en: work.author,
+    ru: work.author,
+    kk: work.author,
+  };
+
+  work.shortTitle = content.shortTitle.en;
+  work.fullDescription = content.fullDescription.en;
+  work.tags = content.tags;
+  work.relatedAuthor = content.relatedAuthor;
+  work.availableLanguages = ["kk", "ru", "en"];
+  work.imageCredit = work.imageCredit ?? "MURA local archive visual";
+  work.imageSource = work.imageSource ?? "local:mura/archive-collection";
+  work.locales = {
+    en: {
+      title: content.shortTitle.en,
+      author: localizedAuthor.en,
+      shortTitle: content.shortTitle.en,
+      fullDescription: content.fullDescription.en,
+      tags: content.tags,
+      availableLanguages: work.availableLanguages,
+      ...(content.locales?.en ?? {}),
+    },
+    ru: {
+      title: content.shortTitle.ru,
+      author: localizedAuthor.ru,
+      shortTitle: content.shortTitle.ru,
+      fullDescription: content.fullDescription.ru,
+      tags: content.tags,
+      availableLanguages: work.availableLanguages,
+      ...(content.locales?.ru ?? {}),
+    },
+    kk: {
+      title: content.shortTitle.kk,
+      author: localizedAuthor.kk,
+      shortTitle: content.shortTitle.kk,
+      fullDescription: content.fullDescription.kk,
+      tags: content.tags,
+      availableLanguages: work.availableLanguages,
+      ...(content.locales?.kk ?? {}),
+    },
+  };
+}

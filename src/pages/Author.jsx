@@ -172,6 +172,8 @@ function createWorks(profileWorks, localizedWorks) {
       ...item,
       href: item.href ?? (linkedWork ? `/reading/${linkedWork.id}` : "/works"),
       image: item.image ?? linkedWork?.image,
+      title: item.title ?? linkedWork?.displayTitle ?? linkedWork?.title,
+      subtitle: item.subtitle ?? linkedWork?.shortTitle ?? linkedWork?.genre,
       year: item.years ?? linkedWork?.year,
       genre: item.genre ?? linkedWork?.genre,
       description: item.description ?? linkedWork?.description,

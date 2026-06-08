@@ -45,26 +45,35 @@ function mergeByIndex(baseItems = [], translatedItems = []) {
 }
 
 function mergeWork(base, translated = {}) {
+  const dataLocale = base.locales?.[translated.lang] ?? {};
+  const mergedTranslation = {
+    ...dataLocale,
+    ...translated,
+  };
+
   return {
     ...base,
-    ...translated,
+    ...mergedTranslation,
     canonicalTitle: base.title,
     canonicalAuthor: base.author,
     canonicalThemes: base.themes ?? [],
-    themes: base.themes?.map((theme) => localizeLabel(theme, themeLabels, translated.lang)) ?? base.themes,
-    fragments: translated.fragments
-      ? mergeByIndex(base.fragments, translated.fragments).map((fragment, index) => ({
+    themes:
+      mergedTranslation.themes ??
+      base.themes?.map((theme) => localizeLabel(theme, themeLabels, translated.lang)) ??
+      base.themes,
+    fragments: mergedTranslation.fragments
+      ? mergeByIndex(base.fragments, mergedTranslation.fragments).map((fragment, index) => ({
           ...fragment,
           annotations: mergeByIndex(
             base.fragments[index]?.annotations,
-            translated.fragments[index]?.annotations
+            mergedTranslation.fragments[index]?.annotations
           ),
           reflection: {
             ...base.fragments[index]?.reflection,
-            ...translated.fragments[index]?.reflection,
+            ...mergedTranslation.fragments[index]?.reflection,
             resonanceQuote: {
               ...base.fragments[index]?.reflection?.resonanceQuote,
-              ...translated.fragments[index]?.reflection?.resonanceQuote,
+              ...mergedTranslation.fragments[index]?.reflection?.resonanceQuote,
             },
           },
         }))
@@ -151,7 +160,7 @@ export function I18nProvider({ children }) {
     const localizeWork = (work) => {
       if (!work) return work;
       const translated = workTranslations[work.id]?.[language];
-      return mergeWork(work, translated ? { ...translated, lang: language } : {});
+      return mergeWork(work, { ...(translated ?? {}), lang: language });
     };
 
     const localizeWorks = (works) => works.map(localizeWork);
@@ -161,6 +170,7 @@ export function I18nProvider({ children }) {
       return {
         ...author,
         canonicalName: author.name,
+        ...(author.locales?.[language] ?? {}),
         ...(authorTranslations[author.name]?.[language] ?? {}),
       };
     };

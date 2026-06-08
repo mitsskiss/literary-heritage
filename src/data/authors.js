@@ -494,7 +494,7 @@ export const authors = [
         works: [
           {
             workId: "abai-words",
-            title: "Слова назидания",
+            title: "Книга слов",
             subtitle: "Қара сөздер",
             years: "1890-1904",
             genre: "Философская проза",
@@ -966,4 +966,634 @@ export const authors = [
     sourceHint: "Modern Kazakh poetry materials",
   },
 ];
+
+const finalAuthorProfiles = {
+  "Mukhtar Auezov": {
+    works: ["auezov-abai-path", "auezov-enlik-kebek"],
+    en: {
+      name: "Mukhtar Auezov",
+      years: "1897-1961",
+      shortDescription: "Novelist, playwright, scholar, and the author of the epic novel The Path of Abai.",
+      fullBiography: [
+        "Mukhtar Auezov was born in the Semey region, close to the cultural world that shaped Abai. He grew up with oral stories, family memory, and the literary authority of the steppe.",
+        "His early drama Enlik-Kebek helped form modern Kazakh theatre, while his scholarship preserved folklore, Abai studies, and the history of Kazakh literature.",
+        "The Path of Abai transformed Abai's biography into a national epic. Through family conflict, education, social pressure, and moral growth, Auezov made Abai a living figure of cultural memory.",
+      ],
+      timeline: [
+        { year: "1897", text: "Born in the Semey region." },
+        { year: "1917", text: "Wrote Enlik-Kebek, a landmark of early Kazakh drama." },
+        { year: "1942-1956", text: "Published the main volumes of The Path of Abai." },
+        { year: "1961", text: "Passed away, leaving a central archive of Kazakh prose and Abai studies." },
+      ],
+      keyThemes: ["National memory", "Abai studies", "Historical prose", "Folklore", "Moral formation"],
+      cultureContribution: "Auezov gave Kazakh prose an epic historical scale and made Abai's world readable as a cultural memory of the nation.",
+      interestingFact: "The Path of Abai is both a novel and an archive of customs, speech, education, family conflict, and steppe ethics.",
+      quotes: [
+        "A writer preserves not only events, but the moral climate of a people.",
+        "Abai's road is a road toward language, conscience, and national memory.",
+      ],
+    },
+    ru: {
+      name: "Мухтар Ауэзов",
+      years: "1897-1961",
+      shortDescription: "Писатель, драматург, ученый и автор романа-эпопеи «Путь Абая».",
+      fullBiography: [
+        "Мухтар Ауэзов родился в Семейском регионе, в культурной среде, тесно связанной с памятью об Абае. Устные рассказы, семейная история и степная традиция стали частью его литературного слуха.",
+        "Ранняя пьеса «Енлик-Кебек» помогла сформировать современную казахскую драму, а научные труды Ауэзова сохранили фольклор, абаеведение и историю литературы.",
+        "«Путь Абая» превратил биографию Абая в национальную эпопею. Через семейные конфликты, образование, давление общества и нравственный рост Ауэзов сделал Абая живой фигурой культурной памяти.",
+      ],
+      timeline: [
+        { year: "1897", text: "Родился в Семейском регионе." },
+        { year: "1917", text: "Создал пьесу «Енлик-Кебек»." },
+        { year: "1942-1956", text: "Опубликовал основные тома «Пути Абая»." },
+        { year: "1961", text: "Ушел из жизни, оставив фундамент казахской прозы и абаеведения." },
+      ],
+      keyThemes: ["Национальная память", "Абаеведение", "Историческая проза", "Фольклор", "Нравственное становление"],
+      cultureContribution: "Ауэзов придал казахской прозе эпический масштаб и сделал мир Абая частью национальной культурной памяти.",
+      interestingFact: "«Путь Абая» читается не только как роман, но и как архив обычаев, речи, воспитания и степной этики.",
+      quotes: [
+        "Писатель сохраняет не только события, но и нравственный климат народа.",
+        "Путь Абая — это путь к языку, совести и национальной памяти.",
+      ],
+    },
+    kk: {
+      name: "Мұхтар Әуезов",
+      years: "1897-1961",
+      shortDescription: "Жазушы, драматург, ғалым және «Абай жолы» роман-эпопеясының авторы.",
+      fullBiography: [
+        "Мұхтар Әуезов Семей өңірінде, Абай мұрасымен тығыз байланысты мәдени ортада дүниеге келді. Ауызша әңгіме, отбасылық жады және дала дәстүрі оның жазушылық дүниетанымын қалыптастырды.",
+        "«Еңлік-Кебек» пьесасы қазақ драматургиясының қалыптасуына ықпал етті, ал ғылыми еңбектері фольклорды, абайтануды және әдебиет тарихын сақтады.",
+        "«Абай жолы» Абай өмірін ұлттық эпопеяға айналдырды. Отбасы тартысы, білім, қоғамдық қысым және рухани өсу арқылы Әуезов Абайды мәдени жадтың тірі тұлғасы ретінде көрсетті.",
+      ],
+      timeline: [
+        { year: "1897", text: "Семей өңірінде дүниеге келді." },
+        { year: "1917", text: "«Еңлік-Кебек» пьесасын жазды." },
+        { year: "1942-1956", text: "«Абай жолы» эпопеясының негізгі томдары жарық көрді." },
+        { year: "1961", text: "Қазақ прозасы мен абайтануға мол мұра қалдырды." },
+      ],
+      keyThemes: ["Ұлттық жады", "Абайтану", "Тарихи проза", "Фольклор", "Рухани қалыптасу"],
+      cultureContribution: "Әуезов қазақ прозасына эпикалық кеңдік беріп, Абай әлемін ұлттық мәдени жадқа айналдырды.",
+      interestingFact: "«Абай жолы» роман ғана емес, қазақ тұрмысы, сөзі, тәрбиесі және дала этикасының көркем архиві ретінде оқылады.",
+      quotes: [
+        "Жазушы оқиғаны ғана емес, халықтың рухани ахуалын да сақтайды.",
+        "Абай жолы — тілге, арға және ұлттық жадқа апаратын жол.",
+      ],
+    },
+  },
+  "Saken Seifullin": {
+    works: ["seifullin-thorny-path", "seifullin-kokshetau"],
+    en: {
+      name: "Saken Seifullin",
+      years: "1894-1938",
+      shortDescription: "Poet, prose writer, dramatist, and public figure of a difficult historical transition.",
+      fullBiography: [
+        "Saken Seifullin entered literature during a time of political rupture and cultural reorientation. His poetry and prose speak from inside public change, not from a safe distance.",
+        "Thorny Path records revolution, danger, hope, and witness. Kokshetau shows how landscape becomes memory and homeland.",
+        "His life ended during repression, which makes his work an archive of both literary renewal and historical pain.",
+      ],
+      timeline: [
+        { year: "1894", text: "Born in the Akmola region." },
+        { year: "1910s", text: "Entered public life, journalism, poetry, and education." },
+        { year: "1927", text: "Published Thorny Path." },
+        { year: "1938", text: "Repressed and executed; later rehabilitated in cultural memory." },
+      ],
+      keyThemes: ["Freedom", "Witness", "Public duty", "Historical change", "Landscape"],
+      cultureContribution: "Seifullin helped shape early twentieth-century Kazakh prose and poetry as public testimony.",
+      interestingFact: "His prose often reads like a document of history and a literary confession at the same time.",
+      quotes: ["A hard road can still lead toward awakening.", "Memory becomes duty when history is wounded."],
+    },
+    ru: {
+      name: "Сакен Сейфуллин",
+      years: "1894-1938",
+      shortDescription: "Поэт, прозаик, драматург и общественный деятель эпохи сложного перелома.",
+      fullBiography: [
+        "Сакен Сейфуллин вошел в литературу в период политических потрясений и культурной переориентации. Его поэзия и проза говорят изнутри общественных перемен.",
+        "«Тернистый путь» фиксирует революцию, опасность, надежду и свидетельство. «Кокшетау» показывает, как пейзаж становится памятью и образом родины.",
+        "Его жизнь оборвалась во время репрессий, поэтому наследие Сейфуллина хранит и литературное обновление, и историческую боль.",
+      ],
+      timeline: [
+        { year: "1894", text: "Родился в Акмолинском регионе." },
+        { year: "1910-е", text: "Вошел в общественную жизнь, журналистику, поэзию и просвещение." },
+        { year: "1927", text: "Опубликовал «Тернистый путь»." },
+        { year: "1938", text: "Был репрессирован; позднее восстановлен в культурной памяти." },
+      ],
+      keyThemes: ["Свобода", "Свидетельство", "Общественный долг", "Исторический перелом", "Пейзаж"],
+      cultureContribution: "Сейфуллин помог сформировать казахскую прозу и поэзию XX века как пространство общественного свидетельства.",
+      interestingFact: "Его проза часто читается одновременно как документ эпохи и литературная исповедь.",
+      quotes: ["Трудная дорога тоже может вести к пробуждению.", "Память становится долгом, когда история ранена."],
+    },
+    kk: {
+      name: "Сәкен Сейфуллин",
+      years: "1894-1938",
+      shortDescription: "Қиын тарихи өтпелі кезеңнің ақыны, прозашысы, драматургі және қоғам қайраткері.",
+      fullBiography: [
+        "Сәкен Сейфуллин әдебиетке саяси сілкініс пен мәдени өзгеріс тұсында келді. Оның өлеңі мен прозасы қоғамдық өзгерісті сырттан емес, ішінен сөйлейді.",
+        "«Тар жол, тайғақ кешу» революция, қауіп, үміт және куәлік туралы баяндайды. «Көкшетау» табиғатты жады мен туған жер бейнесіне айналдырады.",
+        "Оның өмірі қуғын-сүргін жылдарында үзілді, сондықтан мұрасы әдеби жаңару мен тарихи жараны қатар сақтайды.",
+      ],
+      timeline: [
+        { year: "1894", text: "Ақмола өңірінде дүниеге келді." },
+        { year: "1910-жылдар", text: "Қоғамдық өмірге, журналистикаға, поэзияға және ағартушылыққа араласты." },
+        { year: "1927", text: "«Тар жол, тайғақ кешу» жарық көрді." },
+        { year: "1938", text: "Қуғын-сүргінге ұшырады; кейін мәдени жадта ақталды." },
+      ],
+      keyThemes: ["Еркіндік", "Куәлік", "Қоғамдық борыш", "Тарихи өзгеріс", "Табиғат"],
+      cultureContribution: "Сейфуллин XX ғасыр басындағы қазақ прозасы мен поэзиясын қоғамдық куәлік кеңістігі ретінде қалыптастырды.",
+      interestingFact: "Оның прозасы бір мезетте дәуір құжаты әрі әдеби сырласу ретінде оқылады.",
+      quotes: ["Қиын жол да оянуға апара алады.", "Тарих жараланғанда, жады борышқа айналады."],
+    },
+  },
+  "Magzhan Zhumabayev": {
+    works: ["zhumabayev-batyr-bayan", "zhumabayev-sholpan"],
+    en: {
+      name: "Magzhan Zhumabayev",
+      years: "1893-1938",
+      shortDescription: "Alash-era lyric poet of beauty, freedom, language, and national feeling.",
+      fullBiography: [
+        "Magzhan Zhumabayev brought musical rhythm, symbolism, and emotional intensity into modern Kazakh poetry.",
+        "His lyric voice joins personal longing with national memory; Batyr Bayan turns history into a drama of honor, love, and sacrifice.",
+        "Repression interrupted his life, but his poetry returned as one of the strongest voices of the Alash generation.",
+      ],
+      timeline: [
+        { year: "1893", text: "Born in North Kazakhstan." },
+        { year: "1912", text: "Published the early collection Sholpan." },
+        { year: "1923", text: "Created the historical poem Batyr Bayan." },
+        { year: "1938", text: "Repressed; later restored to Kazakh literary memory." },
+      ],
+      keyThemes: ["Freedom", "Beauty", "Language", "Homeland", "Sacrifice"],
+      cultureContribution: "Magzhan expanded Kazakh lyric poetry through musical language, symbolic imagery, and intense national feeling.",
+      interestingFact: "His poetry is often remembered for its sound: rhythm and image carry meaning together.",
+      quotes: ["A song can hold what history cannot say directly.", "Memory burns brightest where love and loss meet."],
+    },
+    ru: {
+      name: "Магжан Жумабаев",
+      years: "1893-1938",
+      shortDescription: "Лирический поэт эпохи Алаша, писавший о красоте, свободе, языке и национальном чувстве.",
+      fullBiography: [
+        "Магжан Жумабаев принес в новую казахскую поэзию музыкальный ритм, символическую образность и эмоциональную напряженность.",
+        "Его лирика соединяет личную тоску с национальной памятью; «Батыр Баян» превращает историю в драму чести, любви и жертвы.",
+        "Репрессии прервали его жизнь, но поэзия Магжана вернулась как один из сильнейших голосов поколения Алаш.",
+      ],
+      timeline: [
+        { year: "1893", text: "Родился в Северном Казахстане." },
+        { year: "1912", text: "Опубликовал ранний сборник «Шолпан»." },
+        { year: "1923", text: "Создал историческую поэму «Батыр Баян»." },
+        { year: "1938", text: "Был репрессирован; позднее возвращен в литературную память." },
+      ],
+      keyThemes: ["Свобода", "Красота", "Язык", "Родина", "Жертва"],
+      cultureContribution: "Магжан расширил казахскую лирику музыкальностью, символами и сильным национальным чувством.",
+      interestingFact: "Его стихи часто запоминаются звучанием: ритм и образ несут смысл вместе.",
+      quotes: ["Песня может сохранить то, что история не говорит прямо.", "Память ярче всего горит там, где встречаются любовь и утрата."],
+    },
+    kk: {
+      name: "Мағжан Жұмабаев",
+      years: "1893-1938",
+      shortDescription: "Сұлулық, еркіндік, тіл және ұлттық сезім туралы жырлаған Алаш дәуірінің лирик ақыны.",
+      fullBiography: [
+        "Мағжан Жұмабаев жаңа қазақ поэзиясына музыкалық ырғақ, символдық бейне және терең эмоциялық қуат әкелді.",
+        "Оның лирикасы жеке сағынышты ұлттық жадымен байланыстырады; «Батыр Баян» тарихты намыс, махаббат және құрбандық драмасына айналдырады.",
+        "Қуғын-сүргін оның өмірін үзді, бірақ Мағжан поэзиясы Алаш буынының ең қуатты дауыстарының бірі болып қайта оралды.",
+      ],
+      timeline: [
+        { year: "1893", text: "Солтүстік Қазақстанда дүниеге келді." },
+        { year: "1912", text: "«Шолпан» атты алғашқы жинағы жарық көрді." },
+        { year: "1923", text: "«Батыр Баян» тарихи поэмасын жазды." },
+        { year: "1938", text: "Қуғын-сүргінге ұшырады; кейін әдеби жадқа қайта оралды." },
+      ],
+      keyThemes: ["Еркіндік", "Сұлулық", "Тіл", "Туған жер", "Құрбандық"],
+      cultureContribution: "Мағжан қазақ лирикасын музыкалық тілмен, символдық бейнемен және ұлттық сезіммен кеңейтті.",
+      interestingFact: "Оның өлеңдері көбіне әуезімен есте қалады: ырғақ пен бейне мағынаны бірге жеткізеді.",
+      quotes: ["Тарих ашық айта алмағанды ән сақтай алады.", "Махаббат пен жоғалту түйіскен жерде жады ең жарық жанады."],
+    },
+  },
+  "Akhmet Baitursynuly": {
+    works: ["baitursynuly-masa", "baitursynuly-forty-fables"],
+    en: {
+      name: "Akhmet Baitursynuly",
+      years: "1872-1937",
+      shortDescription: "Educator, linguist, poet, and reformer who made language a foundation of cultural awakening.",
+      fullBiography: [
+        "Akhmet Baitursynuly was born in the Torgai region and became one of the central intellectuals of the Alash movement.",
+        "He worked as a teacher, journalist, poet, translator, and language reformer. His alphabet reform, textbooks, and literary criticism connected literacy with national self-respect.",
+        "Masa and Forty Fables use literature as civic education: the word should wake society, sharpen conscience, and protect language.",
+      ],
+      timeline: [
+        { year: "1872", text: "Born in the Torgai region." },
+        { year: "1909", text: "Published Forty Fables." },
+        { year: "1911", text: "Published Masa, a civic poetic call." },
+        { year: "1937", text: "Repressed; later restored as a central figure of Kazakh language history." },
+      ],
+      keyThemes: ["Language", "Literacy", "Freedom", "Education", "Responsibility"],
+      cultureContribution: "Baitursynuly strengthened Kazakh written culture through language reform, education, poetry, and public thought.",
+      interestingFact: "His language work made literacy a cultural project, not only a school subject.",
+      quotes: ["A living language keeps a people awake.", "A word should awaken the sleeping mind."],
+    },
+    ru: {
+      name: "Ахмет Байтурсынулы",
+      years: "1872-1937",
+      shortDescription: "Просветитель, лингвист, поэт и реформатор, сделавший язык основой культурного пробуждения.",
+      fullBiography: [
+        "Ахмет Байтурсынулы родился в Тургайском регионе и стал одним из центральных интеллектуалов движения Алаш.",
+        "Он был учителем, журналистом, поэтом, переводчиком и реформатором языка. Его алфавитная реформа, учебники и литературная критика связали грамотность с национальным достоинством.",
+        "«Маса» и «Сорок басен» используют литературу как гражданское воспитание: слово должно будить общество, обострять совесть и защищать язык.",
+      ],
+      timeline: [
+        { year: "1872", text: "Родился в Тургайском регионе." },
+        { year: "1909", text: "Опубликовал «Сорок басен»." },
+        { year: "1911", text: "Опубликовал «Масу»." },
+        { year: "1937", text: "Был репрессирован; позднее возвращен как ключевая фигура истории казахского языка." },
+      ],
+      keyThemes: ["Язык", "Грамотность", "Свобода", "Образование", "Ответственность"],
+      cultureContribution: "Байтурсынулы укрепил казахскую письменную культуру через реформу языка, образование, поэзию и общественную мысль.",
+      interestingFact: "Его языковая работа превратила грамотность в культурный проект, а не только школьный предмет.",
+      quotes: ["Живой язык держит народ бодрствующим.", "Слово должно пробуждать спящий разум."],
+    },
+    kk: {
+      name: "Ахмет Байтұрсынұлы",
+      years: "1872-1937",
+      shortDescription: "Тілді мәдени оянудың негізіне айналдырған ағартушы, тілші, ақын және реформатор.",
+      fullBiography: [
+        "Ахмет Байтұрсынұлы Торғай өңірінде дүниеге келіп, Алаш қозғалысының негізгі зияткерлерінің біріне айналды.",
+        "Ол ұстаз, журналист, ақын, аудармашы және тіл реформаторы болды. Әліпби реформасы, оқулықтары мен әдеби сыны сауаттылықты ұлттық қадірмен байланыстырды.",
+        "«Маса» мен «Қырық мысал» әдебиетті азаматтық тәрбие ретінде қолданады: сөз қоғамды оятып, арды шыңдап, тілді қорғауы керек.",
+      ],
+      timeline: [
+        { year: "1872", text: "Торғай өңірінде дүниеге келді." },
+        { year: "1909", text: "«Қырық мысал» жарық көрді." },
+        { year: "1911", text: "«Маса» жинағы жарияланды." },
+        { year: "1937", text: "Қуғын-сүргінге ұшырады; кейін қазақ тілі тарихының өзекті тұлғасы ретінде ақталды." },
+      ],
+      keyThemes: ["Тіл", "Сауат", "Еркіндік", "Білім", "Жауапкершілік"],
+      cultureContribution: "Байтұрсынұлы тіл реформасы, білім, поэзия және қоғамдық ой арқылы қазақ жазба мәдениетін нығайтты.",
+      interestingFact: "Оның тіл еңбегі сауаттылықты мектеп пәні ғана емес, мәдени жобаға айналдырды.",
+      quotes: ["Тірі тіл халықты ояу ұстайды.", "Сөз ұйықтаған сананы оятуы керек."],
+    },
+  },
+  "Ilyas Zhansugurov": {
+    works: ["zhansugurov-kulager"],
+    en: {
+      name: "Ilyas Zhansugurov",
+      years: "1894-1938",
+      shortDescription: "Poet, dramatist, translator, and one of the strongest voices of Kazakh poetic rhythm.",
+      fullBiography: [
+        "Ilyas Zhansugurov was born in Jetisu and brought landscape, music, and motion into Kazakh poetry.",
+        "His work combines journalism, drama, translation, and poetry, but Kulager remains the clearest symbol of his artistic world.",
+        "In Kulager the death of a horse becomes a meditation on talent, envy, beauty, and cultural loss.",
+      ],
+      timeline: [
+        { year: "1894", text: "Born in Jetisu." },
+        { year: "1920s", text: "Worked in journalism, education, and literary institutions." },
+        { year: "1936", text: "Created Kulager, a classic Kazakh poem." },
+        { year: "1938", text: "Repressed during the Great Terror." },
+      ],
+      keyThemes: ["Art", "Landscape", "Music", "Beauty", "Tragedy"],
+      cultureContribution: "Zhansugurov made Kazakh poetic language more rhythmic, visual, and musically charged.",
+      interestingFact: "Kulager turns the image of a horse into a symbol of wounded beauty.",
+      quotes: ["Where beauty is envied, tragedy follows close behind.", "A horse can become a song when memory carries it."],
+    },
+    ru: {
+      name: "Ильяс Жансугуров",
+      years: "1894-1938",
+      shortDescription: "Поэт, драматург, переводчик и один из самых ритмически сильных голосов казахской поэзии.",
+      fullBiography: [
+        "Ильяс Жансугуров родился в Жетысу и внес в казахскую поэзию пейзаж, музыку и движение.",
+        "Его творчество объединяет журналистику, драму, перевод и поэзию, но «Кулагер» остается главным символом его художественного мира.",
+        "В «Кулагере» гибель коня становится размышлением о таланте, зависти, красоте и культурной утрате.",
+      ],
+      timeline: [
+        { year: "1894", text: "Родился в Жетысу." },
+        { year: "1920-е", text: "Работал в журналистике, образовании и литературных институциях." },
+        { year: "1936", text: "Создал поэму «Кулагер»." },
+        { year: "1938", text: "Был репрессирован." },
+      ],
+      keyThemes: ["Искусство", "Пейзаж", "Музыка", "Красота", "Трагедия"],
+      cultureContribution: "Жансугуров сделал казахскую поэтическую речь более ритмичной, зримой и музыкальной.",
+      interestingFact: "«Кулагер» превращает образ коня в символ раненой красоты.",
+      quotes: ["Там, где завидуют красоте, трагедия идет рядом.", "Конь становится песней, когда его несет память."],
+    },
+    kk: {
+      name: "Ілияс Жансүгіров",
+      years: "1894-1938",
+      shortDescription: "Қазақ поэзиясының ырғақты, көркем қуатын күшейткен ақын, драматург және аудармашы.",
+      fullBiography: [
+        "Ілияс Жансүгіров Жетісуда дүниеге келіп, қазақ поэзиясына пейзаж, музыка және қозғалыс әкелді.",
+        "Оның шығармашылығы журналистика, драма, аударма және поэзияны біріктіреді, бірақ «Құлагер» оның көркем әлемінің басты символы болып қалды.",
+        "«Құлагерде» тұлпардың өлімі талант, қызғаныш, сұлулық және мәдени жоғалту туралы толғанысқа айналады.",
+      ],
+      timeline: [
+        { year: "1894", text: "Жетісуда дүниеге келді." },
+        { year: "1920-жылдар", text: "Журналистика, білім және әдеби ұйымдарда еңбек етті." },
+        { year: "1936", text: "«Құлагер» поэмасын жазды." },
+        { year: "1938", text: "Қуғын-сүргінге ұшырады." },
+      ],
+      keyThemes: ["Өнер", "Пейзаж", "Музыка", "Сұлулық", "Трагедия"],
+      cultureContribution: "Жансүгіров қазақ поэтикалық тілін ырғақты, көрнекі және музыкалық қуатқа толтырды.",
+      interestingFact: "«Құлагер» тұлпар бейнесін жараланған сұлулық символына айналдырады.",
+      quotes: ["Сұлулыққа қызғаныш туса, трагедия қасында жүреді.", "Жады көтергенде тұлпар әнге айналады."],
+    },
+  },
+  "Zhambyl Zhabayev": {
+    works: ["zhabayev-selected-aitys"],
+    en: {
+      name: "Zhambyl Zhabayev",
+      years: "1846-1945",
+      shortDescription: "Legendary aqyn whose improvisational poetry carried oral tradition into modern memory.",
+      fullBiography: [
+        "Zhambyl Zhabayev was born in the nineteenth-century steppe and became a bearer of the aqyn and zhyrau tradition.",
+        "His poetry was formed in performance: aitys, public address, song, and memory shaped the way his word lived among listeners.",
+        "In the twentieth century he became a symbol of continuity between oral literature and modern Kazakh cultural memory.",
+      ],
+      timeline: [
+        { year: "1846", text: "Born in the Zhambyl region." },
+        { year: "Late XIX century", text: "Became known as an improvising aqyn." },
+        { year: "1930s-1940s", text: "His poems circulated widely in print and performance." },
+        { year: "1945", text: "Passed away, leaving a bridge between oral and written tradition." },
+      ],
+      keyThemes: ["Oral tradition", "Aitys", "Memory", "Homeland", "Public voice"],
+      cultureContribution: "Zhambyl preserved oral poetic energy and made it part of twentieth-century literary memory.",
+      interestingFact: "His poetry depended on voice, audience, and improvisation as much as on written text.",
+      quotes: ["A song lives while people answer it.", "The word of the aqyn travels from voice to voice."],
+    },
+    ru: {
+      name: "Жамбыл Жабаев",
+      years: "1846-1945",
+      shortDescription: "Легендарный акын, перенесший импровизационную устную поэзию в современную память.",
+      fullBiography: [
+        "Жамбыл Жабаев родился в степи XIX века и стал носителем традиции акынов и жырау.",
+        "Его поэзия формировалась в исполнении: айтыс, публичное слово, песня и память определяли жизнь его текста среди слушателей.",
+        "В XX веке Жамбыл стал символом преемственности между устной литературой и современной казахской культурной памятью.",
+      ],
+      timeline: [
+        { year: "1846", text: "Родился в Жамбылском регионе." },
+        { year: "Конец XIX века", text: "Стал известен как акын-импровизатор." },
+        { year: "1930-1940-е", text: "Его стихи широко распространялись в печати и исполнении." },
+        { year: "1945", text: "Оставил мост между устной и письменной традицией." },
+      ],
+      keyThemes: ["Устная традиция", "Айтыс", "Память", "Родина", "Народный голос"],
+      cultureContribution: "Жамбыл сохранил энергию устной поэзии и сделал ее частью литературной памяти XX века.",
+      interestingFact: "Его поэзия зависела от голоса, аудитории и импровизации не меньше, чем от письменного текста.",
+      quotes: ["Песня живет, пока люди отвечают ей.", "Слово акына переходит от голоса к голосу."],
+    },
+    kk: {
+      name: "Жамбыл Жабаев",
+      years: "1846-1945",
+      shortDescription: "Импровизациялық ауызша поэзияны қазіргі мәдени жадқа жеткізген әйгілі ақын.",
+      fullBiography: [
+        "Жамбыл Жабаев XIX ғасыр даласында дүниеге келіп, ақындық және жыраулық дәстүрдің ірі өкілі болды.",
+        "Оның поэзиясы орындауда қалыптасты: айтыс, көпшілікке арналған сөз, ән және жады оның мәтінін тыңдаушы арасында тірілтті.",
+        "XX ғасырда Жамбыл ауызша әдебиет пен қазіргі қазақ мәдени жады арасындағы сабақтастықтың символына айналды.",
+      ],
+      timeline: [
+        { year: "1846", text: "Жамбыл өңірінде дүниеге келді." },
+        { year: "XIX ғасыр соңы", text: "Айтыскер ақын ретінде танылды." },
+        { year: "1930-1940-жылдар", text: "Өлеңдері баспасөзде және орындауда кең тарады." },
+        { year: "1945", text: "Ауызша және жазба дәстүр арасындағы көпір болып қалды." },
+      ],
+      keyThemes: ["Ауызша дәстүр", "Айтыс", "Жады", "Туған жер", "Халық үні"],
+      cultureContribution: "Жамбыл ауызша поэзия қуатын сақтап, оны XX ғасыр әдеби жадының бөлігіне айналдырды.",
+      interestingFact: "Оның поэзиясы жазба мәтінмен қатар дауысқа, тыңдаушыға және импровизацияға сүйенді.",
+      quotes: ["Халық жауап бергенде ғана ән тірі.", "Ақын сөзі дауыстан дауысқа көшеді."],
+    },
+  },
+  "Shakarim Kudaiberdiuly": {
+    works: ["shakarim-three-truths", "shakarim-qalqaman-mamyr"],
+    en: {
+      name: "Shakarim Kudaiberdiuly",
+      years: "1858-1931",
+      shortDescription: "Poet, thinker, historian, and translator who placed conscience at the center of human life.",
+      fullBiography: [
+        "Shakarim Kudaiberdiuly grew in the intellectual orbit of Abai and developed a deeply ethical line of Kazakh literature.",
+        "His poetry, translations, historical writing, and philosophical prose ask how faith, reason, conscience, and responsibility can live together.",
+        "Three Truths is read as a major statement of Kazakh moral philosophy, while Qalqaman-Mamyr revisits tradition through compassion and judgment.",
+      ],
+      timeline: [
+        { year: "1858", text: "Born in the Semey region." },
+        { year: "1888", text: "Wrote Qalqaman-Mamyr." },
+        { year: "1910s", text: "Developed philosophical works including Three Truths." },
+        { year: "1931", text: "Died during a violent period; his legacy was later restored." },
+      ],
+      keyThemes: ["Conscience", "Faith", "Reason", "Truth", "Compassion"],
+      cultureContribution: "Shakarim continued Abai's moral inquiry and deepened Kazakh philosophical prose.",
+      interestingFact: "His central word is conscience: knowledge becomes human only when it passes through ethical judgment.",
+      quotes: ["Truth must pass through the heart.", "A clean conscience is the road by which knowledge becomes human."],
+    },
+    ru: {
+      name: "Шакарим Кудайбердиев",
+      years: "1858-1931",
+      shortDescription: "Поэт, мыслитель, историк и переводчик, поставивший совесть в центр человеческой жизни.",
+      fullBiography: [
+        "Шакарим Кудайбердиев вырос в интеллектуальном поле Абая и развил глубокую этическую линию казахской литературы.",
+        "Его поэзия, переводы, исторические труды и философская проза спрашивают, как могут сосуществовать вера, разум, совесть и ответственность.",
+        "«Три истины» читаются как важное высказывание казахской нравственной философии, а «Калкаман-Мамыр» переосмысляет традицию через сострадание и суд.",
+      ],
+      timeline: [
+        { year: "1858", text: "Родился в Семейском регионе." },
+        { year: "1888", text: "Написал «Калкаман-Мамыр»." },
+        { year: "1910-е", text: "Создавал философские тексты, включая «Три истины»." },
+        { year: "1931", text: "Погиб в трагическую эпоху; позднее наследие было возвращено." },
+      ],
+      keyThemes: ["Совесть", "Вера", "Разум", "Истина", "Сострадание"],
+      cultureContribution: "Шакарим продолжил нравственный поиск Абая и углубил казахскую философскую прозу.",
+      interestingFact: "Его ключевое слово — совесть: знание становится человеческим только через нравственный суд.",
+      quotes: ["Истина должна пройти через сердце.", "Чистая совесть — дорога, на которой знание становится человеческим."],
+    },
+    kk: {
+      name: "Шәкәрім Құдайбердіұлы",
+      years: "1858-1931",
+      shortDescription: "Арды адам өмірінің өзегіне қойған ақын, ойшыл, тарихшы және аудармашы.",
+      fullBiography: [
+        "Шәкәрім Құдайбердіұлы Абайдың интеллектуалдық ортасында өсіп, қазақ әдебиетіндегі терең этикалық бағытты дамытты.",
+        "Оның поэзиясы, аудармалары, тарихи еңбектері және философиялық прозасы иман, ақыл, ар және жауапкершілік қалай қатар өмір сүре алады деген сұрақ қояды.",
+        "«Үш анық» қазақ моральдық философиясының маңызды мәтіні ретінде оқылады, ал «Қалқаман-Мамыр» дәстүрді мейірім мен әділет арқылы қайта пайымдайды.",
+      ],
+      timeline: [
+        { year: "1858", text: "Семей өңірінде дүниеге келді." },
+        { year: "1888", text: "«Қалқаман-Мамыр» жазылды." },
+        { year: "1910-жылдар", text: "«Үш анық» сияқты философиялық еңбектерін дамытты." },
+        { year: "1931", text: "Қайғылы кезеңде қаза тапты; мұрасы кейін қайта оралды." },
+      ],
+      keyThemes: ["Ар", "Иман", "Ақыл", "Ақиқат", "Мейірім"],
+      cultureContribution: "Шәкәрім Абайдың моральдық ізденісін жалғастырып, қазақ философиялық прозасын тереңдетті.",
+      interestingFact: "Оның негізгі ұғымы — ар: білім этикалық таразыдан өткенде ғана адамдық мәнге ие болады.",
+      quotes: ["Ақиқат жүрек арқылы өтуі керек.", "Таза ар — білімді адамдыққа жеткізетін жол."],
+    },
+  },
+};
+
+const supplementalAuthorProfiles = {
+};
+
+const localizedActivityByAuthor = {
+  "Mukhtar Auezov": {
+    en: "Novelist, playwright, scholar",
+    ru: "Писатель, драматург, ученый",
+    kk: "Жазушы, драматург, ғалым",
+  },
+  "Saken Seifullin": {
+    en: "Poet, writer, public figure",
+    ru: "Поэт, прозаик, общественный деятель",
+    kk: "Ақын, жазушы, қоғам қайраткері",
+  },
+  "Magzhan Zhumabayev": {
+    en: "Poet, teacher, translator",
+    ru: "Поэт, педагог, переводчик",
+    kk: "Ақын, ұстаз, аудармашы",
+  },
+  "Akhmet Baitursynuly": {
+    en: "Educator, linguist, poet",
+    ru: "Просветитель, лингвист, поэт",
+    kk: "Ағартушы, тілші, ақын",
+  },
+  "Ilyas Zhansugurov": {
+    en: "Poet, dramatist, translator",
+    ru: "Поэт, драматург, переводчик",
+    kk: "Ақын, драматург, аудармашы",
+  },
+  "Zhambyl Zhabayev": {
+    en: "Aqyn, improviser, poet",
+    ru: "Акын, импровизатор, поэт",
+    kk: "Ақын, айтыскер, жыраулық дәстүр өкілі",
+  },
+  "Shakarim Kudaiberdiuly": {
+    en: "Poet, thinker, historian",
+    ru: "Поэт, мыслитель, историк",
+    kk: "Ақын, ойшыл, тарихшы",
+  },
+};
+
+function buildLocalizedProfile(author, language, data, works) {
+  const labels = {
+    en: {
+      born: "Born",
+      activity: "Activity",
+      epoch: "Epoch",
+      language: "Language of work",
+      articlesIntro: "Selected context for deeper reading.",
+    },
+    ru: {
+      born: "Родился",
+      activity: "Деятельность",
+      epoch: "Эпоха",
+      language: "Язык творчества",
+      articlesIntro: "Материалы для более глубокого чтения.",
+    },
+    kk: {
+      born: "Туған жылы",
+      activity: "Қызметі",
+      epoch: "Дәуірі",
+      language: "Шығармашылық тілі",
+      articlesIntro: "Терең оқуға арналған материалдар.",
+    },
+  }[language];
+  const locale = data[language];
+  const localizedActivity =
+    localizedActivityByAuthor[author.name]?.[language] ?? author.roles.slice(0, 2).join(", ");
+  const workCards = works.map((workId) => ({ workId }));
+
+  return {
+    ...locale,
+    metadata: [
+      { label: labels.born, value: author.birthplace, detail: author.years, icon: "map" },
+      { label: labels.activity, value: localizedActivity, detail: author.roles.slice(2).join(", "), icon: "feather" },
+      { label: labels.epoch, value: author.period, detail: author.years, icon: "globe" },
+      { label: labels.language, value: language === "kk" ? "Қазақ тілі" : language === "ru" ? "Казахский" : "Kazakh", detail: "Literary tradition", icon: "book" },
+    ],
+    works: workCards,
+    research: [
+      { title: locale.name, text: locale.cultureContribution, href: "/works" },
+      { title: locale.keyThemes[0], text: locale.interestingFact, href: "/authors" },
+    ],
+    facts: [locale.interestingFact, locale.cultureContribution],
+    labels: { articlesIntro: labels.articlesIntro },
+  };
+}
+
+for (const author of authors) {
+  const finalProfile = finalAuthorProfiles[author.name];
+  if (finalProfile) {
+    author.profile = {
+      ...(author.profile ?? {}),
+      en: buildLocalizedProfile(author, "en", finalProfile, finalProfile.works),
+      ru: buildLocalizedProfile(author, "ru", finalProfile, finalProfile.works),
+      kk: buildLocalizedProfile(author, "kk", finalProfile, finalProfile.works),
+    };
+    author.workDetail = {
+      en: {
+        name: finalProfile.en.name,
+        role: author.roles.join(", "),
+        shortBio: finalProfile.en.shortDescription,
+        culturalImportance: finalProfile.en.cultureContribution,
+        connectionToWork: finalProfile.en.interestingFact,
+      },
+      ru: {
+        name: finalProfile.ru.name,
+        role: author.roles.join(", "),
+        shortBio: finalProfile.ru.shortDescription,
+        culturalImportance: finalProfile.ru.cultureContribution,
+        connectionToWork: finalProfile.ru.interestingFact,
+      },
+      kk: {
+        name: finalProfile.kk.name,
+        role: author.roles.join(", "),
+        shortBio: finalProfile.kk.shortDescription,
+        culturalImportance: finalProfile.kk.cultureContribution,
+        connectionToWork: finalProfile.kk.interestingFact,
+      },
+    };
+  }
+
+  const supplemental = supplementalAuthorProfiles[author.name];
+  if (supplemental) {
+    const baseProfile = {
+      en: {
+        name: author.name,
+        years: author.years,
+        shortDescription: author.description,
+        fullBiography: [author.biography, author.legacy],
+        timeline: [
+          { year: author.years.split("-")[0], text: author.biography },
+          { year: "Legacy", text: author.legacy },
+        ],
+        keyThemes: author.keyIdeas,
+        cultureContribution: author.legacy,
+        interestingFact: supplemental.facts.en,
+        quotes: [author.legacy, supplemental.facts.en],
+      },
+      ru: {
+        name: author.name,
+        years: author.years,
+        shortDescription: author.description,
+        fullBiography: [author.biography, author.legacy],
+        timeline: [
+          { year: author.years.split("-")[0], text: author.biography },
+          { year: "Наследие", text: author.legacy },
+        ],
+        keyThemes: author.keyIdeas,
+        cultureContribution: author.legacy,
+        interestingFact: supplemental.facts.ru,
+        quotes: [author.legacy, supplemental.facts.ru],
+      },
+      kk: {
+        name: author.name,
+        years: author.years,
+        shortDescription: author.description,
+        fullBiography: [author.biography, author.legacy],
+        timeline: [
+          { year: author.years.split("-")[0], text: author.biography },
+          { year: "Мұра", text: author.legacy },
+        ],
+        keyThemes: author.keyIdeas,
+        cultureContribution: author.legacy,
+        interestingFact: supplemental.facts.kk,
+        quotes: [author.legacy, supplemental.facts.kk],
+      },
+    };
+    author.profile = {
+      ...(author.profile ?? {}),
+      en: buildLocalizedProfile(author, "en", baseProfile, supplemental.works),
+      ru: buildLocalizedProfile(author, "ru", baseProfile, supplemental.works),
+      kk: buildLocalizedProfile(author, "kk", baseProfile, supplemental.works),
+    };
+  }
+}
 
