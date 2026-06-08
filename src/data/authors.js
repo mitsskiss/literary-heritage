@@ -97,16 +97,16 @@ const authorPortraits = {
     portraitPosition: "center 24%",
   },
   zhumabayev: {
-    portrait: createFallbackPortrait("MZ", "MAGZHAN ZHUMABAYEV", "#ba8d50"),
+    portrait: commonsFile("Magzhan Zhumabai 2018 stamp of Kazakhstan.jpg"),
     portraitAlt: portraitAlt(
-      "Neutral MURA archival placeholder for Magzhan Zhumabayev",
-      "Нейтральный архивный placeholder MURA для Магжана Жумабаева",
-      "Мағжан Жұмабаевқа арналған бейтарап MURA архивтік placeholder"
+      "Kazakhstan commemorative stamp portrait of Magzhan Zhumabayev",
+      "Портрет Магжана Жумабаева на памятной марке Казахстана",
+      "Мағжан Жұмабаевтың Қазақстан естелік маркасындағы портреті"
     ),
-    portraitCredit: localPlaceholderCredit,
-    portraitSource: "local:mura-placeholder/magzhan-zhumabayev",
+    portraitCredit: "Wikimedia Commons, Kazakhstan commemorative stamp",
+    portraitSource: commonsSource("Magzhan Zhumabai 2018 stamp of Kazakhstan.jpg"),
     fallbackPortrait: createFallbackPortrait("MZ", "MAGZHAN ZHUMABAYEV", "#ba8d50"),
-    portraitPosition: "center",
+    portraitPosition: "center 26%",
   },
   zhansugurov: {
     portrait: commonsFile("Ilyas Jansügirov portrait at Almaty Central State Museum of Kazakhstan.jpg"),
@@ -145,16 +145,16 @@ const authorPortraits = {
     portraitPosition: "center 22%",
   },
   makatayev: {
-    portrait: createFallbackPortrait("MM", "MUKAGALI MAKATAYEV", "#c28b4b"),
+    portrait: commonsFile("KZMakataev.jpg"),
     portraitAlt: portraitAlt(
-      "Neutral MURA archival placeholder for Mukagali Makatayev",
-      "Нейтральный архивный placeholder MURA для Мукагали Макатаева",
-      "Мұқағали Мақатаевқа арналған бейтарап MURA архивтік placeholder"
+      "Kazakhstan postage stamp portrait of Mukagali Makatayev",
+      "Портрет Мукагали Макатаева на почтовой марке Казахстана",
+      "Мұқағали Мақатаевтың Қазақстан пошта маркасындағы портреті"
     ),
-    portraitCredit: localPlaceholderCredit,
-    portraitSource: "local:mura-placeholder/mukagali-makatayev",
+    portraitCredit: "Wikimedia Commons, Kazakhstan State Postal Service, public domain stamp scan",
+    portraitSource: commonsSource("KZMakataev.jpg"),
     fallbackPortrait: createFallbackPortrait("MM", "MUKAGALI MAKATAYEV", "#c28b4b"),
-    portraitPosition: "center",
+    portraitPosition: "center 35%",
   },
   zhambyl: {
     portrait: commonsFile("Zhambyl Zhabayuly and Mikhail Kalinin.jpg", 900),
@@ -181,28 +181,28 @@ const authorPortraits = {
     portraitPosition: "center 26%",
   },
   mailin: {
-    portrait: createFallbackPortrait("BM", "BEIMBET MAILIN", "#b9844a"),
+    portrait: commonsFile("Beimbet Maylin.jpeg", 600),
     portraitAlt: portraitAlt(
-      "Neutral MURA archival placeholder for Beimbet Mailin",
-      "Нейтральный архивный placeholder MURA для Беимбета Майлина",
-      "Бейімбет Майлинге арналған бейтарап MURA архивтік placeholder"
+      "Archival portrait of Beimbet Mailin",
+      "Архивный портрет Беимбета Майлина",
+      "Бейімбет Майлиннің архивтік портреті"
     ),
-    portraitCredit: localPlaceholderCredit,
-    portraitSource: "local:mura-placeholder/beimbet-mailin",
+    portraitCredit: "Wikimedia Commons, unknown author, public domain archival portrait",
+    portraitSource: commonsSource("Beimbet Maylin.jpeg"),
     fallbackPortrait: createFallbackPortrait("BM", "BEIMBET MAILIN", "#b9844a"),
-    portraitPosition: "center",
+    portraitPosition: "center 24%",
   },
   musrepov: {
-    portrait: createFallbackPortrait("GM", "GABIT MUSREPOV", "#c1904e"),
+    portrait: commonsFile("Musrepov.jpg", 700),
     portraitAlt: portraitAlt(
-      "Neutral MURA archival placeholder for Gabit Musrepov",
-      "Нейтральный архивный placeholder MURA для Габита Мусрепова",
-      "Ғабит Мүсіреповке арналған бейтарап MURA архивтік placeholder"
+      "Archival portrait of Gabit Musrepov",
+      "Архивный портрет Габита Мусрепова",
+      "Ғабит Мүсіреповтің архивтік портреті"
     ),
-    portraitCredit: localPlaceholderCredit,
-    portraitSource: "local:mura-placeholder/gabit-musrepov",
+    portraitCredit: "Wikimedia Commons, archival portrait",
+    portraitSource: commonsSource("Musrepov.jpg"),
     fallbackPortrait: createFallbackPortrait("GM", "GABIT MUSREPOV", "#c1904e"),
-    portraitPosition: "center",
+    portraitPosition: "center 28%",
   },
   suleimenov: {
     portrait: commonsFile("Oljas Suleymenov.jpg"),
@@ -217,16 +217,16 @@ const authorPortraits = {
     portraitPosition: "center 28%",
   },
   ongarsynova: {
-    portrait: createFallbackPortrait("FO", "FARIZA ONGARSYNOVA", "#b98a58"),
+    portrait: "https://www.pushkinlibrary.kz/exhibitions/fariza/images/image014.jpg",
     portraitAlt: portraitAlt(
-      "Neutral MURA archival placeholder for Fariza Ongarsynova",
-      "Нейтральный архивный placeholder MURA для Фаризы Онгарсыновой",
-      "Фариза Оңғарсыноваға арналған бейтарап MURA архивтік placeholder"
+      "Portrait of Fariza Ongarsynova",
+      "Портрет Фаризы Онгарсыновой",
+      "Фариза Оңғарсынованың портреті"
     ),
-    portraitCredit: localPlaceholderCredit,
-    portraitSource: "local:mura-placeholder/fariza-ongarsynova",
+    portraitCredit: "East Kazakhstan Regional Pushkin Library, Fariza Ongarsynova exhibition",
+    portraitSource: "https://www.pushkinlibrary.kz/exhibitions/fariza/indexru.html",
     fallbackPortrait: createFallbackPortrait("FO", "FARIZA ONGARSYNOVA", "#b98a58"),
-    portraitPosition: "center",
+    portraitPosition: "center 26%",
   },
 };
 

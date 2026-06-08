@@ -146,8 +146,12 @@ function Reading() {
     null;
   const authorDisplayName = localizedAuthor?.name ?? work.author;
   const authorRole = localizedAuthor?.role ?? authorRecord?.roles?.join(", ");
-  const heroPortrait = id === "abai-words" ? work.image : work.image;
-  const heroBookCover = id === "abai-words" ? abaiBookCover : null;
+  const localizedPortraitAlt =
+    authorRecord?.portraitAlt?.[language] ??
+    authorRecord?.portraitAlt?.en ??
+    authorDisplayName;
+  const heroPortrait = authorRecord?.image ?? work.image;
+  const heroBookCover = work.image ?? (id === "abai-words" ? abaiBookCover : null);
   const abaiHeroCategory =
     language === "kk"
       ? "Философиялық мұра"
@@ -236,7 +240,7 @@ function Reading() {
             <img
               className="reading-book-hero__portrait"
               src={heroPortrait}
-              alt={authorDisplayName}
+              alt={localizedPortraitAlt}
             />
           </div>
 

@@ -1,4 +1,4 @@
-import abaiCover from "../assets/authors/abai.jpg";
+import abaiCover from "../assets/works/abay.png";
 import archiveAuthors from "../assets/mura/portal-authors.jpg";
 import archivePoetry from "../assets/mura/collection-poetry.jpg";
 import archiveProse from "../assets/mura/collection-prose.jpg";
