@@ -28,7 +28,7 @@ function AuthRecoveryBridge() {
 
   useEffect(() => {
     if (authEvent === "PASSWORD_RECOVERY" || authRedirectType === "recovery") {
-      navigate("/auth", { replace: true });
+      navigate("/reset-password", { replace: true });
       return;
     }
 
@@ -61,6 +61,8 @@ function App() {
           <Route path="/reading/:id/chapter/:chapterNumber" element={<ChapterReading />} />
           <Route path="/progress" element={<Progress />} />
           <Route path="/auth" element={<Auth />} />
+          <Route path="/auth/callback" element={<Auth />} />
+          <Route path="/reset-password" element={<Auth />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/about" element={<About />} />
           <Route path="/admin" element={<Admin />} />

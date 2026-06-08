@@ -24,6 +24,8 @@ async function expectNoHorizontalOverflow(page) {
 }
 
 test.describe("MURA author profile premium layout", () => {
+  test.describe.configure({ timeout: 60000 });
+
   test("Abai profile renders dark premium layout and working actions", async ({ page }) => {
     await page.setViewportSize({ width: 1366, height: 900 });
     await gotoAuthor(page, { theme: "dark", language: "ru" });

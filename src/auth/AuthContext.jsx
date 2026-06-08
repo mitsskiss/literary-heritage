@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import {
+  cleanAuthCallbackUrl,
   initialAuthCallback,
   isSupabaseConfigured,
   supabase,
@@ -20,11 +21,37 @@ function getSiteUrl() {
 }
 
 function getAuthRedirectUrl() {
-  return getSiteUrl();
+  return `${getSiteUrl()}#/auth/callback`;
 }
 
 function getPasswordRecoveryRedirectUrl() {
-  return getSiteUrl();
+  return `${getSiteUrl()}#/reset-password`;
+}
+
+async function hydrateAuthCallbackSession() {
+  if (!supabase || !initialAuthCallback.isCallback) {
+    return { data: null, error: null };
+  }
+
+  if (initialAuthCallback.errorDescription || initialAuthCallback.errorCode) {
+    return {
+      data: null,
+      error: new Error(initialAuthCallback.errorDescription || initialAuthCallback.errorCode),
+    };
+  }
+
+  if (initialAuthCallback.accessToken && initialAuthCallback.refreshToken) {
+    return supabase.auth.setSession({
+      access_token: initialAuthCallback.accessToken,
+      refresh_token: initialAuthCallback.refreshToken,
+    });
+  }
+
+  if (initialAuthCallback.code) {
+    return supabase.auth.exchangeCodeForSession(initialAuthCallback.code);
+  }
+
+  return { data: null, error: null };
 }
 
 export function AuthProvider({ children }) {
@@ -35,6 +62,8 @@ export function AuthProvider({ children }) {
   const [authRedirectType, setAuthRedirectType] = useState(
     initialAuthCallback.isCallback ? initialAuthCallback.type : null
   );
+  const [authCallbackError, setAuthCallbackError] = useState("");
+  const [recoveryReady, setRecoveryReady] = useState(false);
 
   useEffect(() => {
     if (!supabase) {
@@ -44,22 +73,40 @@ export function AuthProvider({ children }) {
 
     let isMounted = true;
 
-    supabase.auth.getSession().then(({ data }) => {
+    async function initializeSession() {
+      const hydrated = await hydrateAuthCallbackSession();
+      if (!isMounted) return;
+
+      if (hydrated?.error) {
+        setAuthCallbackError(hydrated.error.message);
+      }
+
+      const { data } = await supabase.auth.getSession();
       if (!isMounted) return;
       setSession(data.session ?? null);
-      if (initialAuthCallback.isCallback && data.session) {
+      if (initialAuthCallback.isCallback) {
+        if (initialAuthCallback.type === "recovery") {
+          setRecoveryReady(Boolean(data.session));
+        }
         setAuthEvent(
           initialAuthCallback.type === "recovery" ? "PASSWORD_RECOVERY" : "SIGNED_IN"
         );
         setAuthRedirectType(initialAuthCallback.type ?? "auth");
+        cleanAuthCallbackUrl(initialAuthCallback.type);
       }
       setLoading(false);
-    });
+    }
+
+    initializeSession();
 
     const { data: listener } = supabase.auth.onAuthStateChange(
       (event, nextSession) => {
         setAuthEvent(event);
         setSession(nextSession ?? null);
+        if (event === "PASSWORD_RECOVERY") {
+          setRecoveryReady(Boolean(nextSession));
+          setAuthRedirectType("recovery");
+        }
         if (initialAuthCallback.isCallback && nextSession) {
           setAuthRedirectType(initialAuthCallback.type ?? "auth");
         }
@@ -112,6 +159,8 @@ export function AuthProvider({ children }) {
       loading,
       authEvent,
       authRedirectType,
+      authCallbackError,
+      recoveryReady,
       isConfigured: isSupabaseConfigured,
       signIn: async ({ email, password }) => {
         if (!supabase) throw new Error("Supabase is not configured");
@@ -149,6 +198,13 @@ export function AuthProvider({ children }) {
       },
       updatePassword: async ({ password }) => {
         if (!supabase) throw new Error("Supabase is not configured");
+        const { data: sessionData } = await supabase.auth.getSession();
+        if (!sessionData.session?.user) {
+          return {
+            data: null,
+            error: new Error("Password recovery session is missing or expired."),
+          };
+        }
         return supabase.auth.updateUser({ password });
       },
       signOut: async () => {
@@ -191,7 +247,7 @@ export function AuthProvider({ children }) {
         return data ?? null;
       },
     }),
-    [authEvent, authRedirectType, loading, profile, session]
+    [authCallbackError, authEvent, authRedirectType, loading, profile, recoveryReady, session]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

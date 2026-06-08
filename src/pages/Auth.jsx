@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 import { useI18n } from "../i18n/useI18n";
 import "./Auth.css";
@@ -10,13 +10,17 @@ function Auth() {
   const { t } = useI18n();
   const {
     authEvent,
+    authCallbackError,
     isConfigured,
+    recoveryReady,
     resetPassword,
     resendConfirmation,
+    session,
     signIn,
     signUp,
     updatePassword,
   } = useAuth();
+  const location = useLocation();
   const navigate = useNavigate();
   const [mode, setMode] = useState("signin");
   const [displayName, setDisplayName] = useState("");
@@ -31,6 +35,8 @@ function Auth() {
   const normalizedEmail = email.trim();
   const isPasswordUpdate = mode === "update-password";
   const needsPassword = mode !== "reset";
+  const isRecoveryRoute = location.pathname === "/reset-password";
+  const cannotUpdatePassword = isPasswordUpdate && !recoveryReady && !session?.user;
   const canResendConfirmation = Boolean(
     isConfigured && normalizedEmail && !isSubmitting && !isResending && mode !== "update-password"
   );
@@ -65,13 +71,50 @@ function Auth() {
     [t]
   );
 
+  const getAuthErrorMessage = useCallback(
+    (errorMessage = "") => {
+      const normalized = errorMessage.toLowerCase();
+      if (normalized.includes("invalid login credentials")) {
+        return t("authInvalidCredentials");
+      }
+      if (normalized.includes("email not confirmed")) {
+        return t("authEmailNotConfirmed");
+      }
+      if (normalized.includes("auth session missing") || normalized.includes("session missing")) {
+        return t("authSessionMissing");
+      }
+      if (normalized.includes("expired") || normalized.includes("invalid token") || normalized.includes("otp")) {
+        return t("authRecoveryExpired");
+      }
+      if (normalized.includes("failed to fetch") || normalized.includes("network")) {
+        return t("authNetworkError");
+      }
+      if (normalized.includes("already registered") || normalized.includes("already exists")) {
+        return t("authAlreadyRegistered");
+      }
+      if (normalized.includes("rate limit") || normalized.includes("too many")) {
+        return t("authRateLimited");
+      }
+      return errorMessage;
+    },
+    [t]
+  );
+
   useEffect(() => {
-    if (authEvent === "PASSWORD_RECOVERY") {
+    if (authEvent === "PASSWORD_RECOVERY" || isRecoveryRoute) {
       setMode("update-password");
-      setMessage(t("authReadyForNewPassword"));
-      setIsError(false);
+      if (authCallbackError) {
+        setMessage(getAuthErrorMessage(authCallbackError));
+        setIsError(true);
+      } else if (recoveryReady || authEvent === "PASSWORD_RECOVERY") {
+        setMessage(t("authReadyForNewPassword"));
+        setIsError(false);
+      } else {
+        setMessage(t("authSessionMissing"));
+        setIsError(true);
+      }
     }
-  }, [authEvent, t]);
+  }, [authCallbackError, authEvent, getAuthErrorMessage, isRecoveryRoute, recoveryReady, t]);
 
   useEffect(() => {
     const urlText = `${window.location.href}`.toLowerCase();
@@ -79,26 +122,6 @@ function Auth() {
       setMode("update-password");
     }
   }, []);
-
-  const getAuthErrorMessage = (errorMessage = "") => {
-    const normalized = errorMessage.toLowerCase();
-    if (normalized.includes("invalid login credentials")) {
-      return t("authInvalidCredentials");
-    }
-    if (normalized.includes("email not confirmed")) {
-      return t("authEmailNotConfirmed");
-    }
-    if (normalized.includes("auth session missing") || normalized.includes("session missing")) {
-      return t("authSessionMissing");
-    }
-    if (normalized.includes("already registered") || normalized.includes("already exists")) {
-      return t("authAlreadyRegistered");
-    }
-    if (normalized.includes("rate limit") || normalized.includes("too many")) {
-      return t("authRateLimited");
-    }
-    return errorMessage;
-  };
 
   const switchMode = (nextMode) => {
     setMode(nextMode);
@@ -144,6 +167,11 @@ function Auth() {
       } else if (mode === "reset") {
         result = await resetPassword({ email: normalizedEmail });
       } else {
+        if (cannotUpdatePassword) {
+          setIsError(true);
+          setMessage(t("authSessionMissing"));
+          return;
+        }
         result = await updatePassword({ password });
       }
 
@@ -165,7 +193,7 @@ function Auth() {
 
       if (mode === "update-password") {
         setMessage(t("authPasswordUpdated"));
-        window.setTimeout(() => navigate("/profile"), 900);
+        window.setTimeout(() => navigate("/auth", { replace: true }), 900);
         return;
       }
 
@@ -319,30 +347,36 @@ function Auth() {
                 ) : null}
 
                 {message ? (
-                  <p className={`auth-card__message ${isError ? "is-error" : "is-success"}`}>
+                  <p className={`auth-card__message ${isError ? "is-error" : "is-success"}`} role={isError ? "alert" : "status"}>
                     {message}
                   </p>
                 ) : null}
 
-                <button className="auth-card__submit" type="submit" disabled={isSubmitting}>
+                <button className="auth-card__submit" type="submit" disabled={isSubmitting || cannotUpdatePassword} aria-busy={isSubmitting}>
                   {isSubmitting ? t("pleaseWait") : currentCopy.action}
                 </button>
 
                 <div className="auth-card__secondary-actions">
                   {mode === "signin" ? (
-                    <button type="button" onClick={() => switchMode("reset")}>
+                    <button type="button" disabled={isSubmitting} onClick={() => switchMode("reset")}>
                       {t("forgotPassword")}
                     </button>
                   ) : null}
 
                   {mode === "reset" || isPasswordUpdate ? (
-                    <button type="button" onClick={() => switchMode("signin")}>
+                    <button type="button" disabled={isSubmitting} onClick={() => switchMode("signin")}>
                       {t("backToSignIn")}
                     </button>
                   ) : null}
 
+                  {isPasswordUpdate && cannotUpdatePassword ? (
+                    <button type="button" disabled={isSubmitting} onClick={() => switchMode("reset")}>
+                      {t("sendNewResetLink")}
+                    </button>
+                  ) : null}
+
                   {mode === "signup" ? (
-                    <button type="button" onClick={() => switchMode("signin")}>
+                    <button type="button" disabled={isSubmitting} onClick={() => switchMode("signin")}>
                       {t("alreadyHaveAccount")}
                     </button>
                   ) : null}

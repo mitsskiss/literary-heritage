@@ -5,6 +5,9 @@ import {
   emptyAdminContent,
   normalizeId,
 } from "../admin/adminContent";
+import { authors as baseAuthors } from "../data/authors";
+import { chapterStoryLibrary } from "../data/stories";
+import { works as baseWorks } from "../data/works";
 import { useAdminAccess } from "../hooks/useAdminAccess";
 import { useAdminContent } from "../hooks/useAdminContent";
 import { useI18n } from "../i18n/useI18n";
@@ -63,14 +66,14 @@ function makeId(value, fallback) {
 
 function Admin() {
   const { t } = useI18n();
-  const { isAdmin, checkingAdmin, requiresSetup, user } = useAdminAccess();
+  const { canMutateAdminData, checkingAdmin, isDemoAdmin } = useAdminAccess();
   const {
     content,
     updateContent,
     isRemoteLoading,
     syncStatus,
     syncError,
-  } = useAdminContent({ canWrite: isAdmin });
+  } = useAdminContent({ canWrite: canMutateAdminData });
   const [activeTab, setActiveTab] = useState("works");
   const [authorForm, setAuthorForm] = useState(initialAuthor);
   const [workForm, setWorkForm] = useState(initialWork);
@@ -82,12 +85,37 @@ function Admin() {
     id,
     label: t(`adminTab_${id}`),
   }));
-  const syncLabel = syncStatus === "remote" ? "Supabase" : t("adminLocalStorage");
+  const demoContent = useMemo(
+    () => ({
+      authors: baseAuthors.map((author) => ({
+        id: author.slug ?? makeId(author.canonicalName ?? author.name, "author"),
+        name: author.name,
+        period: author.period,
+        description: author.description,
+      })),
+      works: baseWorks.map((work) => ({
+        id: work.id,
+        title: work.title,
+        author: work.author,
+        year: work.year,
+        description: work.description,
+      })),
+      chapters: Object.values(chapterStoryLibrary).map((chapter) => ({
+        id: chapter.id,
+        workId: chapter.workId,
+        chapterTitle: chapter.chapterTitle,
+      })),
+      translations: emptyAdminContent.translations,
+    }),
+    []
+  );
+  const displayContent = canMutateAdminData ? content : demoContent;
+  const syncLabel = isDemoAdmin ? t("adminDemoSync") : syncStatus === "remote" ? "Supabase" : t("adminLocalStorage");
   const activeTabLabel = tabs.find((tab) => tab.id === activeTab)?.label ?? t("adminSectionFallback");
 
   const workOptions = useMemo(
-    () => content.works.map((work) => ({ id: work.id, title: work.title })),
-    [content.works]
+    () => displayContent.works.map((work) => ({ id: work.id, title: work.title })),
+    [displayContent.works]
   );
 
   const showMessage = (text) => {
@@ -96,6 +124,11 @@ function Admin() {
   };
 
   const saveSharedContent = async (updater, successMessage) => {
+    if (!canMutateAdminData) {
+      showMessage(t("adminDemoSaveBlocked"));
+      return false;
+    }
+
     const result = await updateContent(updater);
 
     if (result?.ok) {
@@ -193,6 +226,11 @@ function Admin() {
   };
 
   const removeItem = async (type, id) => {
+    if (!canMutateAdminData) {
+      showMessage(t("adminDemoSaveBlocked"));
+      return;
+    }
+
     await saveSharedContent((current) => ({
       ...current,
       [type]: current[type].filter((item) => item.id !== id),
@@ -209,48 +247,13 @@ function Admin() {
     }
   };
 
-  const exportJson = JSON.stringify(content, null, 2);
+  const exportJson = JSON.stringify(displayContent, null, 2);
 
-  if (requiresSetup) {
-    return (
-      <AdminAccessState
-        title={t("adminSetupTitle")}
-        text={t("adminSetupText")}
-        protectedLabel={t("adminProtectedArea")}
-        homeLabel={t("navHome")}
-      />
-    );
-  }
-
-  if (checkingAdmin || isRemoteLoading) {
+  if (checkingAdmin || (canMutateAdminData && isRemoteLoading)) {
     return (
       <AdminAccessState
         title={t("adminCheckingTitle")}
         text={t("adminCheckingText")}
-        protectedLabel={t("adminProtectedArea")}
-        homeLabel={t("navHome")}
-      />
-    );
-  }
-
-  if (!user) {
-    return (
-      <AdminAccessState
-        title={t("adminSignInTitle")}
-        text={t("adminSignInText")}
-        protectedLabel={t("adminProtectedArea")}
-        homeLabel={t("navHome")}
-        action={<Link to="/auth" className="admin-hero__link">{t("signIn")}</Link>}
-      />
-    );
-  }
-
-  if (!isAdmin) {
-    return (
-      <AdminAccessState
-        title={t("adminNoAccessTitle")}
-        text={t("adminNoAccessText")}
-        code={user.id}
         protectedLabel={t("adminProtectedArea")}
         homeLabel={t("navHome")}
       />
@@ -262,13 +265,13 @@ function Admin() {
       <div className="admin-page__container">
         <header className="admin-hero">
           <div>
-            <p className="admin-hero__kicker">{t("adminStudioKicker")}</p>
-            <h1>{t("adminStudioTitle")}</h1>
+            <p className="admin-hero__kicker">{isDemoAdmin ? t("adminDemoKicker") : t("adminStudioKicker")}</p>
+            <h1>{isDemoAdmin ? t("adminDemoTitle") : t("adminStudioTitle")}</h1>
             <p>
-              {t("adminStudioText")}
+              {isDemoAdmin ? t("adminDemoText") : t("adminStudioText")}
             </p>
             <div className="admin-hero__meta" aria-label={t("adminPanelStatus")}>
-              <span>{t("adminAccessMeta")}</span>
+              <span>{canMutateAdminData ? t("adminAccessMeta") : t("adminDemoAccessMeta")}</span>
               <span>{t("adminSyncMeta", { mode: syncLabel })}</span>
               <span>{t("adminActiveMeta", { section: activeTabLabel })}</span>
             </div>
@@ -281,19 +284,19 @@ function Admin() {
 
         <section className="admin-stats" aria-label={t("adminSummary")}>
           <article>
-            <strong>{content.authors.length}</strong>
+            <strong>{displayContent.authors.length}</strong>
             <span>{t("adminStatAuthors")}</span>
           </article>
           <article>
-            <strong>{content.works.length}</strong>
+            <strong>{displayContent.works.length}</strong>
             <span>{t("adminStatWorks")}</span>
           </article>
           <article>
-            <strong>{content.chapters.length}</strong>
+            <strong>{displayContent.chapters.length}</strong>
             <span>{t("adminStatChapters")}</span>
           </article>
           <article>
-            <strong>{content.translations.length}</strong>
+            <strong>{displayContent.translations.length}</strong>
             <span>{t("adminStatTranslations")}</span>
           </article>
         </section>
@@ -315,20 +318,20 @@ function Admin() {
 
         {activeTab === "authors" ? (
           <section className="admin-panel">
-            <FormShell title={t("adminAddAuthor")} onSubmit={addAuthor}>
+            {canMutateAdminData ? <FormShell title={t("adminAddAuthor")} onSubmit={addAuthor}>
               <AdminInput label={t("adminFieldName")} value={authorForm.name} onChange={(name) => setAuthorForm({ ...authorForm, name })} required />
               <AdminInput label={t("period")} value={authorForm.period} onChange={(period) => setAuthorForm({ ...authorForm, period })} />
               <AdminInput label={t("adminFieldPhotoUrl")} value={authorForm.image} onChange={(image) => setAuthorForm({ ...authorForm, image })} />
               <AdminTextarea label={t("adminFieldDescription")} value={authorForm.description} onChange={(description) => setAuthorForm({ ...authorForm, description })} required />
               <button className="admin-submit" type="submit">{t("adminSaveAuthor")}</button>
-            </FormShell>
-            <AdminList items={content.authors} type="authors" titleKey="name" onRemove={removeItem} savedLabel={t("adminSaved")} emptyLabel={t("adminEmpty")} removeLabel={t("deleteComment")} />
+            </FormShell> : <AdminReadOnlyCard title={t("adminReadOnlyTitle")} text={t("adminReadOnlyText")} />}
+            <AdminList items={displayContent.authors} type="authors" titleKey="name" onRemove={removeItem} savedLabel={t("adminSaved")} emptyLabel={t("adminEmpty")} removeLabel={t("deleteComment")} canRemove={canMutateAdminData} />
           </section>
         ) : null}
 
         {activeTab === "works" ? (
           <section className="admin-panel">
-            <FormShell title={t("adminAddWork")} onSubmit={addWork}>
+            {canMutateAdminData ? <FormShell title={t("adminAddWork")} onSubmit={addWork}>
               <AdminInput label={t("adminFieldOptionalId")} value={workForm.id} onChange={(id) => setWorkForm({ ...workForm, id })} />
               <AdminInput label={t("adminFieldTitle")} value={workForm.title} onChange={(title) => setWorkForm({ ...workForm, title })} required />
               <AdminInput label={t("adminFieldAuthor")} value={workForm.author} onChange={(author) => setWorkForm({ ...workForm, author })} required />
@@ -342,14 +345,14 @@ function Admin() {
               <AdminTextarea label={t("adminFieldFragment")} value={workForm.fragmentText} onChange={(fragmentText) => setWorkForm({ ...workForm, fragmentText })} />
               <AdminTextarea label={t("adminFieldFragmentNote")} value={workForm.fragmentNote} onChange={(fragmentNote) => setWorkForm({ ...workForm, fragmentNote })} />
               <button className="admin-submit" type="submit">{t("adminAddWorkButton")}</button>
-            </FormShell>
-            <AdminList items={content.works} type="works" titleKey="title" onRemove={removeItem} savedLabel={t("adminSaved")} emptyLabel={t("adminEmpty")} removeLabel={t("deleteComment")} />
+            </FormShell> : <AdminReadOnlyCard title={t("adminReadOnlyTitle")} text={t("adminReadOnlyText")} />}
+            <AdminList items={displayContent.works} type="works" titleKey="title" onRemove={removeItem} savedLabel={t("adminSaved")} emptyLabel={t("adminEmpty")} removeLabel={t("deleteComment")} canRemove={canMutateAdminData} />
           </section>
         ) : null}
 
         {activeTab === "chapters" ? (
           <section className="admin-panel">
-            <FormShell title={t("adminAddChapter")} onSubmit={addChapter}>
+            {canMutateAdminData ? <FormShell title={t("adminAddChapter")} onSubmit={addChapter}>
               <label className="admin-field">
                 <span>{t("work")}</span>
                 <select
@@ -382,14 +385,14 @@ function Admin() {
                 {t("adminInsertSceneTemplate")}
               </button>
               <button className="admin-submit" type="submit">{t("adminSaveChapter")}</button>
-            </FormShell>
-            <AdminList items={content.chapters} type="chapters" titleKey="chapterTitle" onRemove={removeItem} savedLabel={t("adminSaved")} emptyLabel={t("adminEmpty")} removeLabel={t("deleteComment")} />
+            </FormShell> : <AdminReadOnlyCard title={t("adminReadOnlyTitle")} text={t("adminReadOnlyText")} />}
+            <AdminList items={displayContent.chapters} type="chapters" titleKey="chapterTitle" onRemove={removeItem} savedLabel={t("adminSaved")} emptyLabel={t("adminEmpty")} removeLabel={t("deleteComment")} canRemove={canMutateAdminData} />
           </section>
         ) : null}
 
         {activeTab === "translations" ? (
           <section className="admin-panel">
-            <FormShell title={t("adminAddTranslation")} onSubmit={addTranslation}>
+            {canMutateAdminData ? <FormShell title={t("adminAddTranslation")} onSubmit={addTranslation}>
               <label className="admin-field">
                 <span>{t("adminFieldType")}</span>
                 <select value={translationForm.entityType} onChange={(event) => setTranslationForm({ ...translationForm, entityType: event.target.value })}>
@@ -413,8 +416,8 @@ function Admin() {
               <AdminInput label={t("adminFieldChapterTagline")} value={translationForm.tagline} onChange={(tagline) => setTranslationForm({ ...translationForm, tagline })} />
               <AdminTextarea label={t("adminFieldDescription")} value={translationForm.description} onChange={(description) => setTranslationForm({ ...translationForm, description })} />
               <button className="admin-submit" type="submit">{t("adminSaveTranslation")}</button>
-            </FormShell>
-            <AdminList items={content.translations} type="translations" titleKey="entityId" onRemove={removeItem} savedLabel={t("adminSaved")} emptyLabel={t("adminEmpty")} removeLabel={t("deleteComment")} />
+            </FormShell> : <AdminReadOnlyCard title={t("adminReadOnlyTitle")} text={t("adminReadOnlyText")} />}
+            <AdminList items={displayContent.translations} type="translations" titleKey="entityId" onRemove={removeItem} savedLabel={t("adminSaved")} emptyLabel={t("adminEmpty")} removeLabel={t("deleteComment")} canRemove={canMutateAdminData} />
           </section>
         ) : null}
 
@@ -426,16 +429,20 @@ function Admin() {
                 {t("adminExportImportText")}
               </p>
               <textarea value={exportJson} readOnly rows={14} />
-              <textarea
-                value={importValue}
-                onChange={(event) => setImportValue(event.target.value)}
-                rows={8}
-                placeholder={t("adminImportPlaceholder")}
-              />
-              <div className="admin-actions">
-                <button type="button" className="admin-submit" onClick={importContent}>{t("adminImport")}</button>
-                <button type="button" className="admin-danger" onClick={() => saveSharedContent(emptyAdminContent, t("adminCleared"))}>{t("adminClearData")}</button>
-              </div>
+              {canMutateAdminData ? (
+                <>
+                  <textarea
+                    value={importValue}
+                    onChange={(event) => setImportValue(event.target.value)}
+                    rows={8}
+                    placeholder={t("adminImportPlaceholder")}
+                  />
+                  <div className="admin-actions">
+                    <button type="button" className="admin-submit" onClick={importContent}>{t("adminImport")}</button>
+                    <button type="button" className="admin-danger" onClick={() => saveSharedContent(emptyAdminContent, t("adminCleared"))}>{t("adminClearData")}</button>
+                  </div>
+                </>
+              ) : <AdminReadOnlyCard title={t("adminReadOnlyTitle")} text={t("adminReadOnlyText")} />}
             </div>
           </section>
         ) : null}
@@ -489,7 +496,16 @@ function AdminTextarea({ label, value, onChange, rows = 5, ...props }) {
   );
 }
 
-function AdminList({ items, type, titleKey, onRemove, savedLabel, emptyLabel, removeLabel }) {
+function AdminReadOnlyCard({ title, text }) {
+  return (
+    <div className="admin-card admin-readonly-card">
+      <h2>{title}</h2>
+      <p>{text}</p>
+    </div>
+  );
+}
+
+function AdminList({ items, type, titleKey, onRemove, savedLabel, emptyLabel, removeLabel, canRemove }) {
   return (
     <div className="admin-card">
       <h2>{savedLabel}</h2>
@@ -503,9 +519,9 @@ function AdminList({ items, type, titleKey, onRemove, savedLabel, emptyLabel, re
                 <strong>{item[titleKey] || item.id}</strong>
                 <span>{item.id}</span>
               </div>
-              <button type="button" onClick={() => onRemove(type, item.id)}>
+              {canRemove ? <button type="button" onClick={() => onRemove(type, item.id)}>
                 {removeLabel}
-              </button>
+              </button> : null}
             </article>
           ))}
         </div>

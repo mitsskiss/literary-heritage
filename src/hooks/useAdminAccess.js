@@ -52,6 +52,9 @@ export function useAdminAccess() {
   return useMemo(
     () => ({
       isAdmin: Boolean(profile?.role === "admin" || isAdminUser),
+      canViewAdminPanel: true,
+      canMutateAdminData: Boolean(profile?.role === "admin" || isAdminUser),
+      isDemoAdmin: !(profile?.role === "admin" || isAdminUser),
       checkingAdmin,
       requiresSetup: !isConfigured,
       user,

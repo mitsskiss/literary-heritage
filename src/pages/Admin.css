@@ -354,6 +354,10 @@
   box-shadow: var(--shadow);
 }
 
+.admin-readonly-card {
+  border-style: dashed;
+}
+
 :root[data-theme="dark"] .admin-page {
   background:
     radial-gradient(circle at 20% 0%, rgba(90, 80, 185, 0.24), transparent 28rem),
