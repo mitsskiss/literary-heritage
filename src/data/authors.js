@@ -57,8 +57,6 @@ const createFallbackPortrait = (initials, name, accent = "#b78a45") => {
 
 const portraitAlt = (en, ru, kk) => ({ en, ru, kk });
 
-const localPlaceholderCredit = "MURA neutral archival placeholder, no likeness claimed";
-
 const authorPortraits = {
   abai: {
     portrait: commonsFile("Abai Kunanbaev.jpg"),
