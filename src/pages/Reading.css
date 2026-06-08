@@ -4700,3 +4700,142 @@
     text-align: center !important;
   }
 }
+
+/* Reading hero colour correction: keep the showcase warm in light mode. */
+.reading-book-page--stage4 .reading-book-hero--generated .reading-book-hero__portrait {
+  display: block !important;
+}
+
+:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero--stage4 {
+  border-color: rgba(146, 96, 39, 0.2) !important;
+  background:
+    radial-gradient(circle at 12% 12%, rgba(191, 130, 48, 0.12), transparent 14rem),
+    radial-gradient(circle at 88% 62%, rgba(19, 68, 58, 0.06), transparent 16rem),
+    linear-gradient(135deg, #fff8eb 0%, #f4e7cf 100%) !important;
+  box-shadow: 0 20px 48px rgba(99, 68, 31, 0.12) !important;
+}
+
+:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero__media,
+:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero--generated .reading-book-hero__media {
+  border-color: rgba(121, 82, 36, 0.18) !important;
+  background:
+    radial-gradient(circle at 48% 24%, rgba(255, 247, 225, 0.64), transparent 8rem),
+    linear-gradient(90deg, rgba(31, 70, 61, 0.08), rgba(255, 245, 224, 0.38)),
+    var(--reading-hero-manuscript),
+    linear-gradient(135deg, #efe1c3, #c8ad7a) !important;
+  background-size: auto, auto, 700px auto, cover !important;
+  background-position: center, center, center, center !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 252, 241, 0.34),
+    0 16px 30px rgba(91, 61, 27, 0.14) !important;
+}
+
+:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero__media::before {
+  background:
+    radial-gradient(circle at 50% 32%, rgba(255, 248, 229, 0.2), transparent 8rem),
+    linear-gradient(90deg, rgba(18, 60, 52, 0.08), transparent 52%, rgba(255, 247, 226, 0.24)) !important;
+}
+
+:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero__media::after {
+  background: linear-gradient(180deg, transparent, rgba(92, 64, 29, 0.12)) !important;
+}
+
+:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero__portrait {
+  opacity: 0.82 !important;
+  filter: grayscale(1) sepia(0.34) contrast(1.04) brightness(1.02) !important;
+  mix-blend-mode: multiply !important;
+}
+
+:root[data-theme="dark"] .reading-book-page--stage4 .reading-book-hero--generated .reading-book-hero__media {
+  background:
+    radial-gradient(circle at 50% 22%, rgba(224, 181, 105, 0.08), transparent 8rem),
+    linear-gradient(90deg, rgba(2, 12, 10, 0.18), rgba(2, 12, 10, 0.3)),
+    var(--reading-hero-manuscript),
+    linear-gradient(135deg, #081814, #10251f) !important;
+  background-size: auto, auto, 700px auto, cover !important;
+}
+
+:root[data-theme="dark"] .reading-book-page--stage4 .reading-book-hero--generated .reading-book-hero__portrait {
+  opacity: 0.66 !important;
+  filter: grayscale(1) sepia(0.18) contrast(1.06) brightness(0.82) !important;
+  mix-blend-mode: normal !important;
+}
+
+:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero__content,
+:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero__author,
+:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero__description,
+:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero__metaLine,
+:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero__titleSub {
+  color: #245a50 !important;
+}
+
+:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero__title {
+  color: #16483f !important;
+}
+
+:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero__category {
+  border-color: rgba(178, 115, 35, 0.34) !important;
+  background: rgba(191, 126, 43, 0.08) !important;
+  color: #a46622 !important;
+}
+
+:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero__utilityButton,
+:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero__action:not(.is-primary) {
+  border-color: rgba(116, 83, 43, 0.18) !important;
+  background: rgba(255, 250, 239, 0.72) !important;
+  color: #245a50 !important;
+}
+
+:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero__utilityButton:hover,
+:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero__utilityButton.is-favorite {
+  border-color: rgba(176, 112, 33, 0.28) !important;
+  background: rgba(191, 126, 43, 0.11) !important;
+  color: #16483f !important;
+}
+
+:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero__action.is-primary {
+  background: linear-gradient(180deg, #c5862f, #9d6420) !important;
+  color: #fff8e8 !important;
+  box-shadow: 0 10px 22px rgba(150, 91, 27, 0.2) !important;
+}
+
+:root[data-theme="dark"] .reading-book-page--stage4 .reading-book-hero__action.is-primary {
+  background: linear-gradient(180deg, #b9792b, #8e5a1e) !important;
+  color: #fff2d7 !important;
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.26) !important;
+}
+
+:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero__bookObject {
+  background:
+    radial-gradient(circle at 50% 42%, rgba(185, 128, 51, 0.16), transparent 6.5rem),
+    linear-gradient(180deg, rgba(255, 250, 238, 0.56), rgba(236, 218, 186, 0.2)) !important;
+}
+
+:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero__bookObject::before {
+  opacity: 0.24 !important;
+  filter: sepia(0.22) saturate(0.82) !important;
+}
+
+@media (max-width: 700px) {
+  :root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero--stage4 {
+    background:
+      radial-gradient(circle at 16% 8%, rgba(192, 131, 48, 0.1), transparent 11rem),
+      linear-gradient(135deg, #fff8eb 0%, #f3e5ca 100%) !important;
+  }
+
+  :root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero__media,
+  :root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero--generated .reading-book-hero__media {
+    min-height: 168px !important;
+    background:
+      radial-gradient(circle at 48% 22%, rgba(255, 248, 229, 0.62), transparent 7rem),
+      linear-gradient(90deg, rgba(27, 74, 64, 0.08), rgba(255, 245, 224, 0.36)),
+      var(--reading-hero-manuscript),
+      linear-gradient(135deg, #efe1c3, #c8ad7a) !important;
+    background-size: auto, auto, 620px auto, cover !important;
+  }
+
+  :root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero__bookObject {
+    background: rgba(255, 248, 232, 0.72) !important;
+    box-shadow: 0 14px 28px rgba(84, 56, 24, 0.18) !important;
+  }
+}
