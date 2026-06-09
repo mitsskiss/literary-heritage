@@ -8,6 +8,10 @@ import { mergeAdminAuthors, mergeAdminWorks } from "../admin/adminContent";
 import { useAdminContent } from "../hooks/useAdminContent";
 import AuthorPortrait from "../components/AuthorPortrait";
 import {
+  getAuthorsWithPortrait,
+  getVisibleWorks,
+} from "../utils/authorPortraits";
+import {
   MuraArrowIcon,
   MuraBookOpenIcon,
   MuraBookmarkIcon,
@@ -191,8 +195,13 @@ function Author() {
   const [shareStatus, setShareStatus] = useState("");
   const tabPanelRef = useRef(null);
 
-  const localizedAuthors = mergeAdminAuthors(localizeAuthors(authors), adminContent, language);
-  const localizedWorks = mergeAdminWorks(localizeWorks(works), adminContent, language);
+  const localizedAuthors = getAuthorsWithPortrait(
+    mergeAdminAuthors(localizeAuthors(authors), adminContent, language)
+  );
+  const localizedWorks = getVisibleWorks(
+    mergeAdminWorks(localizeWorks(works), adminContent, language),
+    localizedAuthors
+  );
   const authorInfo = localizedAuthors.find(
     (author) =>
       author.canonicalName === name ||

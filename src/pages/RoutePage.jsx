@@ -2,8 +2,14 @@ import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { readingRoutes } from "../data/routes";
 import { works } from "../data/works";
+import { authors } from "../data/authors";
 import { useI18n } from "../i18n/useI18n";
 import { useProgressStore } from "../store/useProgressStore";
+import {
+  getAuthorsWithPortrait,
+  getVisibleRoutes,
+  getVisibleWorks,
+} from "../utils/authorPortraits";
 import {
   MuraArrowIcon,
   MuraBackIcon,
@@ -39,8 +45,12 @@ function getStoredText(key) {
 function RoutePage() {
   const { routeId } = useParams();
   const { t, language, localizeJourneys, localizeWorks } = useI18n();
-  const localizedRoutes = useMemo(() => localizeJourneys(readingRoutes), [localizeJourneys]);
-  const localizedWorks = localizeWorks(works);
+  const localizedAuthors = useMemo(() => getAuthorsWithPortrait(authors), []);
+  const localizedWorks = getVisibleWorks(localizeWorks(works), localizedAuthors);
+  const localizedRoutes = useMemo(
+    () => getVisibleRoutes(localizeJourneys(readingRoutes), localizedWorks),
+    [localizedWorks, localizeJourneys]
+  );
   const route = useMemo(
     () => localizedRoutes.find((item) => item.id === routeId),
     [localizedRoutes, routeId]

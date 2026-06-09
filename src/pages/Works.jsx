@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useMemo, useState } from "react";
+import { authors } from "../data/authors";
 import { works } from "../data/works";
 import { workMetadataById } from "../data/exploreData";
 import fallbackCover from "../assets/logo.jpg";
@@ -7,6 +8,7 @@ import { useI18n } from "../i18n/useI18n";
 import { useProgressStore } from "../store/useProgressStore";
 import { mergeAdminWorks } from "../admin/adminContent";
 import { useAdminContent } from "../hooks/useAdminContent";
+import { getVisibleWorks } from "../utils/authorPortraits";
 import { getWorkDisplayTitle } from "../utils/workTitles";
 import "./Works.css";
 
@@ -17,10 +19,13 @@ function Works() {
   const { content: adminContent } = useAdminContent();
   const favorites = useProgressStore((state) => state.favorites);
   const toggleFavorite = useProgressStore((state) => state.toggleFavorite);
-
   const catalogWorks = useMemo(
     () =>
-      mergeAdminWorks(localizeWorks(works), adminContent, language).map((work) => {
+      getVisibleWorks(
+        mergeAdminWorks(localizeWorks(works), adminContent, language),
+        authors
+      )
+        .map((work) => {
         const displayTitle = getWorkDisplayTitle(work, language);
 
         return {

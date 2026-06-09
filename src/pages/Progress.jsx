@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { authors } from "../data/authors";
 import { literaryEpochs } from "../data/epochs";
 import { readingRoutes } from "../data/routes";
 import { works } from "../data/works";
@@ -10,6 +11,12 @@ import {
 } from "../data/stories";
 import { useProgressStore } from "../store/useProgressStore";
 import { useI18n } from "../i18n/useI18n";
+import {
+  getAuthorsWithPortrait,
+  getVisibleEpochs,
+  getVisibleRoutes,
+  getVisibleWorks,
+} from "../utils/authorPortraits";
 import "./Progress.css";
 
 const progressDashboardFallback = {
@@ -394,10 +401,10 @@ function getBestWorkImage(work) {
   );
 }
 
-function getRouteForEpochStage(stage) {
-  const epoch = literaryEpochs.find((item) => stage.epochIds.includes(item.id));
+function getRouteForEpochStage(stage, epochs = literaryEpochs, routes = readingRoutes) {
+  const epoch = epochs.find((item) => stage.epochIds.includes(item.id));
   const epochWorkIds = new Set(epoch?.works ?? []);
-  const route = readingRoutes.find((item) =>
+  const route = routes.find((item) =>
     getSafeArray(item.works).some((workId) => epochWorkIds.has(workId))
   );
 
@@ -414,10 +421,10 @@ function getFallbackTimelineIndex(overallCompletion) {
   return 4;
 }
 
-function getTimelineItems({ localizedWorks, storyProgress, overallCompletion, t }) {
+function getTimelineItems({ localizedWorks, visibleEpochs, visibleRoutes, storyProgress, overallCompletion, t }) {
   const workById = new Map(localizedWorks.map((work) => [work.id, work]));
   const items = timelineStageDefinitions.map((stage) => {
-    const stageWorks = literaryEpochs
+    const stageWorks = visibleEpochs
       .filter((epoch) => stage.epochIds.includes(epoch.id))
       .flatMap((epoch) => epoch.works)
       .map((workId) => workById.get(workId))
@@ -437,7 +444,7 @@ function getTimelineItems({ localizedWorks, storyProgress, overallCompletion, t 
       ...stage,
       title: t(stage.titleKey),
       subtitle: t(stage.subtitleKey),
-      to: getRouteForEpochStage(stage),
+      to: getRouteForEpochStage(stage, visibleEpochs, visibleRoutes),
       progress,
     };
   });
@@ -805,7 +812,10 @@ function Progress() {
   const safeStoryProgress = getSafeRecord(storyProgress);
   const safeAchievements = getSafeArray(achievements);
   const completedStoryIds = getCompletedStoryIds(safeStoryProgress, completedStories);
-  const localizedWorks = localizeWorks(getSafeArray(works));
+  const visibleAuthors = getAuthorsWithPortrait(authors);
+  const localizedWorks = getVisibleWorks(localizeWorks(getSafeArray(works)), visibleAuthors);
+  const visibleRoutes = getVisibleRoutes(readingRoutes, localizedWorks);
+  const visibleEpochs = getVisibleEpochs(literaryEpochs, localizedWorks);
   const hasRealWorks = localizedWorks.length > 0;
   const worksTotal =
     hasRealWorks ? localizedWorks.length : progressDashboardFallback.worksTotal;
@@ -890,6 +900,8 @@ function Progress() {
   const routeDetailsRoute = activeRouteStats.routeId ? `/route/${activeRouteStats.routeId}` : "/explore";
   const timelineItems = getTimelineItems({
     localizedWorks,
+    visibleEpochs,
+    visibleRoutes,
     storyProgress: safeStoryProgress,
     overallCompletion,
     t,

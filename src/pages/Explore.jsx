@@ -6,6 +6,11 @@ import { workMetadataById } from "../data/exploreData";
 import { readingRoutes } from "../data/routes";
 import { useI18n } from "../i18n/useI18n";
 import { useProgressStore } from "../store/useProgressStore";
+import {
+  getAuthorsWithPortrait,
+  getVisibleRoutes,
+  getVisibleWorks,
+} from "../utils/authorPortraits";
 import exploreHero from "../assets/mura/routes-hero.jpg";
 import "./Explore.css";
 
@@ -42,12 +47,13 @@ function Explore() {
   const reflections = useProgressStore((state) => state.reflections);
 
   const activeTheme = searchParams.get("theme") || "all";
-  const localizedWorks = localizeWorks(works).map((work) => ({
-    ...work,
-    ...localizeMetadata(work.id, workMetadataById[work.id]),
-  }));
-  const localizedAuthors = localizeAuthors(authors);
-  const localizedJourneys = localizeJourneys(readingRoutes);
+  const localizedAuthors = getAuthorsWithPortrait(localizeAuthors(authors));
+  const localizedWorks = getVisibleWorks(localizeWorks(works), localizedAuthors)
+    .map((work) => ({
+      ...work,
+      ...localizeMetadata(work.id, workMetadataById[work.id]),
+    }));
+  const localizedJourneys = getVisibleRoutes(localizeJourneys(readingRoutes), localizedWorks);
 
   const themeOptions = THEME_ORDER.map((theme) => ({ value: theme, label: label(theme) }));
   const authorOptions = [...new Set(localizedWorks.map((work) => work.author))];
@@ -58,6 +64,8 @@ function Explore() {
       const routeWorks = journey.works
         .map((id) => localizedWorks.find((work) => work.id === id))
         .filter(Boolean);
+      if (routeWorks.length === 0) return false;
+
       const routeAuthors = routeWorks.map((work) => work.author);
       const routePeriods = routeWorks.map((work) => work.period);
       const normalizedSearch = searchValue.trim().toLowerCase();

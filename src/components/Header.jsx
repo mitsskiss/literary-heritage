@@ -9,6 +9,13 @@ import { literaryEpochs } from "../data/epochs";
 import { literaryWorldMarkers } from "../data/literaryWorldMap";
 import { readingRoutes } from "../data/routes";
 import { works } from "../data/works";
+import {
+  getAuthorsWithPortrait,
+  getVisibleEpochs,
+  getVisibleMapMarkers,
+  getVisibleRoutes,
+  getVisibleWorks,
+} from "../utils/authorPortraits";
 
 
 function Header() {
@@ -105,11 +112,24 @@ useEffect(() => {
     };
   }, [isAboutPage]);
 
-  const localizedWorks = useMemo(() => localizeWorks(works), [localizeWorks]);
-  const localizedAuthors = useMemo(() => localizeAuthors(authors), [localizeAuthors]);
-  const localizedRoutes = useMemo(() => localizeJourneys(readingRoutes), [localizeJourneys]);
+  const localizedAuthors = useMemo(
+    () => getAuthorsWithPortrait(localizeAuthors(authors)),
+    [localizeAuthors]
+  );
+  const localizedWorks = useMemo(
+    () => getVisibleWorks(localizeWorks(works), localizedAuthors),
+    [localizedAuthors, localizeWorks]
+  );
+  const localizedRoutes = useMemo(
+    () => getVisibleRoutes(localizeJourneys(readingRoutes), localizedWorks),
+    [localizedWorks, localizeJourneys]
+  );
+  const visibleEpochs = useMemo(
+    () => getVisibleEpochs(literaryEpochs, localizedWorks),
+    [localizedWorks]
+  );
   const localizedWorldMarkers = useMemo(
-    () => literaryWorldMarkers.map(localizeMapMarker),
+    () => getVisibleMapMarkers(literaryWorldMarkers.map(localizeMapMarker)),
     [localizeMapMarker]
   );
 
@@ -147,7 +167,7 @@ useEffect(() => {
           [author.period, author.years, ...(author.keyIdeas ?? []), ...(author.mainWorks ?? [])]
         )
       ),
-      ...literaryEpochs.map((epoch) =>
+      ...visibleEpochs.map((epoch) =>
         makeResult(
           t("searchTypeEpoch"),
           epoch.title,
@@ -199,7 +219,7 @@ useEffect(() => {
     return results
       .filter((result) => result.haystack.includes(normalizedQuery))
       .slice(0, 8);
-  }, [label, localizedAuthors, localizedRoutes, localizedWorks, localizedWorldMarkers, searchQuery, t]);
+  }, [label, localizedAuthors, localizedRoutes, localizedWorks, localizedWorldMarkers, searchQuery, t, visibleEpochs]);
 
   useEffect(() => {
     setHighlightedResult(0);
@@ -772,4 +792,3 @@ function LanguageDropdown({
 }
 
 export default Header;
-

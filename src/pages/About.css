@@ -1175,3 +1175,45 @@
     gap: 10px;
   }
 }
+
+:root:not([data-theme="dark"]) .about-page {
+  background: linear-gradient(180deg, var(--mura-background-soft), var(--mura-background) 52%, var(--mura-background));
+}
+
+:root:not([data-theme="dark"]) .about-page .about-shell .about-hero::before {
+  background:
+    linear-gradient(
+      90deg,
+      var(--mura-background) 0%,
+      color-mix(in srgb, var(--mura-background) 96%, transparent) 32%,
+      color-mix(in srgb, var(--mura-background) 58%, transparent) 52%,
+      transparent 74%
+    );
+}
+
+:root:not([data-theme="dark"]) .about-page .about-shell .about-hero::after,
+:root:not([data-theme="dark"]) .about-page .about-shell .about-hero__visual::before,
+:root:not([data-theme="dark"]) .about-memory-card--adaptive::after {
+  display: none;
+}
+
+:root:not([data-theme="dark"]) .about-page .about-shell .about-hero__visual img {
+  filter: sepia(0.2) saturate(0.82) brightness(0.62) contrast(1.05);
+  opacity: 0.82;
+}
+
+:root:not([data-theme="dark"]) .about-memory-card--adaptive::before {
+  background:
+    linear-gradient(
+      90deg,
+      var(--mura-card-background-solid) 0%,
+      color-mix(in srgb, var(--mura-card-background-solid) 84%, transparent) 34%,
+      color-mix(in srgb, var(--mura-card-background-solid) 42%, transparent) 52%,
+      transparent 72%
+    );
+}
+
+:root:not([data-theme="dark"]) .about-memory-card--adaptive .about-memory-card__image img {
+  filter: sepia(0.26) saturate(0.78) brightness(0.48) contrast(1.04);
+  opacity: 0.62;
+}

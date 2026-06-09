@@ -6,13 +6,19 @@ import { useI18n } from "../i18n/useI18n";
 import { mergeAdminAuthors, mergeAdminWorks } from "../admin/adminContent";
 import { useAdminContent } from "../hooks/useAdminContent";
 import AuthorPortrait from "../components/AuthorPortrait";
+import { getAuthorsWithPortrait, getVisibleWorks } from "../utils/authorPortraits";
 import "./Author.css";
 
 function Authors() {
   const { t, language, localizeAuthors, localizeWorks } = useI18n();
   const { content: adminContent } = useAdminContent();
-  const localizedAuthors = mergeAdminAuthors(localizeAuthors(authors), adminContent, language);
-  const localizedWorks = mergeAdminWorks(localizeWorks(works), adminContent, language);
+  const localizedAuthors = getAuthorsWithPortrait(
+    mergeAdminAuthors(localizeAuthors(authors), adminContent, language)
+  );
+  const localizedWorks = getVisibleWorks(
+    mergeAdminWorks(localizeWorks(works), adminContent, language),
+    localizedAuthors
+  );
   const [query, setQuery] = useState("");
   const [periodFilter, setPeriodFilter] = useState("all");
 

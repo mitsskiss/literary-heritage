@@ -11,6 +11,16 @@ import portalAuthors from "../assets/mura/portal-authors.jpg";
 import portalWorks from "../assets/mura/portal-works.jpg";
 import portalEpochs from "../assets/mura/portal-epochs.jpg";
 import portalQuotes from "../assets/mura/portal-quotes.jpg";
+import { authors } from "../data/authors";
+import { literaryEpochs } from "../data/epochs";
+import { readingRoutes } from "../data/routes";
+import { works } from "../data/works";
+import {
+  getAuthorsWithPortrait,
+  getVisibleEpochs,
+  getVisibleRoutes,
+  getVisibleWorks,
+} from "../utils/authorPortraits";
 import "./Landing.css";
 
 function Landing() {
@@ -49,11 +59,15 @@ function Landing() {
     },
   ];
 
+  const publicAuthors = getAuthorsWithPortrait(authors);
+  const publicWorks = getVisibleWorks(works, publicAuthors);
+  const publicRoutes = getVisibleRoutes(readingRoutes, publicWorks);
+  const publicEpochs = getVisibleEpochs(literaryEpochs, publicWorks);
   const stats = [
-    { value: "3,000+", label: t("navWorks"), icon: "book" },
-    { value: "600+", label: t("navAuthors"), icon: "pen" },
-    { value: "1,500+", label: `${t("landingEpochs")} & ${t("navWorks")}`, icon: "horse" },
-    { value: "120+", label: t("landingRoutes"), icon: "star" },
+    { value: String(publicWorks.length), label: t("navWorks"), icon: "book" },
+    { value: String(publicAuthors.length), label: t("navAuthors"), icon: "pen" },
+    { value: String(publicEpochs.length), label: t("landingEpochs"), icon: "horse" },
+    { value: String(publicRoutes.length), label: t("landingRoutes"), icon: "star" },
   ];
 
   const collections = [

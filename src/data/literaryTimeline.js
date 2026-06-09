@@ -72,7 +72,7 @@ export const literaryTimelineEntries = [
     href: "/route/alash-voice",
     detailsTitle: "Alash and early XX century",
     detailsText:
-      "Akhmet Baitursynuly and Magzhan Zhumabayev turn language, poetry, and public thought into cultural action.",
+      "Mirzhakyp Dulatuly and Saken Seifullin turn language, public thought, and historical memory into cultural action.",
     related: ["Masa", "Batyr Bayan", "Education"],
   },
   {

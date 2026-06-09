@@ -4,6 +4,7 @@ import kazakhstanMap from "../assets/mura/map-kazakhstan-v2.jpg";
 import { literaryWorldMarkers, mapCategoryMeta } from "../data/literaryWorldMap";
 import { useI18n } from "../i18n/useI18n";
 import { useProgressStore } from "../store/useProgressStore";
+import { getVisibleMapMarkers } from "../utils/authorPortraits";
 import "./WorldMap.css";
 
 const KAZAKHSTAN_BOUNDS = {
@@ -223,7 +224,7 @@ function WorldMap() {
 
   const localizedPlaces = useMemo(
     () =>
-      literaryWorldMarkers.map((place) => {
+      getVisibleMapMarkers(literaryWorldMarkers).map((place) => {
         const categoryMeta = localizeMapCategory(
           place.category,
           mapCategoryMeta[place.category] ?? mapCategoryMeta.museum

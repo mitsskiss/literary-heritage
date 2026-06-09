@@ -14,20 +14,28 @@ import { useProgressStore } from "../store/useProgressStore";
 import BookSocial from "../components/BookSocial";
 import "./Reading.css";
 import { useI18n } from "../i18n/useI18n";
-import manuscriptTexture from "../assets/mura/abai-manuscript-bg.svg";
+import abaiWordsHero from "../assets/works/abai-words-hero.png";
 import {
   MuraArrowIcon,
+  MuraBookOpenIcon,
   MuraBookmarkIcon,
+  MuraClockIcon,
   MuraShareIcon,
+  MuraSparkIcon,
 } from "../components/icons/MuraIconSet";
 import { getWorkDisplayTitle } from "../utils/workTitles";
+import { getAuthorsWithPortrait, getVisibleWorks } from "../utils/authorPortraits";
 
 function Reading() {
   const { t, language, localizeMetadata, localizeStoryBook, localizeWork } = useI18n();
   const { id } = useParams();
   const [shareMessage, setShareMessage] = useState("");
   const { content: adminContent } = useAdminContent();
-  const allWorks = mergeAdminWorks(works.map(localizeWork), adminContent, language);
+  const visibleAuthors = getAuthorsWithPortrait(authors);
+  const allWorks = getVisibleWorks(
+    mergeAdminWorks(works.map(localizeWork), adminContent, language),
+    visibleAuthors
+  );
   const work = allWorks.find((item) => item.id === id);
   const metadata = localizeMetadata(id, {
     ...(workMetadataById[id] ?? {}),
@@ -128,7 +136,7 @@ function Reading() {
     );
   const displayBookTitle = getWorkDisplayTitle(work, language);
   const canonicalAuthorName = work.canonicalAuthor ?? work.author;
-  const authorRecord = authors.find(
+  const authorRecord = visibleAuthors.find(
     (author) =>
       author.name === canonicalAuthorName ||
       author.name === work.author ||
@@ -151,12 +159,22 @@ function Reading() {
     authorRecord?.portraitAlt?.en ??
     authorDisplayName;
   const showcasePortrait =
-    authorRecord?.portrait ?? authorRecord?.image ?? authorRecord?.fallbackPortrait ?? work.image;
-  const showcasePortraitPosition = authorRecord?.portraitPosition ?? "center 28%";
+    work.id === "abai-words"
+      ? abaiWordsHero
+      : authorRecord?.portrait ?? authorRecord?.image ?? authorRecord?.fallbackPortrait ?? work.image;
+  const showcasePortraitPosition =
+    work.id === "abai-words" ? "18% center" : authorRecord?.portraitPosition ?? "center 28%";
   const showcaseStyle = {
-    "--reading-showcase-manuscript": `url("${manuscriptTexture}")`,
     "--reading-showcase-position": showcasePortraitPosition,
   };
+  const heroSubtitle =
+    work.id === "abai-words"
+      ? language === "kk"
+        ? "The Book of Words"
+        : "Қара сөздер"
+      : work.originalTitle && work.originalTitle !== displayBookTitle
+        ? work.originalTitle
+        : "";
   const heroCategory = metadata?.type ?? work.genre ?? t("literaryArchive");
   const breadcrumbItems = [
     { label: t("works"), href: "/explore" },
@@ -226,7 +244,10 @@ function Reading() {
           ))}
         </nav>
 
-        <section className="reading-work-showcase" style={showcaseStyle}>
+        <section
+          className={`reading-work-showcase ${work.id === "abai-words" ? "reading-work-showcase--abai" : ""}`}
+          style={showcaseStyle}
+        >
           <div className="reading-work-showcase__visual">
             <img
               className="reading-work-showcase__portrait"
@@ -238,20 +259,32 @@ function Reading() {
           <div className="reading-work-showcase__content">
             <p className="reading-work-showcase__category">{heroCategory}</p>
             <p className="reading-work-showcase__author">{authorDisplayName}</p>
-            <h1 className="reading-work-showcase__title reading-book-hero__title">{displayBookTitle}</h1>
+            <h1 className="reading-work-showcase__title">{displayBookTitle}</h1>
+            {heroSubtitle ? (
+              <p className="reading-work-showcase__subtitle">{heroSubtitle}</p>
+            ) : null}
             <div className="reading-work-showcase__meta">
-              <span>{storyBook.totalScenes} {t("scenes").toLowerCase()}</span>
+              <span>
+                <MuraBookOpenIcon />
+                {storyBook.totalScenes} {t("scenes").toLowerCase()}
+              </span>
               <i aria-hidden="true" />
-              <span>{metadata?.period ?? t("literaryArchive")}</span>
+              <span>
+                <MuraSparkIcon />
+                {metadata?.period ?? t("literaryArchive")}
+              </span>
               <i aria-hidden="true" />
-              <span>{t("minRoute", { count: storyBook.totalMinutes })}</span>
+              <span>
+                <MuraClockIcon />
+                {t("minRoute", { count: storyBook.totalMinutes })}
+              </span>
             </div>
-            <p className="reading-work-showcase__description reading-book-hero__description">{work.description}</p>
+            <p className="reading-work-showcase__description">{work.description}</p>
 
             <div className="reading-work-showcase__utility" aria-label={t("shareWork")}>
               <button
                 type="button"
-                className={`reading-work-showcase__utilityButton reading-book-hero__utilityButton ${
+                className={`reading-work-showcase__utilityButton ${
                   isWorkFavorite ? "is-favorite" : ""
                 }`}
                 onClick={() =>
@@ -269,14 +302,14 @@ function Reading() {
               </button>
               <button
                 type="button"
-                className="reading-work-showcase__utilityButton reading-book-hero__utilityButton"
+                className="reading-work-showcase__utilityButton"
                 onClick={handleShareWork}
               >
                 <MuraShareIcon />
                 {t("shareWork")}
               </button>
               {shareMessage ? (
-                <span className="reading-work-showcase__shareStatus reading-book-hero__shareStatus" role="status">
+                <span className="reading-work-showcase__shareStatus" role="status">
                   {shareMessage}
                 </span>
               ) : null}
@@ -285,14 +318,14 @@ function Reading() {
             <div className="reading-work-showcase__actions">
               <Link
                 to={getChapterPath(work.id, nextChapter.chapterNumber)}
-                className="reading-work-showcase__action reading-book-hero__action is-primary"
+                className="reading-work-showcase__action is-primary"
               >
                 {nextChapter.isStarted && !nextChapter.isCompleted
                   ? t("continueReading")
                   : t("startReading")}
                 <MuraArrowIcon />
               </Link>
-              <Link to="/progress" className="reading-work-showcase__action reading-book-hero__action">
+              <Link to="/progress" className="reading-work-showcase__action">
                 {t("viewProgress")}
               </Link>
             </div>
