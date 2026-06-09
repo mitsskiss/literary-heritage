@@ -1,6 +1,3 @@
--- Run this once in Supabase SQL Editor.
--- It creates shared admin content storage and restricts editing to selected users.
-
 create table if not exists public.admin_users (
   user_id uuid primary key references auth.users(id) on delete cascade,
   created_at timestamptz not null default now()
@@ -75,7 +72,4 @@ grant select, insert, update, delete on public.admin_users to authenticated;
 
 notify pgrst, 'reload schema';
 
--- After creating your account, copy its auth.users id and run one of these:
--- insert into public.admin_users (user_id) values ('YOUR_USER_ID_HERE');
--- or, if your profiles table has a role column:
--- update public.profiles set role = 'admin' where id = 'YOUR_USER_ID_HERE';
+
