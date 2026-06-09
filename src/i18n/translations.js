@@ -521,7 +521,7 @@ export const ui = {
     authRateLimited: "Too many attempts. Wait a little and try again.",
     authNetworkError: "Network error. Check the connection and try again.",
     authRecoveryExpired: "This recovery link is invalid or expired. Send a new password reset link and open the latest email.",
-    authPasswordAlreadyCurrent: "This password is already your current password. Try signing in with it. If sign in still fails, your email may be unconfirmed or the app may be using a different auth environment.",
+    authPasswordAlreadyCurrent: "This is already your current password. Return to sign in and use this password. If sign in still fails, check email confirmation or the Supabase project settings.",
     authPasswordTooShort: "Password must contain at least 6 characters.",
     authPasswordsDoNotMatch: "Passwords do not match.",
     authResetEmailSent: "Password reset email sent. Open the latest email and create a new password.",

@@ -7,6 +7,7 @@ const chapterPath = "/reading/abai-words/chapter/1";
 async function gotoChapter(page, { theme = "dark", language = "kk" } = {}) {
   await page.addInitScript(
     ({ nextTheme, nextLanguage }) => {
+      window.localStorage.clear();
       window.localStorage.setItem("literary_heritage_theme", nextTheme);
       window.localStorage.setItem("literary_heritage_language", nextLanguage);
     },

@@ -82,7 +82,7 @@ test.describe("MURA reading overview Stage 4", () => {
     await page.goto(`${baseUrl}/reading/abai-words`);
 
     await expectNoMixedTitle(page, "Қара сөздер");
-    await expect(page.locator(".reading-book-hero__bookObject")).toBeVisible();
+    await expect(page.locator(".reading-work-showcase__portrait")).toBeVisible();
     const readingOverflow = await page.evaluate(
       () => document.documentElement.scrollWidth > window.innerWidth
     );

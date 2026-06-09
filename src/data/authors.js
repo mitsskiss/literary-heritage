@@ -55,6 +55,23 @@ const createFallbackPortrait = (initials, name, accent = "#b78a45") => {
   return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
 };
 
+const neutralPortrait = (initials, name, slug, accent = "#b78a45") => {
+  const portrait = createFallbackPortrait(initials, name.toUpperCase(), accent);
+
+  return {
+    portrait,
+    portraitAlt: portraitAlt(
+      `Neutral MURA archival placeholder for ${name}`,
+      `Нейтральный архивный плейсхолдер MURA для ${name}`,
+      `${name} үшін бейтарап MURA архивтік плейсхолдері`
+    ),
+    portraitCredit: "MURA neutral archival placeholder",
+    portraitSource: `local:mura-placeholder/${slug}`,
+    fallbackPortrait: portrait,
+    portraitPosition: "center",
+  };
+};
+
 const portraitAlt = (en, ru, kk) => ({ en, ru, kk });
 
 const authorPortraits = {
@@ -94,18 +111,7 @@ const authorPortraits = {
     fallbackPortrait: createFallbackPortrait("SS", "SAKEN SEIFULLIN", "#b48642"),
     portraitPosition: "center 24%",
   },
-  zhumabayev: {
-    portrait: commonsFile("Magzhan Zhumabai 2018 stamp of Kazakhstan.jpg"),
-    portraitAlt: portraitAlt(
-      "Kazakhstan commemorative stamp portrait of Magzhan Zhumabayev",
-      "Портрет Магжана Жумабаева на памятной марке Казахстана",
-      "Мағжан Жұмабаевтың Қазақстан естелік маркасындағы портреті"
-    ),
-    portraitCredit: "Wikimedia Commons, Kazakhstan commemorative stamp",
-    portraitSource: commonsSource("Magzhan Zhumabai 2018 stamp of Kazakhstan.jpg"),
-    fallbackPortrait: createFallbackPortrait("MZ", "MAGZHAN ZHUMABAYEV", "#ba8d50"),
-    portraitPosition: "center 26%",
-  },
+  zhumabayev: neutralPortrait("MZ", "Magzhan Zhumabayev", "magzhan-zhumabayev", "#ba8d50"),
   zhansugurov: {
     portrait: commonsFile("Ilyas Jansügirov portrait at Almaty Central State Museum of Kazakhstan.jpg"),
     portraitAlt: portraitAlt(
@@ -142,18 +148,7 @@ const authorPortraits = {
     fallbackPortrait: createFallbackPortrait("SK", "SHAKARIM KUDAIBERDIULY", "#b8874c"),
     portraitPosition: "center 22%",
   },
-  makatayev: {
-    portrait: commonsFile("KZMakataev.jpg"),
-    portraitAlt: portraitAlt(
-      "Kazakhstan postage stamp portrait of Mukagali Makatayev",
-      "Портрет Мукагали Макатаева на почтовой марке Казахстана",
-      "Мұқағали Мақатаевтың Қазақстан пошта маркасындағы портреті"
-    ),
-    portraitCredit: "Wikimedia Commons, Kazakhstan State Postal Service, public domain stamp scan",
-    portraitSource: commonsSource("KZMakataev.jpg"),
-    fallbackPortrait: createFallbackPortrait("MM", "MUKAGALI MAKATAYEV", "#c28b4b"),
-    portraitPosition: "center 35%",
-  },
+  makatayev: neutralPortrait("MM", "Mukagali Makatayev", "mukagali-makatayev", "#c28b4b"),
   zhambyl: {
     portrait: commonsFile("Zhambyl Zhabayuly and Mikhail Kalinin.jpg", 900),
     portraitAlt: portraitAlt(
@@ -190,18 +185,7 @@ const authorPortraits = {
     fallbackPortrait: createFallbackPortrait("BM", "BEIMBET MAILIN", "#b9844a"),
     portraitPosition: "center 24%",
   },
-  musrepov: {
-    portrait: commonsFile("Musrepov.jpg", 700),
-    portraitAlt: portraitAlt(
-      "Archival portrait of Gabit Musrepov",
-      "Архивный портрет Габита Мусрепова",
-      "Ғабит Мүсіреповтің архивтік портреті"
-    ),
-    portraitCredit: "Wikimedia Commons, archival portrait",
-    portraitSource: commonsSource("Musrepov.jpg"),
-    fallbackPortrait: createFallbackPortrait("GM", "GABIT MUSREPOV", "#c1904e"),
-    portraitPosition: "center 28%",
-  },
+  musrepov: neutralPortrait("GM", "Gabit Musrepov", "gabit-musrepov", "#c1904e"),
   suleimenov: {
     portrait: commonsFile("Oljas Suleymenov.jpg"),
     portraitAlt: portraitAlt(
@@ -214,18 +198,7 @@ const authorPortraits = {
     fallbackPortrait: createFallbackPortrait("OS", "OLZHAS SULEIMENOV", "#ad8b55"),
     portraitPosition: "center 28%",
   },
-  ongarsynova: {
-    portrait: "https://www.pushkinlibrary.kz/exhibitions/fariza/images/image014.jpg",
-    portraitAlt: portraitAlt(
-      "Portrait of Fariza Ongarsynova",
-      "Портрет Фаризы Онгарсыновой",
-      "Фариза Оңғарсынованың портреті"
-    ),
-    portraitCredit: "East Kazakhstan Regional Pushkin Library, Fariza Ongarsynova exhibition",
-    portraitSource: "https://www.pushkinlibrary.kz/exhibitions/fariza/indexru.html",
-    fallbackPortrait: createFallbackPortrait("FO", "FARIZA ONGARSYNOVA", "#b98a58"),
-    portraitPosition: "center 26%",
-  },
+  ongarsynova: neutralPortrait("FO", "Fariza Ongarsynova", "fariza-ongarsynova", "#b98a58"),
 };
 
 export const authors = [

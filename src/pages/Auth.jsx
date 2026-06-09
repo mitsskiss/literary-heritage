@@ -74,12 +74,20 @@ function Auth() {
   );
 
   const getAuthErrorMessage = useCallback(
-    (errorMessage = "") => {
-      const normalized = errorMessage.toLowerCase();
+    (authError = "") => {
+      const errorMessage =
+        typeof authError === "string"
+          ? authError
+          : authError?.message ?? String(authError ?? "");
+      const errorCode =
+        typeof authError === "string"
+          ? ""
+          : String(authError?.code ?? authError?.error_code ?? authError?.status ?? "");
+      const normalized = `${errorMessage} ${errorCode}`.toLowerCase();
       if (normalized.includes("invalid login credentials")) {
         return t("authInvalidCredentials");
       }
-      if (normalized.includes("email not confirmed")) {
+      if (normalized.includes("email not confirmed") || normalized.includes("email_not_confirmed")) {
         return t("authEmailNotConfirmed");
       }
       if (normalized.includes("auth session missing") || normalized.includes("session missing")) {
@@ -88,7 +96,12 @@ function Auth() {
       if (normalized.includes("expired") || normalized.includes("invalid token") || normalized.includes("otp")) {
         return t("authRecoveryExpired");
       }
-      if (normalized.includes("new password should be different") || normalized.includes("different from the old password")) {
+      if (
+        normalized.includes("new password should be different") ||
+        normalized.includes("different from the old password") ||
+        normalized.includes("same password") ||
+        normalized.includes("password should be different")
+      ) {
         return t("authPasswordAlreadyCurrent");
       }
       if (normalized.includes("failed to fetch") || normalized.includes("network")) {
@@ -188,7 +201,7 @@ function Auth() {
 
       if (result.error) {
         setIsError(true);
-        setMessage(getAuthErrorMessage(result.error.message));
+        setMessage(getAuthErrorMessage(result.error));
         return;
       }
 
@@ -212,7 +225,7 @@ function Auth() {
       navigate("/profile");
     } catch (error) {
       setIsError(true);
-      setMessage(getAuthErrorMessage(error.message));
+      setMessage(getAuthErrorMessage(error));
     } finally {
       setIsSubmitting(false);
     }
@@ -233,14 +246,14 @@ function Auth() {
       const result = await resendConfirmation({ email: normalizedEmail });
       if (result.error) {
         setIsError(true);
-        setMessage(getAuthErrorMessage(result.error.message));
+        setMessage(getAuthErrorMessage(result.error));
         return;
       }
 
       setMessage(t("authConfirmationResent"));
     } catch (error) {
       setIsError(true);
-      setMessage(getAuthErrorMessage(error.message));
+      setMessage(getAuthErrorMessage(error));
     } finally {
       setIsResending(false);
     }
@@ -308,6 +321,7 @@ function Auth() {
                     <input
                       value={displayName}
                       onChange={(event) => setDisplayName(event.target.value)}
+                      disabled={isSubmitting}
                       autoComplete="name"
                       placeholder={t("displayNamePlaceholder")}
                     />
@@ -321,6 +335,7 @@ function Auth() {
                       type="email"
                       value={email}
                       onChange={(event) => setEmail(event.target.value)}
+                      disabled={isSubmitting}
                       required
                       autoComplete="email"
                       placeholder="name@email.com"
@@ -335,6 +350,7 @@ function Auth() {
                       type="password"
                       value={password}
                       onChange={(event) => setPassword(event.target.value)}
+                      disabled={isSubmitting}
                       minLength={PASSWORD_MIN_LENGTH}
                       required
                       autoComplete={mode === "signin" ? "current-password" : "new-password"}
@@ -350,6 +366,7 @@ function Auth() {
                       type="password"
                       value={confirmPassword}
                       onChange={(event) => setConfirmPassword(event.target.value)}
+                      disabled={isSubmitting}
                       minLength={PASSWORD_MIN_LENGTH}
                       required
                       autoComplete="new-password"

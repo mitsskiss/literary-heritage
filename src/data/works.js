@@ -917,6 +917,119 @@ const localizedWorkAuthors = {
   "Fariza Ongarsynova": { en: "Fariza Ongarsynova", ru: "Фариза Онгарсынова", kk: "Фариза Оңғарсынова" },
 };
 
+const localizedWorkFragments = {
+  "abai-words": {
+    ru: [
+      {
+        text: "Человек рождается с любознательностью и стремлением понять мир.",
+        authorNote:
+          "Абай связывает любознательность с нравственным воспитанием и ответственностью перед культурой.",
+        annotations: [
+          { word: "любознательность", explanation: "Внутренний импульс, открывающий человека знанию и самодисциплине." },
+          { word: "понимание", explanation: "Связь обучения с совестью, действием и обществом." },
+          { word: "знание", explanation: "У Абая знание должно улучшать душу и поведение, а не только память." },
+        ],
+        reflection: {
+          resonanceQuote: {
+            text: "Если человек не стремится к знанию, душа пустеет.",
+            author: "Абай Кунанбаев",
+          },
+        },
+      },
+    ],
+    kk: [
+      {
+        text: "Адам баласы дүниені тануға деген құмарлықпен туады.",
+        authorNote:
+          "Абай құмарлықты адамдық тәрбие мен мәдени жауапкершіліктің бастауы ретінде көрсетеді.",
+        annotations: [
+          { word: "құмарлық", explanation: "Адамды білімге және өзін тәрбиелеуге ашатын ішкі талпыныс." },
+          { word: "тану", explanation: "Оқуды армен, әрекетпен және қауыммен байланыстыру." },
+          { word: "білім", explanation: "Абай үшін білім жан мен мінезді түзетуі керек." },
+        ],
+        reflection: {
+          resonanceQuote: {
+            text: "Адам білімге ұмтылмаса, жаны бос қалады.",
+            author: "Абай Құнанбайұлы",
+          },
+        },
+      },
+    ],
+  },
+  "auezov-abai-path": {
+    ru: [
+      {
+        text: "Путь Абая ведет к народу, языку, справедливости и трудной правде.",
+        authorNote:
+          "Ауэзов превращает биографию в культурную эпопею, где личный рост становится национальной памятью.",
+        annotations: [
+          { word: "справедливость", explanation: "Нравственный принцип, направляющий конфликт Абая с невежеством и произволом." },
+          { word: "путь", explanation: "Символ личного роста и исторического движения." },
+        ],
+        reflection: {
+          resonanceQuote: {
+            text: "Степь помнит тех, кто служил ее слову.",
+            author: "Мухтар Ауэзов",
+          },
+        },
+      },
+    ],
+    kk: [
+      {
+        text: "Абай жолы халыққа, тілге, әділетке және ауыр шындыққа бастайды.",
+        authorNote:
+          "Әуезов өмірбаянды мәдени эпопеяға айналдырып, жеке өсуді ұлттық жадпен байланыстырады.",
+        annotations: [
+          { word: "әділет", explanation: "Абайдың надандық пен зорлыққа қарсы күресін бағыттайтын адамгершілік ұстаным." },
+          { word: "жол", explanation: "Жеке өсу мен тарихи қозғалыстың белгісі." },
+        ],
+        reflection: {
+          resonanceQuote: {
+            text: "Дала өз сөзіне қызмет еткендерді ұмытпайды.",
+            author: "Мұхтар Әуезов",
+          },
+        },
+      },
+    ],
+  },
+  "baitursynuly-masa": {
+    ru: [
+      {
+        text: "Язык, знание и гражданская ответственность пробуждают народ.",
+        authorNote:
+          "Байтұрсынұлы показывает литературу как голос, который будит общественное сознание.",
+        annotations: [
+          { word: "язык", explanation: "Основа грамотности, культуры и общественной связи." },
+          { word: "ответственность", explanation: "Готовность служить народу знанием и словом." },
+        ],
+        reflection: {
+          resonanceQuote: {
+            text: "Живой язык держит народ в бодрствовании.",
+            author: "Ахмет Байтурсынулы",
+          },
+        },
+      },
+    ],
+    kk: [
+      {
+        text: "Тіл, білім және азаматтық жауапкершілік халықты оятады.",
+        authorNote:
+          "Байтұрсынұлы әдебиетті қоғамдық сананы оятатын үн ретінде көрсетеді.",
+        annotations: [
+          { word: "тіл", explanation: "Сауат, мәдениет және қоғамдық байланыстың негізі." },
+          { word: "жауапкершілік", explanation: "Білім мен сөз арқылы халыққа қызмет етуге дайындық." },
+        ],
+        reflection: {
+          resonanceQuote: {
+            text: "Тірі тіл халықты ояу ұстайды.",
+            author: "Ахмет Байтұрсынұлы",
+          },
+        },
+      },
+    ],
+  },
+};
+
 for (const work of works) {
   const content = finalWorkContent[work.id];
   if (!content) continue;
@@ -930,6 +1043,7 @@ for (const work of works) {
   work.fullDescription = content.fullDescription.en;
   work.tags = content.tags;
   work.relatedAuthor = content.relatedAuthor;
+  work.routeLink = work.routeId ? `/route/${work.routeId}` : `/reading/${work.id}`;
   work.availableLanguages = ["kk", "ru", "en"];
   work.imageCredit = work.imageCredit ?? "MURA local archive visual";
   work.imageSource = work.imageSource ?? "local:mura/archive-collection";
@@ -940,6 +1054,7 @@ for (const work of works) {
       shortTitle: content.shortTitle.en,
       fullDescription: content.fullDescription.en,
       tags: content.tags,
+      fragments: localizedWorkFragments[work.id]?.en,
       availableLanguages: work.availableLanguages,
       ...(content.locales?.en ?? {}),
     },
@@ -949,6 +1064,7 @@ for (const work of works) {
       shortTitle: content.shortTitle.ru,
       fullDescription: content.fullDescription.ru,
       tags: content.tags,
+      fragments: localizedWorkFragments[work.id]?.ru,
       availableLanguages: work.availableLanguages,
       ...(content.locales?.ru ?? {}),
     },
@@ -958,6 +1074,7 @@ for (const work of works) {
       shortTitle: content.shortTitle.kk,
       fullDescription: content.fullDescription.kk,
       tags: content.tags,
+      fragments: localizedWorkFragments[work.id]?.kk,
       availableLanguages: work.availableLanguages,
       ...(content.locales?.kk ?? {}),
     },

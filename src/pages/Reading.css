@@ -1,11 +1,10 @@
 .reading-book-page {
-  min-height: 100vh;
-  padding: 108px 20px 88px;
+  min-height: 100dvh;
+  padding: calc(var(--header-safe-offset, 0px) + 34px) clamp(16px, 2.4vw, 34px) 74px;
   background:
-    radial-gradient(circle at 14% 0%, rgba(198, 178, 137, 0.14), transparent 26%),
-    radial-gradient(circle at 86% 10%, rgba(22, 58, 53, 0.08), transparent 22%),
-    linear-gradient(180deg, #f8f4ec 0%, #f4eee2 100%);
-  color: #163a35;
+    radial-gradient(circle at 18% 0%, rgba(183, 129, 48, 0.12), transparent 28rem),
+    linear-gradient(180deg, #fbf4e7 0%, #f3e7d0 54%, #fbf4e7 100%);
+  color: #123f38;
 }
 
 .reading-book-page__container {
@@ -13,636 +12,373 @@
   margin: 0 auto;
 }
 
-.reading-book-page__backLink {
-  display: inline-flex;
-  margin-bottom: 18px;
-  color: rgba(22, 58, 53, 0.7);
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.reading-book-hero,
-.reading-book-summary__card,
-.reading-chapter-card,
-.reading-book-fallback {
-  border: 1px solid rgba(22, 58, 53, 0.1);
-  border-radius: 30px;
-  background: rgba(255, 252, 246, 0.78);
-  box-shadow: 0 18px 40px rgba(18, 39, 35, 0.05);
-}
-
-.reading-book-hero {
-  display: grid;
-  gap: 22px;
-  overflow: hidden;
-}
-
-.reading-book-hero__media {
-  min-height: 360px;
-}
-
-.reading-book-hero__cover {
-  height: 100%;
-  min-height: 360px;
-  background-size: cover;
-  background-position: center;
-  position: relative;
-}
-
-.reading-book-hero__cover::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(180deg, rgba(8, 18, 17, 0.04), rgba(8, 18, 17, 0.38)),
-    radial-gradient(circle at center, rgba(8, 18, 17, 0.02), rgba(8, 18, 17, 0.18));
-}
-
-.reading-book-hero__content,
-.reading-book-summary__card,
-.reading-chapter-card,
-.reading-book-fallback {
-  padding: 24px;
-}
-
-.reading-book-hero__topline,
-.reading-book-hero__themes,
-.reading-book-hero__actions,
-.reading-book-summary__meta,
-.reading-chapter-card__meta {
+.reading-book-breadcrumb {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-}
-
-.reading-book-hero__topline span,
-.reading-book-theme,
-.reading-book-summary__meta span,
-.reading-chapter-card__meta span,
-.reading-chapter-card__state {
-  padding: 9px 12px;
-  border-radius: 999px;
-  border: 1px solid rgba(22, 58, 53, 0.1);
-  background: rgba(255, 253, 249, 0.84);
-  font-size: 13px;
-  color: rgba(22, 58, 53, 0.72);
-}
-
-.reading-book-theme {
-  cursor: pointer;
-}
-
-.reading-book-hero__action.is-favorite,
-.reading-book-theme.is-favorite,
-.reading-fragment-card__save.is-favorite {
-  border-color: var(--accent-strong);
-  background: color-mix(in srgb, var(--accent) 34%, var(--surface) 66%);
-  color: var(--brand);
-}
-
-.reading-book-hero__title,
-.reading-book-chapters__title,
-.reading-book-fallback__title {
-  margin: 16px 0 0;
-  font-size: clamp(44px, 8vw, 98px);
-  line-height: 0.88;
-  letter-spacing: -0.07em;
-}
-
-.reading-book-hero__author {
-  margin: 14px 0 0;
-  font-size: 18px;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 14px;
+  color: rgba(18, 63, 56, 0.72);
+  font-size: 0.86rem;
   font-weight: 700;
 }
 
-.reading-book-hero__description,
-.reading-book-hero__overview,
-.reading-book-chapters__meta,
-.reading-book-fallback__text,
-.reading-chapter-card__text {
-  margin: 14px 0 0;
-  font-size: 16px;
-  line-height: 1.85;
-  color: rgba(22, 58, 53, 0.74);
-}
-
-.reading-book-hero__metrics {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 12px;
-  margin-top: 22px;
-}
-
-.reading-book-hero__metrics article {
-  padding: 16px 18px;
-  border-radius: 24px;
-  border: 1px solid rgba(22, 58, 53, 0.08);
-  background: rgba(255, 253, 249, 0.7);
-}
-
-.reading-book-hero__metrics span,
-.reading-book-summary__label,
-.reading-chapter-card__eyebrow {
-  display: block;
-  margin-bottom: 8px;
-  font-size: 12px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(22, 58, 53, 0.54);
-}
-
-.reading-book-hero__metrics strong,
-.reading-book-summary__row h2 {
-  font-size: 28px;
-}
-
-.reading-book-hero__actions {
-  margin-top: 22px;
-}
-
-.reading-book-hero__action,
-.reading-book-fallback__action,
-.reading-chapter-card__action {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 48px;
-  padding: 0 18px;
-  border-radius: 999px;
-  border: 1px solid rgba(22, 58, 53, 0.12);
-  background: rgba(255, 253, 249, 0.82);
-  color: #163a35;
-  font-size: 14px;
-  font-weight: 700;
+.reading-book-breadcrumb a {
+  color: inherit;
   text-decoration: none;
-  transition:
-    transform 0.22s ease,
-    background 0.22s ease,
-    color 0.22s ease,
-    border-color 0.22s ease;
 }
 
-.reading-book-hero__action.is-primary,
-.reading-book-fallback__action,
-.reading-chapter-card__action {
-  border-color: #163a35;
-  background: #163a35;
-  color: #f8f4ec;
+.reading-book-breadcrumb a:hover {
+  color: #9a651f;
 }
 
-.reading-book-hero__action:hover,
-.reading-book-fallback__action:hover,
-.reading-chapter-card__action:hover {
-  transform: translateY(-2px);
-}
-
-.reading-book-hero__themes {
-  margin-top: 18px;
-}
-
-.reading-book-summary {
-  display: grid;
-  gap: 18px;
-  margin-top: 26px;
-}
-
-.reading-book-fragments {
-  margin-top: 28px;
-}
-
-.reading-book-fragments__head {
-  display: flex;
-  justify-content: space-between;
-  gap: 18px;
-  align-items: end;
-  flex-wrap: wrap;
-  margin-bottom: 16px;
-}
-
-.reading-book-fragments__head h2 {
-  margin: 0;
-  font-size: clamp(30px, 4vw, 52px);
-  line-height: 0.95;
-}
-
-.reading-book-fragments__head p {
-  max-width: 420px;
-  margin: 0;
-  color: var(--text-muted);
-  line-height: 1.65;
-}
-
-.reading-book-fragments__grid {
-  display: grid;
-  gap: 16px;
-}
-
-.reading-fragment-card {
-  padding: 22px;
-  border: 1px solid var(--border);
-  border-radius: 26px;
-  background: var(--surface);
-  box-shadow: 0 18px 40px var(--shadow);
-}
-
-.reading-fragment-card__top {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-.reading-fragment-card__top p {
-  margin: 0;
-  color: var(--text-muted);
-  font-size: 12px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
-.reading-fragment-card__save {
-  min-height: 36px;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  background: var(--surface-strong);
-  color: var(--text);
-  padding: 0 12px;
-  font-weight: 800;
-  cursor: pointer;
-}
-
-.reading-fragment-card blockquote {
-  margin: 18px 0 0;
-  color: var(--text);
-  font-size: clamp(20px, 3vw, 30px);
-  line-height: 1.35;
-}
-
-.reading-fragment-card__note {
-  margin: 16px 0 0;
-  color: var(--text-muted);
-  line-height: 1.75;
-}
-
-.reading-fragment-card__annotations {
-  display: grid;
-  gap: 10px;
-  margin-top: 18px;
-}
-
-.reading-fragment-card__annotations span {
-  display: grid;
-  gap: 4px;
-  padding: 12px 14px;
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  background: var(--surface-strong);
-  color: var(--text-muted);
-}
-
-.reading-fragment-card__annotations strong {
-  color: var(--text);
-}
-
-.reading-book-summary__row {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  align-items: end;
-  flex-wrap: wrap;
-}
-
-.reading-book-summary__row h2 {
-  margin: 0;
-}
-
-.reading-book-summary__row span {
-  color: rgba(22, 58, 53, 0.68);
-}
-
-.reading-book-summary__track {
-  height: 10px;
-  margin-top: 16px;
-  border-radius: 999px;
-  background: rgba(22, 58, 53, 0.08);
-  overflow: hidden;
-}
-
-.reading-book-summary__fill {
-  height: 100%;
-  border-radius: 999px;
-  background: linear-gradient(90deg, #163a35, #3f766d);
-}
-
-.reading-book-chapters {
-  margin-top: 34px;
-}
-
-.reading-book-chapters__head {
-  display: flex;
-  justify-content: space-between;
-  gap: 18px;
-  align-items: end;
-  flex-wrap: wrap;
-  margin-bottom: 18px;
-}
-
-.reading-book-chapters__title {
-  max-width: 10ch;
-}
-
-.reading-book-chapters__meta {
-  max-width: 340px;
-}
-
-.reading-book-chapters__list {
-  display: grid;
-  gap: 18px;
-}
-
-.reading-chapter-card__top {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  align-items: start;
-  flex-wrap: wrap;
-}
-
-.reading-chapter-card__state.is-complete {
-  background: rgba(22, 58, 53, 0.08);
-  border-color: rgba(22, 58, 53, 0.16);
-  color: #163a35;
-}
-
-.reading-chapter-card__title {
-  margin: 14px 0 0;
-  font-size: clamp(28px, 4vw, 46px);
-  line-height: 0.95;
-  letter-spacing: -0.05em;
-}
-
-.reading-chapter-card__meta {
-  margin-top: 18px;
-}
-
-.reading-chapter-card__action {
-  margin-top: 20px;
-}
-
-.reading-book-fallback {
-  max-width: 820px;
-  margin: 26px auto 0;
-}
-
-.reading-book-fallback__action {
-  margin-top: 18px;
-}
-
-[data-theme="dark"] .reading-book-page {
-  background:
-    radial-gradient(circle at 20% -10%, rgba(90, 80, 185, 0.28), transparent 34%),
-    linear-gradient(180deg, #09080f 0%, #111018 58%, #09080f 100%);
-  color: var(--text);
-}
-
-[data-theme="dark"] .reading-book-back,
-[data-theme="dark"] .reading-book-hero__eyebrow,
-[data-theme="dark"] .reading-book-hero__description,
-[data-theme="dark"] .reading-book-summary__label,
-[data-theme="dark"] .reading-chapter-card__eyebrow,
-[data-theme="dark"] .reading-chapter-card__state {
-  color: var(--text-muted);
-}
-
-[data-theme="dark"] .reading-book-hero,
-[data-theme="dark"] .reading-book-summary__card,
-[data-theme="dark"] .reading-chapter-card,
-[data-theme="dark"] .reading-book-fallback,
-[data-theme="dark"] .reading-fragment-card {
-  background: rgba(30, 28, 38, 0.88);
-  border-color: rgba(255, 255, 255, 0.14);
-  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.42);
-}
-
-[data-theme="dark"] .reading-book-hero__themes span,
-[data-theme="dark"] .reading-book-hero__topline span,
-[data-theme="dark"] .reading-book-hero__metrics article,
-[data-theme="dark"] .reading-book-summary__meta span,
-[data-theme="dark"] .reading-chapter-card__meta span,
-[data-theme="dark"] .reading-chapter-card__state.is-complete {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.14);
-  color: var(--text);
-}
-
-[data-theme="dark"] .reading-fragment-card__annotations span {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.14);
-  color: var(--text-muted);
-}
-
-[data-theme="dark"] .reading-fragment-card__annotations strong,
-[data-theme="dark"] .reading-fragment-card blockquote {
-  color: var(--text);
-}
-
-[data-theme="dark"] .reading-book-hero__metrics span {
-  color: var(--text-muted);
-}
-
-[data-theme="dark"] .reading-book-hero__metrics strong {
-  color: var(--text);
-}
-
-[data-theme="dark"] .reading-book-hero__action,
-[data-theme="dark"] .reading-book-fallback__action,
-[data-theme="dark"] .reading-chapter-card__action {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.14);
-  color: var(--text);
-}
-
-[data-theme="dark"] .reading-book-hero__action.is-primary,
-[data-theme="dark"] .reading-book-fallback__action,
-[data-theme="dark"] .reading-chapter-card__action {
-  background: #ffffff !important;
-  border-color: rgba(255, 255, 255, 0.8) !important;
-  color: #09080f !important;
-}
-
-[data-theme="dark"] .reading-book-themeFavorite.is-saved,
-[data-theme="dark"] .reading-book-fragment__favorite.is-saved {
-  background: rgba(90, 80, 185, 0.34);
-  border-color: rgba(172, 185, 201, 0.48);
-  color: #ffffff;
-}
-
-[data-theme="dark"] .reading-chapter-card__progressTrack {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-[data-theme="dark"] .reading-chapter-card__progressTrack span {
-  background: linear-gradient(90deg, #ffffff, #acb9c9);
-}
-
-@media (min-width: 1024px) {
-  .reading-book-hero {
-    grid-template-columns: minmax(300px, 0.78fr) minmax(0, 1.22fr);
-  }
-
-  .reading-book-summary {
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-  }
-
-  .reading-book-chapters__list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .reading-book-fragments__grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 900px) {
-  .reading-book-page {
-    padding: 96px 16px 78px;
-  }
-}
-
-@media (max-width: 640px) {
-  .reading-book-hero__content,
-  .reading-book-summary__card,
-  .reading-chapter-card,
-  .reading-book-fallback {
-    padding: 20px;
-  }
-
-  .reading-book-hero__title,
-  .reading-book-chapters__title,
-  .reading-book-fallback__title {
-    font-size: clamp(38px, 14vw, 62px);
-  }
-}
-
-/* Final MURA archive treatment */
-.reading-book-page {
-  padding-top: calc(var(--header-safe-offset) + 34px);
-  background:
-    radial-gradient(circle at 16% 0%, color-mix(in srgb, var(--heritage-gold) 13%, transparent), transparent 28rem),
-    linear-gradient(180deg, var(--heritage-bg) 0%, var(--heritage-bg-soft) 52%, var(--heritage-bg) 100%);
-  color: var(--heritage-ink);
-}
-
-.reading-book-hero,
-.reading-book-summary__card,
-.reading-chapter-card,
-.reading-fragment-card,
-.reading-book-fallback {
-  border-color: var(--heritage-line);
-  border-radius: 8px;
-  background: var(--heritage-surface);
-  box-shadow: var(--heritage-shadow);
-}
-
-.reading-book-hero__title,
-.reading-book-chapters__title,
-.reading-chapter-card__title,
-.reading-fragment-card blockquote,
-.reading-book-fallback__title {
-  color: var(--heritage-ink);
-  font-family: Georgia, "Times New Roman", serif;
-  font-weight: 500;
-}
-
-.reading-book-hero__topline span,
-.reading-book-summary__label,
-.reading-chapter-card__eyebrow,
-.reading-fragment-card__top p {
-  color: var(--heritage-gold-strong);
-}
-
-.reading-book-hero__description,
-.reading-book-hero__overview,
-.reading-book-chapters__meta,
-.reading-chapter-card__text,
-.reading-fragment-card__note,
-.reading-book-fallback__text {
-  color: var(--heritage-text);
-}
-
-.reading-book-hero__action.is-primary,
-.reading-chapter-card__action,
-.reading-book-fallback__action {
-  border-color: var(--heritage-gold);
-  background: linear-gradient(180deg, var(--heritage-gold), var(--heritage-gold-strong));
-  color: #fff8ec;
-}
-
-/* Calm definition rows for fragments */
-.reading-fragment-card__annotations {
-  display: grid;
-  gap: 10px;
-}
-
-.reading-fragment-card__annotations span {
-  display: block;
-  border: 0;
-  border-left: 3px solid color-mix(in srgb, var(--heritage-gold) 70%, var(--heritage-line));
-  border-radius: 0;
-  background: color-mix(in srgb, var(--heritage-surface-strong) 70%, transparent);
-  padding: 10px 0 10px 14px;
-  box-shadow: none;
-}
-
-/* Reader flow clarity */
-.reading-book-hero__metaLine {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 9px;
-  align-items: center;
-  color: var(--heritage-gold-strong);
-  font-size: 12px;
-  font-weight: 850;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.reading-book-hero__metaLine i {
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: currentColor;
-  opacity: 0.55;
-}
-
-.reading-book-hero__actions {
-  align-items: stretch;
-}
-
-.reading-book-hero__themes {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(130px, max-content));
+.reading-book-breadcrumb__item {
+  display: inline-flex;
   gap: 8px;
   align-items: center;
 }
 
-.reading-book-hero__themes p {
-  grid-column: 1 / -1;
-  margin: 0 0 2px;
-  color: var(--heritage-gold-strong);
-  font-size: 12px;
-  font-weight: 850;
-  letter-spacing: 0.08em;
+.reading-book-breadcrumb__separator {
+  color: rgba(154, 101, 31, 0.62);
+}
+
+.reading-work-showcase {
+  --showcase-paper: #fff8eb;
+  --showcase-paper-deep: #eedbb7;
+  --showcase-ink: #123f38;
+  --showcase-muted: #55756f;
+  --showcase-gold: #b7772b;
+  --showcase-gold-dark: #8f5b1d;
+  --showcase-border: rgba(132, 90, 42, 0.22);
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(300px, 0.36fr) minmax(0, 0.64fr);
+  min-height: clamp(350px, 28vw, 430px);
+  overflow: hidden;
+  border: 1px solid var(--showcase-border);
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 82% 18%, rgba(184, 124, 48, 0.1), transparent 18rem),
+    linear-gradient(110deg, var(--showcase-paper) 0%, #fffaf0 58%, var(--showcase-paper-deep) 100%);
+  box-shadow: 0 24px 58px rgba(91, 62, 28, 0.14);
+}
+
+.reading-work-showcase::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 0 auto;
+  width: min(48%, 520px);
+  pointer-events: none;
+  background: var(--reading-showcase-manuscript);
+  background-size: 720px auto;
+  background-position: right -90px top -120px;
+  opacity: 0.11;
+  filter: sepia(0.8) saturate(0.55) brightness(1.7);
+  mask-image: linear-gradient(90deg, transparent, #000 34%);
+}
+
+.reading-work-showcase__visual {
+  position: relative;
+  min-height: inherit;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 48% 22%, rgba(236, 203, 144, 0.18), transparent 10rem),
+    linear-gradient(180deg, #17443a 0%, #071512 100%);
+}
+
+.reading-work-showcase__visual::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(6, 31, 26, 0.36), rgba(6, 31, 26, 0.02) 48%, rgba(255, 246, 223, 0.08)),
+    linear-gradient(180deg, rgba(7, 18, 16, 0.04), rgba(7, 18, 16, 0.46));
+}
+
+.reading-work-showcase__visual::after {
+  content: "";
+  position: absolute;
+  z-index: 3;
+  top: -8%;
+  right: -86px;
+  width: 168px;
+  height: 116%;
+  border-left: 1px solid rgba(184, 124, 48, 0.28);
+  border-radius: 50% 0 0 50%;
+  background: linear-gradient(180deg, var(--showcase-paper), #fffaf0 58%, var(--showcase-paper-deep));
+  box-shadow: -18px 0 34px rgba(239, 222, 190, 0.32);
+}
+
+.reading-work-showcase__portrait {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--reading-showcase-position, center 28%);
+  filter: grayscale(0.92) sepia(0.24) contrast(1.06) brightness(1.02);
+}
+
+.reading-work-showcase__content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 800px;
+  padding: clamp(22px, 3vw, 34px) clamp(28px, 5vw, 64px);
+  color: var(--showcase-ink);
+}
+
+.reading-work-showcase__category {
+  width: fit-content;
+  max-width: 100%;
+  min-height: 32px;
+  margin: 0 0 12px;
+  border: 1px solid rgba(184, 118, 42, 0.34);
+  border-radius: 999px;
+  padding: 8px 14px;
+  background: rgba(184, 118, 42, 0.08);
+  color: var(--showcase-gold);
+  font-size: 0.68rem;
+  font-weight: 760;
+  letter-spacing: 0.1em;
+  line-height: 1.15;
   text-transform: uppercase;
 }
 
-.reading-book-theme {
+.reading-work-showcase__author {
+  margin: 0 0 5px;
+  color: var(--showcase-ink);
+  font-size: clamp(0.94rem, 1.5vw, 1.08rem);
+  font-weight: 700;
+}
+
+.reading-work-showcase__title {
+  max-width: 15ch;
+  margin: 0;
+  color: var(--showcase-ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.65rem, 4.5vw, 4.45rem);
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 0.98;
+  text-wrap: balance;
+}
+
+.reading-work-showcase__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  align-items: center;
+  margin-top: 12px;
+  color: var(--showcase-muted);
+  font-size: 0.86rem;
+  font-weight: 650;
+}
+
+.reading-work-showcase__meta i {
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(184, 118, 42, 0.56);
+}
+
+.reading-work-showcase__description {
+  max-width: 58ch;
+  margin: 12px 0 0;
+  color: var(--showcase-muted);
+  font-size: clamp(0.95rem, 1.35vw, 1.04rem);
+  line-height: 1.62;
+}
+
+.reading-work-showcase__utility,
+.reading-work-showcase__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-top: 14px;
+}
+
+.reading-work-showcase__utilityButton,
+.reading-work-showcase__action,
+.reading-book-fallback__action,
+.reading-chapter-card__action {
+  display: inline-flex;
+  align-items: center;
   justify-content: center;
+  gap: 8px;
+  min-height: 42px;
+  border: 1px solid rgba(97, 70, 36, 0.18);
+  border-radius: 6px;
+  padding: 0 14px;
+  background: rgba(255, 252, 244, 0.72);
+  color: var(--showcase-ink);
+  font-size: 0.9rem;
+  font-weight: 750;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+}
+
+.reading-work-showcase__action {
+  min-width: 156px;
+  min-height: 52px;
+  padding: 0 22px;
+}
+
+.reading-work-showcase__action.is-primary,
+.reading-book-fallback__action,
+.reading-chapter-card__action {
+  border-color: transparent;
+  background: linear-gradient(180deg, #c1842e, #9a5f1b);
+  color: #fff8e8;
+  box-shadow: 0 12px 24px rgba(149, 91, 27, 0.2);
+}
+
+.reading-work-showcase__utilityButton:hover,
+.reading-work-showcase__utilityButton.is-favorite,
+.reading-work-showcase__action:hover,
+.reading-book-fallback__action:hover,
+.reading-chapter-card__action:hover {
+  transform: translateY(-1px);
+  border-color: rgba(184, 118, 42, 0.34);
+  background-color: rgba(184, 118, 42, 0.1);
+}
+
+.reading-work-showcase__shareStatus {
+  color: var(--showcase-gold-dark);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.mura-book-reference-row,
+.reading-book-summary {
+  display: grid;
+  grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.mura-book-progress-card,
+.mura-book-quote-card,
+.reading-book-summary__card,
+.reading-chapter-card,
+.reading-fragment-card,
+.reading-book-fallback,
+.reading-flow-guide,
+.mura-author-profile {
+  border: 1px solid rgba(132, 90, 42, 0.16);
+  border-radius: 8px;
+  background: rgba(255, 250, 241, 0.82);
+  box-shadow: 0 18px 42px rgba(91, 62, 28, 0.08);
+}
+
+.mura-book-progress-card,
+.mura-book-quote-card,
+.reading-book-summary__card,
+.reading-chapter-card,
+.reading-fragment-card,
+.reading-book-fallback {
+  padding: 22px;
+}
+
+.mura-book-progress-card span,
+.mura-book-quote-card span,
+.reading-book-summary__label,
+.reading-chapter-card__eyebrow,
+.reading-fragment-card__top p,
+.reading-flow-guide__label,
+.reading-book-hero__themes p {
+  display: block;
+  margin: 0 0 8px;
+  color: #9a651f;
+  font-size: 0.73rem;
+  font-weight: 850;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.mura-book-progress-card strong,
+.reading-book-summary__row h2 {
+  color: #123f38;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  line-height: 1;
+}
+
+.mura-book-progress-card small,
+.mura-book-quote-card small,
+.reading-book-summary__row span,
+.reading-book-summary__meta span,
+.reading-chapter-card__meta span,
+.reading-chapter-card__state,
+.reading-chapter-card__text,
+.reading-fragment-card__note,
+.reading-book-fallback__text {
+  color: rgba(18, 63, 56, 0.72);
+}
+
+.mura-ref-progress,
+.reading-book-summary__track {
+  height: 10px;
+  margin: 14px 0 10px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(18, 63, 56, 0.09);
+}
+
+.mura-ref-progress i,
+.reading-book-summary__fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #123f38, #2f7567);
+}
+
+.mura-book-quote-card {
+  position: relative;
+}
+
+.mura-book-quote-card p {
+  margin: 0;
+  color: #123f38;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.25rem, 2.4vw, 2rem);
+  line-height: 1.35;
+}
+
+.reading-book-hero__themes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.reading-book-hero__themes p {
+  width: 100%;
+}
+
+.reading-book-theme {
   min-height: 36px;
-  border-radius: 4px;
-  box-shadow: none;
+  border: 1px solid rgba(132, 90, 42, 0.16);
+  border-radius: 6px;
+  padding: 0 12px;
+  background: rgba(255, 250, 241, 0.76);
+  color: #123f38;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.reading-book-theme.is-favorite,
+.reading-fragment-card__save.is-favorite {
+  border-color: rgba(184, 118, 42, 0.42);
+  background: rgba(184, 118, 42, 0.12);
+  color: #8f5b1d;
 }
 
 .reading-flow-guide {
@@ -651,28 +387,25 @@
   gap: 18px;
   align-items: stretch;
   margin-top: 22px;
-  border: 1px solid var(--heritage-line);
-  border-radius: 8px;
-  background: color-mix(in srgb, var(--heritage-surface) 90%, transparent);
   padding: 20px;
-  box-shadow: var(--heritage-shadow);
 }
 
-.reading-flow-guide__label {
-  margin: 0 0 8px;
-  color: var(--heritage-gold-strong);
-  font-size: 12px;
-  font-weight: 850;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+.reading-flow-guide h2,
+.reading-book-chapters__title,
+.reading-book-fallback__title,
+.reading-chapter-card__title,
+.reading-book-fragments__head h2,
+.mura-author-profile h2,
+.reading-book-summary__row h2 {
+  margin: 0;
+  color: #123f38;
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 500;
+  letter-spacing: 0;
 }
 
 .reading-flow-guide h2 {
-  margin: 0;
-  color: var(--heritage-ink);
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(28px, 4vw, 42px);
-  font-weight: 500;
+  font-size: clamp(1.75rem, 4vw, 2.65rem);
   line-height: 1;
 }
 
@@ -687,7 +420,7 @@
 
 .reading-flow-guide li {
   min-width: 0;
-  border-left: 1px solid var(--heritage-line);
+  border-left: 1px solid rgba(132, 90, 42, 0.16);
   padding-left: 14px;
 }
 
@@ -697,4145 +430,434 @@
 }
 
 .reading-flow-guide strong {
-  color: var(--heritage-ink);
-  font-size: 14px;
+  color: #123f38;
+  font-size: 0.95rem;
 }
 
 .reading-flow-guide span {
   margin-top: 6px;
-  color: var(--heritage-text);
-  font-size: 14px;
+  color: rgba(18, 63, 56, 0.72);
+  font-size: 0.92rem;
   line-height: 1.55;
 }
 
-:root[data-theme="dark"] .reading-flow-guide,
-:root[data-theme="dark"] .reading-book-hero__metaLine {
-  color: var(--text);
-}
-
-@media (max-width: 760px) {
-  .reading-flow-guide,
-  .reading-flow-guide ol {
-    grid-template-columns: 1fr;
-  }
-
-  .reading-flow-guide li {
-    border-left: 0;
-    border-top: 1px solid var(--heritage-line);
-    padding: 12px 0 0;
-  }
-}
-
-/* MIRAS v2 book detail: same composition in light and dark. */
-.reading-book-page {
-  min-height: 100dvh;
-  padding-top: 34px !important;
-  padding-right: clamp(18px, 2.4vw, 34px) !important;
-  padding-bottom: 74px !important;
-  background:
-    radial-gradient(circle at 72% -8%, color-mix(in srgb, var(--miras-gold) 16%, transparent), transparent 28rem),
-    linear-gradient(180deg, var(--miras-bg-soft), var(--miras-bg) 58%, var(--miras-bg-soft));
-  color: var(--miras-ink);
-}
-
-:root[data-theme="dark"] .reading-book-page {
-  background:
-    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    radial-gradient(circle at 68% 4%, rgba(28, 100, 82, 0.24), transparent 24rem),
-    linear-gradient(180deg, #020c0b, var(--miras-bg) 54%, #041512);
-  background-size: 84px 84px, 84px 84px, auto, auto;
-}
-
-.reading-book-page__container {
-  width: min(100%, var(--miras-page-max));
-  margin: 0 auto;
-}
-
-.reading-book-page__backLink {
-  margin: 0 0 18px;
-  color: var(--miras-text);
-  font-size: 0.86rem;
-  font-weight: 720;
-  text-decoration: none;
-}
-
-.reading-book-page__backLink:hover {
-  color: var(--miras-gold-strong);
-}
-
-.reading-book-hero {
-  display: grid !important;
-  grid-template-columns: minmax(250px, 0.36fr) minmax(0, 0.64fr) !important;
-  gap: 0 !important;
-  overflow: hidden !important;
-  border: 1px solid var(--miras-line) !important;
-  border-radius: var(--miras-radius) !important;
-  background:
-    linear-gradient(135deg, color-mix(in srgb, var(--miras-panel) 92%, transparent), color-mix(in srgb, var(--miras-panel-strong) 86%, transparent));
-  box-shadow: var(--miras-shadow) !important;
-}
-
-:root[data-theme="dark"] .reading-book-hero {
-  border-color: var(--miras-line) !important;
-  background:
-    radial-gradient(circle at 20% 0%, rgba(32, 112, 91, 0.2), transparent 22rem),
-    linear-gradient(135deg, rgba(8, 31, 27, 0.92), rgba(3, 17, 15, 0.96));
-}
-
-.reading-book-hero__media {
-  min-height: clamp(390px, 42vw, 560px) !important;
-}
-
-.reading-book-hero__cover {
-  min-height: clamp(390px, 42vw, 560px) !important;
-  background-size: cover !important;
-  background-position: center top !important;
-  filter: saturate(0.78) contrast(1.08);
-}
-
-:root[data-theme="dark"] .reading-book-hero__cover {
-  filter: grayscale(0.82) contrast(1.12) brightness(0.72);
-}
-
-.reading-book-hero__cover::after {
-  background:
-    linear-gradient(180deg, rgba(3, 17, 15, 0), rgba(3, 17, 15, 0.34)),
-    linear-gradient(90deg, rgba(3, 17, 15, 0.08), rgba(3, 17, 15, 0.46));
-}
-
-.reading-book-hero__content {
-  min-width: 0;
-  padding: clamp(24px, 3.4vw, 42px) !important;
-}
-
-.reading-book-hero__metaLine {
-  gap: 9px;
-  color: var(--miras-gold-strong);
-  font-size: 0.73rem;
-  font-weight: 820;
-  letter-spacing: 0.08em;
-}
-
-.reading-book-hero__title {
-  max-width: 15ch;
-  margin: 18px 0 0 !important;
-  color: var(--miras-ink) !important;
-  font-size: clamp(2.65rem, 4.2vw, 4.7rem) !important;
-  line-height: 0.94 !important;
-  letter-spacing: 0 !important;
-  text-wrap: balance;
-}
-
-.reading-book-hero__author {
-  margin-top: 18px !important;
-  color: var(--miras-ink);
-  font-size: 1rem;
-  font-weight: 780;
-}
-
-.reading-book-hero__description,
-.reading-book-hero__overview {
-  max-width: 64ch;
-  color: var(--miras-text) !important;
-  font-size: 0.94rem !important;
-  line-height: 1.62 !important;
-}
-
-.reading-book-hero__metrics {
-  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
-  gap: 10px !important;
-  margin-top: 22px !important;
-}
-
-.reading-book-hero__metrics article,
-.reading-book-summary__card,
-.reading-chapter-card,
-.reading-fragment-card,
-.reading-book-fallback,
-.reading-flow-guide {
-  border: 1px solid var(--miras-line) !important;
-  border-radius: var(--miras-radius) !important;
-  background: var(--miras-panel) !important;
-  box-shadow: none !important;
-}
-
-.reading-book-hero__metrics article {
-  min-height: 76px;
-  padding: 14px 15px !important;
-}
-
-.reading-book-hero__metrics span,
-.reading-book-summary__label,
-.reading-chapter-card__eyebrow,
-.reading-fragment-card__top p,
-.reading-flow-guide__label {
-  color: var(--miras-muted) !important;
-  font-size: 0.68rem !important;
-  letter-spacing: 0.14em !important;
-  font-weight: 760 !important;
-}
-
-.reading-book-hero__metrics strong,
-.reading-book-summary__row h2 {
-  color: var(--miras-ink) !important;
-  font-variant-numeric: tabular-nums;
-}
-
-.reading-book-hero__actions {
-  gap: 10px !important;
-  margin-top: 22px !important;
-}
-
-.reading-book-hero__action,
-.reading-book-fallback__action,
-.reading-chapter-card__action,
-.reading-fragment-card__save,
-.reading-book-theme {
-  min-height: 40px !important;
-  border: 1px solid var(--miras-line) !important;
-  border-radius: 7px !important;
-  background: color-mix(in srgb, var(--miras-panel-strong) 78%, transparent) !important;
-  color: var(--miras-ink) !important;
-  padding-inline: 15px !important;
-  font-size: 0.78rem !important;
-  font-weight: 840 !important;
-}
-
-.reading-book-hero__action.is-primary,
-.reading-book-fallback__action,
-.reading-chapter-card__action {
-  border-color: var(--miras-gold) !important;
-  background: linear-gradient(180deg, var(--miras-gold), var(--miras-gold-strong)) !important;
-  color: #fff7e8 !important;
-}
-
-.reading-book-hero__action:hover,
-.reading-book-fallback__action:hover,
-.reading-chapter-card__action:hover,
-.reading-fragment-card__save:hover,
-.reading-book-theme:hover {
-  transform: translateY(-1px);
-  border-color: var(--miras-line-strong) !important;
-}
-
-.mura-book-reference-row,
-.reading-book-summary {
-  display: grid !important;
-  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr) !important;
-  gap: 14px !important;
-  margin-top: 20px !important;
-}
-
-.mura-book-progress-card,
-.mura-book-quote-card,
-.reading-book-summary__card {
-  border: 1px solid var(--miras-line) !important;
-  border-radius: var(--miras-radius) !important;
-  background: color-mix(in srgb, var(--miras-panel) 88%, transparent) !important;
-  box-shadow: none !important;
-}
-
-.mura-book-progress-card,
-.mura-book-quote-card {
-  padding: 16px !important;
-}
-
-.mura-book-progress-card span,
-.mura-book-quote-card span,
-.reading-book-hero__themes p {
-  color: var(--miras-muted) !important;
-}
-
-.mura-ref-progress,
-.reading-book-summary__track {
-  height: 8px !important;
-  background: color-mix(in srgb, var(--miras-gold) 14%, var(--miras-panel-strong)) !important;
-}
-
-.mura-ref-progress i,
-.reading-book-summary__fill {
-  background: linear-gradient(90deg, var(--miras-gold), var(--miras-gold-strong)) !important;
-}
-
-.mura-book-quote-card p,
-.reading-fragment-card blockquote {
-  color: var(--miras-ink) !important;
-}
-
-.reading-book-hero__themes {
-  grid-template-columns: repeat(auto-fit, minmax(112px, max-content)) !important;
-  margin-top: 18px !important;
-}
-
-.reading-book-chapters,
-.reading-book-fragments {
-  margin-top: 30px !important;
-}
-
-.reading-book-chapters__head,
-.reading-book-fragments__head {
-  align-items: end !important;
-  margin-bottom: 16px !important;
-}
-
-.reading-book-chapters__title,
-.reading-book-fragments__head h2,
-.reading-chapter-card__title,
-.reading-flow-guide h2 {
-  color: var(--miras-ink) !important;
-  letter-spacing: 0 !important;
-}
-
-.mura-book-chapter-tabs {
-  display: flex !important;
-  gap: 8px !important;
-  overflow-x: auto;
-  margin: 0 0 16px !important;
-  padding-bottom: 4px;
-}
-
-.mura-book-chapter-tabs a {
-  min-width: 78px;
-  min-height: 38px;
-  display: inline-flex !important;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid var(--miras-line) !important;
-  border-radius: 7px !important;
-  background: var(--miras-panel) !important;
-  color: var(--miras-text) !important;
-  text-decoration: none;
-  font-size: 0.8rem;
-  font-weight: 820;
-}
-
-.mura-book-chapter-tabs a.is-started,
-.mura-book-chapter-tabs a:hover {
-  border-color: var(--miras-line-strong) !important;
-  color: var(--miras-ink) !important;
-  background: color-mix(in srgb, var(--miras-gold) 14%, var(--miras-panel)) !important;
-}
-
-.reading-book-chapters__list,
-.reading-book-fragments__grid {
-  gap: 14px !important;
-}
-
-.reading-chapter-card,
-.reading-fragment-card {
-  padding: 20px !important;
-}
-
-.reading-chapter-card__meta span,
-.reading-book-summary__meta span,
-.reading-chapter-card__state {
-  border-radius: 7px !important;
-  border-color: var(--miras-line) !important;
-  background: color-mix(in srgb, var(--miras-panel-strong) 72%, transparent) !important;
-  color: var(--miras-text) !important;
-}
-
-.reading-flow-guide {
-  grid-template-columns: minmax(190px, 0.32fr) minmax(0, 1fr) !important;
-  margin-top: 18px !important;
-}
-
-@media (min-width: 1024px) {
-  .reading-book-page {
-    padding-left: var(--miras-content-offset) !important;
-  }
-}
-
-@media (max-width: 1100px) {
-  .reading-book-hero {
-    grid-template-columns: 1fr !important;
-  }
-
-  .reading-book-hero__media,
-  .reading-book-hero__cover {
-    min-height: 360px !important;
-  }
-
-  .reading-book-hero__title {
-    max-width: 14ch;
-  }
-}
-
-@media (max-width: 760px) {
-  .reading-book-page {
-    padding: 92px 14px 58px !important;
-  }
-
-  .reading-book-hero__content {
-    padding: 22px !important;
-  }
-
-  .reading-book-hero__metrics,
-  .mura-book-reference-row,
-  .reading-book-summary,
-  .reading-flow-guide,
-  .reading-flow-guide ol {
-    grid-template-columns: 1fr !important;
-  }
-
-  .reading-book-hero__title {
-    max-width: 100%;
-    font-size: clamp(2.25rem, 12vw, 3.4rem) !important;
-  }
-}
-
-/* MIRAS reference refinement: dense archive hero with portrait/book composition. */
-.reading-book-page__container {
-  width: min(100%, 1160px) !important;
-}
-
-.reading-book-hero {
-  grid-template-columns: minmax(340px, 0.46fr) minmax(0, 0.54fr) !important;
-  min-height: 438px;
-  background:
-    radial-gradient(circle at 82% 8%, color-mix(in srgb, var(--miras-gold) 13%, transparent), transparent 22rem),
-    linear-gradient(120deg, color-mix(in srgb, var(--miras-panel) 94%, transparent), color-mix(in srgb, var(--miras-bg-soft) 80%, transparent)) !important;
-}
-
-:root[data-theme="dark"] .reading-book-hero {
-  background:
-    radial-gradient(circle at 76% 10%, rgba(31, 118, 92, 0.2), transparent 20rem),
-    linear-gradient(120deg, rgba(4, 14, 12, 0.94), rgba(7, 25, 21, 0.91) 58%, rgba(2, 10, 9, 0.96)) !important;
-}
-
-.reading-book-hero__media {
-  position: relative;
-  min-height: 438px !important;
-  overflow: hidden;
-  background:
-    radial-gradient(circle at 42% 18%, rgba(255, 255, 255, 0.12), transparent 18rem),
-    #081916;
-}
-
-.reading-book-hero__cover {
-  position: absolute;
-  inset: 0;
-  min-height: 100% !important;
-  background-size: cover !important;
-  background-position: center top !important;
-  transform: scale(1.02);
-}
-
-.reading-book-hero__cover::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(90deg, rgba(3, 17, 15, 0.08), rgba(3, 17, 15, 0.5) 82%),
-    linear-gradient(180deg, rgba(3, 17, 15, 0), rgba(3, 17, 15, 0.38)) !important;
-}
-
-:root[data-theme="dark"] .reading-book-hero__cover::after {
-  background:
-    linear-gradient(90deg, rgba(1, 8, 7, 0.14), rgba(1, 8, 7, 0.76) 82%),
-    linear-gradient(180deg, rgba(1, 8, 7, 0.1), rgba(1, 8, 7, 0.64)) !important;
-}
-
-.reading-book-hero__bookObject {
-  position: absolute;
-  z-index: 2;
-  top: clamp(34px, 5vw, 58px);
-  right: clamp(26px, 4vw, 48px);
-  width: 118px;
-  height: 176px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 18px 15px;
-  border: 1px solid rgba(226, 199, 143, 0.35);
-  border-radius: 4px;
-  background:
-    linear-gradient(90deg, rgba(255, 255, 255, 0.12), transparent 18%),
-    linear-gradient(145deg, #0b3b2d, #051d18 72%);
-  box-shadow:
-    16px 18px 34px rgba(0, 0, 0, 0.34),
-    inset 8px 0 0 rgba(0, 0, 0, 0.18);
-  color: #f3ead7;
-  transform: perspective(560px) rotateY(-8deg) rotateZ(1deg);
-}
-
-.reading-book-hero__bookObject span,
-.reading-book-hero__bookObject small {
-  color: rgba(243, 234, 215, 0.66);
-  font-size: 0.58rem;
-  font-weight: 760;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.reading-book-hero__bookObject strong {
-  color: #f7efe0;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 1.08rem;
-  line-height: 1.08;
-  letter-spacing: 0;
-}
-
-.reading-book-hero__content {
-  display: flex;
-  min-height: 438px;
-  flex-direction: column;
-  justify-content: center;
-  padding: clamp(30px, 4vw, 52px) clamp(30px, 4.4vw, 58px) !important;
-}
-
-.reading-book-hero__metaLine {
-  width: fit-content;
-  padding: 0 !important;
-  color: var(--miras-gold-strong) !important;
-  text-transform: none;
-}
-
-.reading-book-hero__title {
-  max-width: 10ch !important;
-  margin-top: 12px !important;
-  font-size: clamp(3.05rem, 5.25vw, 5.5rem) !important;
-}
-
-.reading-book-hero__titleSub {
-  margin: 10px 0 0;
-  color: var(--miras-gold-strong);
-  font-size: 0.78rem;
-  font-weight: 820;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.reading-book-hero__author {
-  margin-top: 20px !important;
-}
-
-.reading-book-hero__description {
-  max-width: 50ch !important;
-  margin-top: 14px !important;
-}
-
-.reading-book-hero__overview {
-  display: none !important;
-}
-
-.reading-book-hero__metrics {
-  display: none !important;
-}
-
-.reading-book-hero__actions {
-  margin-top: 26px !important;
-}
-
-.reading-book-hero__action {
-  min-width: 128px;
-  justify-content: center;
-}
-
-.mura-book-reference-row {
-  margin-top: 14px !important;
-}
-
-.mura-book-progress-card,
-.mura-book-quote-card {
-  min-height: 104px;
-  background:
-    linear-gradient(135deg, color-mix(in srgb, var(--miras-panel) 92%, transparent), color-mix(in srgb, var(--miras-panel-strong) 78%, transparent)) !important;
-}
-
-:root[data-theme="dark"] .mura-book-progress-card,
-:root[data-theme="dark"] .mura-book-quote-card {
-  background:
-    linear-gradient(135deg, rgba(9, 28, 24, 0.82), rgba(4, 17, 15, 0.92)) !important;
-}
-
-.reading-book-hero__themes {
-  display: flex !important;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px !important;
-  margin-top: 14px !important;
-}
-
-.reading-book-hero__themes p {
-  width: auto !important;
-  margin: 0 8px 0 0 !important;
-  color: var(--miras-muted) !important;
-  font-size: 0.68rem !important;
-  font-weight: 820 !important;
-  letter-spacing: 0.14em !important;
-  text-transform: uppercase;
-}
-
-.reading-book-theme {
-  min-height: 34px !important;
-  padding: 0 13px !important;
-  border-radius: 6px !important;
-}
-
-.reading-flow-guide {
-  display: none !important;
-}
-
-@media (max-width: 1100px) {
-  .reading-book-hero {
-    grid-template-columns: 1fr !important;
-  }
-
-  .reading-book-hero__media {
-    min-height: 360px !important;
-  }
-
-  .reading-book-hero__content {
-    min-height: 0;
-  }
-}
-
-@media (max-width: 760px) {
-  .reading-book-hero__bookObject {
-    width: 94px;
-    height: 142px;
-    top: 22px;
-    right: 20px;
-    padding: 14px 12px;
-  }
-
-  .reading-book-hero__bookObject strong {
-    font-size: 0.92rem;
-  }
-
-  .reading-book-hero__title {
-    max-width: 100% !important;
-  }
-
-  .reading-book-hero__actions {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .reading-book-hero__action {
-    width: 100%;
-  }
-}
-/* FINAL: book page closer to dark MURA reference */
-.reading-book-page {
-  min-height: 100dvh !important;
-  padding: 34px clamp(18px, 2.4vw, 34px) 72px var(--miras-content-offset, 224px) !important;
-  background:
-    linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.014) 1px, transparent 1px),
-    radial-gradient(circle at 72% 4%, rgba(39, 112, 91, 0.18), transparent 28rem),
-    linear-gradient(180deg, #020b0a 0%, #061613 54%, #020b0a 100%) !important;
-  background-size: 88px 88px, 88px 88px, auto, auto !important;
-  color: #f4f1e9 !important;
-}
-
-.reading-book-page__container {
-  width: min(100%, 1160px) !important;
-  margin: 0 auto !important;
-}
-
-.reading-book-page__backLink {
-  margin: 0 0 14px !important;
-  color: rgba(244, 241, 233, 0.72) !important;
-  font-size: 0.84rem !important;
-  font-weight: 760 !important;
-  text-decoration: none !important;
-}
-
-.reading-book-hero--reference {
-  position: relative !important;
-  display: grid !important;
-  grid-template-columns: minmax(300px, 0.34fr) minmax(0, 0.66fr) !important;
-  min-height: 390px !important;
-  overflow: hidden !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  background:
-    linear-gradient(90deg, rgba(2, 11, 10, 0.1), rgba(2, 11, 10, 0.8) 45%, rgba(2, 11, 10, 0.16)),
-    radial-gradient(circle at 72% 24%, rgba(200, 149, 49, 0.12), transparent 18rem),
-    linear-gradient(180deg, rgba(5, 20, 18, 0.96), rgba(2, 11, 10, 0.98)) !important;
-  box-shadow: none !important;
-}
-
-.reading-book-hero--reference::before {
-  content: "" !important;
-  position: absolute !important;
-  inset: 0 !important;
-  z-index: 0 !important;
-  pointer-events: none !important;
-  background:
-    linear-gradient(90deg, rgba(2, 11, 10, 0.02), rgba(2, 11, 10, 0.68) 38%, rgba(2, 11, 10, 0.18)),
-    radial-gradient(circle at 50% 50%, transparent 0%, rgba(0, 0, 0, 0.42) 78%) !important;
-}
-
-.reading-book-hero--reference::after {
-  content: "" !important;
-  position: absolute !important;
-  inset: 0 !important;
-  z-index: 0 !important;
-  pointer-events: none !important;
-  opacity: 0.13 !important;
-  background-image:
-    repeating-linear-gradient(
-      0deg,
-      transparent 0,
-      transparent 12px,
-      rgba(214, 184, 118, 0.12) 13px
-    );
-  mask-image: linear-gradient(90deg, transparent, black 38%, black 78%, transparent);
-}
-
-.reading-book-hero--reference .reading-book-hero__media {
-  position: relative !important;
-  z-index: 1 !important;
-  min-height: 390px !important;
-  overflow: hidden !important;
-  border: 0 !important;
-}
-
-.reading-book-hero--reference .reading-book-hero__cover {
-  position: absolute !important;
-  inset: 0 !important;
-  min-height: 100% !important;
-  background-size: cover !important;
-  background-position: center top !important;
-  filter: grayscale(1) contrast(1.08) brightness(0.58) !important;
-  transform: scale(1.04) !important;
-}
-
-.reading-book-hero--reference .reading-book-hero__cover::after {
-  content: "" !important;
-  position: absolute !important;
-  inset: 0 !important;
-  background:
-    linear-gradient(90deg, rgba(2, 11, 10, 0.08), rgba(2, 11, 10, 0.8) 92%),
-    linear-gradient(180deg, rgba(2, 11, 10, 0.02), rgba(2, 11, 10, 0.58)) !important;
-}
-
-.reading-book-hero--reference .reading-book-hero__content {
-  position: relative !important;
-  z-index: 2 !important;
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: center !important;
-  min-height: 390px !important;
-  padding: 42px 220px 42px 42px !important;
-  color: #f4f1e9 !important;
-}
-
-.reading-book-hero--reference .reading-book-hero__metaLine {
-  display: flex !important;
-  flex-wrap: wrap !important;
-  gap: 8px !important;
-  align-items: center !important;
-  color: #d0a34d !important;
-  font-size: 0.68rem !important;
-  font-weight: 850 !important;
-  letter-spacing: 0.08em !important;
-  text-transform: uppercase !important;
-}
-
-.reading-book-hero--reference .reading-book-hero__title {
-  max-width: 10ch !important;
-  margin: 12px 0 0 !important;
-  color: #f4f1e9 !important;
-  font-family: Georgia, "Times New Roman", serif !important;
-  font-size: clamp(3.2rem, 5.8vw, 5.8rem) !important;
-  font-weight: 500 !important;
-  line-height: 0.9 !important;
-  letter-spacing: -0.04em !important;
-}
-
-.reading-book-hero--reference .reading-book-hero__titleSub {
-  margin: 8px 0 0 !important;
-  color: rgba(244, 241, 233, 0.58) !important;
-  font-size: 0.72rem !important;
-  font-weight: 850 !important;
-  letter-spacing: 0.16em !important;
-  text-transform: uppercase !important;
-}
-
-.reading-book-hero--reference .reading-book-hero__author {
-  margin: 20px 0 0 !important;
-  color: rgba(244, 241, 233, 0.82) !important;
-  font-size: 0.94rem !important;
-  font-weight: 760 !important;
-}
-
-.reading-book-hero--reference .reading-book-hero__description {
-  max-width: 48ch !important;
-  margin: 12px 0 0 !important;
-  color: rgba(244, 241, 233, 0.64) !important;
-  font-size: 0.9rem !important;
-  line-height: 1.55 !important;
-}
-
-.reading-book-hero--reference .reading-book-hero__overview,
-.reading-book-hero--reference .reading-book-hero__metrics {
-  display: none !important;
-}
-
-.reading-book-hero--reference .reading-book-hero__actions {
-  display: flex !important;
-  flex-wrap: wrap !important;
-  gap: 10px !important;
-  margin-top: 22px !important;
-}
-
-.reading-book-hero--reference .reading-book-hero__action {
-  min-height: 38px !important;
-  padding: 0 20px !important;
-  border: 1px solid rgba(214, 184, 118, 0.22) !important;
-  border-radius: 4px !important;
-  background: rgba(255, 255, 255, 0.035) !important;
-  color: #f4f1e9 !important;
-  font-size: 0.78rem !important;
-  font-weight: 820 !important;
-  text-decoration: none !important;
-}
-
-.reading-book-hero--reference .reading-book-hero__action.is-primary {
-  border-color: rgba(23, 154, 112, 0.8) !important;
-  background: #0f7d61 !important;
-  color: #f4f1e9 !important;
-}
-
-.reading-book-hero--reference .reading-book-hero__bookObject {
-  position: absolute !important;
-  z-index: 3 !important;
-  top: 52px !important;
-  right: 72px !important;
-  width: 126px !important;
-  height: 202px !important;
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: space-between !important;
-  padding: 18px 14px !important;
-  border: 1px solid rgba(214, 184, 118, 0.3) !important;
-  border-radius: 2px !important;
-  background:
-    linear-gradient(90deg, rgba(255, 255, 255, 0.11), transparent 16%),
-    linear-gradient(145deg, #0d3a2f, #051d18 76%) !important;
-  box-shadow:
-    20px 24px 48px rgba(0, 0, 0, 0.42),
-    inset 8px 0 0 rgba(0, 0, 0, 0.18) !important;
-  color: #f3ead7 !important;
-  transform: perspective(620px) rotateY(-8deg) rotateZ(1deg) !important;
-}
-
-.reading-book-hero--reference .reading-book-hero__bookObject span,
-.reading-book-hero--reference .reading-book-hero__bookObject small {
-  color: rgba(243, 234, 215, 0.64) !important;
-  font-size: 0.56rem !important;
-  font-weight: 760 !important;
-  letter-spacing: 0.12em !important;
-  text-transform: uppercase !important;
-}
-
-.reading-book-hero--reference .reading-book-hero__bookObject strong {
-  color: #f7efe0 !important;
-  font-family: Georgia, "Times New Roman", serif !important;
-  font-size: 1rem !important;
-  line-height: 1.08 !important;
-}
-
-.mura-book-reference-row {
-  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr) !important;
-  gap: 14px !important;
-  margin-top: 14px !important;
-}
-
-.mura-book-progress-card,
-.mura-book-quote-card {
-  border: 1px solid rgba(214, 184, 118, 0.18) !important;
-  border-radius: 4px !important;
-  background: rgba(7, 24, 21, 0.72) !important;
-  color: #f4f1e9 !important;
-  box-shadow: none !important;
-}
-
-.reading-flow-guide,
-.reading-book-summary {
-  display: none !important;
-}
-
-.reading-book-chapters {
-  margin-top: 28px !important;
-}
-
-.reading-book-chapters__head {
-  display: flex !important;
-  align-items: end !important;
-  justify-content: space-between !important;
-  gap: 18px !important;
-  margin-bottom: 14px !important;
-  border-bottom: 1px solid rgba(214, 184, 118, 0.16) !important;
-  padding-bottom: 12px !important;
-}
-
-.reading-book-chapters__title {
-  margin: 0 !important;
-  color: #f4f1e9 !important;
-  font-family: Georgia, "Times New Roman", serif !important;
-  font-size: clamp(1.6rem, 2.5vw, 2.3rem) !important;
-  font-weight: 500 !important;
-}
-
-.mura-book-chapter-tabs {
-  display: flex !important;
-  gap: 8px !important;
-  overflow-x: auto !important;
-  margin-bottom: 16px !important;
-}
-
-.mura-book-chapter-tabs a {
-  min-width: 82px !important;
-  min-height: 36px !important;
-  border-radius: 4px !important;
-  border: 1px solid rgba(214, 184, 118, 0.16) !important;
-  background: rgba(8, 31, 27, 0.72) !important;
-  color: rgba(244, 241, 233, 0.72) !important;
-}
-
-/* Light theme still readable, but dark is the reference */
-:root[data-theme="light"] .reading-book-page {
-  background:
-    radial-gradient(circle at 72% -8%, rgba(200, 149, 49, 0.12), transparent 26rem),
-    linear-gradient(180deg, #f8f0e1, #efe2ca 58%, #f8f0e1) !important;
-  color: #173f39 !important;
-}
-
-:root[data-theme="light"] .reading-book-hero--reference {
-  border: 1px solid rgba(92, 64, 32, 0.16) !important;
-  background:
-    linear-gradient(90deg, rgba(255, 248, 236, 0.02), rgba(255, 248, 236, 0.76) 45%, rgba(255, 248, 236, 0.2)),
-    linear-gradient(180deg, #fff8ec, #ead9c5) !important;
-}
-
-:root[data-theme="light"] .reading-book-hero--reference .reading-book-hero__title,
-:root[data-theme="light"] .reading-book-hero--reference .reading-book-hero__author,
-:root[data-theme="light"] .reading-book-chapters__title {
-  color: #173f39 !important;
-}
-
-:root[data-theme="light"] .reading-book-hero--reference .reading-book-hero__description,
-:root[data-theme="light"] .reading-book-hero--reference .reading-book-hero__titleSub {
-  color: rgba(23, 63, 57, 0.68) !important;
-}
-
-@media (max-width: 1100px) {
-  .reading-book-hero--reference {
-    grid-template-columns: 1fr !important;
-  }
-
-  .reading-book-hero--reference .reading-book-hero__content {
-    padding: 26px !important;
-  }
-
-  .reading-book-hero--reference .reading-book-hero__bookObject {
-    top: 36px !important;
-    right: 34px !important;
-  }
-}
-
-@media (max-width: 760px) {
-  .reading-book-page {
-    padding: 92px 14px 58px !important;
-  }
-
-  .reading-book-hero--reference .reading-book-hero__media {
-    min-height: 300px !important;
-  }
-
-  .reading-book-hero--reference .reading-book-hero__content {
-    min-height: auto !important;
-    padding: 24px !important;
-  }
-
-  .reading-book-hero--reference .reading-book-hero__title {
-    max-width: 100% !important;
-    font-size: clamp(2.4rem, 12vw, 3.7rem) !important;
-  }
-
-  .reading-book-hero--reference .reading-book-hero__actions,
-  .mura-book-reference-row {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-  }
-
-  .reading-book-hero--reference .reading-book-hero__bookObject {
-    width: 92px !important;
-    height: 140px !important;
-    top: 20px !important;
-    right: 20px !important;
-  }
-}
-
-/* Final strict MURA overview refinements */
-.reading-book-page {
-  --mura-ref-bg: #07110f;
-  --mura-ref-surface: #0d1714;
-  --mura-ref-surface-2: #101c18;
-  --mura-ref-border: rgba(190, 210, 190, 0.12);
-  --mura-ref-border-strong: rgba(190, 210, 190, 0.22);
-  --mura-ref-text: #e7eee8;
-  --mura-ref-text-2: rgba(231, 238, 232, 0.68);
-  --mura-ref-text-3: rgba(231, 238, 232, 0.45);
-  --mura-ref-accent: #62c99a;
-}
-
-.mura-book-reference-row {
-  display: grid !important;
-}
-
-.mura-book-progress-card,
-.mura-book-quote-card,
-.reading-chapter-card,
-.reading-fragment-card,
-.reading-book-fallback {
-  border-color: var(--mura-ref-border) !important;
-  border-radius: 6px !important;
-  background: rgba(13, 23, 20, 0.78) !important;
-  color: var(--mura-ref-text) !important;
-  box-shadow: none !important;
-}
-
-.mura-book-progress-card {
+.mura-author-profile {
   display: grid;
-  align-content: center;
-  gap: 8px;
-  padding: 20px !important;
-}
-
-.mura-book-progress-card span,
-.mura-book-progress-card small,
-.reading-book-chapters__meta,
-.reading-chapter-card__text,
-.reading-fragment-card__note {
-  color: var(--mura-ref-text-2) !important;
-}
-
-.mura-book-progress-card strong {
-  color: var(--mura-ref-text) !important;
-  font-size: 1.55rem !important;
-  font-weight: 760 !important;
-}
-
-.mura-ref-progress {
-  height: 4px !important;
-  border-radius: 999px !important;
-  background: rgba(190, 210, 190, 0.14) !important;
-}
-
-.mura-ref-progress i {
-  display: block;
-  height: 100%;
-  border-radius: inherit;
-  background: var(--mura-ref-accent) !important;
-}
-
-.mura-book-quote-card {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: 10px 14px;
-  align-content: center;
-  padding: 20px !important;
-}
-
-.mura-book-quote-card > span {
-  grid-row: 1 / span 2;
-  color: rgba(231, 238, 232, 0.32) !important;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 2.1rem !important;
-  line-height: 0.9;
-}
-
-.mura-book-quote-card p {
-  margin: 0 !important;
-  color: var(--mura-ref-text) !important;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(1.05rem, 1.7vw, 1.42rem) !important;
-  line-height: 1.36 !important;
-}
-
-.mura-book-quote-card small {
-  color: var(--mura-ref-text-3) !important;
-}
-
-.reading-chapter-card {
-  padding: 16px !important;
-}
-
-.reading-chapter-card__title {
-  font-family: var(--mura-font-sans) !important;
-  font-size: clamp(1.05rem, 1.7vw, 1.35rem) !important;
-  font-weight: 780 !important;
-  line-height: 1.16 !important;
-}
-
-.reading-chapter-card__eyebrow,
-.reading-chapter-card__state,
-.reading-chapter-card__meta span,
-.reading-book-theme {
-  border-radius: 5px !important;
-  border-color: var(--mura-ref-border) !important;
-  background: rgba(255, 255, 255, 0.035) !important;
-  color: var(--mura-ref-text-2) !important;
-  font-size: 0.72rem !important;
-}
-
-.reading-chapter-card__state.is-complete,
-.reading-book-theme.is-favorite,
-.reading-book-hero__action.is-favorite {
-  border-color: rgba(98, 201, 154, 0.42) !important;
-  background: rgba(98, 201, 154, 0.11) !important;
-  color: var(--mura-ref-text) !important;
-}
-
-.reading-chapter-card__action {
-  min-height: 36px !important;
-  border-radius: 5px !important;
-  border-color: var(--mura-ref-border-strong) !important;
-  background: rgba(255, 255, 255, 0.04) !important;
-  color: var(--mura-ref-text) !important;
-  font-size: 0.76rem !important;
-}
-
-.reading-chapter-card__action:hover {
-  border-color: rgba(98, 201, 154, 0.54) !important;
-  background: rgba(98, 201, 154, 0.1) !important;
-}
-
-.reading-book-hero--reference {
-  min-height: 420px !important;
-}
-
-.reading-book-hero--reference .reading-book-hero__media,
-.reading-book-hero--reference .reading-book-hero__cover,
-.reading-book-hero--reference .reading-book-hero__content {
-  min-height: 420px !important;
-}
-
-.reading-book-hero--reference .reading-book-hero__content {
-  padding-right: 178px !important;
-}
-
-.reading-book-hero--reference .reading-book-hero__title {
-  font-size: clamp(3rem, 5vw, 5.15rem) !important;
-}
-
-.reading-book-hero--reference .reading-book-hero__description {
-  max-width: 44ch !important;
-}
-
-.reading-book-hero--reference .reading-book-hero__action {
-  min-width: 112px !important;
-  min-height: 36px !important;
-  padding-inline: 16px !important;
-}
-
-:root[data-theme="light"] .mura-book-progress-card,
-:root[data-theme="light"] .mura-book-quote-card,
-:root[data-theme="light"] .reading-chapter-card,
-:root[data-theme="light"] .reading-fragment-card,
-:root[data-theme="light"] .reading-book-fallback {
-  border-color: rgba(85, 66, 38, 0.18) !important;
-  background: rgba(255, 248, 236, 0.86) !important;
-  color: #173f39 !important;
-}
-
-:root[data-theme="light"] .mura-book-quote-card p,
-:root[data-theme="light"] .mura-book-progress-card strong,
-:root[data-theme="light"] .reading-chapter-card__title {
-  color: #173f39 !important;
-}
-
-:root[data-theme="light"] .mura-book-progress-card span,
-:root[data-theme="light"] .mura-book-progress-card small,
-:root[data-theme="light"] .mura-book-quote-card small,
-:root[data-theme="light"] .reading-chapter-card__text {
-  color: rgba(23, 63, 57, 0.66) !important;
-}
-
-/* Stage 1: strict MURA work overview pass */
-.reading-book-page {
-  --mura-overview-bg: #07110f;
-  --mura-overview-bg-soft: #081310;
-  --mura-overview-surface: #0d1714;
-  --mura-overview-elevated: #111f1b;
-  --mura-overview-border: rgba(210, 225, 215, 0.12);
-  --mura-overview-border-strong: rgba(210, 225, 215, 0.2);
-  --mura-overview-text: #e7eee8;
-  --mura-overview-text-secondary: rgba(231, 238, 232, 0.68);
-  --mura-overview-text-muted: rgba(231, 238, 232, 0.45);
-  --mura-overview-accent: #4ea77f;
-  --mura-overview-accent-strong: #62c99a;
-  min-height: 100dvh !important;
-  padding: 28px clamp(18px, 2.1vw, 28px) 58px var(--miras-content-offset, 168px) !important;
-  background:
-    radial-gradient(circle at 72% 10%, rgba(42, 115, 92, 0.18), transparent 18rem),
-    linear-gradient(180deg, var(--mura-overview-bg-soft), var(--mura-overview-bg) 54%, #040b0a) !important;
-  background-size: auto !important;
-  color: var(--mura-overview-text) !important;
-}
-
-.reading-book-page__container {
-  width: min(100%, 920px) !important;
-  margin: 0 auto !important;
-}
-
-.reading-book-page__backLink {
-  margin: 0 0 12px !important;
-  color: var(--mura-overview-text-muted) !important;
-  font-size: 0.76rem !important;
-  font-weight: 650 !important;
-}
-
-.reading-book-page__backLink:hover {
-  color: var(--mura-overview-text) !important;
-}
-
-.reading-book-hero--reference {
-  display: grid !important;
-  grid-template-columns: minmax(220px, 292px) minmax(0, 1fr) 152px !important;
-  align-items: center !important;
-  gap: 22px !important;
-  min-height: 318px !important;
-  padding: 0 !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  overflow: visible !important;
-  background:
-    linear-gradient(90deg, rgba(7, 17, 15, 0.06), rgba(7, 17, 15, 0.82) 50%, rgba(7, 17, 15, 0.16)),
-    radial-gradient(circle at 77% 32%, rgba(78, 167, 127, 0.12), transparent 14rem) !important;
-  box-shadow: none !important;
-}
-
-.reading-book-hero--reference::before {
-  inset: -8px 0 -6px !important;
-  z-index: 0 !important;
-  opacity: 0.58 !important;
-  background:
-    linear-gradient(90deg, transparent, rgba(7, 17, 15, 0.72) 34%, rgba(7, 17, 15, 0.42) 74%, transparent),
-    repeating-linear-gradient(0deg, transparent 0 14px, rgba(216, 185, 124, 0.05) 15px) !important;
-  pointer-events: none !important;
-}
-
-.reading-book-hero--reference::after {
-  content: none !important;
-}
-
-.reading-book-hero--reference .reading-book-hero__media {
-  position: relative !important;
-  z-index: 1 !important;
-  min-height: 318px !important;
-  height: 318px !important;
-  overflow: hidden !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-}
-
-.reading-book-hero--reference .reading-book-hero__cover {
-  position: absolute !important;
-  inset: 0 !important;
-  min-height: 100% !important;
-  background-size: cover !important;
-  background-position: center top !important;
-  filter: grayscale(1) contrast(1.12) brightness(0.72) !important;
-  transform: scale(1.02) !important;
-}
-
-.reading-book-hero--reference .reading-book-hero__cover::after {
-  background:
-    linear-gradient(90deg, rgba(7, 17, 15, 0.06), rgba(7, 17, 15, 0.8) 96%),
-    linear-gradient(180deg, rgba(7, 17, 15, 0), rgba(7, 17, 15, 0.58)) !important;
-}
-
-.reading-book-hero--reference .reading-book-hero__content {
-  position: relative !important;
-  z-index: 2 !important;
-  min-height: auto !important;
-  padding: 18px 0 20px !important;
-  color: var(--mura-overview-text) !important;
-}
-
-.reading-book-hero--reference .reading-book-hero__metaLine {
-  gap: 8px !important;
-  color: var(--mura-overview-accent-strong) !important;
-  font-size: 0.64rem !important;
-  font-weight: 760 !important;
-  letter-spacing: 0.08em !important;
-  text-transform: uppercase !important;
-}
-
-.reading-book-hero--reference .reading-book-hero__metaLine i {
-  width: 3px !important;
-  height: 3px !important;
-}
-
-.reading-book-hero--reference .reading-book-hero__title {
-  max-width: 8.5ch !important;
-  margin: 10px 0 0 !important;
-  color: var(--mura-overview-text) !important;
-  font-size: clamp(2.55rem, 5vw, 4.35rem) !important;
-  font-weight: 500 !important;
-  line-height: 0.91 !important;
-  letter-spacing: -0.035em !important;
-}
-
-.reading-book-hero--reference .reading-book-hero__titleSub {
-  margin-top: 6px !important;
-  color: var(--mura-overview-text-muted) !important;
-  font-size: 0.68rem !important;
-  font-weight: 760 !important;
-  letter-spacing: 0.12em !important;
-}
-
-.reading-book-hero--reference .reading-book-hero__author {
-  margin-top: 14px !important;
-  color: var(--mura-overview-text-secondary) !important;
-  font-size: 0.88rem !important;
-  font-weight: 700 !important;
-}
-
-.reading-book-hero--reference .reading-book-hero__description {
-  max-width: 38ch !important;
-  margin-top: 10px !important;
-  color: var(--mura-overview-text-secondary) !important;
-  font-size: 0.82rem !important;
-  line-height: 1.55 !important;
-}
-
-.reading-book-hero--reference .reading-book-hero__overview,
-.reading-book-hero--reference .reading-book-hero__metrics {
-  display: none !important;
-}
-
-.reading-book-hero__statsLine {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 13px;
-  color: var(--mura-overview-text-muted);
-  font-size: 0.72rem;
-}
-
-.reading-book-hero__statsLine span {
-  display: inline-flex;
+  grid-template-columns: 160px minmax(0, 1fr);
+  gap: 20px;
   align-items: center;
-  min-height: 22px;
-  border: 1px solid var(--mura-overview-border);
-  border-radius: 5px;
-  background: rgba(255, 255, 255, 0.026);
-  padding: 0 8px;
-}
-
-.reading-book-hero--reference .reading-book-hero__actions {
-  display: flex !important;
-  gap: 10px !important;
-  margin-top: 16px !important;
-}
-
-.reading-book-hero--reference .reading-book-hero__action {
-  min-width: 116px !important;
-  min-height: 38px !important;
-  border: 1px solid var(--mura-overview-border-strong) !important;
-  border-radius: 5px !important;
-  background: transparent !important;
-  color: var(--mura-overview-text) !important;
-  padding: 0 16px !important;
-  font-size: 0.76rem !important;
-  font-weight: 760 !important;
-}
-
-.reading-book-hero--reference .reading-book-hero__action.is-primary {
-  border-color: rgba(78, 167, 127, 0.78) !important;
-  background: linear-gradient(180deg, #1b8666, #106349) !important;
-  color: #f3f8f4 !important;
-}
-
-.reading-book-hero__utilityActions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 14px;
-  margin-top: 13px;
-}
-
-.reading-book-hero__utilityButton {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  min-height: 24px;
-  border: 0;
-  background: transparent;
-  color: var(--mura-overview-text-secondary);
-  padding: 0;
-  font: inherit;
-  font-size: 0.72rem;
-  font-weight: 650;
-  cursor: pointer;
-}
-
-.reading-book-hero__utilityButton::before {
-  content: "";
-  width: 13px;
-  height: 13px;
-  border: 1px solid currentColor;
-  border-radius: 2px;
-  opacity: 0.82;
-}
-
-.reading-book-hero__utilityButton:hover,
-.reading-book-hero__utilityButton.is-favorite {
-  color: var(--mura-overview-text);
-}
-
-.reading-book-hero__shareStatus {
-  color: var(--mura-overview-text-muted);
-  font-size: 0.7rem;
-}
-
-.reading-book-hero--reference .reading-book-hero__bookObject {
-  position: relative !important;
-  top: auto !important;
-  right: auto !important;
-  z-index: 2 !important;
-  justify-self: center !important;
-  align-self: start !important;
-  width: 116px !important;
-  height: 176px !important;
-  margin-top: 40px !important;
-  padding: 16px 13px !important;
-  border: 1px solid rgba(210, 225, 215, 0.2) !important;
-  border-radius: 2px !important;
-  background:
-    linear-gradient(90deg, rgba(255, 255, 255, 0.1), transparent 18%),
-    linear-gradient(145deg, #123d31, #071b17 72%) !important;
-  box-shadow:
-    14px 18px 34px rgba(0, 0, 0, 0.34),
-    inset 8px 0 0 rgba(0, 0, 0, 0.2) !important;
-  transform: perspective(540px) rotateY(-7deg) rotateZ(1deg) !important;
-}
-
-.reading-book-hero--reference .reading-book-hero__bookObject strong {
-  font-size: 0.92rem !important;
-}
-
-.mura-book-reference-row {
-  display: grid !important;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr) !important;
-  gap: 14px !important;
-  margin-top: 14px !important;
-}
-
-.mura-book-progress-card,
-.mura-book-quote-card {
-  min-height: 98px !important;
-  border: 1px solid var(--mura-overview-border) !important;
-  border-radius: 6px !important;
-  background: rgba(13, 23, 20, 0.78) !important;
-  color: var(--mura-overview-text) !important;
-  padding: 18px !important;
-  box-shadow: none !important;
-}
-
-.mura-book-progress-card span,
-.mura-book-progress-card small {
-  color: var(--mura-overview-text-secondary) !important;
-  font-size: 0.72rem !important;
-}
-
-.mura-book-progress-card strong {
-  color: var(--mura-overview-text) !important;
-  font-size: 1.3rem !important;
-  font-weight: 650 !important;
-}
-
-.mura-ref-progress {
-  height: 3px !important;
-  background: rgba(210, 225, 215, 0.14) !important;
-}
-
-.mura-ref-progress i {
-  background: var(--mura-overview-accent-strong) !important;
-}
-
-.mura-book-quote-card {
-  grid-template-columns: auto minmax(0, 1fr) !important;
-}
-
-.mura-book-quote-card p {
-  color: var(--mura-overview-text) !important;
-  font-size: clamp(1rem, 1.5vw, 1.26rem) !important;
-  line-height: 1.36 !important;
-}
-
-.mura-book-quote-card small {
-  color: var(--mura-overview-text-muted) !important;
-}
-
-.reading-book-hero__themes {
-  margin-top: 12px !important;
-  gap: 7px !important;
-}
-
-.reading-book-hero__themes p {
-  color: var(--mura-overview-text-muted) !important;
-}
-
-.reading-book-theme {
-  min-height: 28px !important;
-  border-color: var(--mura-overview-border) !important;
-  border-radius: 5px !important;
-  background: rgba(255, 255, 255, 0.026) !important;
-  color: var(--mura-overview-text-secondary) !important;
-  padding: 0 9px !important;
-  font-size: 0.68rem !important;
-}
-
-.reading-book-theme:hover,
-.reading-book-theme.is-favorite {
-  border-color: rgba(78, 167, 127, 0.48) !important;
-  color: var(--mura-overview-text) !important;
-}
-
-.reading-book-chapters {
-  margin-top: 22px !important;
-}
-
-.reading-book-chapters__head {
-  margin-bottom: 12px !important;
-  border-bottom: 1px solid var(--mura-overview-border) !important;
-  padding-bottom: 10px !important;
-}
-
-.reading-book-chapters__title {
-  color: var(--mura-overview-text) !important;
-  font-size: clamp(1.32rem, 2vw, 1.75rem) !important;
-}
-
-.reading-book-chapters__meta {
-  color: var(--mura-overview-text-muted) !important;
-  font-size: 0.78rem !important;
-  line-height: 1.5 !important;
-}
-
-.mura-book-chapter-tabs {
-  gap: 8px !important;
-  margin-bottom: 12px !important;
-  padding-bottom: 3px !important;
-}
-
-.mura-book-chapter-tabs a {
-  min-width: 70px !important;
-  min-height: 32px !important;
-  border: 1px solid var(--mura-overview-border) !important;
-  border-radius: 5px !important;
-  background: rgba(13, 23, 20, 0.82) !important;
-  color: var(--mura-overview-text-secondary) !important;
-  font-size: 0.72rem !important;
-}
-
-.mura-book-chapter-tabs a.is-started,
-.mura-book-chapter-tabs a:hover {
-  border-color: rgba(78, 167, 127, 0.5) !important;
-  background: rgba(78, 167, 127, 0.12) !important;
-  color: var(--mura-overview-text) !important;
-}
-
-.reading-book-chapters__list {
-  grid-template-columns: 1fr !important;
-  gap: 10px !important;
-}
-
-.reading-chapter-card {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 8px 14px;
-  align-items: center;
-  border: 1px solid var(--mura-overview-border) !important;
-  border-radius: 6px !important;
-  background: rgba(13, 23, 20, 0.74) !important;
-  padding: 14px !important;
-  box-shadow: none !important;
-}
-
-.reading-chapter-card__top,
-.reading-chapter-card__title,
-.reading-chapter-card__text,
-.reading-chapter-card__meta {
-  grid-column: 1;
-}
-
-.reading-chapter-card__top {
-  align-items: center !important;
-}
-
-.reading-chapter-card__eyebrow {
-  margin: 0 !important;
-  color: var(--mura-overview-text-muted) !important;
-}
-
-.reading-chapter-card__state,
-.reading-chapter-card__meta span {
-  border: 1px solid var(--mura-overview-border) !important;
-  border-radius: 5px !important;
-  background: rgba(255, 255, 255, 0.026) !important;
-  color: var(--mura-overview-text-secondary) !important;
-  padding: 6px 8px !important;
-  font-size: 0.68rem !important;
-}
-
-.reading-chapter-card__state.is-complete {
-  border-color: rgba(78, 167, 127, 0.48) !important;
-  background: rgba(78, 167, 127, 0.12) !important;
-  color: var(--mura-overview-text) !important;
-}
-
-.reading-chapter-card__title {
-  margin: 6px 0 0 !important;
-  color: var(--mura-overview-text) !important;
-  font-family: var(--mura-font-sans) !important;
-  font-size: 1rem !important;
-  font-weight: 760 !important;
-  line-height: 1.25 !important;
-}
-
-.reading-chapter-card__text {
-  margin-top: 4px !important;
-  color: var(--mura-overview-text-secondary) !important;
-  font-size: 0.8rem !important;
-  line-height: 1.45 !important;
-}
-
-.reading-chapter-card__meta {
-  margin-top: 6px !important;
-  gap: 6px !important;
-}
-
-.reading-chapter-card__action {
-  grid-column: 2;
-  grid-row: 1 / span 4;
-  min-height: 34px !important;
-  align-self: center;
-  border: 1px solid var(--mura-overview-border-strong) !important;
-  border-radius: 5px !important;
-  background: transparent !important;
-  color: var(--mura-overview-text) !important;
-  padding: 0 12px !important;
-  font-size: 0.72rem !important;
-}
-
-.reading-book-fragments,
-.reading-flow-guide,
-.reading-book-summary {
-  display: none !important;
-}
-
-:root[data-theme="light"] .reading-book-page {
-  --mura-overview-bg: #f5eddf;
-  --mura-overview-bg-soft: #fff8ec;
-  --mura-overview-surface: #fff8ec;
-  --mura-overview-elevated: #f3e6d0;
-  --mura-overview-border: rgba(85, 66, 38, 0.16);
-  --mura-overview-border-strong: rgba(85, 66, 38, 0.28);
-  --mura-overview-text: #173f39;
-  --mura-overview-text-secondary: rgba(23, 63, 57, 0.68);
-  --mura-overview-text-muted: rgba(23, 63, 57, 0.46);
-  --mura-overview-accent: #0d7a5f;
-  --mura-overview-accent-strong: #0a6a52;
-  background:
-    radial-gradient(circle at 72% -6%, rgba(13, 122, 95, 0.12), transparent 20rem),
-    linear-gradient(180deg, #fff8ec, #f0e2ca 58%, #fff8ec) !important;
-  color: var(--mura-overview-text) !important;
-}
-
-:root[data-theme="light"] .reading-book-hero--reference {
-  background:
-    linear-gradient(90deg, rgba(255, 248, 236, 0.04), rgba(255, 248, 236, 0.84) 48%, rgba(255, 248, 236, 0.36)),
-    radial-gradient(circle at 77% 32%, rgba(13, 122, 95, 0.1), transparent 14rem) !important;
-}
-
-:root[data-theme="light"] .reading-book-hero--reference::before {
-  background: linear-gradient(90deg, transparent, rgba(255, 248, 236, 0.74) 34%, rgba(255, 248, 236, 0.36) 74%, transparent) !important;
-}
-
-:root[data-theme="light"] .reading-book-hero--reference .reading-book-hero__title,
-:root[data-theme="light"] .reading-book-hero--reference .reading-book-hero__author,
-:root[data-theme="light"] .reading-book-chapters__title,
-:root[data-theme="light"] .reading-chapter-card__title,
-:root[data-theme="light"] .mura-book-quote-card p,
-:root[data-theme="light"] .mura-book-progress-card strong {
-  color: var(--mura-overview-text) !important;
-}
-
-:root[data-theme="light"] .mura-book-progress-card,
-:root[data-theme="light"] .mura-book-quote-card,
-:root[data-theme="light"] .reading-chapter-card {
-  border-color: var(--mura-overview-border) !important;
-  background: rgba(255, 248, 236, 0.86) !important;
-}
-
-@media (max-width: 1100px) {
-  .reading-book-hero--reference {
-    grid-template-columns: minmax(210px, 0.8fr) minmax(0, 1.2fr) !important;
-  }
-
-  .reading-book-hero--reference .reading-book-hero__bookObject {
-    position: absolute !important;
-    top: 28px !important;
-    right: 24px !important;
-    width: 96px !important;
-    height: 144px !important;
-    margin: 0 !important;
-  }
-
-  .reading-book-hero--reference .reading-book-hero__content {
-    padding-right: 126px !important;
-  }
-}
-
-@media (max-width: 760px) {
-  .reading-book-page {
-    padding: 92px 14px 50px !important;
-  }
-
-  .reading-book-page__container {
-    width: 100% !important;
-  }
-
-  .reading-book-hero--reference {
-    grid-template-columns: 1fr !important;
-    gap: 0 !important;
-  }
-
-  .reading-book-hero--reference .reading-book-hero__media {
-    height: 300px !important;
-    min-height: 300px !important;
-  }
-
-  .reading-book-hero--reference .reading-book-hero__content {
-    padding: 22px 0 0 !important;
-  }
-
-  .reading-book-hero--reference .reading-book-hero__title {
-    max-width: 100% !important;
-    font-size: clamp(2.35rem, 12vw, 3.45rem) !important;
-  }
-
-  .reading-book-hero--reference .reading-book-hero__actions,
-  .mura-book-reference-row,
-  .reading-chapter-card {
-    grid-template-columns: 1fr !important;
-  }
-
-  .reading-book-hero--reference .reading-book-hero__bookObject {
-    top: 18px !important;
-    right: 18px !important;
-  }
-
-  .reading-book-hero--reference .reading-book-hero__action,
-  .reading-chapter-card__action {
-    width: 100% !important;
-    grid-column: 1 !important;
-    grid-row: auto !important;
-  }
-}
-
-@media (min-width: 761px) {
-  .reading-book-page .reading-book-hero.reading-book-hero--reference {
-    grid-template-columns: minmax(220px, 292px) minmax(0, 1fr) 152px !important;
-  }
-
-  .reading-book-page .reading-book-hero.reading-book-hero--reference .reading-book-hero__bookObject {
-    position: relative !important;
-    top: auto !important;
-    right: auto !important;
-    width: 116px !important;
-    height: 176px !important;
-    margin: 40px 0 0 !important;
-  }
-
-  .reading-book-page .reading-book-hero.reading-book-hero--reference .reading-book-hero__content {
-    padding-right: 0 !important;
-  }
-}
-
-/* Stage 1A: final MURA hero structure and assets */
-.reading-book-page {
-  --mura-hero-bg: #07110f;
-  --mura-hero-bg-soft: #081310;
-  --mura-hero-surface: #0d1714;
-  --mura-hero-border: rgba(210, 225, 215, 0.12);
-  --mura-hero-border-strong: rgba(210, 225, 215, 0.2);
-  --mura-hero-text: #e7eee8;
-  --mura-hero-text-soft: rgba(231, 238, 232, 0.68);
-  --mura-hero-text-muted: rgba(231, 238, 232, 0.45);
-  --mura-hero-accent: #62c99a;
-  padding-top: 22px !important;
-}
-
-.reading-book-breadcrumb {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0;
-  margin: 0 0 10px;
-  color: var(--mura-hero-text-muted);
-  font-size: 0.72rem;
-  line-height: 1.4;
-}
-
-.reading-book-breadcrumb__item {
-  display: inline-flex;
-  align-items: center;
-  min-width: 0;
-}
-
-.reading-book-breadcrumb a,
-.reading-book-breadcrumb span {
-  color: inherit;
-  text-decoration: none;
-}
-
-.reading-book-breadcrumb a:hover {
-  color: var(--mura-hero-text);
-}
-
-.reading-book-breadcrumb__separator {
-  margin: 0 8px;
-  color: rgba(231, 238, 232, 0.28) !important;
-  font-size: 0.68rem;
-}
-
-.reading-book-hero.reading-book-hero--reference {
-  grid-template-columns: minmax(0, 31.5%) minmax(0, 46%) minmax(132px, 18.5%) !important;
-  align-items: start !important;
-  gap: 20px !important;
-  min-height: 324px !important;
-  border: 0 !important;
-  background:
-    radial-gradient(circle at 82% 22%, rgba(58, 124, 98, 0.14), transparent 12rem),
-    linear-gradient(90deg, rgba(7, 17, 15, 0.02), rgba(7, 17, 15, 0.76) 45%, rgba(7, 17, 15, 0.2)) !important;
-}
-
-.reading-book-hero.reading-book-hero--reference::before {
-  inset: -10px -8px -8px !important;
-  border-radius: 7px !important;
-  background:
-    linear-gradient(90deg, transparent, rgba(7, 17, 15, 0.58) 32%, rgba(7, 17, 15, 0.22) 74%, transparent),
-    radial-gradient(circle at 28% 48%, rgba(231, 238, 232, 0.05), transparent 12rem) !important;
-  opacity: 1 !important;
-}
-
-.reading-book-hero--reference .reading-book-hero__media {
-  isolation: isolate;
-  height: 318px !important;
-  min-height: 318px !important;
-  margin-top: 0 !important;
-  border-radius: 0 !important;
-  background: #06100e !important;
-}
-
-.reading-book-hero--reference .reading-book-hero__media::before,
-.reading-book-hero--reference .reading-book-hero__media::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  pointer-events: none;
-}
-
-.reading-book-hero--reference .reading-book-hero__media::before {
-  background:
-    linear-gradient(90deg, rgba(7, 17, 15, 0.04), rgba(7, 17, 15, 0.66) 92%),
-    linear-gradient(180deg, rgba(7, 17, 15, 0.04), rgba(7, 17, 15, 0.54));
-}
-
-.reading-book-hero--reference .reading-book-hero__media::after {
-  inset: -1px -1px -1px auto;
-  width: 38%;
-  background: linear-gradient(90deg, transparent, var(--mura-hero-bg));
-}
-
-.reading-book-hero__manuscript,
-.reading-book-hero__portrait {
-  position: absolute;
-  display: block;
-  max-width: none;
-  pointer-events: none;
-}
-
-.reading-book-hero__manuscript {
-  inset: 0;
-  z-index: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0.72;
-  mix-blend-mode: screen;
-}
-
-.reading-book-hero__portrait {
-  z-index: 2;
-  left: -58px;
-  bottom: -18px;
-  width: 142%;
-  height: 126%;
-  object-fit: cover;
-  object-position: 50% 8%;
-  filter: grayscale(1) contrast(1.08) brightness(0.8);
-}
-
-.reading-book-hero--reference .reading-book-hero__cover {
-  display: none !important;
-}
-
-.reading-book-hero--reference .reading-book-hero__content {
-  padding: 34px 0 0 !important;
-}
-
-.reading-book-hero__category {
-  display: inline-flex !important;
-  align-items: center;
-  width: fit-content !important;
-  max-width: 100%;
-  min-height: 20px;
-  margin: 0 0 9px;
-  border: 1px solid rgba(98, 201, 154, 0.22);
-  border-radius: 4px;
-  background: rgba(98, 201, 154, 0.08);
-  color: #d8b56d;
-  padding: 0 7px;
-  font-size: 0.58rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  line-height: 1;
-  text-transform: uppercase;
-}
-
-.reading-book-hero--reference .reading-book-hero__author {
-  margin: 0 0 4px !important;
-  color: var(--mura-hero-text-soft) !important;
-  font-size: 0.9rem !important;
-  font-weight: 560 !important;
-}
-
-.reading-book-hero--reference .reading-book-hero__title {
-  max-width: 12ch !important;
-  margin: 0 !important;
-  font-size: clamp(2.45rem, 4.1vw, 3.35rem) !important;
-  font-weight: 520 !important;
-  line-height: 1 !important;
-  letter-spacing: 0 !important;
-  text-wrap: balance;
-}
-
-.reading-book-hero--reference .reading-book-hero__titleSub {
-  margin: 5px 0 0 !important;
-}
-
-.reading-book-hero--reference .reading-book-hero__metaLine {
-  display: flex !important;
-  flex-wrap: wrap;
-  gap: 7px !important;
-  margin-top: 8px !important;
-  color: var(--mura-hero-text-muted) !important;
-  font-size: 0.72rem !important;
-  font-weight: 600 !important;
-  letter-spacing: 0 !important;
-  text-transform: none !important;
-}
-
-.reading-book-hero--reference .reading-book-hero__metaLine i {
-  align-self: center;
-  background: rgba(231, 238, 232, 0.26) !important;
-}
-
-.reading-book-hero--reference .reading-book-hero__description {
-  max-width: 43ch !important;
-  margin-top: 13px !important;
-  color: var(--mura-hero-text-soft) !important;
-  font-size: 0.82rem !important;
-  line-height: 1.56 !important;
-}
-
-.reading-book-hero--reference .reading-book-hero__overview,
-.reading-book-hero--reference .reading-book-hero__statsLine,
-.reading-book-hero--reference .reading-book-hero__metrics {
-  display: none !important;
-}
-
-.reading-book-hero__utilityActions {
-  gap: 16px !important;
-  margin-top: 13px !important;
-}
-
-.reading-book-hero__utilityButton {
-  gap: 6px !important;
-  min-height: 24px !important;
-  color: var(--mura-hero-text-soft) !important;
-  font-size: 0.72rem !important;
-  line-height: 1 !important;
-}
-
-.reading-book-hero__utilityButton::before {
-  content: none !important;
-}
-
-.mura-icon {
-  width: 14px;
-  height: 14px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.55;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.reading-book-hero__utilityButton:hover,
-.reading-book-hero__utilityButton.is-favorite {
-  color: var(--mura-hero-text) !important;
-}
-
-.reading-book-hero__shareStatus {
-  color: var(--mura-hero-text-muted) !important;
-}
-
-.reading-book-hero--reference .reading-book-hero__actions {
-  gap: 11px !important;
-  margin-top: 18px !important;
-}
-
-.reading-book-hero--reference .reading-book-hero__action {
-  gap: 8px !important;
-  min-width: 132px !important;
-  min-height: 40px !important;
-  border-radius: 5px !important;
-  padding: 0 18px !important;
-  font-size: 0.74rem !important;
-  font-weight: 760 !important;
-}
-
-.reading-book-hero--reference .reading-book-hero__action.is-primary {
-  border-color: rgba(98, 201, 154, 0.46) !important;
-  background: linear-gradient(180deg, rgba(27, 134, 102, 0.92), rgba(15, 92, 68, 0.96)) !important;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
-}
-
-.reading-book-hero--reference .reading-book-hero__action:not(.is-primary) {
-  background: rgba(255, 255, 255, 0.018) !important;
-}
-
-.reading-book-hero--reference .reading-book-hero__bookObject {
-  width: 132px !important;
-  height: 190px !important;
-  margin-top: 30px !important;
-  justify-self: start !important;
-  padding: 0 !important;
-  border: 0 !important;
-  background: transparent !important;
-  box-shadow: none !important;
-  transform: none !important;
-}
-
-.reading-book-hero--reference .reading-book-hero__bookObject img {
-  display: block;
-  width: 100%;
-  height: auto;
-  filter: saturate(0.95) brightness(0.92);
-}
-
-.mura-book-reference-row {
-  margin-top: 16px !important;
-}
-
-:root[data-theme="light"] .reading-book-page {
-  --mura-hero-bg: #f5eddf;
-  --mura-hero-bg-soft: #fff8ec;
-  --mura-hero-surface: #fff8ec;
-  --mura-hero-border: rgba(85, 66, 38, 0.16);
-  --mura-hero-border-strong: rgba(85, 66, 38, 0.28);
-  --mura-hero-text: #173f39;
-  --mura-hero-text-soft: rgba(23, 63, 57, 0.68);
-  --mura-hero-text-muted: rgba(23, 63, 57, 0.48);
-  --mura-hero-accent: #0d7a5f;
-}
-
-:root[data-theme="light"] .reading-book-breadcrumb {
-  color: rgba(23, 63, 57, 0.5);
-}
-
-:root[data-theme="light"] .reading-book-breadcrumb__separator {
-  color: rgba(23, 63, 57, 0.3) !important;
-}
-
-:root[data-theme="light"] .reading-book-hero.reading-book-hero--reference {
-  background:
-    radial-gradient(circle at 82% 22%, rgba(13, 122, 95, 0.1), transparent 12rem),
-    linear-gradient(90deg, rgba(255, 248, 236, 0.18), rgba(255, 248, 236, 0.84) 48%, rgba(255, 248, 236, 0.2)) !important;
-}
-
-:root[data-theme="light"] .reading-book-hero.reading-book-hero--reference::before {
-  background:
-    linear-gradient(90deg, transparent, rgba(255, 248, 236, 0.62) 33%, rgba(255, 248, 236, 0.2) 74%, transparent),
-    radial-gradient(circle at 28% 48%, rgba(23, 63, 57, 0.05), transparent 12rem) !important;
-}
-
-:root[data-theme="light"] .reading-book-hero__category {
-  border-color: rgba(13, 122, 95, 0.24);
-  background: rgba(13, 122, 95, 0.08);
-  color: #7a5a1a;
-}
-
-:root[data-theme="light"] .reading-book-hero--reference .reading-book-hero__media::before {
-  background:
-    linear-gradient(90deg, rgba(245, 237, 223, 0.02), rgba(245, 237, 223, 0.56) 94%),
-    linear-gradient(180deg, rgba(245, 237, 223, 0), rgba(245, 237, 223, 0.28));
-}
-
-:root[data-theme="light"] .reading-book-hero--reference .reading-book-hero__media::after {
-  background: linear-gradient(90deg, transparent, var(--mura-hero-bg));
-}
-
-:root[data-theme="light"] .reading-book-hero__portrait {
-  filter: grayscale(1) contrast(1.04) brightness(0.94);
-}
-
-@media (max-width: 1100px) {
-  .reading-book-hero.reading-book-hero--reference {
-    grid-template-columns: minmax(210px, 33%) minmax(0, 1fr) 126px !important;
-    gap: 18px !important;
-  }
-
-  .reading-book-hero--reference .reading-book-hero__bookObject {
-    width: 116px !important;
-    height: 168px !important;
-    margin-top: 34px !important;
-  }
-}
-
-@media (max-width: 760px) {
-  .reading-book-breadcrumb {
-    margin-bottom: 12px;
-    font-size: 0.68rem;
-  }
-
-  .reading-book-hero.reading-book-hero--reference {
-    grid-template-columns: 1fr !important;
-    min-height: 0 !important;
-    gap: 0 !important;
-  }
-
-  .reading-book-hero--reference .reading-book-hero__media {
-    height: 288px !important;
-    min-height: 288px !important;
-  }
-
-  .reading-book-hero--reference .reading-book-hero__content {
-    padding: 18px 0 0 !important;
-  }
-
-  .reading-book-hero--reference .reading-book-hero__title {
-    max-width: 100% !important;
-  }
-
-  .reading-book-hero--reference .reading-book-hero__bookObject {
-    position: absolute !important;
-    top: 18px !important;
-    right: 16px !important;
-    width: 92px !important;
-    height: auto !important;
-    margin: 0 !important;
-  }
-
-  .reading-book-hero--reference .reading-book-hero__action {
-    width: 100% !important;
-  }
-}
-
-@media (min-width: 761px) {
-  .reading-book-page .reading-book-hero.reading-book-hero--reference {
-    grid-template-columns: minmax(0, 31.5%) minmax(0, 46%) minmax(132px, 18.5%) !important;
-  }
-
-  .reading-book-page .reading-book-hero.reading-book-hero--reference .reading-book-hero__bookObject {
-    width: 132px !important;
-    height: 190px !important;
-    margin-top: 30px !important;
-    justify-self: start !important;
-    padding: 0 !important;
-    border: 0 !important;
-    background: transparent !important;
-    box-shadow: none !important;
-    transform: none !important;
-  }
-}
-
-/* Stage 4 MURA work overview */
-.reading-book-page--stage4 {
-  --stage4-bg: #0b1513;
-  --stage4-bg-soft: #0f201c;
-  --stage4-surface: rgba(15, 31, 28, 0.76);
-  --stage4-surface-strong: rgba(19, 39, 35, 0.9);
-  --stage4-line: rgba(229, 189, 111, 0.18);
-  --stage4-line-soft: rgba(255, 255, 255, 0.08);
-  --stage4-text: #f5ead7;
-  --stage4-muted: rgba(245, 234, 215, 0.68);
-  --stage4-soft: rgba(245, 234, 215, 0.48);
-  --stage4-gold: #d5a95c;
-  --stage4-emerald: #1c8a67;
-  --stage4-shadow: 0 22px 70px rgba(0, 0, 0, 0.34);
-  min-height: 100vh;
-  padding-top: 18px !important;
-  background:
-    radial-gradient(circle at 78% 4%, rgba(213, 169, 92, 0.12), transparent 22rem),
-    radial-gradient(circle at 18% 18%, rgba(28, 138, 103, 0.16), transparent 24rem),
-    linear-gradient(180deg, var(--stage4-bg) 0%, #08110f 100%) !important;
-  color: var(--stage4-text);
-}
-
-:root[data-theme="light"] .reading-book-page--stage4 {
-  --stage4-bg: #f3eadb;
-  --stage4-bg-soft: #fff8ed;
-  --stage4-surface: rgba(255, 249, 239, 0.82);
-  --stage4-surface-strong: rgba(255, 252, 244, 0.94);
-  --stage4-line: rgba(105, 74, 33, 0.16);
-  --stage4-line-soft: rgba(23, 63, 57, 0.1);
-  --stage4-text: #123a35;
-  --stage4-muted: rgba(18, 58, 53, 0.68);
-  --stage4-soft: rgba(18, 58, 53, 0.48);
-  --stage4-gold: #b67829;
-  --stage4-emerald: #0b6e57;
-  --stage4-shadow: 0 22px 60px rgba(94, 65, 32, 0.12);
-  background:
-    radial-gradient(circle at 82% 0%, rgba(182, 120, 41, 0.1), transparent 22rem),
-    radial-gradient(circle at 10% 18%, rgba(11, 110, 87, 0.08), transparent 26rem),
-    linear-gradient(180deg, #f7efe2 0%, #f3eadb 100%) !important;
-}
-
-.reading-book-page--stage4 .reading-book-page__container {
-  width: min(100%, 1180px) !important;
-  padding: 0 clamp(16px, 3vw, 34px) 44px !important;
-}
-
-.reading-book-page--stage4 .reading-book-breadcrumb {
-  margin: 0 0 12px !important;
-  color: var(--stage4-soft) !important;
-  font-size: 0.75rem !important;
-  letter-spacing: 0.02em !important;
-}
-
-.reading-book-page--stage4 .reading-book-breadcrumb a {
-  color: var(--stage4-muted) !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero--stage4 {
-  position: relative;
-  display: grid !important;
-  grid-template-columns: minmax(230px, 0.36fr) minmax(0, 0.48fr) minmax(132px, 0.16fr) !important;
-  gap: clamp(18px, 3vw, 34px) !important;
-  min-height: 370px !important;
-  padding: clamp(18px, 3vw, 30px) clamp(18px, 3.2vw, 40px) !important;
-  overflow: hidden;
-  border: 1px solid var(--stage4-line) !important;
-  border-radius: 10px !important;
-  background:
-    linear-gradient(90deg, rgba(7, 15, 13, 0.14), rgba(7, 15, 13, 0.58) 36%, rgba(7, 15, 13, 0.26)),
-    var(--stage4-bg-soft) !important;
-  box-shadow: var(--stage4-shadow) !important;
-}
-
-:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero--stage4 {
-  background:
-    linear-gradient(90deg, rgba(255, 248, 236, 0.1), rgba(255, 248, 236, 0.72) 38%, rgba(255, 248, 236, 0.22)),
-    var(--stage4-bg-soft) !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero--stage4::before {
-  opacity: 0.78 !important;
-  background:
-    radial-gradient(circle at 74% 24%, rgba(213, 169, 92, 0.18), transparent 11rem),
-    linear-gradient(90deg, transparent 0%, rgba(6, 13, 12, 0.5) 42%, rgba(6, 13, 12, 0.16) 100%) !important;
-}
-
-:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero--stage4::before {
-  background:
-    radial-gradient(circle at 76% 24%, rgba(182, 120, 41, 0.12), transparent 12rem),
-    linear-gradient(90deg, transparent 0%, rgba(255, 248, 236, 0.64) 42%, rgba(255, 248, 236, 0.12) 100%) !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__media {
-  position: relative !important;
-  min-height: 312px !important;
-  height: 100% !important;
-  overflow: hidden !important;
-  isolation: isolate;
-  border-radius: 6px;
-}
-
-.reading-book-page--stage4 .reading-book-hero__media::before {
-  content: "" !important;
-  position: absolute !important;
-  inset: 0 !important;
-  z-index: 1 !important;
-  background:
-    radial-gradient(circle at 42% 54%, transparent 0 8rem, rgba(6, 13, 12, 0.18) 14rem, transparent 21rem),
-    linear-gradient(90deg, rgba(6, 13, 12, 0.06), transparent 68%) !important;
-  opacity: 0.78 !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__media::after {
-  content: "" !important;
-  position: absolute !important;
-  inset: 0 !important;
-  z-index: 3 !important;
-  background: linear-gradient(90deg, transparent 0 66%, color-mix(in srgb, var(--stage4-bg-soft) 78%, transparent) 100%) !important;
-  pointer-events: none;
-}
-
-:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero__media::before {
-  background:
-    radial-gradient(circle at 42% 54%, transparent 0 8rem, rgba(18, 58, 53, 0.08) 14rem, transparent 21rem),
-    linear-gradient(90deg, rgba(18, 58, 53, 0.02), transparent 70%) !important;
-  opacity: 0.55 !important;
-}
-
-:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero__media::after {
-  background: linear-gradient(90deg, transparent 0 62%, rgba(255, 248, 236, 0.64) 100%) !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__manuscript {
-  position: absolute !important;
-  inset: -40px -70px -40px -34px !important;
-  z-index: 0 !important;
-  width: calc(100% + 160px) !important;
-  height: calc(100% + 80px) !important;
-  object-fit: cover !important;
-  opacity: 0.22 !important;
-  filter: sepia(0.35) contrast(1.05) brightness(0.72) !important;
-  mask-image: linear-gradient(90deg, #000 0 72%, transparent 100%);
-}
-
-:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero__manuscript {
-  opacity: 0 !important;
-  filter: sepia(0.5) contrast(0.95) brightness(1.12) !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__portrait {
-  position: absolute !important;
-  z-index: 2 !important;
-  left: -10px !important;
-  bottom: -34px !important;
-  width: min(105%, 330px) !important;
-  height: auto !important;
-  max-height: 390px !important;
-  object-fit: contain !important;
-  object-position: bottom left !important;
-  opacity: 0.82 !important;
-  filter: grayscale(1) contrast(1.08) brightness(0.88) !important;
-  mix-blend-mode: luminosity;
-}
-
-:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero__portrait {
-  opacity: 0.42 !important;
-  filter: grayscale(1) contrast(0.92) brightness(1.65) sepia(0.16) !important;
-  mix-blend-mode: multiply;
-}
-
-.reading-book-page--stage4 .reading-book-hero__content {
-  position: relative;
-  z-index: 2;
-  padding: clamp(14px, 2.4vw, 28px) 0 !important;
-  align-self: center;
-}
-
-.reading-book-page--stage4 .reading-book-hero__category {
-  display: inline-flex;
-  width: fit-content;
-  margin: 0 0 12px !important;
-  border: 1px solid color-mix(in srgb, var(--stage4-gold) 42%, transparent) !important;
-  border-radius: 999px !important;
-  background: color-mix(in srgb, var(--stage4-gold) 12%, transparent) !important;
-  color: var(--stage4-gold) !important;
-  padding: 6px 10px !important;
-  font-size: 0.64rem !important;
-  font-weight: 760 !important;
-  letter-spacing: 0.08em !important;
-  text-transform: uppercase;
-}
-
-.reading-book-page--stage4 .reading-book-hero__author {
-  margin: 0 0 6px !important;
-  color: var(--stage4-muted) !important;
-  font-size: 0.95rem !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__title {
-  max-width: 13ch !important;
-  color: var(--stage4-text) !important;
-  font-family: Georgia, "Times New Roman", serif !important;
-  font-size: clamp(3.1rem, 6.2vw, 5.35rem) !important;
-  font-weight: 500 !important;
-  line-height: 0.92 !important;
-  letter-spacing: 0 !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__titleSub {
-  margin: 8px 0 0 !important;
-  color: var(--stage4-soft) !important;
-  font-size: 0.9rem !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__metaLine {
-  margin-top: 14px !important;
-  color: var(--stage4-soft) !important;
-  font-size: 0.76rem !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__metaLine i {
-  background: color-mix(in srgb, var(--stage4-gold) 44%, transparent) !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__description {
-  max-width: 48ch !important;
-  margin-top: 16px !important;
-  color: var(--stage4-muted) !important;
-  font-size: 0.94rem !important;
-  line-height: 1.65 !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__overview,
-.reading-book-page--stage4 .reading-book-hero__metrics,
-.reading-book-page--stage4 .reading-book-fragments,
-.reading-book-page--stage4 .reading-book-summary {
-  display: none !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__utilityActions {
-  margin-top: 14px !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__utilityButton {
-  color: var(--stage4-muted) !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__utilityButton:hover,
-.reading-book-page--stage4 .reading-book-hero__utilityButton.is-favorite {
-  color: var(--stage4-gold) !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__actions {
-  margin-top: 20px !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__action {
-  min-height: 44px !important;
-  border-radius: 6px !important;
-  border: 1px solid var(--stage4-line) !important;
-  background: transparent !important;
-  color: var(--stage4-text) !important;
-  box-shadow: none !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__action.is-primary {
-  border-color: rgba(75, 188, 139, 0.34) !important;
-  background: linear-gradient(180deg, #1b9a73, #0b654f) !important;
-  color: #fff8ea !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__bookObject {
-  z-index: 2;
-  align-self: center !important;
-  justify-self: center !important;
-  width: clamp(118px, 12vw, 156px) !important;
-  height: auto !important;
-  margin: 0 !important;
-  filter: drop-shadow(0 24px 28px rgba(0, 0, 0, 0.34));
-}
-
-.reading-book-page--stage4 .reading-book-hero__bookObject img {
-  width: 100% !important;
-  filter: saturate(0.92) brightness(0.88) !important;
-}
-
-:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero__bookObject img {
-  filter: saturate(0.96) brightness(1.02) !important;
-}
-
-.reading-book-page--stage4 .mura-book-reference-row {
-  display: grid;
-  grid-template-columns: minmax(250px, 0.38fr) minmax(0, 0.62fr);
-  gap: 16px;
-  margin: 18px 0 0 !important;
-}
-
-.reading-book-page--stage4 .mura-book-progress-card,
-.reading-book-page--stage4 .mura-book-quote-card,
-.reading-book-page--stage4 .reading-chapter-card,
-.reading-book-page--stage4 .mura-author-profile,
-.reading-book-page--stage4 .book-social {
-  border: 1px solid var(--stage4-line) !important;
-  border-radius: 8px !important;
-  background: var(--stage4-surface) !important;
-  box-shadow: none !important;
-}
-
-.reading-book-page--stage4 .mura-book-progress-card,
-.reading-book-page--stage4 .mura-book-quote-card {
-  min-height: 92px;
-  padding: 18px !important;
-}
-
-.reading-book-page--stage4 .mura-book-progress-card span,
-.reading-book-page--stage4 .mura-book-progress-card small,
-.reading-book-page--stage4 .mura-book-quote-card small {
-  color: var(--stage4-soft) !important;
-}
-
-.reading-book-page--stage4 .mura-book-progress-card strong {
-  color: var(--stage4-text) !important;
-  font-family: Georgia, "Times New Roman", serif !important;
-}
-
-.reading-book-page--stage4 .mura-ref-progress {
-  background: color-mix(in srgb, var(--stage4-text) 9%, transparent) !important;
-}
-
-.reading-book-page--stage4 .mura-ref-progress i {
-  background: linear-gradient(90deg, var(--stage4-emerald), #7fd2ac) !important;
-}
-
-.reading-book-page--stage4 .mura-book-quote-card p {
-  color: var(--stage4-text) !important;
-  font-family: Georgia, "Times New Roman", serif !important;
-  font-size: clamp(1.05rem, 2vw, 1.42rem) !important;
-  line-height: 1.35 !important;
-}
-
-.reading-book-page--stage4 .mura-book-quote-card > span {
-  color: var(--stage4-gold) !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__themes {
-  margin: 18px 0 0 !important;
-  padding: 0 !important;
-  border: 0 !important;
-  background: transparent !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__themes p {
-  color: var(--stage4-gold) !important;
-  letter-spacing: 0.08em !important;
-}
-
-.reading-book-page--stage4 .reading-book-theme {
-  border: 1px solid var(--stage4-line) !important;
-  border-radius: 999px !important;
-  background: color-mix(in srgb, var(--stage4-surface-strong) 70%, transparent) !important;
-  color: var(--stage4-muted) !important;
-  box-shadow: none !important;
-}
-
-.reading-book-page--stage4 .reading-book-theme:hover,
-.reading-book-page--stage4 .reading-book-theme.is-favorite {
-  border-color: color-mix(in srgb, var(--stage4-gold) 55%, transparent) !important;
-  color: var(--stage4-text) !important;
-}
-
-.reading-book-page--stage4 .reading-flow-guide {
-  display: grid;
-  grid-template-columns: minmax(220px, 0.28fr) minmax(0, 1fr);
-  gap: clamp(18px, 3vw, 36px);
-  margin-top: 28px !important;
-  padding: 26px 0 0 !important;
-  border: 0 !important;
-  border-top: 1px solid var(--stage4-line-soft) !important;
-  background: transparent !important;
-  box-shadow: none !important;
-}
-
-.reading-book-page--stage4 .reading-flow-guide__label {
-  color: var(--stage4-gold) !important;
-}
-
-.reading-book-page--stage4 .reading-flow-guide h2,
-.reading-book-page--stage4 .reading-book-chapters__title,
-.reading-book-page--stage4 .mura-author-profile h2 {
-  color: var(--stage4-text) !important;
-  font-family: Georgia, "Times New Roman", serif !important;
-  font-weight: 500 !important;
-  letter-spacing: 0 !important;
-}
-
-.reading-book-page--stage4 .reading-flow-guide ol {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
-}
-
-.reading-book-page--stage4 .reading-flow-guide li {
-  border: 1px solid var(--stage4-line-soft) !important;
-  border-radius: 8px !important;
-  background: color-mix(in srgb, var(--stage4-surface) 54%, transparent) !important;
-  color: var(--stage4-muted) !important;
-}
-
-.reading-book-page--stage4 .reading-flow-guide li::before {
-  color: var(--stage4-gold) !important;
-}
-
-.reading-book-page--stage4 .reading-flow-guide strong {
-  color: var(--stage4-text) !important;
-}
-
-.reading-book-page--stage4 .mura-author-profile {
-  display: grid;
-  grid-template-columns: 104px minmax(0, 1fr);
-  gap: 18px;
   margin-top: 22px;
-  padding: 18px;
+  padding: 20px;
 }
 
-.reading-book-page--stage4 .mura-author-profile__portrait {
+.mura-author-profile__portrait {
+  aspect-ratio: 3 / 4;
   overflow: hidden;
   border-radius: 8px;
-  background: color-mix(in srgb, var(--stage4-text) 9%, transparent);
-  aspect-ratio: 1;
+  background: #123f38;
 }
 
-.reading-book-page--stage4 .mura-author-profile__portrait img {
+.mura-author-profile__portrait img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: grayscale(1) contrast(1.05);
 }
 
-.reading-book-page--stage4 .mura-author-profile__label {
-  margin: 0 0 6px;
-  color: var(--stage4-gold);
-  font-size: 0.72rem;
-  font-weight: 760;
+.mura-author-profile__label {
+  margin: 0 0 8px;
+  color: #9a651f;
+  font-size: 0.78rem;
+  font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
-.reading-book-page--stage4 .mura-author-profile h2 {
-  margin: 0;
-  font-size: clamp(1.45rem, 3vw, 2.15rem);
+.mura-author-profile__body > p:not(.mura-author-profile__label) {
+  color: rgba(18, 63, 56, 0.74);
+  line-height: 1.7;
 }
 
-.reading-book-page--stage4 .mura-author-profile__body > p:not(.mura-author-profile__label) {
-  margin: 8px 0 0;
-  color: var(--stage4-muted);
-  line-height: 1.65;
-}
-
-.reading-book-page--stage4 .mura-author-profile__notes {
+.mura-author-profile__notes,
+.reading-book-summary__meta,
+.reading-chapter-card__meta {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
   margin-top: 14px;
 }
 
-.reading-book-page--stage4 .mura-author-profile__notes span {
-  border: 1px solid var(--stage4-line-soft);
+.mura-author-profile__notes span,
+.reading-book-summary__meta span,
+.reading-chapter-card__meta span,
+.reading-chapter-card__state {
+  border: 1px solid rgba(132, 90, 42, 0.14);
   border-radius: 999px;
-  padding: 7px 10px;
-  color: var(--stage4-muted);
-  font-size: 0.78rem;
+  padding: 8px 11px;
+  background: rgba(255, 253, 247, 0.72);
+  font-size: 0.82rem;
 }
 
-.reading-book-page--stage4 .reading-book-chapters {
-  margin-top: 30px !important;
+.reading-book-fragments,
+.reading-book-chapters {
+  margin-top: 28px;
 }
 
-.reading-book-page--stage4 .reading-book-chapters__head {
-  margin-bottom: 14px !important;
+.reading-book-fragments__head,
+.reading-book-chapters__head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  align-items: end;
+  justify-content: space-between;
+  margin-bottom: 16px;
 }
 
-.reading-book-page--stage4 .reading-book-chapters__meta,
-.reading-book-page--stage4 .reading-chapter-card__text,
-.reading-book-page--stage4 .reading-chapter-card__meta span {
-  color: var(--stage4-muted) !important;
+.reading-book-fragments__head h2,
+.reading-book-chapters__title {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  line-height: 1;
 }
 
-.reading-book-page--stage4 .mura-book-chapter-tabs {
-  border-color: var(--stage4-line-soft) !important;
-  background: transparent !important;
+.reading-book-fragments__head p,
+.reading-book-chapters__meta {
+  max-width: 420px;
+  margin: 0;
+  color: rgba(18, 63, 56, 0.72);
+  line-height: 1.65;
 }
 
-.reading-book-page--stage4 .mura-book-chapter-tabs a {
-  border-color: var(--stage4-line-soft) !important;
-  color: var(--stage4-muted) !important;
+.reading-book-fragments__grid,
+.reading-book-chapters__list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
 }
 
-.reading-book-page--stage4 .mura-book-chapter-tabs a:hover,
-.reading-book-page--stage4 .mura-book-chapter-tabs a.is-started {
-  border-color: var(--stage4-gold) !important;
-  color: var(--stage4-text) !important;
+.reading-fragment-card__top,
+.reading-chapter-card__top,
+.reading-book-summary__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: start;
+  justify-content: space-between;
 }
 
-.reading-book-page--stage4 .reading-chapter-card {
-  padding: 18px !important;
+.reading-fragment-card__save {
+  min-height: 36px;
+  border: 1px solid rgba(132, 90, 42, 0.16);
+  border-radius: 6px;
+  background: rgba(255, 250, 241, 0.76);
+  color: #123f38;
+  padding: 0 12px;
+  font-weight: 800;
+  cursor: pointer;
 }
 
-.reading-book-page--stage4 .reading-chapter-card__eyebrow,
-.reading-book-page--stage4 .reading-chapter-card__state {
-  color: var(--stage4-gold) !important;
+.reading-fragment-card blockquote {
+  margin: 18px 0 0;
+  color: #123f38;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.25rem, 3vw, 1.9rem);
+  line-height: 1.36;
 }
 
-.reading-book-page--stage4 .reading-chapter-card__title {
-  margin-top: 10px !important;
-  color: var(--stage4-text) !important;
-  font-family: Georgia, "Times New Roman", serif !important;
-  font-size: clamp(1.5rem, 3vw, 2.1rem) !important;
-  line-height: 1.08 !important;
-  letter-spacing: 0 !important;
+.reading-fragment-card__annotations {
+  display: grid;
+  gap: 10px;
+  margin-top: 18px;
 }
 
-.reading-book-page--stage4 .reading-chapter-card__action {
-  border-color: var(--stage4-line) !important;
-  background: color-mix(in srgb, var(--stage4-emerald) 18%, transparent) !important;
-  color: var(--stage4-text) !important;
+.reading-fragment-card__annotations span {
+  border-left: 3px solid rgba(184, 118, 42, 0.58);
+  padding: 10px 0 10px 14px;
+  color: rgba(18, 63, 56, 0.72);
 }
 
-.reading-book-page--stage4 .book-social {
-  margin-top: 24px !important;
-  color: var(--stage4-text) !important;
+.reading-fragment-card__annotations strong {
+  display: block;
+  color: #123f38;
 }
 
-.reading-book-page--stage4 .book-social * {
-  border-color: var(--stage4-line-soft);
+.mura-book-chapter-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
 }
 
-.reading-book-page--stage4 .book-social input,
-.reading-book-page--stage4 .book-social textarea {
-  background: var(--stage4-surface-strong);
-  color: var(--stage4-text);
+.mura-book-chapter-tabs a {
+  border: 1px solid rgba(132, 90, 42, 0.16);
+  border-radius: 6px;
+  padding: 9px 12px;
+  background: rgba(255, 250, 241, 0.76);
+  color: #123f38;
+  font-weight: 800;
+  text-decoration: none;
 }
 
-.reading-book-page--stage4 .book-social p,
-.reading-book-page--stage4 .book-social span,
-.reading-book-page--stage4 .book-social small {
-  color: var(--stage4-muted);
+.mura-book-chapter-tabs a.is-started {
+  border-color: rgba(47, 117, 103, 0.32);
+  background: rgba(47, 117, 103, 0.1);
 }
 
-.reading-book-page--stage4 .mura-icon {
-  width: 15px;
-  height: 15px;
-  stroke-width: 1.7;
+.reading-chapter-card__title {
+  margin-top: 12px;
+  font-size: clamp(1.55rem, 3vw, 2.4rem);
+  line-height: 1.08;
 }
 
-.reading-book-page--stage4 a,
-.reading-book-page--stage4 button {
-  transition:
-    border-color 180ms ease,
-    background 180ms ease,
-    color 180ms ease,
-    transform 180ms ease;
+.reading-chapter-card__text {
+  margin: 12px 0 0;
+  line-height: 1.65;
 }
 
-.reading-book-page--stage4 .reading-chapter-card:hover,
-.reading-book-page--stage4 .mura-book-progress-card:hover,
-.reading-book-page--stage4 .mura-book-quote-card:hover {
-  transform: translateY(-2px);
+.reading-chapter-card__action {
+  margin-top: 18px;
+}
+
+.reading-book-fallback {
+  max-width: 760px;
+  margin: 28px auto 0;
+}
+
+.reading-book-fallback__title {
+  font-size: clamp(2.2rem, 6vw, 4.5rem);
+}
+
+.reading-book-fallback__text {
+  line-height: 1.7;
+}
+
+[data-theme="dark"] .reading-book-page,
+:root[data-theme="dark"] .reading-book-page {
+  background:
+    radial-gradient(circle at 72% 0%, rgba(188, 127, 45, 0.1), transparent 26rem),
+    linear-gradient(180deg, #02100e 0%, #071a16 56%, #020c0b 100%);
+  color: #f5ead7;
+}
+
+:root[data-theme="dark"] .reading-work-showcase {
+  --showcase-paper: #071613;
+  --showcase-paper-deep: #0d211c;
+  --showcase-ink: #f5ead7;
+  --showcase-muted: rgba(245, 234, 215, 0.72);
+  --showcase-gold: #ddb36c;
+  --showcase-gold-dark: #d5a45a;
+  --showcase-border: rgba(221, 179, 108, 0.22);
+  background:
+    radial-gradient(circle at 80% 16%, rgba(221, 179, 108, 0.08), transparent 18rem),
+    linear-gradient(110deg, #071613 0%, #0a1b17 58%, #06100e 100%);
+  box-shadow: 0 26px 64px rgba(0, 0, 0, 0.34);
+}
+
+:root[data-theme="dark"] .reading-work-showcase::before {
+  opacity: 0.12;
+  filter: invert(1) sepia(0.35) saturate(0.55) brightness(0.9);
+}
+
+:root[data-theme="dark"] .reading-work-showcase__visual::after {
+  border-left-color: rgba(221, 179, 108, 0.18);
+  background: linear-gradient(180deg, #071613, #0a1b17 58%, #06100e);
+  box-shadow: -18px 0 34px rgba(4, 12, 10, 0.52);
+}
+
+:root[data-theme="dark"] .reading-work-showcase__portrait {
+  opacity: 0.84;
+  filter: grayscale(0.95) sepia(0.12) contrast(1.08) brightness(0.78);
+}
+
+:root[data-theme="dark"] .mura-book-progress-card,
+:root[data-theme="dark"] .mura-book-quote-card,
+:root[data-theme="dark"] .reading-book-summary__card,
+:root[data-theme="dark"] .reading-chapter-card,
+:root[data-theme="dark"] .reading-fragment-card,
+:root[data-theme="dark"] .reading-book-fallback,
+:root[data-theme="dark"] .reading-flow-guide,
+:root[data-theme="dark"] .mura-author-profile {
+  border-color: rgba(221, 179, 108, 0.18);
+  background: rgba(8, 31, 27, 0.82);
+  box-shadow: 0 20px 52px rgba(0, 0, 0, 0.28);
+}
+
+:root[data-theme="dark"] .reading-book-breadcrumb,
+:root[data-theme="dark"] .mura-book-progress-card small,
+:root[data-theme="dark"] .mura-book-quote-card small,
+:root[data-theme="dark"] .reading-book-summary__row span,
+:root[data-theme="dark"] .reading-book-summary__meta span,
+:root[data-theme="dark"] .reading-chapter-card__meta span,
+:root[data-theme="dark"] .reading-chapter-card__state,
+:root[data-theme="dark"] .reading-chapter-card__text,
+:root[data-theme="dark"] .reading-fragment-card__note,
+:root[data-theme="dark"] .reading-book-fallback__text,
+:root[data-theme="dark"] .reading-flow-guide span,
+:root[data-theme="dark"] .mura-author-profile__body > p:not(.mura-author-profile__label),
+:root[data-theme="dark"] .reading-book-fragments__head p,
+:root[data-theme="dark"] .reading-book-chapters__meta,
+:root[data-theme="dark"] .reading-fragment-card__annotations span {
+  color: rgba(245, 234, 215, 0.72);
+}
+
+:root[data-theme="dark"] .reading-work-showcase__content,
+:root[data-theme="dark"] .reading-work-showcase__author,
+:root[data-theme="dark"] .reading-work-showcase__title,
+:root[data-theme="dark"] .mura-book-progress-card strong,
+:root[data-theme="dark"] .mura-book-quote-card p,
+:root[data-theme="dark"] .reading-flow-guide h2,
+:root[data-theme="dark"] .reading-flow-guide strong,
+:root[data-theme="dark"] .reading-book-chapters__title,
+:root[data-theme="dark"] .reading-book-fallback__title,
+:root[data-theme="dark"] .reading-chapter-card__title,
+:root[data-theme="dark"] .reading-book-fragments__head h2,
+:root[data-theme="dark"] .mura-author-profile h2,
+:root[data-theme="dark"] .reading-book-summary__row h2,
+:root[data-theme="dark"] .reading-fragment-card blockquote,
+:root[data-theme="dark"] .reading-fragment-card__annotations strong {
+  color: #f5ead7;
+}
+
+:root[data-theme="dark"] .reading-work-showcase__utilityButton,
+:root[data-theme="dark"] .reading-work-showcase__action,
+:root[data-theme="dark"] .reading-book-theme,
+:root[data-theme="dark"] .reading-fragment-card__save,
+:root[data-theme="dark"] .mura-book-chapter-tabs a,
+:root[data-theme="dark"] .mura-author-profile__notes span,
+:root[data-theme="dark"] .reading-book-summary__meta span,
+:root[data-theme="dark"] .reading-chapter-card__meta span,
+:root[data-theme="dark"] .reading-chapter-card__state {
+  border-color: rgba(221, 179, 108, 0.2);
+  background: rgba(255, 248, 236, 0.04);
+  color: #f5ead7;
+}
+
+:root[data-theme="dark"] .reading-work-showcase__action.is-primary,
+:root[data-theme="dark"] .reading-book-fallback__action,
+:root[data-theme="dark"] .reading-chapter-card__action {
+  background: linear-gradient(180deg, #bb7b2b, #8f571a);
+  color: #fff2d6;
 }
 
 @media (max-width: 980px) {
-  .reading-book-page--stage4 .reading-book-hero--stage4 {
-    grid-template-columns: minmax(190px, 0.34fr) minmax(0, 1fr) !important;
+  .reading-work-showcase {
+    grid-template-columns: minmax(220px, 0.34fr) minmax(0, 0.66fr);
   }
 
-  .reading-book-page--stage4 .reading-book-hero__bookObject {
-    position: absolute !important;
-    right: clamp(18px, 4vw, 34px) !important;
-    bottom: 24px !important;
-    width: 110px !important;
+  .reading-work-showcase__content {
+    padding: 28px clamp(22px, 4vw, 42px);
   }
 
-  .reading-book-page--stage4 .mura-book-reference-row,
-  .reading-book-page--stage4 .reading-flow-guide {
+  .reading-work-showcase__title {
+    font-size: clamp(2.35rem, 6vw, 3.7rem);
+  }
+}
+
+@media (max-width: 760px) {
+  .reading-work-showcase,
+  .mura-book-reference-row,
+  .reading-book-summary,
+  .reading-flow-guide,
+  .reading-flow-guide ol,
+  .mura-author-profile,
+  .reading-book-fragments__grid,
+  .reading-book-chapters__list {
     grid-template-columns: 1fr;
   }
 
-  .reading-book-page--stage4 .reading-flow-guide ol {
+  .reading-work-showcase {
+    min-height: 0;
+  }
+
+  .reading-work-showcase::before {
+    width: 100%;
+    opacity: 0.08;
+    mask-image: linear-gradient(180deg, transparent 0 18%, #000 52%);
+  }
+
+  .reading-work-showcase__visual {
+    min-height: 172px;
+  }
+
+  .reading-work-showcase__visual::after {
+    top: auto;
+    right: -5%;
+    bottom: -72px;
+    width: 110%;
+    height: 124px;
+    border-top: 1px solid rgba(184, 124, 48, 0.22);
+    border-left: 0;
+    border-radius: 50% 50% 0 0;
+  }
+
+  .reading-work-showcase__content {
+    padding: 16px 16px 18px;
+  }
+
+  .reading-work-showcase__title {
+    max-width: 100%;
+    font-size: clamp(1.95rem, 9vw, 2.65rem);
+    line-height: 1.02;
+  }
+
+  .reading-work-showcase__description {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+
+  .reading-work-showcase__actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .reading-work-showcase__action {
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+    padding: 0 8px;
+    font-size: 0.78rem;
+    line-height: 1.15;
+    text-align: center;
+  }
+
+  .reading-flow-guide li {
+    border-top: 1px solid rgba(132, 90, 42, 0.16);
+    border-left: 0;
+    padding: 12px 0 0;
+  }
+
+  .mura-author-profile {
+    align-items: start;
+  }
+
+  .mura-author-profile__portrait {
+    width: min(180px, 100%);
+  }
+}
+
+@media (max-width: 430px) {
+  .reading-book-page {
+    padding-right: 14px;
+    padding-left: 14px;
+  }
+
+  .reading-work-showcase__utilityButton {
+    flex: 1 1 130px;
+  }
+
+  .reading-work-showcase__actions {
     grid-template-columns: 1fr;
   }
-}
 
-@media (max-width: 700px) {
-  .reading-book-page--stage4 {
-    padding-top: 12px !important;
-  }
-
-  .reading-book-page--stage4 .reading-book-page__container {
-    padding-inline: 14px !important;
-  }
-
-  .reading-book-page--stage4 .reading-book-hero--stage4 {
-    grid-template-columns: 1fr !important;
-    min-height: 0 !important;
-    padding: 16px !important;
-  }
-
-  .reading-book-page--stage4 .reading-book-hero__media {
-    min-height: 230px !important;
-  }
-
-  .reading-book-page--stage4 .reading-book-hero__portrait {
-    left: 0 !important;
-    bottom: -20px !important;
-    width: min(86%, 300px) !important;
-  }
-
-  .reading-book-page--stage4 .reading-book-hero__content {
-    padding-top: 4px !important;
-  }
-
-  .reading-book-page--stage4 .reading-book-hero__title {
-    max-width: 100% !important;
-    font-size: clamp(2.6rem, 14vw, 4.1rem) !important;
-  }
-
-  .reading-book-page--stage4 .reading-book-hero__bookObject {
-    top: 20px !important;
-    right: 16px !important;
-    bottom: auto !important;
-    width: 86px !important;
-  }
-
-  .reading-book-page--stage4 .reading-book-hero__actions {
-    display: grid !important;
-    grid-template-columns: 1fr;
-  }
-
-  .reading-book-page--stage4 .mura-author-profile {
-    grid-template-columns: 1fr;
-  }
-
-  .reading-book-page--stage4 .mura-author-profile__portrait {
-    width: 96px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .reading-book-page--stage4 *,
-  .reading-book-page--stage4 *::before,
-  .reading-book-page--stage4 *::after {
-    transition: none !important;
-    animation: none !important;
-  }
-}
-
-/* Cinematic work-detail hero: one integrated literary artwork instead of split image columns. */
-.reading-book-page--stage4 .reading-book-hero--stage4 {
-  position: relative !important;
-  display: grid !important;
-  grid-template-columns: minmax(0, 1fr) !important;
-  min-height: clamp(440px, 43vw, 620px) !important;
-  padding: clamp(34px, 5vw, 72px) clamp(24px, 6vw, 92px) !important;
-  overflow: hidden !important;
-  isolation: isolate !important;
-  border: 1px solid rgba(211, 175, 108, 0.2) !important;
-  border-radius: 8px !important;
-  background-color: #06110f !important;
-  background-image:
-    linear-gradient(90deg, rgba(2, 9, 8, 0.2) 0%, rgba(2, 9, 8, 0.58) 38%, rgba(2, 9, 8, 0.9) 66%, rgba(2, 9, 8, 0.62) 100%),
-    radial-gradient(circle at 76% 34%, rgba(46, 101, 73, 0.25), transparent 18rem),
-    var(--reading-hero-artwork),
-    var(--reading-hero-portrait),
-    var(--reading-hero-manuscript),
-    linear-gradient(135deg, #0b1715 0%, #07110f 52%, #020706 100%) !important;
-  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, repeat, no-repeat !important;
-  background-position: center, center, center, left bottom, center, center !important;
-  background-size: cover, cover, cover, min(48vw, 560px) auto, cover, cover !important;
-  box-shadow: 0 28px 80px rgba(2, 10, 9, 0.24) !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero--stage4::before {
-  content: "" !important;
-  position: absolute !important;
-  inset: 0 !important;
-  z-index: -1 !important;
-  pointer-events: none !important;
-  background:
-    linear-gradient(180deg, rgba(2, 9, 8, 0.08), rgba(2, 9, 8, 0.54)),
-    radial-gradient(circle at 25% 38%, rgba(255, 255, 255, 0.08), transparent 13rem),
-    radial-gradient(circle at 62% 42%, rgba(206, 160, 82, 0.12), transparent 18rem),
-    linear-gradient(90deg, rgba(2, 9, 8, 0.1), rgba(2, 9, 8, 0.56) 52%, rgba(2, 9, 8, 0.24)) !important;
-  opacity: 1 !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero--stage4::after {
-  content: "" !important;
-  position: absolute !important;
-  z-index: -1 !important;
-  right: clamp(38px, 8vw, 112px) !important;
-  top: 50% !important;
-  width: clamp(96px, 13vw, 170px) !important;
-  aspect-ratio: 0.68 !important;
-  transform: translateY(-48%) perspective(520px) rotateY(-14deg) rotateZ(-1deg) !important;
-  border: 1px solid rgba(213, 192, 137, 0.14) !important;
-  border-radius: 3px 8px 8px 3px !important;
-  background:
-    linear-gradient(90deg, rgba(255, 255, 255, 0.08), transparent 10%, transparent 86%, rgba(255, 255, 255, 0.08) 88%, rgba(220, 210, 180, 0.4) 93%, rgba(28, 25, 21, 0.9) 100%),
-    radial-gradient(circle at 34% 24%, rgba(151, 192, 151, 0.16), transparent 36%),
-    linear-gradient(135deg, #0f352d, #08231e 52%, #051612) !important;
-  box-shadow:
-    -18px 28px 42px rgba(0, 0, 0, 0.45),
-    inset 10px 0 18px rgba(255, 255, 255, 0.04),
-    inset -8px 0 16px rgba(0, 0, 0, 0.28) !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero--generated::after {
-  display: none !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__media,
-.reading-book-page--stage4 .reading-book-hero__bookObject {
-  display: none !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__content {
-  position: relative !important;
-  z-index: 2 !important;
-  width: min(48%, 520px) !important;
-  min-width: 360px !important;
-  margin-left: clamp(250px, 27vw, 360px) !important;
-  padding: 0 !important;
-  align-self: center !important;
-  color: rgba(245, 238, 221, 0.92) !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__category {
-  border-color: rgba(199, 151, 71, 0.52) !important;
-  background: rgba(153, 103, 38, 0.18) !important;
-  color: #d9ad68 !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__author,
-.reading-book-page--stage4 .reading-book-hero__titleSub,
-.reading-book-page--stage4 .reading-book-hero__metaLine,
-.reading-book-page--stage4 .reading-book-hero__description,
-.reading-book-page--stage4 .reading-book-hero__utilityButton {
-  color: rgba(244, 238, 221, 0.78) !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__title {
-  max-width: 10.5ch !important;
-  color: #f5edda !important;
-  text-shadow: 0 2px 22px rgba(0, 0, 0, 0.34) !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__metaLine i {
-  background: rgba(217, 173, 104, 0.65) !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__description {
-  max-width: 46ch !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__utilityButton {
-  border-color: rgba(238, 222, 181, 0.18) !important;
-  background: rgba(4, 16, 14, 0.28) !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__utilityButton:hover,
-.reading-book-page--stage4 .reading-book-hero__utilityButton.is-favorite {
-  color: #e8c47f !important;
-  border-color: rgba(232, 196, 127, 0.44) !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__action {
-  border-color: rgba(238, 222, 181, 0.22) !important;
-  background: rgba(4, 16, 14, 0.34) !important;
-  color: #f5edda !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__action.is-primary {
-  border-color: rgba(80, 205, 150, 0.38) !important;
-  background: linear-gradient(180deg, #1ca878, #0b634f) !important;
-  color: #fff8ea !important;
-}
-
-:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero--stage4,
-:root[data-theme="dark"] .reading-book-page--stage4 .reading-book-hero--stage4 {
-  background-color: #06110f !important;
-  background-image:
-    linear-gradient(90deg, rgba(2, 9, 8, 0.2) 0%, rgba(2, 9, 8, 0.58) 38%, rgba(2, 9, 8, 0.9) 66%, rgba(2, 9, 8, 0.62) 100%),
-    radial-gradient(circle at 76% 34%, rgba(46, 101, 73, 0.25), transparent 18rem),
-    var(--reading-hero-artwork),
-    var(--reading-hero-portrait),
-    var(--reading-hero-manuscript),
-    linear-gradient(135deg, #0b1715 0%, #07110f 52%, #020706 100%) !important;
-  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, repeat, no-repeat !important;
-  background-position: center, center, center, left bottom, center, center !important;
-  background-size: cover, cover, cover, min(48vw, 560px) auto, cover, cover !important;
-}
-
-@media (max-width: 980px) {
-  .reading-book-page--stage4 .reading-book-hero--stage4 {
-    min-height: 560px !important;
-    padding: clamp(28px, 5vw, 46px) !important;
-    background-position: center, center, left top, center, center !important;
-    background-size: cover, cover, min(72vw, 500px) auto, cover, cover !important;
-  }
-
-  .reading-book-page--stage4 .reading-book-hero--stage4::after {
-    right: clamp(22px, 6vw, 54px) !important;
-    top: 30% !important;
-    width: clamp(78px, 18vw, 126px) !important;
-  }
-
-  .reading-book-page--stage4 .reading-book-hero__content {
-    width: min(100%, 560px) !important;
-    min-width: 0 !important;
-    margin: auto 0 0 !important;
-    padding-top: 250px !important;
-  }
-}
-
-@media (max-width: 700px) {
-  .reading-book-page--stage4 .reading-book-hero--stage4,
-  :root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero--stage4,
-  :root[data-theme="dark"] .reading-book-page--stage4 .reading-book-hero--stage4 {
-    min-height: 620px !important;
-    padding: 22px !important;
-    background-image:
-      linear-gradient(180deg, rgba(2, 9, 8, 0.16) 0%, rgba(2, 9, 8, 0.42) 34%, rgba(2, 9, 8, 0.9) 62%, rgba(2, 9, 8, 0.98) 100%),
-      radial-gradient(circle at 72% 24%, rgba(46, 101, 73, 0.24), transparent 12rem),
-      var(--reading-hero-artwork),
-      var(--reading-hero-portrait),
-      var(--reading-hero-manuscript),
-      linear-gradient(135deg, #0b1715 0%, #07110f 52%, #020706 100%) !important;
-    background-position: center, center, center top, left 8px top 22px, center, center !important;
-    background-size: cover, cover, auto 46%, min(92vw, 370px) auto, cover, cover !important;
-  }
-
-  .reading-book-page--stage4 .reading-book-hero--stage4::after {
-    top: 178px !important;
-    right: 18px !important;
-    width: 84px !important;
-  }
-
-  .reading-book-page--stage4 .reading-book-hero__content {
-    margin: 0 !important;
-    min-width: 0 !important;
-    padding-top: 315px !important;
-  }
-
-  .reading-book-page--stage4 .reading-book-hero__title {
-    max-width: 100% !important;
-    font-size: clamp(2.8rem, 13vw, 4rem) !important;
-  }
-
-  .reading-book-page--stage4 .reading-book-hero__actions {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-  }
-}
-
-/* Final Archive Book Showcase sizing: compact card, not full cinematic poster. */
-.reading-book-page--stage4 .reading-book-hero--stage4,
-:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero--stage4,
-:root[data-theme="dark"] .reading-book-page--stage4 .reading-book-hero--stage4 {
-  padding-block: clamp(18px, 2.3vw, 26px) !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__media {
-  min-height: clamp(280px, 27vw, 360px) !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__category {
-  margin-bottom: 9px !important;
-  min-height: 28px !important;
-  padding: 5px 10px !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__author {
-  margin-bottom: 5px !important;
-  font-size: 0.9rem !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__title {
-  font-size: clamp(2.25rem, 4.1vw, 3.6rem) !important;
-  line-height: 0.98 !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__titleSub {
-  margin-top: 7px !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__metaLine {
-  margin-top: 12px !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__description {
-  margin-top: 12px !important;
-  font-size: 0.9rem !important;
-  line-height: 1.56 !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__utilityActions {
-  margin-top: 12px !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__actions {
-  margin-top: 14px !important;
-}
-
-@media (max-width: 700px) {
-  .reading-book-page--stage4 .reading-book-hero__media {
-    min-height: 200px !important;
-  }
-
-  .reading-book-page--stage4 .reading-book-hero__title {
-    font-size: clamp(2.05rem, 10vw, 3.05rem) !important;
-  }
-}
-
-/* Compact showcase tuning: keeps the archive-card layout close to the MURA reference. */
-.reading-book-page--stage4 .reading-book-hero--stage4,
-:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero--stage4 {
-  padding-block: clamp(18px, 2.3vw, 26px) !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__media {
-  min-height: clamp(280px, 27vw, 360px) !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__category {
-  margin-bottom: 9px !important;
-  min-height: 28px !important;
-  padding: 5px 10px !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__author {
-  margin-bottom: 5px !important;
-  font-size: 0.9rem !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__title {
-  font-size: clamp(2.25rem, 4.1vw, 3.6rem) !important;
-  line-height: 0.98 !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__titleSub {
-  margin-top: 7px !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__metaLine {
-  margin-top: 12px !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__description {
-  margin-top: 12px !important;
-  font-size: 0.9rem !important;
-  line-height: 1.56 !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__utilityActions {
-  margin-top: 12px !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__actions {
-  margin-top: 14px !important;
-}
-
-@media (max-width: 700px) {
-  .reading-book-page--stage4 .reading-book-hero__media {
-    min-height: 200px !important;
-  }
-
-  .reading-book-page--stage4 .reading-book-hero__title {
-    font-size: clamp(2.05rem, 10vw, 3.05rem) !important;
-  }
-}
-
-/* Archive Book Showcase correction: neutralizes the cinematic poster override above. */
-.reading-book-page--stage4 .reading-book-hero--stage4,
-:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero--stage4 {
-  position: relative !important;
-  display: grid !important;
-  grid-template-columns: minmax(230px, 0.38fr) minmax(0, 0.46fr) minmax(112px, 0.16fr) !important;
-  gap: clamp(18px, 2.4vw, 32px) !important;
-  min-height: 0 !important;
-  padding: clamp(18px, 2.3vw, 26px) clamp(20px, 3.2vw, 38px) !important;
-  overflow: hidden !important;
-  isolation: isolate !important;
-  border: 1px solid rgba(105, 74, 33, 0.16) !important;
-  border-radius: 10px !important;
-  background:
-    radial-gradient(circle at 87% 13%, rgba(183, 128, 48, 0.1), transparent 13rem),
-    linear-gradient(135deg, rgba(255, 252, 244, 0.96), rgba(245, 235, 218, 0.92)) !important;
-  box-shadow: 0 20px 52px rgba(94, 65, 32, 0.12) !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero--stage4::before,
-:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero--stage4::before {
-  content: "" !important;
-  position: absolute !important;
-  inset: 0 !important;
-  z-index: 0 !important;
-  pointer-events: none !important;
-  opacity: 0.42 !important;
-  background:
-    radial-gradient(circle at 3% 8%, rgba(182, 120, 41, 0.14), transparent 11rem),
-    radial-gradient(circle at 98% 94%, rgba(18, 58, 53, 0.08), transparent 12rem) !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero--stage4::after,
-.reading-book-page--stage4 .reading-book-hero--generated::after {
-  display: none !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__media {
-  position: relative !important;
-  display: block !important;
-  min-height: clamp(280px, 27vw, 360px) !important;
-  height: 100% !important;
-  overflow: hidden !important;
-  border: 1px solid rgba(23, 63, 57, 0.1) !important;
-  border-radius: 8px !important;
-  background:
-    linear-gradient(90deg, rgba(12, 32, 28, 0.74), rgba(12, 32, 28, 0.18)),
-    var(--reading-hero-artwork),
-    linear-gradient(135deg, #10251f, #e7dcc5) !important;
-  background-repeat: no-repeat, no-repeat, no-repeat !important;
-  background-position: center, left center, center !important;
-  background-size: cover, cover, cover !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__media::before {
-  content: "" !important;
-  position: absolute !important;
-  inset: 0 !important;
-  z-index: 1 !important;
-  background:
-    linear-gradient(90deg, rgba(7, 18, 16, 0.06), rgba(255, 248, 236, 0.2) 72%, rgba(255, 248, 236, 0.48)),
-    radial-gradient(circle at 74% 16%, rgba(213, 169, 92, 0.1), transparent 8rem) !important;
-  opacity: 1 !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__media::after {
-  content: "" !important;
-  position: absolute !important;
-  inset: auto 0 0 0 !important;
-  z-index: 3 !important;
-  height: 42% !important;
-  background: linear-gradient(180deg, transparent, rgba(8, 22, 19, 0.42)) !important;
-  pointer-events: none !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__manuscript {
-  position: absolute !important;
-  inset: 0 !important;
-  z-index: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: cover !important;
-  opacity: 0.2 !important;
-  filter: sepia(0.35) contrast(1.02) brightness(0.95) !important;
-  mask-image: none !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__portrait {
-  position: absolute !important;
-  z-index: 2 !important;
-  left: 4% !important;
-  bottom: -9% !important;
-  width: min(88%, 330px) !important;
-  height: auto !important;
-  max-height: 102% !important;
-  object-fit: contain !important;
-  object-position: bottom left !important;
-  opacity: 0.86 !important;
-  filter: grayscale(1) contrast(1.04) brightness(0.98) sepia(0.1) !important;
-  mix-blend-mode: normal !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__content {
-  position: relative !important;
-  z-index: 2 !important;
-  width: auto !important;
-  min-width: 0 !important;
-  margin: 0 !important;
-  padding: clamp(8px, 1.5vw, 16px) 0 !important;
-  align-self: center !important;
-  color: #123a35 !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__category {
-  display: inline-flex !important;
-  width: fit-content !important;
-  margin: 0 0 9px !important;
-  border: 1px solid rgba(182, 120, 41, 0.42) !important;
-  border-radius: 999px !important;
-  background: rgba(182, 120, 41, 0.1) !important;
-  color: #b67829 !important;
-  min-height: 28px !important;
-  padding: 5px 10px !important;
-  font-size: 0.64rem !important;
-  font-weight: 780 !important;
-  letter-spacing: 0.08em !important;
-  text-transform: uppercase !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__author {
-  margin: 0 0 5px !important;
-  color: rgba(18, 58, 53, 0.76) !important;
-  font-size: 0.9rem !important;
-  font-weight: 760 !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__title {
-  max-width: 12ch !important;
-  margin: 0 !important;
-  color: #123a35 !important;
-  font-family: Georgia, "Times New Roman", serif !important;
-  font-size: clamp(2.25rem, 4.1vw, 3.6rem) !important;
-  font-weight: 500 !important;
-  line-height: 0.98 !important;
-  letter-spacing: 0 !important;
-  text-shadow: none !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__titleSub {
-  margin: 8px 0 0 !important;
-  color: rgba(18, 58, 53, 0.62) !important;
-  font-size: 0.82rem !important;
-  font-weight: 800 !important;
-  letter-spacing: 0.12em !important;
-  text-transform: uppercase !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__metaLine {
-  margin-top: 12px !important;
-  color: rgba(18, 58, 53, 0.56) !important;
-  font-size: 0.75rem !important;
-  font-weight: 760 !important;
-  letter-spacing: 0.02em !important;
-  text-transform: none !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__metaLine i {
-  background: rgba(182, 120, 41, 0.44) !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__description {
-  max-width: 46ch !important;
-  margin-top: 12px !important;
-  color: rgba(18, 58, 53, 0.72) !important;
-  font-size: 0.9rem !important;
-  line-height: 1.56 !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__utilityActions {
-  display: flex !important;
-  flex-wrap: wrap !important;
-  gap: 8px !important;
-  margin-top: 12px !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__utilityButton {
-  min-height: 32px !important;
-  border: 1px solid rgba(105, 74, 33, 0.16) !important;
-  border-radius: 5px !important;
-  background: rgba(255, 252, 244, 0.62) !important;
-  color: rgba(18, 58, 53, 0.74) !important;
-  padding: 0 10px !important;
-  font-size: 0.75rem !important;
-  font-weight: 760 !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__utilityButton:hover,
-.reading-book-page--stage4 .reading-book-hero__utilityButton.is-favorite {
-  border-color: rgba(182, 120, 41, 0.42) !important;
-  color: #8b5d1f !important;
-  background: rgba(182, 120, 41, 0.1) !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__actions {
-  display: flex !important;
-  flex-wrap: wrap !important;
-  gap: 10px !important;
-  margin-top: 14px !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__action {
-  min-height: 42px !important;
-  border-radius: 6px !important;
-  border: 1px solid rgba(105, 74, 33, 0.18) !important;
-  background: rgba(255, 252, 244, 0.5) !important;
-  color: #123a35 !important;
-  padding: 0 18px !important;
-  box-shadow: none !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__action.is-primary {
-  border-color: rgba(155, 98, 24, 0.68) !important;
-  background: linear-gradient(180deg, #c98830, #9c651f) !important;
-  color: #fff8ea !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__bookObject {
-  position: relative !important;
-  z-index: 2 !important;
-  display: flex !important;
-  align-self: center !important;
-  justify-self: center !important;
-  width: clamp(92px, 10vw, 138px) !important;
-  height: auto !important;
-  margin: 0 !important;
-  filter: drop-shadow(0 20px 28px rgba(50, 36, 20, 0.22)) !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__bookObject img {
-  display: block !important;
-  width: 100% !important;
-  height: auto !important;
-  max-height: 250px !important;
-  object-fit: contain !important;
-  filter: saturate(0.92) brightness(0.98) !important;
-}
-
-:root[data-theme="dark"] .reading-book-page--stage4 .reading-book-hero--stage4 {
-  border-color: rgba(222, 186, 116, 0.18) !important;
-  background:
-    radial-gradient(circle at 82% 14%, rgba(182, 120, 41, 0.1), transparent 13rem),
-    linear-gradient(135deg, rgba(9, 28, 24, 0.96), rgba(3, 14, 12, 0.96)) !important;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.34) !important;
-}
-
-:root[data-theme="dark"] .reading-book-page--stage4 .reading-book-hero--stage4::before {
-  opacity: 0.64 !important;
-  background:
-    radial-gradient(circle at 5% 12%, rgba(222, 186, 116, 0.08), transparent 10rem),
-    radial-gradient(circle at 98% 92%, rgba(24, 78, 65, 0.24), transparent 12rem) !important;
-}
-
-:root[data-theme="dark"] .reading-book-page--stage4 .reading-book-hero__media {
-  border-color: rgba(222, 186, 116, 0.14) !important;
-  background:
-    linear-gradient(90deg, rgba(4, 14, 12, 0.48), rgba(4, 14, 12, 0.12)),
-    var(--reading-hero-artwork),
-    linear-gradient(135deg, #071512, #132a24) !important;
-}
-
-:root[data-theme="dark"] .reading-book-page--stage4 .reading-book-hero__media::before {
-  background:
-    linear-gradient(90deg, rgba(3, 13, 11, 0.12), rgba(3, 13, 11, 0.28) 72%, rgba(3, 13, 11, 0.58)),
-    radial-gradient(circle at 74% 16%, rgba(213, 169, 92, 0.1), transparent 8rem) !important;
-}
-
-:root[data-theme="dark"] .reading-book-page--stage4 .reading-book-hero__portrait {
-  opacity: 0.8 !important;
-  filter: grayscale(1) contrast(1.06) brightness(0.84) sepia(0.1) !important;
-}
-
-:root[data-theme="dark"] .reading-book-page--stage4 .reading-book-hero__content,
-:root[data-theme="dark"] .reading-book-page--stage4 .reading-book-hero__title,
-:root[data-theme="dark"] .reading-book-page--stage4 .reading-book-hero__action {
-  color: #f2ead7 !important;
-}
-
-:root[data-theme="dark"] .reading-book-page--stage4 .reading-book-hero__author,
-:root[data-theme="dark"] .reading-book-page--stage4 .reading-book-hero__titleSub,
-:root[data-theme="dark"] .reading-book-page--stage4 .reading-book-hero__metaLine,
-:root[data-theme="dark"] .reading-book-page--stage4 .reading-book-hero__description,
-:root[data-theme="dark"] .reading-book-page--stage4 .reading-book-hero__utilityButton {
-  color: rgba(242, 234, 215, 0.72) !important;
-}
-
-:root[data-theme="dark"] .reading-book-page--stage4 .reading-book-hero__category {
-  border-color: rgba(222, 186, 116, 0.4) !important;
-  background: rgba(222, 186, 116, 0.1) !important;
-  color: #d9ad68 !important;
-}
-
-:root[data-theme="dark"] .reading-book-page--stage4 .reading-book-hero__utilityButton,
-:root[data-theme="dark"] .reading-book-page--stage4 .reading-book-hero__action {
-  border-color: rgba(222, 186, 116, 0.16) !important;
-  background: rgba(255, 248, 236, 0.04) !important;
-}
-
-:root[data-theme="dark"] .reading-book-page--stage4 .reading-book-hero__action.is-primary {
-  border-color: rgba(194, 133, 48, 0.76) !important;
-  background: linear-gradient(180deg, #b7792b, #8f5b1e) !important;
-  color: #fff8ea !important;
-}
-
-:root[data-theme="dark"] .reading-book-page--stage4 .reading-book-hero__bookObject {
-  filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.38)) !important;
-}
-
-@media (max-width: 980px) {
-  .reading-book-page--stage4 .reading-book-hero--stage4,
-  :root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero--stage4,
-  :root[data-theme="dark"] .reading-book-page--stage4 .reading-book-hero--stage4 {
-    grid-template-columns: minmax(190px, 0.36fr) minmax(0, 0.64fr) !important;
-    min-height: 0 !important;
-  }
-
-  .reading-book-page--stage4 .reading-book-hero__bookObject {
-    position: absolute !important;
-    right: 24px !important;
-    bottom: 24px !important;
-    width: 92px !important;
-  }
-}
-
-@media (max-width: 700px) {
-  .reading-book-page--stage4 .reading-book-hero--stage4,
-  :root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero--stage4,
-  :root[data-theme="dark"] .reading-book-page--stage4 .reading-book-hero--stage4 {
-    grid-template-columns: 1fr !important;
-    gap: 12px !important;
-    min-height: 0 !important;
-    padding: 14px !important;
-  }
-
-  .reading-book-page--stage4 .reading-book-hero__media {
-    min-height: 150px !important;
-  }
-
-  .reading-book-page--stage4 .reading-book-hero__portrait {
-    left: 6% !important;
-    bottom: -12px !important;
-    width: min(68%, 220px) !important;
-  }
-
-  .reading-book-page--stage4 .reading-book-hero__content {
-    padding: 2px 0 0 !important;
-  }
-
-  .reading-book-page--stage4 .reading-book-hero__title {
-    max-width: 100% !important;
-    font-size: clamp(2.05rem, 10vw, 3.05rem) !important;
-  }
-
-  .reading-book-page--stage4 .reading-book-hero__bookObject {
-    position: absolute !important;
-    top: 22px !important;
-    right: 20px !important;
-    bottom: auto !important;
-    width: 64px !important;
-  }
-
-  .reading-book-page--stage4 .reading-book-hero__actions {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    gap: 8px !important;
-  }
-
-  .reading-book-page--stage4 .reading-book-hero__action {
-    min-height: 38px !important;
-  }
-
-  .reading-book-page--stage4 .reading-book-hero__utilityButton {
-    min-height: 28px !important;
-  }
-}
-
-/* Museum Archive Showcase final pass: integrated work-detail card. */
-.reading-book-page--stage4 .reading-book-hero--stage4,
-:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero--stage4,
-:root[data-theme="dark"] .reading-book-page--stage4 .reading-book-hero--stage4 {
-  display: grid !important;
-  grid-template-columns: minmax(0, 1.55fr) minmax(0, 2fr) minmax(0, 1fr) !important;
-  align-items: stretch !important;
-  gap: clamp(16px, 2vw, 24px) !important;
-  min-height: 0 !important;
-  padding: clamp(22px, 2.6vw, 32px) clamp(22px, 3vw, 34px) !important;
-  border-radius: 10px !important;
-  overflow: hidden !important;
-  isolation: isolate !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero--stage4,
-:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero--stage4 {
-  border: 1px solid rgba(112, 78, 36, 0.18) !important;
-  background:
-    radial-gradient(circle at 9% 15%, rgba(184, 126, 47, 0.13), transparent 16rem),
-    radial-gradient(circle at 92% 52%, rgba(24, 70, 61, 0.08), transparent 18rem),
-    linear-gradient(135deg, #fffaf0 0%, #f3e7d1 100%) !important;
-  box-shadow: 0 24px 58px rgba(97, 69, 34, 0.13) !important;
-}
-
-:root[data-theme="dark"] .reading-book-page--stage4 .reading-book-hero--stage4 {
-  border-color: rgba(219, 178, 105, 0.2) !important;
-  background:
-    radial-gradient(circle at 12% 18%, rgba(202, 147, 65, 0.12), transparent 15rem),
-    radial-gradient(circle at 87% 50%, rgba(28, 92, 74, 0.2), transparent 17rem),
-    linear-gradient(135deg, #071614 0%, #06120f 58%, #030a08 100%) !important;
-  box-shadow: 0 28px 68px rgba(0, 0, 0, 0.36) !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero--stage4::before,
-:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero--stage4::before,
-:root[data-theme="dark"] .reading-book-page--stage4 .reading-book-hero--stage4::before {
-  content: "" !important;
-  position: absolute !important;
-  inset: 0 !important;
-  z-index: 0 !important;
-  pointer-events: none !important;
-  opacity: 0.36 !important;
-  background:
-    linear-gradient(90deg, rgba(117, 76, 30, 0.08), transparent 26%, transparent 72%, rgba(117, 76, 30, 0.08)),
-    var(--reading-hero-manuscript) !important;
-  background-size: auto, 760px auto !important;
-  background-position: center, right 22px top -80px !important;
-}
-
-:root[data-theme="dark"] .reading-book-page--stage4 .reading-book-hero--stage4::before {
-  opacity: 0.24 !important;
-  filter: invert(1) sepia(0.35) saturate(0.75) !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero--stage4::after,
-.reading-book-page--stage4 .reading-book-hero--generated::after {
-  display: none !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__media {
-  position: relative !important;
-  z-index: 1 !important;
-  display: block !important;
-  height: auto !important;
-  min-height: clamp(330px, 29vw, 390px) !important;
-  overflow: hidden !important;
-  border-radius: 8px !important;
-  border: 1px solid rgba(23, 63, 57, 0.14) !important;
-  background:
-    linear-gradient(180deg, rgba(35, 64, 55, 0.06), rgba(106, 71, 32, 0.13)),
-    var(--reading-hero-manuscript),
-    linear-gradient(135deg, #ebe0c9, #cbb892) !important;
-  background-size: auto, 720px auto, cover !important;
-  background-position: center, center, center !important;
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 250, 238, 0.28),
-    0 18px 34px rgba(73, 47, 23, 0.14) !important;
-}
-
-:root[data-theme="dark"] .reading-book-page--stage4 .reading-book-hero__media {
-  border-color: rgba(219, 178, 105, 0.14) !important;
-  background:
-    linear-gradient(180deg, rgba(4, 16, 14, 0.16), rgba(2, 9, 8, 0.42)),
-    var(--reading-hero-manuscript),
-    linear-gradient(135deg, #10241f, #06120f) !important;
-  box-shadow:
-    inset 0 0 0 1px rgba(240, 212, 160, 0.08),
-    0 20px 42px rgba(0, 0, 0, 0.32) !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__media::before {
-  content: "" !important;
-  position: absolute !important;
-  inset: 0 !important;
-  z-index: 1 !important;
-  background:
-    radial-gradient(circle at 56% 32%, rgba(255, 248, 226, 0.24), transparent 8rem),
-    linear-gradient(90deg, rgba(12, 34, 30, 0.1), transparent 44%, rgba(255, 248, 226, 0.28)) !important;
-}
-
-:root[data-theme="dark"] .reading-book-page--stage4 .reading-book-hero__media::before {
-  background:
-    radial-gradient(circle at 52% 34%, rgba(234, 202, 142, 0.09), transparent 8rem),
-    linear-gradient(90deg, rgba(0, 0, 0, 0.24), transparent 46%, rgba(0, 0, 0, 0.18)) !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__media::after {
-  content: "" !important;
-  position: absolute !important;
-  inset: auto 0 0 0 !important;
-  z-index: 3 !important;
-  height: 28% !important;
-  background: linear-gradient(180deg, transparent, rgba(28, 37, 28, 0.22)) !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__manuscript {
-  display: none !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__portrait {
-  position: absolute !important;
-  z-index: 2 !important;
-  left: 50% !important;
-  bottom: -8px !important;
-  width: min(96%, 345px) !important;
-  height: auto !important;
-  max-height: 94% !important;
-  transform: translateX(-50%) !important;
-  object-fit: contain !important;
-  object-position: center bottom !important;
-  opacity: 0.9 !important;
-  filter: grayscale(1) sepia(0.2) contrast(1.03) brightness(0.96) !important;
-  mix-blend-mode: multiply !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero--generated .reading-book-hero__media {
-  background:
-    linear-gradient(90deg, rgba(9, 24, 21, 0.14), rgba(255, 246, 225, 0.24)),
-    var(--reading-hero-artwork),
-    linear-gradient(135deg, #d7c4a0, #f5ead4) !important;
-  background-size: cover, auto 104%, cover !important;
-  background-position: center, left center, center !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero--generated .reading-book-hero__portrait {
-  display: none !important;
-}
-
-:root[data-theme="dark"] .reading-book-page--stage4 .reading-book-hero--generated .reading-book-hero__media {
-  background:
-    linear-gradient(90deg, rgba(3, 12, 10, 0.16), rgba(3, 12, 10, 0.18)),
-    var(--reading-hero-artwork),
-    linear-gradient(135deg, #071512, #132a24) !important;
-  background-size: cover, auto 104%, cover !important;
-  background-position: center, left center, center !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__content {
-  z-index: 2 !important;
-  align-self: center !important;
-  padding: clamp(8px, 1.2vw, 14px) 0 !important;
-  margin: 0 !important;
-  color: #133f38 !important;
-}
-
-:root[data-theme="dark"] .reading-book-page--stage4 .reading-book-hero__content {
-  color: #f2ead7 !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__title {
-  max-width: 11.5ch !important;
-  color: #123f38 !important;
-  font-size: clamp(2.35rem, 4vw, 3.45rem) !important;
-  line-height: 0.99 !important;
-  letter-spacing: 0 !important;
-}
-
-:root[data-theme="dark"] .reading-book-page--stage4 .reading-book-hero__title {
-  color: #f4ead6 !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__bookObject {
-  position: relative !important;
-  z-index: 2 !important;
-  display: grid !important;
-  place-items: center !important;
-  align-self: stretch !important;
-  justify-self: stretch !important;
-  width: 100% !important;
-  max-width: none !important;
-  min-height: 100% !important;
-  margin: 0 !important;
-  border-radius: 8px !important;
-  overflow: visible !important;
-  background:
-    radial-gradient(circle at 50% 42%, rgba(185, 128, 51, 0.12), transparent 6.5rem),
-    linear-gradient(180deg, rgba(255, 250, 238, 0.38), rgba(237, 223, 198, 0.14)) !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__bookObject::before {
-  content: "" !important;
-  position: absolute !important;
-  inset: 20px 0 !important;
-  z-index: -1 !important;
-  border-left: 1px solid rgba(117, 79, 31, 0.1) !important;
-  background:
-    linear-gradient(90deg, rgba(255, 250, 238, 0), rgba(255, 250, 238, 0.48)),
-    var(--reading-hero-manuscript) !important;
-  background-size: auto, 440px auto !important;
-  background-position: center, center !important;
-  opacity: 0.38 !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__bookObject::after {
-  content: "" !important;
-  position: absolute !important;
-  bottom: 20% !important;
-  width: min(82%, 150px) !important;
-  height: 20px !important;
-  border-radius: 999px !important;
-  background: rgba(74, 48, 22, 0.18) !important;
-  filter: blur(14px) !important;
-  transform: translateY(34px) !important;
-}
-
-:root[data-theme="dark"] .reading-book-page--stage4 .reading-book-hero__bookObject {
-  background:
-    radial-gradient(circle at 50% 42%, rgba(211, 158, 78, 0.16), transparent 6.5rem),
-    linear-gradient(180deg, rgba(239, 210, 150, 0.05), rgba(8, 28, 23, 0.1)) !important;
-}
-
-:root[data-theme="dark"] .reading-book-page--stage4 .reading-book-hero__bookObject::before {
-  border-left-color: rgba(219, 178, 105, 0.12) !important;
-  opacity: 0.18 !important;
-  filter: invert(1) sepia(0.35) saturate(0.7) !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__bookObject img {
-  position: relative !important;
-  z-index: 2 !important;
-  width: min(94%, 178px) !important;
-  max-height: 285px !important;
-  object-fit: contain !important;
-  transform: perspective(620px) rotateY(-10deg) rotateZ(-1deg) !important;
-  transform-origin: center !important;
-  filter:
-    drop-shadow(-18px 24px 28px rgba(57, 38, 18, 0.24))
-    saturate(0.96)
-    brightness(0.98) !important;
-}
-
-:root[data-theme="dark"] .reading-book-page--stage4 .reading-book-hero__bookObject img {
-  filter:
-    drop-shadow(-18px 24px 32px rgba(0, 0, 0, 0.5))
-    saturate(0.9)
-    brightness(0.9) !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__bookObject.is-placeholder {
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  justify-content: center !important;
-  justify-self: stretch !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__bookObject.is-placeholder span,
-.reading-book-page--stage4 .reading-book-hero__bookObject.is-placeholder strong,
-.reading-book-page--stage4 .reading-book-hero__bookObject.is-placeholder small {
-  position: relative !important;
-  z-index: 2 !important;
-  display: block !important;
-  width: clamp(120px, 12vw, 170px) !important;
-  padding-inline: 16px !important;
-  color: #e8d9b9 !important;
-  background: linear-gradient(135deg, #123b32, #08251f) !important;
-  box-shadow: -14px 20px 26px rgba(57, 38, 18, 0.22) !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__bookObject.is-placeholder span {
-  padding-top: 32px !important;
-  border-radius: 5px 5px 0 0 !important;
-  font-size: 0.68rem !important;
-  letter-spacing: 0.18em !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__bookObject.is-placeholder strong {
-  min-height: 118px !important;
-  font-family: Georgia, "Times New Roman", serif !important;
-  font-size: 1.05rem !important;
-  line-height: 1.18 !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero__bookObject.is-placeholder small {
-  padding-bottom: 28px !important;
-  border-radius: 0 5px 5px 0 !important;
-  color: rgba(232, 217, 185, 0.7) !important;
-}
-
-@media (max-width: 980px) {
-  .reading-book-page--stage4 .reading-book-hero--stage4,
-  :root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero--stage4,
-  :root[data-theme="dark"] .reading-book-page--stage4 .reading-book-hero--stage4 {
-    grid-template-columns: minmax(210px, 0.38fr) minmax(0, 0.62fr) !important;
-  }
-
-  .reading-book-page--stage4 .reading-book-hero__bookObject {
-    grid-column: 2 !important;
-    min-height: 112px !important;
-    align-self: end !important;
-  }
-
-  .reading-book-page--stage4 .reading-book-hero__bookObject img {
-    width: 112px !important;
-    max-height: 160px !important;
-  }
-}
-
-@media (max-width: 700px) {
-  .reading-book-page--stage4 .reading-book-hero--stage4,
-  :root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero--stage4,
-  :root[data-theme="dark"] .reading-book-page--stage4 .reading-book-hero--stage4 {
-    grid-template-columns: 1fr !important;
-    gap: 12px !important;
-    padding: 14px !important;
-  }
-
-  .reading-book-page--stage4 .reading-book-hero__media {
-    min-height: 190px !important;
-  }
-
-  .reading-book-page--stage4 .reading-book-hero--generated .reading-book-hero__media {
-    background-size: cover, auto 100%, cover !important;
-    background-position: center, 14% center, center !important;
-  }
-
-  .reading-book-page--stage4 .reading-book-hero__portrait {
-    width: min(76%, 250px) !important;
-    max-height: 96% !important;
-  }
-
-  .reading-book-page--stage4 .reading-book-hero__bookObject {
-    grid-column: auto !important;
-    min-height: 126px !important;
-  }
-
-  .reading-book-page--stage4 .reading-book-hero__bookObject img {
-    width: 92px !important;
-    max-height: 128px !important;
-  }
-
-  .reading-book-page--stage4 .reading-book-hero__bookObject.is-placeholder span,
-  .reading-book-page--stage4 .reading-book-hero__bookObject.is-placeholder strong,
-  .reading-book-page--stage4 .reading-book-hero__bookObject.is-placeholder small {
-    width: 92px !important;
-    padding-inline: 10px !important;
-  }
-
-  .reading-book-page--stage4 .reading-book-hero__bookObject.is-placeholder span {
-    padding-top: 14px !important;
-  }
-
-  .reading-book-page--stage4 .reading-book-hero__bookObject.is-placeholder strong {
-    min-height: 52px !important;
-    font-size: 0.78rem !important;
-  }
-
-  .reading-book-page--stage4 .reading-book-hero__bookObject.is-placeholder small {
-    padding-bottom: 12px !important;
-  }
-}
-
-.reading-book-page--stage4 .reading-book-hero.reading-book-hero--stage4 .reading-book-hero__bookObject,
-.reading-book-page--stage4 .reading-book-hero.reading-book-hero--reference .reading-book-hero__bookObject {
-  justify-self: stretch !important;
-  align-self: stretch !important;
-  width: auto !important;
-  inline-size: 100% !important;
-  max-width: 100% !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero.reading-book-hero--stage4 .reading-book-hero__bookObject img {
-  width: min(96%, 184px) !important;
-}
-
-.reading-book-page--stage4 .reading-book-hero.reading-book-hero--stage4 .reading-book-hero__bookObject.is-placeholder span,
-.reading-book-page--stage4 .reading-book-hero.reading-book-hero--stage4 .reading-book-hero__bookObject.is-placeholder strong,
-.reading-book-page--stage4 .reading-book-hero.reading-book-hero--stage4 .reading-book-hero__bookObject.is-placeholder small {
-  width: min(90%, 170px) !important;
-}
-
-@media (max-width: 700px) {
-  .reading-book-page--stage4 .reading-book-hero.reading-book-hero--stage4 .reading-book-hero__media {
-    min-height: 160px !important;
-  }
-
-  .reading-book-page--stage4 .reading-book-hero.reading-book-hero--stage4 .reading-book-hero__bookObject,
-  .reading-book-page--stage4 .reading-book-hero.reading-book-hero--reference .reading-book-hero__bookObject {
-    position: absolute !important;
-    top: 22px !important;
-    right: 20px !important;
-    left: auto !important;
-    bottom: auto !important;
-    width: 78px !important;
-    inline-size: 78px !important;
-    min-height: 108px !important;
-    height: 108px !important;
-    z-index: 4 !important;
-  }
-
-  .reading-book-page--stage4 .reading-book-hero.reading-book-hero--stage4 .reading-book-hero__bookObject::before {
-    inset: 0 !important;
-    border-left: 0 !important;
-  }
-
-  .reading-book-page--stage4 .reading-book-hero.reading-book-hero--stage4 .reading-book-hero__bookObject img {
-    width: 64px !important;
-    max-height: 94px !important;
-  }
-
-  .reading-book-page--stage4 .reading-book-hero.reading-book-hero--stage4 .reading-book-hero__bookObject.is-placeholder span,
-  .reading-book-page--stage4 .reading-book-hero.reading-book-hero--stage4 .reading-book-hero__bookObject.is-placeholder strong,
-  .reading-book-page--stage4 .reading-book-hero.reading-book-hero--stage4 .reading-book-hero__bookObject.is-placeholder small {
-    width: 62px !important;
-    padding-inline: 8px !important;
-  }
-
-  .reading-book-page--stage4 .reading-book-hero.reading-book-hero--stage4 .reading-book-hero__bookObject.is-placeholder span {
-    padding-top: 10px !important;
-    font-size: 0.52rem !important;
-  }
-
-  .reading-book-page--stage4 .reading-book-hero.reading-book-hero--stage4 .reading-book-hero__bookObject.is-placeholder strong {
-    min-height: 42px !important;
-    font-size: 0.62rem !important;
-  }
-
-  .reading-book-page--stage4 .reading-book-hero.reading-book-hero--stage4 .reading-book-hero__bookObject.is-placeholder small {
-    padding-bottom: 9px !important;
-    font-size: 0.5rem !important;
-  }
-
-  .reading-book-page--stage4 .reading-book-hero.reading-book-hero--stage4 .reading-book-hero__actions {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
-    gap: 8px !important;
-  }
-
-  .reading-book-page--stage4 .reading-book-hero.reading-book-hero--stage4 .reading-book-hero__action {
-    grid-column: auto !important;
-    width: 100% !important;
-    min-width: 0 !important;
-    min-height: 38px !important;
-    padding: 0 10px !important;
-    font-size: 0.72rem !important;
-    text-align: center !important;
-  }
-}
-
-/* Reading hero colour correction: keep the showcase warm in light mode. */
-.reading-book-page--stage4 .reading-book-hero--generated .reading-book-hero__portrait {
-  display: block !important;
-}
-
-:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero--stage4 {
-  border-color: rgba(146, 96, 39, 0.2) !important;
-  background:
-    radial-gradient(circle at 12% 12%, rgba(191, 130, 48, 0.12), transparent 14rem),
-    radial-gradient(circle at 88% 62%, rgba(19, 68, 58, 0.06), transparent 16rem),
-    linear-gradient(135deg, #fff8eb 0%, #f4e7cf 100%) !important;
-  box-shadow: 0 20px 48px rgba(99, 68, 31, 0.12) !important;
-}
-
-:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero__media,
-:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero--generated .reading-book-hero__media {
-  border-color: rgba(121, 82, 36, 0.18) !important;
-  background:
-    radial-gradient(circle at 48% 24%, rgba(255, 247, 225, 0.64), transparent 8rem),
-    linear-gradient(90deg, rgba(31, 70, 61, 0.08), rgba(255, 245, 224, 0.38)),
-    var(--reading-hero-manuscript),
-    linear-gradient(135deg, #efe1c3, #c8ad7a) !important;
-  background-size: auto, auto, 700px auto, cover !important;
-  background-position: center, center, center, center !important;
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 252, 241, 0.34),
-    0 16px 30px rgba(91, 61, 27, 0.14) !important;
-}
-
-:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero__media::before {
-  background:
-    radial-gradient(circle at 50% 32%, rgba(255, 248, 229, 0.2), transparent 8rem),
-    linear-gradient(90deg, rgba(18, 60, 52, 0.08), transparent 52%, rgba(255, 247, 226, 0.24)) !important;
-}
-
-:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero__media::after {
-  background: linear-gradient(180deg, transparent, rgba(92, 64, 29, 0.12)) !important;
-}
-
-:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero__portrait {
-  opacity: 0.82 !important;
-  filter: grayscale(1) sepia(0.34) contrast(1.04) brightness(1.02) !important;
-  mix-blend-mode: multiply !important;
-}
-
-:root[data-theme="dark"] .reading-book-page--stage4 .reading-book-hero--generated .reading-book-hero__media {
-  background:
-    radial-gradient(circle at 50% 22%, rgba(224, 181, 105, 0.08), transparent 8rem),
-    linear-gradient(90deg, rgba(2, 12, 10, 0.18), rgba(2, 12, 10, 0.3)),
-    var(--reading-hero-manuscript),
-    linear-gradient(135deg, #081814, #10251f) !important;
-  background-size: auto, auto, 700px auto, cover !important;
-}
-
-:root[data-theme="dark"] .reading-book-page--stage4 .reading-book-hero--generated .reading-book-hero__portrait {
-  opacity: 0.66 !important;
-  filter: grayscale(1) sepia(0.18) contrast(1.06) brightness(0.82) !important;
-  mix-blend-mode: normal !important;
-}
-
-:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero__content,
-:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero__author,
-:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero__description,
-:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero__metaLine,
-:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero__titleSub {
-  color: #245a50 !important;
-}
-
-:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero__title {
-  color: #16483f !important;
-}
-
-:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero__category {
-  border-color: rgba(178, 115, 35, 0.34) !important;
-  background: rgba(191, 126, 43, 0.08) !important;
-  color: #a46622 !important;
-}
-
-:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero__utilityButton,
-:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero__action:not(.is-primary) {
-  border-color: rgba(116, 83, 43, 0.18) !important;
-  background: rgba(255, 250, 239, 0.72) !important;
-  color: #245a50 !important;
-}
-
-:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero__utilityButton:hover,
-:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero__utilityButton.is-favorite {
-  border-color: rgba(176, 112, 33, 0.28) !important;
-  background: rgba(191, 126, 43, 0.11) !important;
-  color: #16483f !important;
-}
-
-:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero__action.is-primary {
-  background: linear-gradient(180deg, #c5862f, #9d6420) !important;
-  color: #fff8e8 !important;
-  box-shadow: 0 10px 22px rgba(150, 91, 27, 0.2) !important;
-}
-
-:root[data-theme="dark"] .reading-book-page--stage4 .reading-book-hero__action.is-primary {
-  background: linear-gradient(180deg, #b9792b, #8e5a1e) !important;
-  color: #fff2d7 !important;
-  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.26) !important;
-}
-
-:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero__bookObject {
-  background:
-    radial-gradient(circle at 50% 42%, rgba(185, 128, 51, 0.16), transparent 6.5rem),
-    linear-gradient(180deg, rgba(255, 250, 238, 0.56), rgba(236, 218, 186, 0.2)) !important;
-}
-
-:root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero__bookObject::before {
-  opacity: 0.24 !important;
-  filter: sepia(0.22) saturate(0.82) !important;
-}
-
-@media (max-width: 700px) {
-  :root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero--stage4 {
-    background:
-      radial-gradient(circle at 16% 8%, rgba(192, 131, 48, 0.1), transparent 11rem),
-      linear-gradient(135deg, #fff8eb 0%, #f3e5ca 100%) !important;
-  }
-
-  :root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero__media,
-  :root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero--generated .reading-book-hero__media {
-    min-height: 168px !important;
-    background:
-      radial-gradient(circle at 48% 22%, rgba(255, 248, 229, 0.62), transparent 7rem),
-      linear-gradient(90deg, rgba(27, 74, 64, 0.08), rgba(255, 245, 224, 0.36)),
-      var(--reading-hero-manuscript),
-      linear-gradient(135deg, #efe1c3, #c8ad7a) !important;
-    background-size: auto, auto, 620px auto, cover !important;
-  }
-
-  :root[data-theme="light"] .reading-book-page--stage4 .reading-book-hero__bookObject {
-    background: rgba(255, 248, 232, 0.72) !important;
-    box-shadow: 0 14px 28px rgba(84, 56, 24, 0.18) !important;
+  .mura-book-progress-card,
+  .mura-book-quote-card,
+  .reading-book-summary__card,
+  .reading-chapter-card,
+  .reading-fragment-card,
+  .reading-book-fallback,
+  .reading-flow-guide,
+  .mura-author-profile {
+    padding: 18px;
   }
 }

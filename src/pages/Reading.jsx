@@ -15,139 +15,12 @@ import BookSocial from "../components/BookSocial";
 import "./Reading.css";
 import { useI18n } from "../i18n/useI18n";
 import manuscriptTexture from "../assets/mura/abai-manuscript-bg.svg";
-import abaiBookCover from "../assets/mura/book-abai.svg";
-import abaiWordsHero from "../assets/works/abai-words-hero.png";
 import {
   MuraArrowIcon,
   MuraBookmarkIcon,
   MuraShareIcon,
 } from "../components/icons/MuraIconSet";
 import { getWorkDisplayTitle } from "../utils/workTitles";
-
-const readingWorkLanguageContent = {
-  "abai-words": {
-    ru: {
-      fragments: [
-        {
-          text: "Человек рождается с любознательностью и стремлением понять мир.",
-          authorNote:
-            "Абай связывает любознательность с нравственным воспитанием и ответственностью перед культурой.",
-          annotations: [
-            { word: "любознательность", explanation: "Внутренний импульс, открывающий человека знанию и самодисциплине." },
-            { word: "понимание", explanation: "Связь обучения с совестью, действием и обществом." },
-            { word: "знание", explanation: "У Абая знание должно улучшать душу и поведение, а не только память." },
-          ],
-          reflection: {
-            resonanceQuote: {
-              text: "Если человек не стремится к знанию, душа пустеет.",
-              author: "Абай Кунанбаев",
-            },
-          },
-        },
-      ],
-    },
-    kk: {
-      fragments: [
-        {
-          text: "Адам баласы дүниені тануға деген құмарлықпен туады.",
-          authorNote:
-            "Абай құмарлықты адамдық тәрбие мен мәдени жауапкершіліктің бастауы ретінде көрсетеді.",
-          annotations: [
-            { word: "құмарлық", explanation: "Адамды білімге және өзін тәрбиелеуге ашатын ішкі талпыныс." },
-            { word: "тану", explanation: "Оқуды армен, әрекетпен және қауыммен байланыстыру." },
-            { word: "білім", explanation: "Абай үшін білім жан мен мінезді түзетуі керек." },
-          ],
-          reflection: {
-            resonanceQuote: {
-              text: "Адам білімге ұмтылмаса, жаны бос қалады.",
-              author: "Абай Құнанбайұлы",
-            },
-          },
-        },
-      ],
-    },
-  },
-  "auezov-abai-path": {
-    ru: {
-      fragments: [
-        {
-          text: "Путь Абая ведет к народу, языку, справедливости и трудной правде.",
-          authorNote:
-            "Ауэзов превращает биографию в культурную эпопею, где личный рост становится национальной памятью.",
-          annotations: [
-            { word: "справедливость", explanation: "Нравственный принцип, направляющий конфликт Абая с невежеством и произволом." },
-            { word: "путь", explanation: "Символ личного роста и исторического движения." },
-          ],
-          reflection: {
-            resonanceQuote: {
-              text: "Степь помнит тех, кто служил ее слову.",
-              author: "Мухтар Ауэзов",
-            },
-          },
-        },
-      ],
-    },
-    kk: {
-      fragments: [
-        {
-          text: "Абай жолы халыққа, тілге, әділетке және ауыр шындыққа бастайды.",
-          authorNote:
-            "Әуезов өмірбаянды мәдени эпопеяға айналдырып, жеке өсуді ұлттық жадпен байланыстырады.",
-          annotations: [
-            { word: "әділет", explanation: "Абайдың надандық пен зорлыққа қарсы күресін бағыттайтын адамгершілік ұстаным." },
-            { word: "жол", explanation: "Жеке өсу мен тарихи қозғалыстың белгісі." },
-          ],
-          reflection: {
-            resonanceQuote: {
-              text: "Дала өз сөзіне қызмет еткендерді ұмытпайды.",
-              author: "Мұхтар Әуезов",
-            },
-          },
-        },
-      ],
-    },
-  },
-  "baitursynuly-masa": {
-    ru: {
-      fragments: [
-        {
-          text: "Язык, знание и гражданская ответственность пробуждают народ.",
-          authorNote:
-            "Байтұрсынұлы показывает литературу как голос, который будит общественное сознание.",
-          annotations: [
-            { word: "язык", explanation: "Основа грамотности, культуры и общественной связи." },
-            { word: "ответственность", explanation: "Готовность служить народу знанием и словом." },
-          ],
-          reflection: {
-            resonanceQuote: {
-              text: "Живой язык держит народ в бодрствовании.",
-              author: "Ахмет Байтурсынулы",
-            },
-          },
-        },
-      ],
-    },
-    kk: {
-      fragments: [
-        {
-          text: "Тіл, білім және азаматтық жауапкершілік халықты оятады.",
-          authorNote:
-            "Байтұрсынұлы әдебиетті қоғамдық сананы оятатын үн ретінде көрсетеді.",
-          annotations: [
-            { word: "тіл", explanation: "Сауат, мәдениет және қоғамдық байланыстың негізі." },
-            { word: "жауапкершілік", explanation: "Білім мен сөз арқылы халыққа қызмет етуге дайындық." },
-          ],
-          reflection: {
-            resonanceQuote: {
-              text: "Тірі тіл халықты ояу ұстайды.",
-              author: "Ахмет Байтұрсынұлы",
-            },
-          },
-        },
-      ],
-    },
-  },
-};
 
 function Reading() {
   const { t, language, localizeMetadata, localizeStoryBook, localizeWork } = useI18n();
@@ -166,7 +39,6 @@ function Reading() {
   const adminStoryBook = getAdminStoryBookByWorkId(id, adminContent, language);
   const storyBook = staticStoryBook ?? adminStoryBook;
   const {
-    xp,
     level,
     streak,
     storyProgress,
@@ -255,12 +127,6 @@ function Reading() {
       (favorite) => favorite.type === type && favorite.id === favoriteId
     );
   const displayBookTitle = getWorkDisplayTitle(work, language);
-  const secondaryBookTitle =
-    work.id === "abai-words" && language === "kk"
-      ? "The Book of Words"
-      : work.originalTitle && work.originalTitle !== displayBookTitle
-        ? work.originalTitle
-        : "";
   const canonicalAuthorName = work.canonicalAuthor ?? work.author;
   const authorRecord = authors.find(
     (author) =>
@@ -273,28 +139,7 @@ function Reading() {
     authorRecord?.workDetail?.en ??
     null;
   const authorDisplayName = localizedAuthor?.name ?? work.author;
-  const localizedReadingContent =
-    readingWorkLanguageContent[work.id]?.[language] ?? null;
-  const localizedFragments =
-    work.fragments?.map((fragment, index) => {
-      const localizedFragment = localizedReadingContent?.fragments?.[index];
-
-      if (!localizedFragment) return fragment;
-
-      return {
-        ...fragment,
-        ...localizedFragment,
-        annotations: localizedFragment.annotations ?? fragment.annotations,
-        reflection: {
-          ...fragment.reflection,
-          ...localizedFragment.reflection,
-          resonanceQuote: {
-            ...fragment.reflection?.resonanceQuote,
-            ...localizedFragment.reflection?.resonanceQuote,
-          },
-        },
-      };
-    }) ?? [];
+  const localizedFragments = work.fragments ?? [];
   const primaryFragment = localizedFragments[0];
   const primaryQuote = primaryFragment?.reflection?.resonanceQuote;
   const quoteCardText =
@@ -305,24 +150,14 @@ function Reading() {
     authorRecord?.portraitAlt?.[language] ??
     authorRecord?.portraitAlt?.en ??
     authorDisplayName;
-  const heroPortrait = authorRecord?.image ?? work.image;
-  const heroBookCover = id === "abai-words" ? abaiBookCover : null;
-  const generatedHeroArtwork = id === "abai-words" ? abaiWordsHero : null;
-  const heroArtworkStyle = {
-    "--reading-hero-artwork": generatedHeroArtwork ? `url("${generatedHeroArtwork}")` : "none",
-    "--reading-hero-portrait": `url("${heroPortrait}")`,
-    "--reading-hero-manuscript": `url("${manuscriptTexture}")`,
-    "--reading-hero-book": heroBookCover ? `url("${heroBookCover}")` : "none",
+  const showcasePortrait =
+    authorRecord?.portrait ?? authorRecord?.image ?? authorRecord?.fallbackPortrait ?? work.image;
+  const showcasePortraitPosition = authorRecord?.portraitPosition ?? "center 28%";
+  const showcaseStyle = {
+    "--reading-showcase-manuscript": `url("${manuscriptTexture}")`,
+    "--reading-showcase-position": showcasePortraitPosition,
   };
-  const abaiHeroCategory =
-    language === "kk"
-      ? "Философиялық мұра"
-      : language === "ru"
-        ? "Философское наследие"
-        : "Philosophical heritage";
-  const heroCategory = id === "abai-words"
-    ? abaiHeroCategory
-    : metadata?.type ?? t("literaryArchive");
+  const heroCategory = metadata?.type ?? work.genre ?? t("literaryArchive");
   const breadcrumbItems = [
     { label: t("works"), href: "/explore" },
     { label: authorDisplayName },
@@ -391,68 +226,32 @@ function Reading() {
           ))}
         </nav>
 
-        <section
-          className={`reading-book-hero reading-book-hero--reference reading-book-hero--stage4 ${
-            generatedHeroArtwork ? "reading-book-hero--generated" : ""
-          }`}
-          style={heroArtworkStyle}
-        >
-          <div className="reading-book-hero__media">
+        <section className="reading-work-showcase" style={showcaseStyle}>
+          <div className="reading-work-showcase__visual">
             <img
-              className="reading-book-hero__manuscript"
-              src={manuscriptTexture}
-              alt=""
-              aria-hidden="true"
-            />
-            <img
-              className="reading-book-hero__portrait"
-              src={heroPortrait}
+              className="reading-work-showcase__portrait"
+              src={showcasePortrait}
               alt={localizedPortraitAlt}
             />
           </div>
 
-          <div className="reading-book-hero__content">
-            <p className="reading-book-hero__category">
-              {heroCategory}
-            </p>
-            <p className="reading-book-hero__author">{authorDisplayName}</p>
-            <h1 className="reading-book-hero__title">{displayBookTitle}</h1>
-            {secondaryBookTitle ? (
-              <p className="reading-book-hero__titleSub">{secondaryBookTitle}</p>
-            ) : null}
-            <div className="reading-book-hero__metaLine">
+          <div className="reading-work-showcase__content">
+            <p className="reading-work-showcase__category">{heroCategory}</p>
+            <p className="reading-work-showcase__author">{authorDisplayName}</p>
+            <h1 className="reading-work-showcase__title reading-book-hero__title">{displayBookTitle}</h1>
+            <div className="reading-work-showcase__meta">
               <span>{storyBook.totalScenes} {t("scenes").toLowerCase()}</span>
               <i aria-hidden="true" />
               <span>{metadata?.period ?? t("literaryArchive")}</span>
               <i aria-hidden="true" />
               <span>{t("minRoute", { count: storyBook.totalMinutes })}</span>
             </div>
-            <p className="reading-book-hero__description">{work.description}</p>
-            <p className="reading-book-hero__overview">{storyBook.overview}</p>
+            <p className="reading-work-showcase__description reading-book-hero__description">{work.description}</p>
 
-            <div className="reading-book-hero__metrics">
-              <article>
-                <span>{t("chapters")}</span>
-                <strong>{storyBook.chapters.length}</strong>
-              </article>
-              <article>
-                <span>{t("scenes")}</span>
-                <strong>{storyBook.totalScenes}</strong>
-              </article>
-              <article>
-                <span>{t("xpRoute")}</span>
-                <strong>{storyBook.totalXp}</strong>
-              </article>
-              <article>
-                <span>{t("yourXp")}</span>
-                <strong>{xp}</strong>
-              </article>
-            </div>
-
-            <div className="reading-book-hero__utilityActions" aria-label={t("shareWork")}>
+            <div className="reading-work-showcase__utility" aria-label={t("shareWork")}>
               <button
                 type="button"
-                className={`reading-book-hero__utilityButton ${
+                className={`reading-work-showcase__utilityButton reading-book-hero__utilityButton ${
                   isWorkFavorite ? "is-favorite" : ""
                 }`}
                 onClick={() =>
@@ -470,50 +269,33 @@ function Reading() {
               </button>
               <button
                 type="button"
-                className="reading-book-hero__utilityButton"
+                className="reading-work-showcase__utilityButton reading-book-hero__utilityButton"
                 onClick={handleShareWork}
               >
                 <MuraShareIcon />
                 {t("shareWork")}
               </button>
               {shareMessage ? (
-                <span className="reading-book-hero__shareStatus" role="status">
+                <span className="reading-work-showcase__shareStatus reading-book-hero__shareStatus" role="status">
                   {shareMessage}
                 </span>
               ) : null}
             </div>
 
-            <div className="reading-book-hero__actions">
+            <div className="reading-work-showcase__actions">
               <Link
                 to={getChapterPath(work.id, nextChapter.chapterNumber)}
-                className="reading-book-hero__action is-primary"
+                className="reading-work-showcase__action reading-book-hero__action is-primary"
               >
                 {nextChapter.isStarted && !nextChapter.isCompleted
                   ? t("continueReading")
                   : t("startReading")}
                 <MuraArrowIcon />
               </Link>
-              <Link to="/progress" className="reading-book-hero__action">
+              <Link to="/progress" className="reading-work-showcase__action reading-book-hero__action">
                 {t("viewProgress")}
               </Link>
             </div>
-          </div>
-
-          <div
-            className={`reading-book-hero__bookObject ${
-              heroBookCover ? "has-cover" : "is-placeholder"
-            }`}
-            aria-hidden="true"
-          >
-            {heroBookCover ? (
-              <img src={heroBookCover} alt="" />
-            ) : (
-              <>
-                <span>MURA</span>
-                <strong>{displayBookTitle}</strong>
-                <small>{authorDisplayName}</small>
-              </>
-            )}
           </div>
         </section>
 
