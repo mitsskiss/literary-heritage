@@ -199,62 +199,6 @@ function Landing() {
           ))}
         </div>
       </section>
-
-      <footer className="miras-footer">
-        <div className="miras-footer__brand">
-          <MirasDecorIcon type="ornament" className="miras-brand__mark" />
-          <strong>MURA</strong>
-          <p>{t("footerText")}</p>
-        </div>
-        <nav aria-label={t("navigation")}>
-          <strong>{t("navigation")}</strong>
-          <Link to="/works">{t("navWorks")}</Link>
-          <Link to="/authors">{t("navAuthors")}</Link>
-          <Link to="/epochs">{t("landingEpochs")}</Link>
-          <Link to="/explore">{t("navExplore")}</Link>
-        </nav>
-        <nav aria-label={t("aboutKicker")}>
-          <strong>{t("aboutKicker")}</strong>
-          <Link to="/about">{t("navAbout")}</Link>
-          <Link to="/map">{t("navMap")}</Link>
-          <Link to="/progress">{t("navProgress")}</Link>
-        </nav>
-        <div className="miras-footer__subscribe">
-          <span>{t("landingSubscribe")}</span>
-          <div>
-            <input
-              aria-label="Email"
-              placeholder={t("landingEmailPlaceholder")}
-              type="email"
-              value={subscriberEmail}
-              onChange={(event) => {
-                setSubscriberEmail(event.target.value);
-                setSubscribeMessage("");
-              }}
-              onKeyDown={(event) => {
-                if (event.key === "Enter") {
-                  event.preventDefault();
-                  handleSubscribe();
-                }
-              }}
-            />
-            <button type="button" aria-label={t("landingSubscribe")} onClick={handleSubscribe}>
-              {"\u2192"}
-            </button>
-          </div>
-          {subscribeMessage ? <small role="status">{subscribeMessage}</small> : null}
-        </div>
-        <div className="miras-footer__social" aria-label={t("landingFollowUs")}>
-          <strong>{t("landingFollowUs")}</strong>
-          <div>
-            {socialLinks.map((item) => (
-              <span key={item.label} aria-label={item.label} role="img">
-                <MirasSocialIcon type={item.icon} />
-              </span>
-            ))}
-          </div>
-        </div>
-      </footer>
     </main>
   );
 }
